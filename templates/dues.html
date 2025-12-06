@@ -1,0 +1,158 @@
+{% extends 'base.html' %}
+{% block content %}
+<style>
+  .dues-hero {
+    background: radial-gradient(circle at 20% 20%, #0d2942 0, #081728 45%, #060f1b 100%);
+    border: 1px solid rgba(0, 191, 255, 0.25);
+    box-shadow: 0 10px 40px #00bfff17, 0 0 0 1px #00bfff22;
+    border-radius: 18px;
+    padding: 18px 22px;
+  }
+  .chip {
+    border-radius: 999px;
+    padding: 0.3rem 0.8rem;
+    font-size: 0.8rem;
+    font-weight: 600;
+    border: 1px solid rgba(255,255,255,0.12);
+    color: #b8eaff;
+    background: rgba(255,255,255,0.06);
+  }
+  .chip-success { border-color: rgba(0, 191, 255, 0.4); background: rgba(0, 191, 255, 0.12); color: #b8eaff; }
+  .chip-danger { border-color: rgba(255, 99, 71, 0.5); background: rgba(255, 99, 71, 0.12); color: #ffb5a1; }
+  .chip-muted { border-color: rgba(255,255,255,0.18); background: rgba(255,255,255,0.06); color: #c9d9e8; }
+  .badge-soft { background: rgba(255,255,255,0.08); color: #e4f6ff; border: 1px solid rgba(255,255,255,0.1); }
+  .btn-chip { padding: 0.15rem 0.6rem; font-size: 0.8rem; }
+</style>
+
+<div class="container py-4">
+  <div class="dues-hero mb-4">
+    <div class="d-flex flex-column flex-md-row align-items-md-center justify-content-between gap-3">
+      <div>
+        <div class="text-uppercase subtle small">Rio Grande Valley APA</div>
+        <h2 class="fw-bold mb-1">Team Dues</h2>
+        <div class="subtle">Track weekly payments (8-ball / 9-ball) and stay on pace for $90 per week.</div>
+      </div>
+      <div class="d-flex gap-2 flex-wrap">
+        <span class="chip"><i class="fa-solid fa-calendar-week me-1"></i> Weeks tracked: {{ weeks_count }}</span>
+        <span class="chip chip-success"><i class="fa-solid fa-bullseye me-1"></i> Target: ${{ total_target }}</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="row g-3 mb-4">
+    <div class="col-12 col-lg-4">
+      <div class="card bg-dark text-light h-100">
+        <div class="card-body">
+          <div class="subtle mb-1">Collected</div>
+          <div class="display-6 fw-bold">${{ collected }}</div>
+        </div>
+      </div>
+    </div>
+    <div class="col-12 col-lg-4">
+      <div class="card bg-dark text-light h-100">
+        <div class="card-body">
+          <div class="subtle mb-1">Outstanding</div>
+          <div class="display-6 text-warning fw-bold">${{ outstanding }}</div>
+        </div>
+      </div>
+    </div>
+    <div class="col-12 col-lg-4">
+      <div class="card bg-dark text-light h-100">
+        <div class="card-body">
+          <div class="subtle mb-2 d-flex justify-content-between align-items-center">
+            <span>Weekly goal: $90</span>
+            <span class="badge badge-soft">Progress</span>
+          </div>
+          <div class="progress" style="height: 1.2rem;">
+            <div class="progress-bar bg-info" role="progressbar" style="width: {{ progress_pct }}%" aria-valuenow="{{ progress_pct }}" aria-valuemin="0" aria-valuemax="100">{{ progress_pct }}%</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card mb-4">
+    <div class="card-body">
+      <div class="d-flex flex-column flex-md-row justify-content-between align-items-md-center mb-3 gap-2">
+        <div>
+          <h5 class="mb-1">Player dues</h5>
+          <div class="text-secondary small">Set per-format status (Paid / Not paid / Didn’t play) for the selected week.</div>
+        </div>
+        <form method="get" class="d-flex align-items-center gap-2">
+          <label class="text-secondary small mb-0" for="weekSelect">Week</label>
+          <select id="weekSelect" name="week" class="form-select bg-dark text-light" onchange="this.form.submit()">
+            {% for w in weeks %}
+            <option value="{{ w.week }}" {% if selected_week.week == w.week %}selected{% endif %}>Week {{ w.week }} — {{ w.date }}</option>
+            {% endfor %}
+          </select>
+        </form>
+      </div>
+      <div class="d-flex flex-wrap gap-2 mb-3">
+        <span class="chip chip-success"><i class="fa-solid fa-circle-check me-1"></i> Paid</span>
+        <span class="chip chip-danger"><i class="fa-solid fa-circle-xmark me-1"></i> Not paid</span>
+        <span class="chip chip-muted"><i class="fa-solid fa-ban me-1"></i> Didn’t play</span>
+      </div>
+      <div class="table-responsive">
+        <table class="table table-dark table-striped table-hover align-middle" id="duesTable">
+          <thead>
+            <tr>
+              <th>Player</th>
+              <th class="text-center">8-Ball</th>
+              <th class="text-center">9-Ball</th>
+              <th class="text-center">Owes</th>
+              <th>Status</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for row in player_dues %}
+            <tr>
+              <td class="fw-semibold">{{ row.name }}</td>
+              {% for fmt in ['eight','nine'] %}
+              {% set applicable = fmt in row.formats %}
+              {% set state = row[fmt] %}
+              <td class="text-center">
+                {% if not applicable %}
+                  <span class="chip chip-muted">N/A</span>
+                {% else %}
+                  {% if state == 'paid' %}
+                    <span class="chip chip-success">Paid</span>
+                  {% elif state == 'dnp' %}
+                    <span class="chip chip-muted">Didn’t play</span>
+                  {% else %}
+                    <span class="chip chip-danger">Not paid</span>
+                  {% endif %}
+                  <div class="d-flex justify-content-center gap-1 mt-1">
+                    {% for val,label in [('paid','Paid'),('unpaid','Not paid'),('dnp','Didn’t play')] %}
+                    <form method="post" class="d-inline">
+                      <input type="hidden" name="week" value="{{ selected_week.week }}">
+                      <input type="hidden" name="player" value="{{ row.name }}">
+                      <input type="hidden" name="game_type" value="{{ fmt }}">
+                      <input type="hidden" name="status" value="{{ val }}">
+                      <button class="btn btn-sm {% if state == val %}btn-info text-dark{% else %}btn-outline-secondary{% endif %} btn-chip" type="submit">{{ label }}</button>
+                    </form>
+                    {% endfor %}
+                  </div>
+                {% endif %}
+              </td>
+              {% endfor %}
+              <td class="text-center fw-bold">${{ row.owes }}</td>
+              <td>
+                {% if row.owes == 0 %}
+                  <span class="chip chip-success">All paid</span>
+                {% else %}
+                  <span class="chip chip-danger">Owes</span>
+                {% endif %}
+              </td>
+            </tr>
+            {% else %}
+            {% for _ in range(8) %}
+            <tr><td colspan="5"><div class="skeleton" style="height:18px;"></div></td></tr>
+            {% endfor %}
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

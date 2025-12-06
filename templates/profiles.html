@@ -1,0 +1,38 @@
+{% extends 'base.html' %}
+{% block title %}Profiles | Cüe-Ligans{% endblock %}
+{% block content %}
+<div class="container py-4">
+  <div class="position-relative mb-4" style="min-height:3.5rem;">
+    <div class="d-flex justify-content-center align-items-center" style="height:100%;">
+      <div class="hero-badge">
+        <i class="fa-solid fa-id-card"></i>
+        <span>Profiles</span>
+      </div>
+    </div>
+  </div>
+  <div class="row g-3">
+    {% for u in users %}
+    <div class="col-12 col-md-6 col-lg-4">
+      <div class="card bg-dark soft-border shadow-soft h-100">
+        <div class="card-body d-flex align-items-center">
+          <div class="avatar-wrapper me-3" style="width:56px;height:56px;border-radius:50%;overflow:hidden;border:1px solid rgba(255,255,255,.2);">
+            {% if u.avatar_url %}
+              <img src="{{ u.avatar_url }}" alt="{{ u.display_name or u.username }}" class="img-fluid">
+            {% else %}
+              <div class="d-flex align-items-center justify-content-center h-100 w-100 bg-secondary text-dark fw-bold" style="font-size:1rem;">
+                {{ (u.display_name or u.username)[:2] | upper }}
+              </div>
+            {% endif %}
+          </div>
+          <div>
+            <div class="h6 mb-0"><a class="text-info text-decoration-none" href="{{ url_for('profile_detail', username=u.username) }}">{{ u.display_name or u.username }}</a></div>
+            <div class="text-secondary small">@{{ u.username }}</div>
+            <div class="text-secondary small">Joined {{ u.created_at.strftime('%b %d, %Y') if u.created_at else '' }}</div>
+          </div>
+        </div>
+      </div>
+    </div>
+    {% endfor %}
+  </div>
+</div>
+{% endblock %}

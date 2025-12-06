@@ -1,0 +1,2706 @@
+{
+  "91040482": {
+    "8-ball": {
+      "matchesPlayed": 8,
+      "matchesWon": 1,
+      "pa": 0.2916666666666667,
+      "ppm": 0.875
+    },
+    "9-ball": {}
+  },
+  "91040488": {
+    "8-ball": {},
+    "9-ball": {
+      "matchesPlayed": 5,
+      "matchesWon": 2,
+      "pa": 0.45,
+      "ppm": 9
+    }
+  },
+  "91043355": {
+    "8-ball": {},
+    "9-ball": {
+      "matchesPlayed": 7,
+      "pa": 0.7,
+      "ppm": 14,
+      "matchesWon": 6
+    }
+  },
+  "91052541": {
+    "8-ball": {},
+    "9-ball": {
+      "matchesPlayed": 6,
+      "pa": 0.6,
+      "ppm": 12,
+      "matchesWon": 4
+    }
+  },
+  "91016338": {
+    "8-ball": {},
+    "9-ball": {
+      "matchesPlayed": 6,
+      "pa": 0.5583333333333333,
+      "ppm": 11.166666666666666,
+      "matchesWon": 4
+    }
+  },
+  "91016306": {
+    "8-ball": {},
+    "9-ball": {
+      "matchesPlayed": 5,
+      "pa": 0.5,
+      "ppm": 10,
+      "matchesWon": 1
+    }
+  },
+  "91016322": {
+    "8-ball": {},
+    "9-ball": {
+      "matchesPlayed": 9,
+      "pa": 0.5,
+      "ppm": 10,
+      "matchesWon": 5
+    }
+  },
+  "91074593": {
+    "8-ball": {},
+    "9-ball": {
+      "matchesPlayed": 7,
+      "pa": 0.4714285714285714,
+      "ppm": 9.428571428571429,
+      "matchesWon": 2
+    }
+  },
+  "91016313": {
+    "8-ball": {},
+    "9-ball": {
+      "matchesPlayed": 7,
+      "pa": 0.4642857142857143,
+      "ppm": 9.285714285714286,
+      "matchesWon": 4
+    }
+  },
+  "91016344": {
+    "8-ball": {},
+    "9-ball": {
+      "matchesPlayed": 11,
+      "pa": 0.4636363636363637,
+      "ppm": 9.272727272727273,
+      "matchesWon": 5
+    }
+  },
+  "91016330": {
+    "8-ball": {},
+    "9-ball": {
+      "matchesPlayed": 9,
+      "pa": 0.4611111111111111,
+      "ppm": 9.222222222222221,
+      "matchesWon": 3
+    }
+  },
+  "91016342": {
+    "8-ball": {},
+    "9-ball": {
+      "matchesPlayed": 6,
+      "pa": 0.7583333333333333,
+      "ppm": 15.166666666666666,
+      "matchesWon": 6
+    }
+  },
+  "91052515": {
+    "8-ball": {},
+    "9-ball": {
+      "matchesPlayed": 5,
+      "pa": 0.74,
+      "ppm": 14.8,
+      "matchesWon": 5
+    }
+  },
+  "91016324": {
+    "8-ball": {},
+    "9-ball": {
+      "matchesPlayed": 10,
+      "pa": 0.65,
+      "ppm": 13,
+      "matchesWon": 8
+    }
+  },
+  "91016300": {
+    "8-ball": {},
+    "9-ball": {
+      "matchesPlayed": 8,
+      "pa": 0.63125,
+      "ppm": 12.625,
+      "matchesWon": 6
+    }
+  },
+  "91016304": {
+    "8-ball": {},
+    "9-ball": {
+      "matchesPlayed": 8,
+      "pa": 0.6125,
+      "ppm": 12.25,
+      "matchesWon": 5
+    }
+  },
+  "91016318": {
+    "8-ball": {},
+    "9-ball": {
+      "matchesPlayed": 7,
+      "pa": 0.5857142857142856,
+      "ppm": 11.714285714285714,
+      "matchesWon": 5
+    }
+  },
+  "91051208": {
+    "8-ball": {},
+    "9-ball": {
+      "matchesPlayed": 10,
+      "pa": 0.58,
+      "ppm": 11.6,
+      "matchesWon": 6
+    }
+  },
+  "91052542": {
+    "8-ball": {},
+    "9-ball": {
+      "matchesPlayed": 9,
+      "pa": 0.5777777777777777,
+      "ppm": 11.555555555555555,
+      "matchesWon": 5
+    }
+  },
+  "91112162": {
+    "8-ball": {},
+    "9-ball": {
+      "matchesPlayed": 5,
+      "pa": 0.5599999999999999,
+      "ppm": 11.2,
+      "matchesWon": 3
+    }
+  },
+  "91052586": {
+    "8-ball": {},
+    "9-ball": {
+      "matchesPlayed": 5,
+      "pa": 0.55,
+      "ppm": 11,
+      "matchesWon": 3
+    }
+  },
+  "91041133": {
+    "8-ball": {},
+    "9-ball": {
+      "matchesPlayed": 7,
+      "pa": 0.6,
+      "ppm": 12,
+      "matchesWon": 5
+    }
+  },
+  "91094585": {
+    "8-ball": {},
+    "9-ball": {
+      "matchesPlayed": 5,
+      "pa": 0.58,
+      "ppm": 11.6,
+      "matchesWon": 3
+    }
+  },
+  "91016301": {
+    "8-ball": {},
+    "9-ball": {
+      "matchesPlayed": 5,
+      "pa": 0.52,
+      "ppm": 10.4,
+      "matchesWon": 2
+    }
+  },
+  "91016307": {
+    "8-ball": {},
+    "9-ball": {
+      "matchesPlayed": 8,
+      "pa": 0.50625,
+      "ppm": 10.125,
+      "matchesWon": 4
+    }
+  },
+  "91016311": {
+    "8-ball": {},
+    "9-ball": {
+      "matchesPlayed": 9,
+      "pa": 0.49444444444444446,
+      "ppm": 9.88888888888889,
+      "matchesWon": 4
+    }
+  },
+  "91016331": {
+    "8-ball": {},
+    "9-ball": {
+      "matchesPlayed": 5,
+      "pa": 0.49000000000000005,
+      "ppm": 9.8,
+      "matchesWon": 3
+    }
+  },
+  "91074786": {
+    "8-ball": {},
+    "9-ball": {
+      "matchesPlayed": 5,
+      "pa": 0.47000000000000003,
+      "ppm": 9.4,
+      "matchesWon": 2
+    }
+  },
+  "91016333": {
+    "8-ball": {},
+    "9-ball": {
+      "matchesPlayed": 9,
+      "pa": 0.4611111111111111,
+      "ppm": 9.222222222222221,
+      "matchesWon": 4
+    }
+  },
+  "91016340": {
+    "8-ball": {},
+    "9-ball": {
+      "matchesPlayed": 6,
+      "pa": 0.4583333333333333,
+      "ppm": 9.166666666666666,
+      "matchesWon": 3
+    }
+  },
+  "91052648": {
+    "8-ball": {},
+    "9-ball": {
+      "matchesPlayed": 7,
+      "pa": 0.36428571428571427,
+      "ppm": 7.285714285714286,
+      "matchesWon": 1
+    }
+  },
+  "91016293": {
+    "8-ball": {},
+    "9-ball": {
+      "matchesPlayed": 4,
+      "matchesWon": 3,
+      "pa": 0.55,
+      "ppm": 11
+    }
+  },
+  "91016291": {
+    "8-ball": {},
+    "9-ball": {
+      "matchesPlayed": 5,
+      "matchesWon": 2,
+      "pa": 0.47000000000000003,
+      "ppm": 9.4
+    }
+  },
+  "91016295": {
+    "8-ball": {},
+    "9-ball": {
+      "matchesPlayed": 9,
+      "matchesWon": 5,
+      "pa": 0.5111111111111111,
+      "ppm": 10.222222222222221
+    }
+  },
+  "91016297": {
+    "8-ball": {},
+    "9-ball": {
+      "matchesPlayed": 8,
+      "matchesWon": 3,
+      "pa": 0.45625,
+      "ppm": 9.125
+    }
+  },
+  "91046487": {
+    "8-ball": {},
+    "9-ball": {
+      "matchesPlayed": 8,
+      "matchesWon": 4,
+      "pa": 0.45,
+      "ppm": 9
+    }
+  },
+  "91016298": {
+    "8-ball": {},
+    "9-ball": {
+      "matchesPlayed": 5,
+      "matchesWon": 3,
+      "pa": 0.43,
+      "ppm": 8.6
+    }
+  },
+  "91016302": {
+    "8-ball": {},
+    "9-ball": {
+      "matchesPlayed": 3,
+      "matchesWon": 3,
+      "pa": 0.65,
+      "ppm": 13
+    }
+  },
+  "91016299": {
+    "8-ball": {},
+    "9-ball": {
+      "matchesPlayed": 6,
+      "matchesWon": 1,
+      "pa": 0.375,
+      "ppm": 7.5
+    }
+  },
+  "91016303": {
+    "8-ball": {},
+    "9-ball": {
+      "matchesPlayed": 11,
+      "matchesWon": 5,
+      "pa": 0.47727272727272724,
+      "ppm": 9.545454545454545
+    }
+  },
+  "91040489": {
+    "8-ball": {},
+    "9-ball": {
+      "matchesPlayed": 6,
+      "matchesWon": 3,
+      "pa": 0.5416666666666667,
+      "ppm": 10.833333333333334
+    }
+  },
+  "91052651": {
+    "8-ball": {},
+    "9-ball": {
+      "matchesPlayed": 8,
+      "matchesWon": 3,
+      "pa": 0.4375,
+      "ppm": 8.75
+    }
+  },
+  "91074586": {
+    "8-ball": {},
+    "9-ball": {
+      "matchesPlayed": 5,
+      "matchesWon": 4,
+      "pa": 0.54,
+      "ppm": 10.8
+    }
+  },
+  "91052544": {
+    "8-ball": {},
+    "9-ball": {
+      "matchesPlayed": 4,
+      "matchesWon": 0,
+      "pa": 0.1875,
+      "ppm": 3.75
+    }
+  },
+  "91052545": {
+    "8-ball": {},
+    "9-ball": {
+      "matchesPlayed": 7,
+      "matchesWon": 4,
+      "pa": 0.5071428571428571,
+      "ppm": 10.142857142857142
+    }
+  },
+  "91016316": {
+    "8-ball": {},
+    "9-ball": {
+      "matchesPlayed": 10,
+      "matchesWon": 4,
+      "pa": 0.43,
+      "ppm": 8.6
+    }
+  },
+  "91016317": {
+    "8-ball": {},
+    "9-ball": {
+      "matchesPlayed": 5,
+      "matchesWon": 3,
+      "pa": 0.45999999999999996,
+      "ppm": 9.2
+    }
+  },
+  "91016321": {
+    "8-ball": {},
+    "9-ball": {
+      "matchesPlayed": 8,
+      "matchesWon": 2,
+      "pa": 0.34375,
+      "ppm": 6.875
+    }
+  },
+  "91047965": {
+    "8-ball": {},
+    "9-ball": {
+      "matchesPlayed": 6,
+      "matchesWon": 2,
+      "pa": 0.39166666666666666,
+      "ppm": 7.833333333333333
+    }
+  },
+  "91112159": {
+    "8-ball": {},
+    "9-ball": {
+      "matchesPlayed": 3,
+      "matchesWon": 2,
+      "pa": 0.5333333333333333,
+      "ppm": 10.666666666666666
+    }
+  },
+  "91016326": {
+    "8-ball": {},
+    "9-ball": {
+      "matchesPlayed": 8,
+      "matchesWon": 4,
+      "pa": 0.49375,
+      "ppm": 9.875
+    }
+  },
+  "91016323": {
+    "8-ball": {},
+    "9-ball": {
+      "matchesPlayed": 2,
+      "matchesWon": 1,
+      "pa": 0.55,
+      "ppm": 11
+    }
+  },
+  "91016329": {
+    "8-ball": {},
+    "9-ball": {
+      "matchesPlayed": 7,
+      "matchesWon": 3,
+      "pa": 0.47857142857142854,
+      "ppm": 9.571428571428571
+    }
+  },
+  "91016325": {
+    "8-ball": {},
+    "9-ball": {
+      "matchesPlayed": 7,
+      "matchesWon": 3,
+      "pa": 0.45,
+      "ppm": 9
+    }
+  },
+  "91016328": {
+    "8-ball": {},
+    "9-ball": {
+      "matchesPlayed": 4,
+      "matchesWon": 2,
+      "pa": 0.5,
+      "ppm": 10
+    }
+  },
+  "91016327": {
+    "8-ball": {},
+    "9-ball": {
+      "matchesPlayed": 8,
+      "matchesWon": 4,
+      "pa": 0.5125,
+      "ppm": 10.25
+    }
+  },
+  "91016337": {
+    "8-ball": {},
+    "9-ball": {
+      "matchesPlayed": 9,
+      "matchesWon": 3,
+      "pa": 0.4111111111111111,
+      "ppm": 8.222222222222221
+    }
+  },
+  "91016334": {
+    "8-ball": {},
+    "9-ball": {
+      "matchesPlayed": 8,
+      "matchesWon": 2,
+      "pa": 0.425,
+      "ppm": 8.5
+    }
+  },
+  "91016336": {
+    "8-ball": {},
+    "9-ball": {
+      "matchesPlayed": 4,
+      "matchesWon": 2,
+      "pa": 0.4875,
+      "ppm": 9.75
+    }
+  },
+  "91016332": {
+    "8-ball": {},
+    "9-ball": {
+      "matchesPlayed": 7,
+      "matchesWon": 2,
+      "pa": 0.42142857142857143,
+      "ppm": 8.428571428571429
+    }
+  },
+  "91016335": {
+    "8-ball": {},
+    "9-ball": {
+      "matchesPlayed": 6,
+      "matchesWon": 3,
+      "pa": 0.5333333333333333,
+      "ppm": 10.666666666666666
+    }
+  },
+  "91016339": {
+    "8-ball": {},
+    "9-ball": {
+      "matchesPlayed": 4,
+      "matchesWon": 2,
+      "pa": 0.4375,
+      "ppm": 8.75
+    }
+  },
+  "91016341": {
+    "8-ball": {},
+    "9-ball": {
+      "matchesPlayed": 9,
+      "matchesWon": 4,
+      "pa": 0.4611111111111111,
+      "ppm": 9.222222222222221
+    }
+  },
+  "91052650": {
+    "8-ball": {},
+    "9-ball": {
+      "matchesPlayed": 9,
+      "matchesWon": 4,
+      "pa": 0.4722222222222222,
+      "ppm": 9.444444444444445
+    }
+  },
+  "91094638": {
+    "8-ball": {},
+    "9-ball": {
+      "matchesPlayed": 5,
+      "matchesWon": 2,
+      "pa": 0.5,
+      "ppm": 10
+    }
+  },
+  "91016731": {
+    "8-ball": {
+      "matchesPlayed": 7,
+      "pa": 0.8095238095238094,
+      "ppm": 2.4285714285714284,
+      "matchesWon": 6
+    },
+    "9-ball": {}
+  },
+  "91016716": {
+    "8-ball": {
+      "matchesPlayed": 7,
+      "pa": 0.6190476190476191,
+      "ppm": 1.8571428571428572,
+      "matchesWon": 5
+    },
+    "9-ball": {}
+  },
+  "91052658": {
+    "8-ball": {
+      "matchesPlayed": 5,
+      "pa": 0.6,
+      "ppm": 1.8,
+      "matchesWon": 3
+    },
+    "9-ball": {}
+  },
+  "91071833": {
+    "8-ball": {
+      "matchesPlayed": 6,
+      "pa": 0.5,
+      "ppm": 1.5,
+      "matchesWon": 3
+    },
+    "9-ball": {}
+  },
+  "91052508": {
+    "8-ball": {
+      "matchesPlayed": 8,
+      "pa": 0.5,
+      "ppm": 1.5,
+      "matchesWon": 5
+    },
+    "9-ball": {}
+  },
+  "91016724": {
+    "8-ball": {
+      "matchesPlayed": 11,
+      "pa": 0.48484848484848486,
+      "ppm": 1.4545454545454546,
+      "matchesWon": 5
+    },
+    "9-ball": {}
+  },
+  "91016723": {
+    "8-ball": {
+      "matchesPlayed": 7,
+      "pa": 0.4761904761904762,
+      "ppm": 1.4285714285714286,
+      "matchesWon": 4
+    },
+    "9-ball": {}
+  },
+  "91016701": {
+    "8-ball": {
+      "matchesPlayed": 7,
+      "pa": 0.4285714285714286,
+      "ppm": 1.2857142857142858,
+      "matchesWon": 3
+    },
+    "9-ball": {}
+  },
+  "91112156": {
+    "8-ball": {
+      "matchesPlayed": 5,
+      "pa": 0.39999999999999997,
+      "ppm": 1.2,
+      "matchesWon": 2
+    },
+    "9-ball": {}
+  },
+  "91047962": {
+    "8-ball": {
+      "matchesPlayed": 5,
+      "pa": 0.39999999999999997,
+      "ppm": 1.2,
+      "matchesWon": 3
+    },
+    "9-ball": {}
+  },
+  "91016690": {
+    "8-ball": {
+      "matchesPlayed": 9,
+      "pa": 0.6296296296296297,
+      "ppm": 1.8888888888888888,
+      "matchesWon": 6
+    },
+    "9-ball": {}
+  },
+  "91016719": {
+    "8-ball": {
+      "matchesPlayed": 8,
+      "pa": 0.625,
+      "ppm": 1.875,
+      "matchesWon": 6
+    },
+    "9-ball": {}
+  },
+  "91016737": {
+    "8-ball": {
+      "matchesPlayed": 6,
+      "pa": 0.611111111111111,
+      "ppm": 1.8333333333333333,
+      "matchesWon": 4
+    },
+    "9-ball": {}
+  },
+  "91016725": {
+    "8-ball": {
+      "matchesPlayed": 5,
+      "pa": 0.6,
+      "ppm": 1.8,
+      "matchesWon": 3
+    },
+    "9-ball": {}
+  },
+  "91016718": {
+    "8-ball": {
+      "matchesPlayed": 8,
+      "pa": 0.5833333333333334,
+      "ppm": 1.75,
+      "matchesWon": 6
+    },
+    "9-ball": {}
+  },
+  "91016735": {
+    "8-ball": {
+      "matchesPlayed": 8,
+      "pa": 0.5833333333333334,
+      "ppm": 1.75,
+      "matchesWon": 5
+    },
+    "9-ball": {}
+  },
+  "91016732": {
+    "8-ball": {
+      "matchesPlayed": 5,
+      "pa": 0.5333333333333333,
+      "ppm": 1.6,
+      "matchesWon": 3
+    },
+    "9-ball": {}
+  },
+  "91074785": {
+    "8-ball": {
+      "matchesPlayed": 6,
+      "pa": 0.5,
+      "ppm": 1.5,
+      "matchesWon": 3
+    },
+    "9-ball": {}
+  },
+  "91016720": {
+    "8-ball": {
+      "matchesPlayed": 7,
+      "pa": 0.4761904761904762,
+      "ppm": 1.4285714285714286,
+      "matchesWon": 4
+    },
+    "9-ball": {}
+  },
+  "91052530": {
+    "8-ball": {
+      "matchesPlayed": 5,
+      "pa": 0.4666666666666666,
+      "ppm": 1.4,
+      "matchesWon": 3
+    },
+    "9-ball": {}
+  },
+  "91016709": {
+    "8-ball": {
+      "matchesPlayed": 8,
+      "pa": 0.625,
+      "ppm": 1.875,
+      "matchesWon": 6
+    },
+    "9-ball": {}
+  },
+  "91016722": {
+    "8-ball": {
+      "matchesPlayed": 8,
+      "pa": 0.5416666666666666,
+      "ppm": 1.625,
+      "matchesWon": 6
+    },
+    "9-ball": {}
+  },
+  "91016686": {
+    "8-ball": {
+      "matchesPlayed": 6,
+      "pa": 0.5,
+      "ppm": 1.5,
+      "matchesWon": 4
+    },
+    "9-ball": {}
+  },
+  "91016694": {
+    "8-ball": {
+      "matchesPlayed": 6,
+      "pa": 0.5,
+      "ppm": 1.5,
+      "matchesWon": 4
+    },
+    "9-ball": {}
+  },
+  "91016695": {
+    "8-ball": {
+      "matchesPlayed": 11,
+      "pa": 0.48484848484848486,
+      "ppm": 1.4545454545454546,
+      "matchesWon": 7
+    },
+    "9-ball": {}
+  },
+  "91016729": {
+    "8-ball": {
+      "matchesPlayed": 7,
+      "pa": 0.4761904761904762,
+      "ppm": 1.4285714285714286,
+      "matchesWon": 4
+    },
+    "9-ball": {}
+  },
+  "91052656": {
+    "8-ball": {
+      "matchesPlayed": 5,
+      "pa": 0.39999999999999997,
+      "ppm": 1.2,
+      "matchesWon": 3
+    },
+    "9-ball": {}
+  },
+  "91016699": {
+    "8-ball": {
+      "matchesPlayed": 5,
+      "pa": 0.3333333333333333,
+      "ppm": 1,
+      "matchesWon": 2
+    },
+    "9-ball": {}
+  },
+  "91046400": {
+    "8-ball": {
+      "matchesPlayed": 7,
+      "pa": 0.2380952380952381,
+      "ppm": 0.7142857142857143,
+      "matchesWon": 1
+    },
+    "9-ball": {}
+  },
+  "91016727": {
+    "8-ball": {
+      "matchesPlayed": 5,
+      "pa": 0.19999999999999998,
+      "ppm": 0.6,
+      "matchesWon": 1
+    },
+    "9-ball": {}
+  },
+  "91040487": {
+    "8-ball": {
+      "matchesPlayed": 5,
+      "pa": 0.7333333333333334,
+      "ppm": 2.2,
+      "matchesWon": 5
+    },
+    "9-ball": {}
+  },
+  "91016705": {
+    "8-ball": {
+      "matchesPlayed": 8,
+      "pa": 0.5,
+      "ppm": 1.5,
+      "matchesWon": 4
+    },
+    "9-ball": {}
+  },
+  "91016687": {
+    "8-ball": {
+      "matchesPlayed": 8,
+      "pa": 0.4166666666666667,
+      "ppm": 1.25,
+      "matchesWon": 4
+    },
+    "9-ball": {}
+  },
+  "91041128": {
+    "8-ball": {
+      "matchesPlayed": 9,
+      "pa": 0.3333333333333333,
+      "ppm": 1,
+      "matchesWon": 3
+    },
+    "9-ball": {}
+  },
+  "91016710": {
+    "8-ball": {
+      "matchesPlayed": 5,
+      "pa": 0.26666666666666666,
+      "ppm": 0.8,
+      "matchesWon": 1
+    },
+    "9-ball": {}
+  },
+  "91016697": {
+    "8-ball": {
+      "matchesPlayed": 6,
+      "pa": 0.16666666666666666,
+      "ppm": 0.5,
+      "matchesWon": 1
+    },
+    "9-ball": {}
+  },
+  "91016712": {
+    "8-ball": {
+      "matchesPlayed": 6,
+      "pa": 0.611111111111111,
+      "ppm": 1.8333333333333333,
+      "matchesWon": 5
+    },
+    "9-ball": {}
+  },
+  "91016734": {
+    "8-ball": {
+      "matchesPlayed": 9,
+      "pa": 0.5925925925925926,
+      "ppm": 1.7777777777777777,
+      "matchesWon": 7
+    },
+    "9-ball": {}
+  },
+  "91016733": {
+    "8-ball": {
+      "matchesPlayed": 7,
+      "pa": 0.5238095238095238,
+      "ppm": 1.5714285714285714,
+      "matchesWon": 4
+    },
+    "9-ball": {}
+  },
+  "91016702": {
+    "8-ball": {
+      "matchesPlayed": 11,
+      "pa": 0.5151515151515151,
+      "ppm": 1.5454545454545454,
+      "matchesWon": 7
+    },
+    "9-ball": {}
+  },
+  "91016726": {
+    "8-ball": {
+      "matchesPlayed": 10,
+      "pa": 0.3333333333333333,
+      "ppm": 1,
+      "matchesWon": 4
+    },
+    "9-ball": {}
+  },
+  "91016693": {
+    "8-ball": {
+      "matchesPlayed": 4,
+      "pa": 0.4166666666666667,
+      "ppm": 1.25,
+      "matchesWon": 1
+    },
+    "9-ball": {}
+  },
+  "91052540": {
+    "8-ball": {
+      "matchesPlayed": 6,
+      "pa": 0.3888888888888889,
+      "ppm": 1.1666666666666667,
+      "matchesWon": 2
+    },
+    "9-ball": {}
+  },
+  "91052647": {
+    "8-ball": {
+      "matchesPlayed": 9,
+      "pa": 0.3703703703703704,
+      "ppm": 1.1111111111111112,
+      "matchesWon": 3
+    },
+    "9-ball": {}
+  },
+  "91043354": {
+    "8-ball": {
+      "matchesPlayed": 8,
+      "pa": 0.2916666666666667,
+      "ppm": 0.875,
+      "matchesWon": 2
+    },
+    "9-ball": {}
+  },
+  "91052536": {
+    "8-ball": {
+      "matchesPlayed": 7,
+      "pa": 0.2857142857142857,
+      "ppm": 0.8571428571428571,
+      "matchesWon": 1
+    },
+    "9-ball": {}
+  },
+  "91016698": {
+    "8-ball": {
+      "matchesPlayed": 6,
+      "pa": 0.2777777777777778,
+      "ppm": 0.8333333333333334,
+      "matchesWon": 2
+    },
+    "9-ball": {}
+  },
+  "91109249": {
+    "8-ball": {
+      "matchesPlayed": 6,
+      "pa": 0.1111111111111111,
+      "ppm": 0.3333333333333333,
+      "matchesWon": 0
+    },
+    "9-ball": {}
+  },
+  "91016707": {
+    "8-ball": {
+      "matchesPlayed": 2,
+      "pa": 0,
+      "ppm": 0,
+      "matchesWon": 0
+    },
+    "9-ball": {}
+  },
+  "91016689": {
+    "8-ball": {
+      "matchesPlayed": 6,
+      "pa": 0.4444444444444444,
+      "ppm": 1.3333333333333333,
+      "matchesWon": 3
+    },
+    "9-ball": {}
+  },
+  "91016715": {
+    "8-ball": {
+      "matchesPlayed": 9,
+      "pa": 0.4444444444444444,
+      "ppm": 1.3333333333333333,
+      "matchesWon": 5
+    },
+    "9-ball": {}
+  },
+  "91040677": {
+    "8-ball": {
+      "matchesPlayed": 6,
+      "pa": 0.4444444444444444,
+      "ppm": 1.3333333333333333,
+      "matchesWon": 3
+    },
+    "9-ball": {}
+  },
+  "91052533": {
+    "8-ball": {
+      "matchesPlayed": 10,
+      "pa": 0.3333333333333333,
+      "ppm": 1,
+      "matchesWon": 4
+    },
+    "9-ball": {}
+  },
+  "91016711": {
+    "8-ball": {
+      "matchesPlayed": 9,
+      "pa": 0.3333333333333333,
+      "ppm": 1,
+      "matchesWon": 4
+    },
+    "9-ball": {}
+  },
+  "91016730": {
+    "8-ball": {
+      "matchesPlayed": 9,
+      "pa": 0.2962962962962963,
+      "ppm": 0.8888888888888888,
+      "matchesWon": 3
+    },
+    "9-ball": {}
+  },
+  "91016691": {
+    "8-ball": {
+      "matchesPlayed": 7,
+      "pa": 0.2857142857142857,
+      "ppm": 0.8571428571428571,
+      "matchesWon": 3
+    },
+    "9-ball": {}
+  },
+  "91052538": {
+    "8-ball": {
+      "matchesPlayed": 6,
+      "pa": 0.2222222222222222,
+      "ppm": 0.6666666666666666,
+      "matchesWon": 1
+    },
+    "9-ball": {}
+  },
+  "91016728": {
+    "8-ball": {
+      "matchesPlayed": 6,
+      "pa": 0.1111111111111111,
+      "ppm": 0.3333333333333333,
+      "matchesWon": 0
+    },
+    "9-ball": {}
+  },
+  "91109618": {
+    "8-ball": {
+      "matchesPlayed": 3,
+      "pa": 0,
+      "ppm": 0,
+      "matchesWon": 0
+    },
+    "9-ball": {}
+  },
+  "91016717": {
+    "8-ball": {
+      "matchesPlayed": 1,
+      "pa": 0.6666666666666666,
+      "ppm": 2,
+      "matchesWon": 1
+    },
+    "9-ball": {}
+  },
+  "91016721": {
+    "8-ball": {
+      "matchesPlayed": 4,
+      "pa": 0.75,
+      "ppm": 2.25,
+      "matchesWon": 4
+    },
+    "9-ball": {}
+  },
+  "91016696": {
+    "8-ball": {
+      "matchesPlayed": 4,
+      "pa": 0.3333333333333333,
+      "ppm": 1,
+      "matchesWon": 2
+    },
+    "9-ball": {}
+  },
+  "91112157": {
+    "8-ball": {
+      "matchesPlayed": 1,
+      "matchesWon": 1,
+      "pa": 0.6666666666666666,
+      "ppm": 2
+    },
+    "9-ball": {}
+  },
+  "851051": {
+    "8-ball": {
+      "matchesPlayed": 4,
+      "matchesWon": 2,
+      "matchCountForLastTwoYrs": 37,
+      "defensiveShotAvg": 1.86,
+      "CLA": 7,
+      "lastPlayed": "2025-10-30T00:00:00Z",
+      "pa": 0.4166666666666667,
+      "ppm": 1.25
+    },
+    "9-ball": {
+      "matchesPlayed": 4,
+      "matchesWon": 2,
+      "matchCountForLastTwoYrs": 40,
+      "defensiveShotAvg": 2.29,
+      "CLA": 7,
+      "lastPlayed": "2025-10-30T00:00:00Z",
+      "pa": 0.4928571428571429,
+      "ppm": 9.857142857142858
+    }
+  },
+  "599430": {
+    "8-ball": {
+      "matchesPlayed": 0,
+      "matchesWon": 0,
+      "matchCountForLastTwoYrs": 26,
+      "defensiveShotAvg": 2.42,
+      "CLA": 0,
+      "lastPlayed": "2025-11-20T00:00:00Z",
+      "pa": 0,
+      "ppm": 0
+    },
+    "9-ball": {
+      "matchesPlayed": 0,
+      "matchesWon": 0,
+      "matchCountForLastTwoYrs": 22,
+      "defensiveShotAvg": 2.19,
+      "CLA": 6,
+      "lastPlayed": "2025-11-13T00:00:00Z",
+      "pa": 0,
+      "ppm": 0
+    }
+  },
+  "530234": {
+    "8-ball": {
+      "matchesPlayed": 10,
+      "matchesWon": 8,
+      "matchCountForLastTwoYrs": 39,
+      "defensiveShotAvg": 1.55,
+      "CLA": 0,
+      "lastPlayed": "2025-11-20T00:00:00Z",
+      "pa": 0.7777777777777778,
+      "ppm": 2.3333333333333335
+    },
+    "9-ball": {
+      "matchesPlayed": 11,
+      "matchesWon": 6,
+      "matchCountForLastTwoYrs": 40,
+      "defensiveShotAvg": 0.94,
+      "CLA": 0,
+      "lastPlayed": "2025-11-20T00:00:00Z",
+      "pa": 0.5,
+      "ppm": 10
+    }
+  },
+  "263588": {
+    "8-ball": {
+      "matchesPlayed": 9,
+      "matchesWon": 4,
+      "matchCountForLastTwoYrs": 48,
+      "defensiveShotAvg": 2.23,
+      "CLA": 5,
+      "lastPlayed": "2025-11-20T00:00:00Z",
+      "pa": 0.20833333333333334,
+      "ppm": 0.625
+    },
+    "9-ball": {
+      "matchesPlayed": 5,
+      "matchesWon": 3,
+      "matchCountForLastTwoYrs": 41,
+      "defensiveShotAvg": 1.41,
+      "CLA": 5,
+      "lastPlayed": "2025-11-06T00:00:00Z",
+      "pa": 0.47000000000000003,
+      "ppm": 9.4
+    }
+  },
+  "336512": {
+    "8-ball": {
+      "matchesPlayed": 7,
+      "matchesWon": 4,
+      "matchCountForLastTwoYrs": 60,
+      "defensiveShotAvg": 3.61,
+      "CLA": 0,
+      "lastPlayed": "2025-11-20T00:00:00Z",
+      "pa": 0.38095238095238093,
+      "ppm": 1.1428571428571428
+    },
+    "9-ball": {
+      "matchesPlayed": 10,
+      "matchesWon": 5,
+      "matchCountForLastTwoYrs": 58,
+      "defensiveShotAvg": 2.31,
+      "CLA": 0,
+      "lastPlayed": "2025-11-13T00:00:00Z",
+      "pa": 0,
+      "ppm": 0
+    }
+  },
+  "1606859": {
+    "8-ball": {
+      "matchesPlayed": 10,
+      "matchesWon": 4,
+      "matchCountForLastTwoYrs": 121,
+      "defensiveShotAvg": 2.96,
+      "CLA": 5,
+      "lastPlayed": "2025-11-20T00:00:00Z",
+      "pa": 0.2333333333333333,
+      "ppm": 0.7
+    },
+    "9-ball": {
+      "matchesPlayed": 5,
+      "matchesWon": 1,
+      "matchCountForLastTwoYrs": 122,
+      "defensiveShotAvg": 1.22,
+      "CLA": 5,
+      "lastPlayed": "2025-11-20T00:00:00Z",
+      "pa": 0.505,
+      "ppm": 10.1
+    }
+  },
+  "1707832": {
+    "8-ball": {
+      "matchesPlayed": 1,
+      "matchesWon": 1,
+      "matchCountForLastTwoYrs": 67,
+      "defensiveShotAvg": 1.47,
+      "CLA": 0,
+      "lastPlayed": "2025-11-11T00:00:00Z",
+      "pa": 0,
+      "ppm": 0
+    },
+    "9-ball": {
+      "matchesPlayed": 9,
+      "matchesWon": 3,
+      "matchCountForLastTwoYrs": 31,
+      "defensiveShotAvg": 0.85,
+      "CLA": 0,
+      "lastPlayed": "2025-11-20T00:00:00Z",
+      "pa": 0.6,
+      "ppm": 12
+    }
+  },
+  "1726363": {
+    "8-ball": {
+      "matchesPlayed": 8,
+      "matchesWon": 3,
+      "matchCountForLastTwoYrs": 75,
+      "defensiveShotAvg": 2.56,
+      "CLA": 6,
+      "lastPlayed": "2025-11-20T00:00:00Z",
+      "pa": 0.5555555555555556,
+      "ppm": 1.6666666666666667
+    },
+    "9-ball": {
+      "matchesPlayed": 7,
+      "matchesWon": 4,
+      "matchCountForLastTwoYrs": 47,
+      "defensiveShotAvg": 2.45,
+      "CLA": 7,
+      "lastPlayed": "2025-11-20T00:00:00Z",
+      "pa": 0.6785714285714286,
+      "ppm": 13.571428571428571
+    }
+  },
+  "1740591": {
+    "8-ball": {
+      "matchesPlayed": 9,
+      "matchesWon": 3,
+      "matchCountForLastTwoYrs": 59,
+      "defensiveShotAvg": 1.96,
+      "CLA": 0,
+      "lastPlayed": "2025-11-20T00:00:00Z",
+      "pa": 0.4761904761904762,
+      "ppm": 1.4285714285714286
+    },
+    "9-ball": {
+      "matchesPlayed": 13,
+      "matchesWon": 12,
+      "matchCountForLastTwoYrs": 64,
+      "defensiveShotAvg": 1.55,
+      "CLA": 0,
+      "lastPlayed": "2025-11-20T00:00:00Z",
+      "pa": 0.63125,
+      "ppm": 12.625
+    }
+  },
+  "1850190": {
+    "8-ball": {
+      "matchesPlayed": 16,
+      "matchesWon": 10,
+      "matchCountForLastTwoYrs": 169,
+      "defensiveShotAvg": 2.76,
+      "CLA": 6,
+      "lastPlayed": "2025-11-20T00:00:00Z",
+      "pa": 0.5454545454545455,
+      "ppm": 1.6363636363636365
+    },
+    "9-ball": {
+      "matchesPlayed": 11,
+      "matchesWon": 9,
+      "matchCountForLastTwoYrs": 118,
+      "defensiveShotAvg": 1.7,
+      "CLA": 8,
+      "lastPlayed": "2025-11-17T00:00:00Z",
+      "pa": 0.43571428571428567,
+      "ppm": 8.714285714285714
+    }
+  },
+  "1999070": {
+    "8-ball": {
+      "matchesPlayed": 7,
+      "matchesWon": 4,
+      "matchCountForLastTwoYrs": 10,
+      "defensiveShotAvg": 2.5,
+      "CLA": 0,
+      "lastPlayed": "2025-11-20T00:00:00Z",
+      "pa": 0,
+      "ppm": 0
+    },
+    "9-ball": {
+      "matchesPlayed": 7,
+      "matchesWon": 4,
+      "matchCountForLastTwoYrs": 8,
+      "defensiveShotAvg": 2.26,
+      "CLA": 0,
+      "lastPlayed": "2025-11-20T00:00:00Z",
+      "pa": 0.6,
+      "ppm": 12
+    }
+  },
+  "2012866": {
+    "8-ball": {
+      "matchesPlayed": 13,
+      "matchesWon": 7,
+      "matchCountForLastTwoYrs": 1,
+      "defensiveShotAvg": 1.62,
+      "CLA": 5,
+      "lastPlayed": "2025-09-04T00:00:00Z",
+      "pa": 0,
+      "ppm": 0
+    },
+    "9-ball": {
+      "matchesPlayed": 5,
+      "matchesWon": 3,
+      "matchCountForLastTwoYrs": 30,
+      "defensiveShotAvg": 1.96,
+      "CLA": 4,
+      "lastPlayed": "2025-11-20T00:00:00Z",
+      "pa": 0,
+      "ppm": 0
+    }
+  },
+  "2013202": {
+    "8-ball": {
+      "matchesPlayed": 13,
+      "matchesWon": 9,
+      "matchCountForLastTwoYrs": 40,
+      "defensiveShotAvg": 1.86,
+      "CLA": 0,
+      "lastPlayed": "2025-11-20T00:00:00Z",
+      "pa": 0,
+      "ppm": 0
+    },
+    "9-ball": {
+      "matchesPlayed": 7,
+      "matchesWon": 1,
+      "matchCountForLastTwoYrs": 45,
+      "defensiveShotAvg": 1.87,
+      "CLA": 6,
+      "lastPlayed": "2025-10-23T00:00:00Z",
+      "pa": 0.37857142857142856,
+      "ppm": 7.571428571428571
+    }
+  },
+  "2082379": {
+    "8-ball": {
+      "matchesPlayed": 10,
+      "matchesWon": 5,
+      "matchCountForLastTwoYrs": 62,
+      "defensiveShotAvg": 3.02,
+      "CLA": 4,
+      "lastPlayed": "2025-11-13T00:00:00Z",
+      "pa": 0.4102564102564103,
+      "ppm": 1.2307692307692308
+    },
+    "9-ball": {
+      "matchesPlayed": 1,
+      "matchesWon": 0,
+      "matchCountForLastTwoYrs": 45,
+      "defensiveShotAvg": 1.6,
+      "CLA": 5,
+      "lastPlayed": "2025-11-20T00:00:00Z",
+      "pa": 0.5,
+      "ppm": 10
+    }
+  },
+  "2082380": {
+    "8-ball": {
+      "matchesPlayed": 14,
+      "matchesWon": 11,
+      "matchCountForLastTwoYrs": 94,
+      "defensiveShotAvg": 1.82,
+      "CLA": 7,
+      "lastPlayed": "2025-11-20T00:00:00Z",
+      "pa": 0.7272727272727272,
+      "ppm": 2.1818181818181817
+    },
+    "9-ball": {
+      "matchesPlayed": 7,
+      "matchesWon": 6,
+      "matchCountForLastTwoYrs": 64,
+      "defensiveShotAvg": 2.76,
+      "CLA": 5,
+      "lastPlayed": "2025-11-20T00:00:00Z",
+      "pa": 0.5714285714285714,
+      "ppm": 11.428571428571429
+    }
+  },
+  "2192681": {
+    "8-ball": {
+      "matchesPlayed": 13,
+      "matchesWon": 9,
+      "matchCountForLastTwoYrs": 79,
+      "defensiveShotAvg": 1.15,
+      "CLA": 0,
+      "lastPlayed": "2025-11-20T00:00:00Z",
+      "pa": 0.8333333333333334,
+      "ppm": 2.5
+    },
+    "9-ball": {
+      "matchesPlayed": 10,
+      "matchesWon": 5,
+      "matchCountForLastTwoYrs": 67,
+      "defensiveShotAvg": 0.77,
+      "CLA": 0,
+      "lastPlayed": "2025-11-13T00:00:00Z",
+      "pa": 0.43,
+      "ppm": 8.6
+    }
+  },
+  "2192683": {
+    "8-ball": {
+      "matchesPlayed": 9,
+      "matchesWon": 8,
+      "matchCountForLastTwoYrs": 80,
+      "defensiveShotAvg": 1.81,
+      "CLA": 0,
+      "lastPlayed": "2025-11-20T00:00:00Z",
+      "pa": 0.3888888888888889,
+      "ppm": 1.1666666666666667
+    },
+    "9-ball": {
+      "matchesPlayed": 12,
+      "matchesWon": 7,
+      "matchCountForLastTwoYrs": 102,
+      "defensiveShotAvg": 1.45,
+      "CLA": 0,
+      "lastPlayed": "2025-11-20T00:00:00Z",
+      "pa": 0.42857142857142855,
+      "ppm": 8.571428571428571
+    }
+  },
+  "2538603": {
+    "8-ball": {
+      "matchesPlayed": 14,
+      "matchesWon": 7,
+      "matchCountForLastTwoYrs": 65,
+      "defensiveShotAvg": 1.74,
+      "CLA": 0,
+      "lastPlayed": "2025-11-20T00:00:00Z",
+      "pa": 0.5238095238095238,
+      "ppm": 1.5714285714285714
+    },
+    "9-ball": {
+      "matchesPlayed": 10,
+      "matchesWon": 6,
+      "matchCountForLastTwoYrs": 66,
+      "defensiveShotAvg": 1,
+      "CLA": 0,
+      "lastPlayed": "2025-11-20T00:00:00Z",
+      "pa": 0.3625,
+      "ppm": 7.25
+    }
+  },
+  "2538615": {
+    "8-ball": {
+      "matchesPlayed": 9,
+      "matchesWon": 5,
+      "matchCountForLastTwoYrs": 59,
+      "defensiveShotAvg": 1.31,
+      "CLA": 4,
+      "lastPlayed": "2025-11-20T00:00:00Z",
+      "pa": 0.5555555555555556,
+      "ppm": 1.6666666666666667
+    },
+    "9-ball": {
+      "matchesPlayed": 8,
+      "matchesWon": 1,
+      "matchCountForLastTwoYrs": 41,
+      "defensiveShotAvg": 1.44,
+      "CLA": 5,
+      "lastPlayed": "2025-11-20T00:00:00Z",
+      "pa": 0.515,
+      "ppm": 10.3
+    }
+  },
+  "2896420": {
+    "8-ball": {
+      "matchesPlayed": 15,
+      "matchesWon": 9,
+      "matchCountForLastTwoYrs": 65,
+      "defensiveShotAvg": 2.93,
+      "CLA": 0,
+      "lastPlayed": "2025-11-13T00:00:00Z",
+      "pa": 0.625,
+      "ppm": 1.875
+    },
+    "9-ball": {
+      "matchesPlayed": 6,
+      "matchesWon": 4,
+      "matchCountForLastTwoYrs": 45,
+      "defensiveShotAvg": 1.48,
+      "CLA": 4,
+      "lastPlayed": "2025-11-20T00:00:00Z",
+      "pa": 0.5125,
+      "ppm": 10.25
+    }
+  },
+  "2538593": {
+    "8-ball": {
+      "matchesPlayed": 10,
+      "matchesWon": 1,
+      "matchCountForLastTwoYrs": 53,
+      "defensiveShotAvg": 1.74,
+      "CLA": 0,
+      "lastPlayed": "2025-11-20T00:00:00Z",
+      "pa": 0.27272727272727276,
+      "ppm": 0.8181818181818182
+    },
+    "9-ball": {
+      "matchesPlayed": 8,
+      "matchesWon": 3,
+      "matchCountForLastTwoYrs": 42,
+      "defensiveShotAvg": 0.6,
+      "CLA": 0,
+      "lastPlayed": "2025-10-30T00:00:00Z",
+      "pa": 0.45,
+      "ppm": 9
+    }
+  },
+  "2538616": {
+    "8-ball": {
+      "matchesPlayed": 10,
+      "matchesWon": 4,
+      "matchCountForLastTwoYrs": 16,
+      "defensiveShotAvg": 2.04,
+      "CLA": 0,
+      "lastPlayed": "2025-11-06T00:00:00Z",
+      "pa": 0.4166666666666667,
+      "ppm": 1.25
+    },
+    "9-ball": {
+      "matchesPlayed": 0,
+      "matchesWon": null,
+      "matchCountForLastTwoYrs": 0,
+      "defensiveShotAvg": 0,
+      "CLA": 0,
+      "lastPlayed": null
+    }
+  },
+  "2538537": {
+    "8-ball": {
+      "matchesPlayed": 5,
+      "matchesWon": 2,
+      "matchCountForLastTwoYrs": 88,
+      "defensiveShotAvg": 2.99,
+      "CLA": 6,
+      "lastPlayed": "2025-11-20T00:00:00Z",
+      "pa": 0.3888888888888889,
+      "ppm": 1.1666666666666667
+    },
+    "9-ball": {
+      "matchesPlayed": 5,
+      "matchesWon": 4,
+      "matchCountForLastTwoYrs": 42,
+      "defensiveShotAvg": 2.91,
+      "CLA": 7,
+      "lastPlayed": "2025-11-06T00:00:00Z",
+      "pa": 0.45,
+      "ppm": 9
+    }
+  },
+  "2538542": {
+    "8-ball": {
+      "matchesPlayed": 10,
+      "matchesWon": 6,
+      "matchCountForLastTwoYrs": 93,
+      "defensiveShotAvg": 1.23,
+      "CLA": 0,
+      "lastPlayed": "2025-11-20T00:00:00Z",
+      "pa": 0.09523809523809523,
+      "ppm": 0.2857142857142857
+    },
+    "9-ball": {
+      "matchesPlayed": 8,
+      "matchesWon": 5,
+      "matchCountForLastTwoYrs": 59,
+      "defensiveShotAvg": 0.81,
+      "CLA": 2,
+      "lastPlayed": "2025-11-13T00:00:00Z",
+      "pa": 0.4583333333333333,
+      "ppm": 9.166666666666666
+    }
+  },
+  "2569117": {
+    "8-ball": {
+      "matchesPlayed": 11,
+      "matchesWon": 10,
+      "matchCountForLastTwoYrs": 146,
+      "defensiveShotAvg": 2.24,
+      "CLA": 6,
+      "lastPlayed": "2025-11-20T00:00:00Z",
+      "pa": 0.1111111111111111,
+      "ppm": 0.3333333333333333
+    },
+    "9-ball": {
+      "matchesPlayed": 9,
+      "matchesWon": 6,
+      "matchCountForLastTwoYrs": 35,
+      "defensiveShotAvg": 1.74,
+      "CLA": 0,
+      "lastPlayed": "2025-11-13T00:00:00Z",
+      "pa": 0.4909090909090909,
+      "ppm": 9.818181818181818
+    }
+  },
+  "2571953": {
+    "8-ball": {
+      "matchesPlayed": 10,
+      "matchesWon": 4,
+      "matchCountForLastTwoYrs": 82,
+      "defensiveShotAvg": 3.09,
+      "CLA": 5,
+      "lastPlayed": "2025-11-13T00:00:00Z",
+      "pa": 0.6666666666666666,
+      "ppm": 2
+    },
+    "9-ball": {
+      "matchesPlayed": 11,
+      "matchesWon": 1,
+      "matchCountForLastTwoYrs": 68,
+      "defensiveShotAvg": 2.2,
+      "CLA": 5,
+      "lastPlayed": "2025-11-20T00:00:00Z",
+      "pa": 0.41818181818181815,
+      "ppm": 8.363636363636363
+    }
+  },
+  "2571954": {
+    "8-ball": {
+      "matchesPlayed": 6,
+      "matchesWon": 3,
+      "matchCountForLastTwoYrs": 95,
+      "defensiveShotAvg": 1.87,
+      "CLA": 3,
+      "lastPlayed": "2025-11-20T00:00:00Z",
+      "pa": 0.3666666666666667,
+      "ppm": 1.1
+    },
+    "9-ball": {
+      "matchesPlayed": 8,
+      "matchesWon": 4,
+      "matchCountForLastTwoYrs": 83,
+      "defensiveShotAvg": 1.13,
+      "CLA": 3,
+      "lastPlayed": "2025-11-20T00:00:00Z",
+      "pa": 0.5045454545454546,
+      "ppm": 10.090909090909092
+    }
+  },
+  "2641849": {
+    "8-ball": {
+      "matchesPlayed": 9,
+      "matchesWon": 7,
+      "matchCountForLastTwoYrs": 78,
+      "defensiveShotAvg": 2.24,
+      "CLA": 4,
+      "lastPlayed": "2025-11-13T00:00:00Z",
+      "pa": 0.7619047619047619,
+      "ppm": 2.2857142857142856
+    },
+    "9-ball": {
+      "matchesPlayed": 9,
+      "matchesWon": 2,
+      "matchCountForLastTwoYrs": 72,
+      "defensiveShotAvg": 1.6,
+      "CLA": 4,
+      "lastPlayed": "2025-11-13T00:00:00Z",
+      "pa": 0.5111111111111111,
+      "ppm": 10.222222222222221
+    }
+  },
+  "2697545": {
+    "8-ball": {
+      "matchesPlayed": 12,
+      "matchesWon": 5,
+      "matchCountForLastTwoYrs": 72,
+      "defensiveShotAvg": 1.84,
+      "CLA": 4,
+      "lastPlayed": "2025-11-20T00:00:00Z",
+      "pa": 0.6666666666666666,
+      "ppm": 2
+    },
+    "9-ball": {
+      "matchesPlayed": 12,
+      "matchesWon": 4,
+      "matchCountForLastTwoYrs": 48,
+      "defensiveShotAvg": 0.91,
+      "CLA": 4,
+      "lastPlayed": "2025-11-20T00:00:00Z",
+      "pa": 0.5333333333333333,
+      "ppm": 10.666666666666666
+    }
+  },
+  "2706918": {
+    "8-ball": {
+      "matchesPlayed": 6,
+      "matchesWon": 2,
+      "matchCountForLastTwoYrs": 28,
+      "defensiveShotAvg": 1.65,
+      "CLA": 0,
+      "lastPlayed": "2025-11-13T00:00:00Z",
+      "pa": 0.20833333333333334,
+      "ppm": 0.625
+    },
+    "9-ball": {
+      "matchesPlayed": 6,
+      "matchesWon": 2,
+      "matchCountForLastTwoYrs": 11,
+      "defensiveShotAvg": 1.27,
+      "CLA": 0,
+      "lastPlayed": "2025-11-20T00:00:00Z",
+      "pa": 0.58,
+      "ppm": 11.6
+    }
+  },
+  "2768882": {
+    "8-ball": {
+      "matchesPlayed": 10,
+      "matchesWon": 6,
+      "matchCountForLastTwoYrs": 87,
+      "defensiveShotAvg": 1.08,
+      "CLA": 2,
+      "lastPlayed": "2025-11-18T00:00:00Z",
+      "pa": 0.8095238095238094,
+      "ppm": 2.4285714285714284
+    },
+    "9-ball": {
+      "matchesPlayed": 11,
+      "matchesWon": 4,
+      "matchCountForLastTwoYrs": 70,
+      "defensiveShotAvg": 0.38,
+      "CLA": 3,
+      "lastPlayed": "2025-11-13T00:00:00Z",
+      "pa": 0.5583333333333333,
+      "ppm": 11.166666666666666
+    }
+  },
+  "2794307": {
+    "8-ball": {
+      "matchesPlayed": 8,
+      "matchesWon": 4,
+      "matchCountForLastTwoYrs": 90,
+      "defensiveShotAvg": 1.59,
+      "CLA": 3,
+      "lastPlayed": "2025-11-20T00:00:00Z",
+      "pa": 0.5333333333333333,
+      "ppm": 1.6
+    },
+    "9-ball": {
+      "matchesPlayed": 12,
+      "matchesWon": 5,
+      "matchCountForLastTwoYrs": 67,
+      "defensiveShotAvg": 0.56,
+      "CLA": 4,
+      "lastPlayed": "2025-11-20T00:00:00Z",
+      "pa": 0.49375,
+      "ppm": 9.875
+    }
+  },
+  "2857905": {
+    "8-ball": {
+      "matchesPlayed": 10,
+      "matchesWon": 2,
+      "matchCountForLastTwoYrs": 98,
+      "defensiveShotAvg": 2.26,
+      "CLA": 4,
+      "lastPlayed": "2025-11-20T00:00:00Z",
+      "pa": 0.5151515151515151,
+      "ppm": 1.5454545454545454
+    },
+    "9-ball": {
+      "matchesPlayed": 5,
+      "matchesWon": 1,
+      "matchCountForLastTwoYrs": 58,
+      "defensiveShotAvg": 1.14,
+      "CLA": 0,
+      "lastPlayed": "2025-11-20T00:00:00Z",
+      "pa": 0.5857142857142856,
+      "ppm": 11.714285714285714
+    }
+  },
+  "2861455": {
+    "8-ball": {
+      "matchesPlayed": 7,
+      "matchesWon": 2,
+      "matchCountForLastTwoYrs": 90,
+      "defensiveShotAvg": 1.71,
+      "CLA": 0,
+      "lastPlayed": "2025-11-13T00:00:00Z",
+      "pa": 0.38095238095238093,
+      "ppm": 1.1428571428571428
+    },
+    "9-ball": {
+      "matchesPlayed": 7,
+      "matchesWon": 3,
+      "matchCountForLastTwoYrs": 78,
+      "defensiveShotAvg": 1.11,
+      "CLA": 2,
+      "lastPlayed": "2025-11-13T00:00:00Z",
+      "pa": 0.4722222222222222,
+      "ppm": 9.444444444444445
+    }
+  },
+  "2864295": {
+    "8-ball": {
+      "matchesPlayed": 9,
+      "matchesWon": 5,
+      "matchCountForLastTwoYrs": 52,
+      "defensiveShotAvg": 2.32,
+      "CLA": 0,
+      "lastPlayed": "2025-11-13T00:00:00Z",
+      "pa": 0.5925925925925926,
+      "ppm": 1.7777777777777777
+    },
+    "9-ball": {
+      "matchesPlayed": 1,
+      "matchesWon": 0,
+      "matchCountForLastTwoYrs": 45,
+      "defensiveShotAvg": 1.94,
+      "CLA": 5,
+      "lastPlayed": "2025-11-20T00:00:00Z",
+      "pa": 0.4583333333333333,
+      "ppm": 9.166666666666666
+    }
+  },
+  "2900440": {
+    "8-ball": {
+      "matchesPlayed": 5,
+      "matchesWon": 4,
+      "matchCountForLastTwoYrs": 68,
+      "defensiveShotAvg": 1.91,
+      "CLA": 0,
+      "lastPlayed": "2025-11-13T00:00:00Z",
+      "pa": 0.611111111111111,
+      "ppm": 1.8333333333333333
+    },
+    "9-ball": {
+      "matchesPlayed": 9,
+      "matchesWon": 6,
+      "matchCountForLastTwoYrs": 15,
+      "defensiveShotAvg": 1.86,
+      "CLA": 0,
+      "lastPlayed": "2025-11-13T00:00:00Z",
+      "pa": 0.58,
+      "ppm": 11.6
+    }
+  },
+  "2912334": {
+    "8-ball": {
+      "matchesPlayed": 8,
+      "matchesWon": 4,
+      "matchCountForLastTwoYrs": 64,
+      "defensiveShotAvg": 1.42,
+      "CLA": 0,
+      "lastPlayed": "2025-11-20T00:00:00Z",
+      "pa": 0.5833333333333334,
+      "ppm": 1.75
+    },
+    "9-ball": {
+      "matchesPlayed": 13,
+      "matchesWon": 2,
+      "matchCountForLastTwoYrs": 85,
+      "defensiveShotAvg": 0.74,
+      "CLA": 0,
+      "lastPlayed": "2025-11-20T00:00:00Z",
+      "pa": 0.4611111111111111,
+      "ppm": 9.222222222222221
+    }
+  },
+  "2939168": {
+    "8-ball": {
+      "matchesPlayed": 5,
+      "matchesWon": 2,
+      "matchCountForLastTwoYrs": 94,
+      "defensiveShotAvg": 1.9,
+      "CLA": 0,
+      "lastPlayed": "2025-11-19T00:00:00Z",
+      "pa": 0,
+      "ppm": 0
+    },
+    "9-ball": {
+      "matchesPlayed": 1,
+      "matchesWon": 1,
+      "matchCountForLastTwoYrs": 40,
+      "defensiveShotAvg": 0.7,
+      "CLA": 0,
+      "lastPlayed": "2025-11-17T00:00:00Z",
+      "pa": 0.5,
+      "ppm": 10
+    }
+  },
+  "2941426": {
+    "8-ball": {
+      "matchesPlayed": 8,
+      "matchesWon": 5,
+      "matchCountForLastTwoYrs": 31,
+      "defensiveShotAvg": 1.47,
+      "CLA": 0,
+      "lastPlayed": "2025-11-20T00:00:00Z",
+      "pa": 0.4444444444444444,
+      "ppm": 1.3333333333333333
+    },
+    "9-ball": {
+      "matchesPlayed": 0,
+      "matchesWon": 0,
+      "matchCountForLastTwoYrs": 21,
+      "defensiveShotAvg": 0.65,
+      "CLA": 0,
+      "lastPlayed": "2025-11-20T00:00:00Z",
+      "pa": 0.7583333333333333,
+      "ppm": 15.166666666666666
+    }
+  },
+  "2991109": {
+    "8-ball": {
+      "matchesPlayed": 6,
+      "matchesWon": 3,
+      "matchCountForLastTwoYrs": 38,
+      "defensiveShotAvg": 2.04,
+      "CLA": 0,
+      "lastPlayed": "2025-11-06T00:00:00Z",
+      "pa": 0.5,
+      "ppm": 1.5
+    },
+    "9-ball": {
+      "matchesPlayed": 5,
+      "matchesWon": 3,
+      "matchCountForLastTwoYrs": 22,
+      "defensiveShotAvg": 1.42,
+      "CLA": 0,
+      "lastPlayed": "2025-11-20T00:00:00Z",
+      "pa": 0.5416666666666667,
+      "ppm": 10.833333333333334
+    }
+  },
+  "2993293": {
+    "8-ball": {
+      "matchesPlayed": 1,
+      "matchesWon": 0,
+      "matchCountForLastTwoYrs": 58,
+      "defensiveShotAvg": 0.82,
+      "CLA": 0,
+      "lastPlayed": "2025-11-20T00:00:00Z",
+      "pa": 0.4666666666666666,
+      "ppm": 1.4
+    },
+    "9-ball": {
+      "matchesPlayed": 1,
+      "matchesWon": 1,
+      "matchCountForLastTwoYrs": 7,
+      "defensiveShotAvg": 0.59,
+      "CLA": 0,
+      "lastPlayed": "2025-11-20T00:00:00Z",
+      "pa": 0.6,
+      "ppm": 12
+    }
+  },
+  "3010101": {
+    "8-ball": {
+      "matchesPlayed": 13,
+      "matchesWon": 6,
+      "matchCountForLastTwoYrs": 69,
+      "defensiveShotAvg": 2.77,
+      "CLA": 0,
+      "lastPlayed": "2025-11-20T00:00:00Z",
+      "pa": 0.4761904761904762,
+      "ppm": 1.4285714285714286
+    },
+    "9-ball": {
+      "matchesPlayed": 0,
+      "matchesWon": null,
+      "matchCountForLastTwoYrs": 0,
+      "defensiveShotAvg": 0,
+      "CLA": 0,
+      "lastPlayed": null
+    }
+  },
+  "3010142": {
+    "8-ball": {
+      "matchesPlayed": 9,
+      "matchesWon": 4,
+      "matchCountForLastTwoYrs": 59,
+      "defensiveShotAvg": 0.65,
+      "CLA": 0,
+      "lastPlayed": "2025-11-20T00:00:00Z",
+      "pa": 0.3333333333333333,
+      "ppm": 1
+    },
+    "9-ball": {
+      "matchesPlayed": 10,
+      "matchesWon": 5,
+      "matchCountForLastTwoYrs": 9,
+      "defensiveShotAvg": 0.37,
+      "CLA": 0,
+      "lastPlayed": "2025-11-13T00:00:00Z",
+      "pa": 0.5777777777777777,
+      "ppm": 11.555555555555555
+    }
+  },
+  "3047541": {
+    "8-ball": {
+      "matchesPlayed": 10,
+      "matchesWon": 2,
+      "matchCountForLastTwoYrs": 80,
+      "defensiveShotAvg": 2.33,
+      "CLA": 0,
+      "lastPlayed": "2025-11-13T00:00:00Z",
+      "pa": 0.5,
+      "ppm": 1.5
+    },
+    "9-ball": {
+      "matchesPlayed": 7,
+      "matchesWon": 5,
+      "matchCountForLastTwoYrs": 42,
+      "defensiveShotAvg": 1.1,
+      "CLA": 0,
+      "lastPlayed": "2025-11-20T00:00:00Z",
+      "pa": 0.34375,
+      "ppm": 6.875
+    }
+  },
+  "3065481": {
+    "8-ball": {
+      "matchesPlayed": 12,
+      "matchesWon": 5,
+      "matchCountForLastTwoYrs": 81,
+      "defensiveShotAvg": 2.51,
+      "CLA": 0,
+      "lastPlayed": "2025-11-13T00:00:00Z",
+      "pa": 0.16666666666666666,
+      "ppm": 0.5
+    },
+    "9-ball": {
+      "matchesPlayed": 7,
+      "matchesWon": 6,
+      "matchCountForLastTwoYrs": 72,
+      "defensiveShotAvg": 1.71,
+      "CLA": 0,
+      "lastPlayed": "2025-11-20T00:00:00Z",
+      "pa": 0.5,
+      "ppm": 10
+    }
+  },
+  "3065536": {
+    "8-ball": {
+      "matchesPlayed": 10,
+      "matchesWon": 5,
+      "matchCountForLastTwoYrs": 70,
+      "defensiveShotAvg": 1.96,
+      "CLA": 4,
+      "lastPlayed": "2025-11-20T00:00:00Z",
+      "pa": 0.611111111111111,
+      "ppm": 1.8333333333333333
+    },
+    "9-ball": {
+      "matchesPlayed": 11,
+      "matchesWon": 4,
+      "matchCountForLastTwoYrs": 81,
+      "defensiveShotAvg": 1.19,
+      "CLA": 0,
+      "lastPlayed": "2025-11-20T00:00:00Z",
+      "pa": 0.4636363636363637,
+      "ppm": 9.272727272727273
+    }
+  },
+  "3088613": {
+    "8-ball": {
+      "matchesPlayed": 9,
+      "matchesWon": 7,
+      "matchCountForLastTwoYrs": 82,
+      "defensiveShotAvg": 2.34,
+      "CLA": 7,
+      "lastPlayed": "2025-11-20T00:00:00Z",
+      "pa": 0.75,
+      "ppm": 2.25
+    },
+    "9-ball": {
+      "matchesPlayed": 7,
+      "matchesWon": 5,
+      "matchCountForLastTwoYrs": 41,
+      "defensiveShotAvg": 1.59,
+      "CLA": 0,
+      "lastPlayed": "2025-11-20T00:00:00Z",
+      "pa": 0.5,
+      "ppm": 10
+    }
+  },
+  "3132870": {
+    "8-ball": {
+      "matchesPlayed": 8,
+      "matchesWon": 5,
+      "matchCountForLastTwoYrs": 105,
+      "defensiveShotAvg": 2.15,
+      "CLA": 0,
+      "lastPlayed": "2025-11-06T00:00:00Z",
+      "pa": 0.5416666666666666,
+      "ppm": 1.625
+    },
+    "9-ball": {
+      "matchesPlayed": 14,
+      "matchesWon": 9,
+      "matchCountForLastTwoYrs": 75,
+      "defensiveShotAvg": 0.72,
+      "CLA": 0,
+      "lastPlayed": "2025-11-13T00:00:00Z",
+      "pa": 0.47857142857142854,
+      "ppm": 9.571428571428571
+    }
+  },
+  "3135231": {
+    "8-ball": {
+      "matchesPlayed": 9,
+      "matchesWon": 6,
+      "matchCountForLastTwoYrs": 91,
+      "defensiveShotAvg": 1.16,
+      "CLA": 0,
+      "lastPlayed": "2025-10-30T00:00:00Z",
+      "pa": 0.2962962962962963,
+      "ppm": 0.8888888888888888
+    },
+    "9-ball": {
+      "matchesPlayed": 10,
+      "matchesWon": 4,
+      "matchCountForLastTwoYrs": 73,
+      "defensiveShotAvg": 0.66,
+      "CLA": 4,
+      "lastPlayed": "2025-11-20T00:00:00Z",
+      "pa": 0.45625,
+      "ppm": 9.125
+    }
+  },
+  "3136870": {
+    "8-ball": {
+      "matchesPlayed": 11,
+      "matchesWon": 5,
+      "matchCountForLastTwoYrs": 106,
+      "defensiveShotAvg": 2.23,
+      "CLA": 0,
+      "lastPlayed": "2025-11-20T00:00:00Z",
+      "pa": 0.6666666666666666,
+      "ppm": 2
+    },
+    "9-ball": {
+      "matchesPlayed": 7,
+      "matchesWon": 7,
+      "matchCountForLastTwoYrs": 69,
+      "defensiveShotAvg": 2.29,
+      "CLA": 0,
+      "lastPlayed": "2025-11-20T00:00:00Z",
+      "pa": 0.49444444444444446,
+      "ppm": 9.88888888888889
+    }
+  },
+  "3164497": {
+    "8-ball": {
+      "matchesPlayed": 8,
+      "matchesWon": 1,
+      "matchCountForLastTwoYrs": 112,
+      "defensiveShotAvg": 1.26,
+      "CLA": 4,
+      "lastPlayed": "2025-11-20T00:00:00Z",
+      "pa": 0.26666666666666666,
+      "ppm": 0.8
+    },
+    "9-ball": {
+      "matchesPlayed": 11,
+      "matchesWon": 7,
+      "matchCountForLastTwoYrs": 39,
+      "defensiveShotAvg": 0.86,
+      "CLA": 0,
+      "lastPlayed": "2025-11-17T00:00:00Z",
+      "pa": 0.5214285714285715,
+      "ppm": 10.428571428571429
+    }
+  },
+  "3188308": {
+    "8-ball": {
+      "matchesPlayed": 12,
+      "matchesWon": 7,
+      "matchCountForLastTwoYrs": 46,
+      "defensiveShotAvg": 1.57,
+      "CLA": 0,
+      "lastPlayed": "2025-11-13T00:00:00Z",
+      "pa": 0.6,
+      "ppm": 1.8
+    },
+    "9-ball": {
+      "matchesPlayed": 8,
+      "matchesWon": 3,
+      "matchCountForLastTwoYrs": 9,
+      "defensiveShotAvg": 0.56,
+      "CLA": 0,
+      "lastPlayed": "2025-11-20T00:00:00Z",
+      "pa": 0.4375,
+      "ppm": 8.75
+    }
+  },
+  "3194113": {
+    "8-ball": {
+      "matchesPlayed": 10,
+      "matchesWon": 3,
+      "matchCountForLastTwoYrs": 67,
+      "defensiveShotAvg": 1.87,
+      "CLA": 0,
+      "lastPlayed": "2025-11-20T00:00:00Z",
+      "pa": 0,
+      "ppm": 0
+    },
+    "9-ball": {
+      "matchesPlayed": 8,
+      "matchesWon": 4,
+      "matchCountForLastTwoYrs": 35,
+      "defensiveShotAvg": 1.32,
+      "CLA": 3,
+      "lastPlayed": "2025-10-30T00:00:00Z",
+      "pa": 0.43,
+      "ppm": 8.6
+    }
+  },
+  "3198462": {
+    "8-ball": {
+      "matchesPlayed": 9,
+      "matchesWon": 1,
+      "matchCountForLastTwoYrs": 45,
+      "defensiveShotAvg": 1.64,
+      "CLA": 0,
+      "lastPlayed": "2025-11-13T00:00:00Z",
+      "pa": 0.6190476190476191,
+      "ppm": 1.8571428571428572
+    },
+    "9-ball": {
+      "matchesPlayed": 8,
+      "matchesWon": 3,
+      "matchCountForLastTwoYrs": 30,
+      "defensiveShotAvg": 1.45,
+      "CLA": 0,
+      "lastPlayed": "2025-11-20T00:00:00Z",
+      "pa": 0.5,
+      "ppm": 10
+    }
+  },
+  "3199825": {
+    "8-ball": {
+      "matchesPlayed": 9,
+      "matchesWon": 4,
+      "matchCountForLastTwoYrs": 67,
+      "defensiveShotAvg": 1.89,
+      "CLA": 0,
+      "lastPlayed": "2025-11-13T00:00:00Z",
+      "pa": 0.5185185185185185,
+      "ppm": 1.5555555555555556
+    },
+    "9-ball": {
+      "matchesPlayed": 7,
+      "matchesWon": 4,
+      "matchCountForLastTwoYrs": 8,
+      "defensiveShotAvg": 1.13,
+      "CLA": 0,
+      "lastPlayed": "2025-11-20T00:00:00Z",
+      "pa": 0.5071428571428571,
+      "ppm": 10.142857142857142
+    }
+  },
+  "3215856": {
+    "8-ball": {
+      "matchesPlayed": 10,
+      "matchesWon": 4,
+      "matchCountForLastTwoYrs": 15,
+      "defensiveShotAvg": 0.87,
+      "CLA": 0,
+      "lastPlayed": "2025-11-13T00:00:00Z",
+      "pa": 0.39999999999999997,
+      "ppm": 1.2
+    },
+    "9-ball": {
+      "matchesPlayed": 10,
+      "matchesWon": 4,
+      "matchCountForLastTwoYrs": 16,
+      "defensiveShotAvg": 0.19,
+      "CLA": 0,
+      "lastPlayed": "2025-11-06T00:00:00Z",
+      "pa": 0.39166666666666666,
+      "ppm": 7.833333333333333
+    }
+  },
+  "3216300": {
+    "8-ball": {
+      "matchesPlayed": 5,
+      "matchesWon": 1,
+      "matchCountForLastTwoYrs": 21,
+      "defensiveShotAvg": 0.57,
+      "CLA": 0,
+      "lastPlayed": "2025-11-20T00:00:00Z",
+      "pa": 0.3333333333333333,
+      "ppm": 1
+    },
+    "9-ball": {
+      "matchesPlayed": 4,
+      "matchesWon": 0,
+      "matchCountForLastTwoYrs": 16,
+      "defensiveShotAvg": 0.31,
+      "CLA": 0,
+      "lastPlayed": "2025-11-06T00:00:00Z",
+      "pa": 0.4642857142857143,
+      "ppm": 9.285714285714286
+    }
+  },
+  "3261742": {
+    "8-ball": {
+      "matchesPlayed": 9,
+      "matchesWon": 2,
+      "matchCountForLastTwoYrs": 27,
+      "defensiveShotAvg": 1.72,
+      "CLA": 0,
+      "lastPlayed": "2025-11-13T00:00:00Z",
+      "pa": 0.4761904761904762,
+      "ppm": 1.4285714285714286
+    },
+    "9-ball": {
+      "matchesPlayed": 11,
+      "matchesWon": 4,
+      "matchCountForLastTwoYrs": 32,
+      "defensiveShotAvg": 0.29,
+      "CLA": 0,
+      "lastPlayed": "2025-11-20T00:00:00Z",
+      "pa": 0.4611111111111111,
+      "ppm": 9.222222222222221
+    }
+  },
+  "3264733": {
+    "8-ball": {
+      "matchesPlayed": 10,
+      "matchesWon": 4,
+      "matchCountForLastTwoYrs": 28,
+      "defensiveShotAvg": 2.19,
+      "CLA": 0,
+      "lastPlayed": "2025-11-06T00:00:00Z",
+      "pa": 0.2916666666666667,
+      "ppm": 0.875
+    },
+    "9-ball": {
+      "matchesPlayed": 12,
+      "matchesWon": 4,
+      "matchCountForLastTwoYrs": 32,
+      "defensiveShotAvg": 0.89,
+      "CLA": 0,
+      "lastPlayed": "2025-11-13T00:00:00Z",
+      "pa": 0.45,
+      "ppm": 9
+    }
+  },
+  "3265477": {
+    "8-ball": {
+      "matchesPlayed": 8,
+      "matchesWon": 0,
+      "matchCountForLastTwoYrs": 27,
+      "defensiveShotAvg": 1.33,
+      "CLA": 0,
+      "lastPlayed": "2025-11-20T00:00:00Z",
+      "pa": 0.4285714285714286,
+      "ppm": 1.2857142857142858
+    },
+    "9-ball": {
+      "matchesPlayed": 11,
+      "matchesWon": 4,
+      "matchCountForLastTwoYrs": 53,
+      "defensiveShotAvg": 0.8,
+      "CLA": 0,
+      "lastPlayed": "2025-11-20T00:00:00Z",
+      "pa": 0.4142857142857143,
+      "ppm": 8.285714285714286
+    }
+  },
+  "3287391": {
+    "8-ball": {
+      "matchesPlayed": 12,
+      "matchesWon": 8,
+      "matchCountForLastTwoYrs": 24,
+      "defensiveShotAvg": 2.17,
+      "CLA": 0,
+      "lastPlayed": "2025-10-30T00:00:00Z",
+      "pa": 0.5555555555555556,
+      "ppm": 1.6666666666666667
+    },
+    "9-ball": {
+      "matchesPlayed": 5,
+      "matchesWon": 3,
+      "matchCountForLastTwoYrs": 5,
+      "defensiveShotAvg": 2,
+      "CLA": 0,
+      "lastPlayed": "2025-10-23T00:00:00Z",
+      "pa": 0.55,
+      "ppm": 11
+    }
+  },
+  "3292210": {
+    "8-ball": {
+      "matchesPlayed": 10,
+      "matchesWon": 3,
+      "matchCountForLastTwoYrs": 22,
+      "defensiveShotAvg": 1.68,
+      "CLA": 0,
+      "lastPlayed": "2025-11-20T00:00:00Z",
+      "pa": 0.48484848484848486,
+      "ppm": 1.4545454545454546
+    },
+    "9-ball": {
+      "matchesPlayed": 0,
+      "matchesWon": null,
+      "matchCountForLastTwoYrs": 0,
+      "defensiveShotAvg": 0,
+      "CLA": 0,
+      "lastPlayed": null
+    }
+  },
+  "3294035": {
+    "8-ball": {
+      "matchesPlayed": 6,
+      "matchesWon": 1,
+      "matchCountForLastTwoYrs": 33,
+      "defensiveShotAvg": 2.15,
+      "CLA": 0,
+      "lastPlayed": "2025-11-12T00:00:00Z",
+      "pa": 0.6666666666666666,
+      "ppm": 2
+    },
+    "9-ball": {
+      "matchesPlayed": 7,
+      "matchesWon": 3,
+      "matchCountForLastTwoYrs": 12,
+      "defensiveShotAvg": 0.17,
+      "CLA": 0,
+      "lastPlayed": "2025-11-20T00:00:00Z",
+      "pa": 0.5285714285714286,
+      "ppm": 10.571428571428571
+    }
+  },
+  "3313665": {
+    "8-ball": {
+      "matchesPlayed": 8,
+      "matchesWon": 2,
+      "matchCountForLastTwoYrs": 9,
+      "defensiveShotAvg": 0.67,
+      "CLA": 0,
+      "lastPlayed": "2025-11-20T00:00:00Z",
+      "pa": 0.2916666666666667,
+      "ppm": 0.875
+    },
+    "9-ball": {
+      "matchesPlayed": 7,
+      "matchesWon": 6,
+      "matchCountForLastTwoYrs": 7,
+      "defensiveShotAvg": 0.43,
+      "CLA": 0,
+      "lastPlayed": "2025-11-06T00:00:00Z",
+      "pa": 0.7,
+      "ppm": 14
+    }
+  },
+  "3314517": {
+    "8-ball": {
+      "matchesPlayed": 8,
+      "matchesWon": 5,
+      "matchCountForLastTwoYrs": 11,
+      "defensiveShotAvg": 2.27,
+      "CLA": 0,
+      "lastPlayed": "2025-11-20T00:00:00Z",
+      "pa": 0.5,
+      "ppm": 1.5
+    },
+    "9-ball": {
+      "matchesPlayed": 5,
+      "matchesWon": 5,
+      "matchCountForLastTwoYrs": 6,
+      "defensiveShotAvg": 1.67,
+      "CLA": 0,
+      "lastPlayed": "2025-11-20T00:00:00Z",
+      "pa": 0.74,
+      "ppm": 14.8
+    }
+  },
+  "3318954": {
+    "8-ball": {
+      "matchesPlayed": 6,
+      "matchesWon": 3,
+      "matchCountForLastTwoYrs": 7,
+      "defensiveShotAvg": 0.86,
+      "CLA": 0,
+      "lastPlayed": "2025-11-20T00:00:00Z",
+      "pa": 0.5,
+      "ppm": 1.5
+    },
+    "9-ball": {
+      "matchesPlayed": 7,
+      "matchesWon": 2,
+      "matchCountForLastTwoYrs": 7,
+      "defensiveShotAvg": 0.71,
+      "CLA": 0,
+      "lastPlayed": "2025-11-06T00:00:00Z",
+      "pa": 0.4714285714285714,
+      "ppm": 9.428571428571429
+    }
+  },
+  "3319315": {
+    "8-ball": {
+      "matchesPlayed": 2,
+      "matchesWon": 1,
+      "matchCountForLastTwoYrs": 2,
+      "defensiveShotAvg": 0,
+      "CLA": 0,
+      "lastPlayed": "2025-09-18T00:00:00Z",
+      "pa": 0.3333333333333333,
+      "ppm": 1
+    },
+    "9-ball": {
+      "matchesPlayed": 5,
+      "matchesWon": 4,
+      "matchCountForLastTwoYrs": 6,
+      "defensiveShotAvg": 1.83,
+      "CLA": 0,
+      "lastPlayed": "2025-11-20T00:00:00Z",
+      "pa": 0.54,
+      "ppm": 10.8
+    }
+  },
+  "3319521": {
+    "8-ball": {
+      "matchesPlayed": 0,
+      "matchesWon": 0,
+      "matchCountForLastTwoYrs": 8,
+      "defensiveShotAvg": 1.31,
+      "CLA": 0,
+      "lastPlayed": "2025-11-20T00:00:00Z",
+      "pa": 0,
+      "ppm": 0
+    },
+    "9-ball": {
+      "matchesPlayed": 0,
+      "matchesWon": 0,
+      "matchCountForLastTwoYrs": 0,
+      "defensiveShotAvg": 0.23,
+      "CLA": 5,
+      "lastPlayed": "2011-09-22T00:00:00Z",
+      "pa": 0.4,
+      "ppm": 8
+    }
+  },
+  "3326542": {
+    "8-ball": {
+      "matchesPlayed": 6,
+      "matchesWon": 0,
+      "matchCountForLastTwoYrs": 7,
+      "defensiveShotAvg": 2.86,
+      "CLA": 0,
+      "lastPlayed": "2025-11-20T00:00:00Z",
+      "pa": 0.1111111111111111,
+      "ppm": 0.3333333333333333
+    },
+    "9-ball": {
+      "matchesPlayed": 0,
+      "matchesWon": null,
+      "matchCountForLastTwoYrs": 0,
+      "defensiveShotAvg": 0,
+      "CLA": 0,
+      "lastPlayed": null
+    }
+  },
+  "3326900": {
+    "8-ball": {
+      "matchesPlayed": 5,
+      "matchesWon": 2,
+      "matchCountForLastTwoYrs": 5,
+      "defensiveShotAvg": 2.6,
+      "CLA": 0,
+      "lastPlayed": "2025-11-13T00:00:00Z",
+      "pa": 0.39999999999999997,
+      "ppm": 1.2
+    },
+    "9-ball": {
+      "matchesPlayed": 5,
+      "matchesWon": 3,
+      "matchCountForLastTwoYrs": 5,
+      "defensiveShotAvg": 1,
+      "CLA": 0,
+      "lastPlayed": "2025-11-13T00:00:00Z",
+      "pa": 0.5599999999999999,
+      "ppm": 11.2
+    }
+  },
+  "3326940": {
+    "8-ball": {
+      "matchesPlayed": 1,
+      "matchesWon": 1,
+      "matchCountForLastTwoYrs": 1,
+      "defensiveShotAvg": 0,
+      "CLA": 0,
+      "lastPlayed": "2025-10-23T00:00:00Z",
+      "pa": 0.6666666666666666,
+      "ppm": 2
+    },
+    "9-ball": {
+      "matchesPlayed": 0,
+      "matchesWon": null,
+      "matchCountForLastTwoYrs": 0,
+      "defensiveShotAvg": 0,
+      "CLA": 0,
+      "lastPlayed": null
+    }
+  }
+}

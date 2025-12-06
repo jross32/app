@@ -1,0 +1,1564 @@
+﻿{% extends 'base.html' %}
+{% block title %}{{ user.display_name or user.username }} | Profile{% endblock %}
+{% block content %}
+<style>
+  .hero-card {
+    background: radial-gradient(circle at 15% 20%, rgba(18,214,255,0.18), transparent 32%),
+                radial-gradient(circle at 80% 15%, rgba(255,116,217,0.14), transparent 35%),
+                linear-gradient(135deg, #0d1b2a 0%, #0b1226 55%, #07101e 100%);
+    border: 1px solid rgba(0,191,255,0.35);
+    box-shadow: 0 18px 44px rgba(0,191,255,0.2);
+    border-radius: 14px;
+    position: relative;
+  }
+  .pill {
+    border-radius: 999px;
+    padding: 0.25rem 0.7rem;
+    border: 1px solid rgba(0,191,255,0.4);
+    background: rgba(0,191,255,0.12);
+    color: #8ee9ff;
+    font-size: 0.8rem;
+  }
+  .stat-tile {
+    background: rgba(255,255,255,0.03);
+    border: 1px solid rgba(255,255,255,0.08);
+    border-radius: 12px;
+    padding: 0.75rem;
+    box-shadow: 0 10px 24px rgba(0,0,0,0.3);
+  }
+.badge-card {
+    background: rgba(255,255,255,0.03);
+    border: 1px solid rgba(255,255,255,0.08);
+    border-radius: 10px;
+    padding: 0.75rem;
+    height: 100%;
+}
+.patch-card {
+    position: relative;
+    background: linear-gradient(135deg, rgba(0,229,255,0.05), rgba(255,92,179,0.04));
+    border: 1px solid rgba(0,229,255,0.18);
+    border-radius: 12px;
+    padding: 0.75rem 0.9rem;
+    box-shadow: 0 10px 26px rgba(0,0,0,0.35);
+    height: 100%;
+}
+.patch-card.mini {
+    padding: 0.65rem 0.8rem;
+}
+.patch-card.patch-locked {
+    opacity: 0.65;
+    border-style: dashed;
+}
+.patch-badge-icon {
+    width: 40px;
+    height: 40px;
+    border-radius: 10px;
+    background: rgba(255,255,255,0.06);
+    display: grid;
+    place-items: center;
+    margin-right: 0.65rem;
+    font-size: 1.05rem;
+    color: #8ee9ff;
+    flex-shrink: 0;
+}
+.patch-count-bubble {
+    position: absolute;
+    right: 10px;
+    bottom: 10px;
+    background: rgba(0,229,255,0.16);
+    border: 1px solid rgba(0,229,255,0.35);
+    color: #8ee9ff;
+    font-weight: 700;
+    padding: 0.15rem 0.45rem;
+    border-radius: 999px;
+    font-size: 0.8rem;
+}
+  .avatar-wrapper {
+    width: 96px;
+    height: 96px;
+    position: relative;
+  }
+  .avatar-wrapper img,
+  .avatar-wrapper .avatar-fallback {
+    transition: opacity 0.2s ease;
+    width: 96px;
+    height: 96px;
+    border-radius: 50%;
+    object-fit: cover;
+  }
+  .avatar-wrapper:hover img,
+  .avatar-wrapper:hover .avatar-fallback {
+    opacity: 0.35;
+  }
+  .avatar-overlay {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #8ee9ff;
+    font-size: 0.85rem;
+    font-weight: 600;
+    opacity: 0;
+    transition: opacity 0.2s ease;
+    background: rgba(0,0,0,0.3);
+    border-radius: 50%;
+  }
+  .avatar-wrapper:hover .avatar-overlay {
+    opacity: 1;
+  }
+  .edit-profile-btn {
+    position: absolute;
+    top: 14px;
+    right: 14px;
+    padding: 0.45rem 0.95rem;
+    font-weight: 600;
+    z-index: 2;
+    background: rgba(0,191,255,0.15);
+    border-color: rgba(0,191,255,0.45);
+    color: #d9f2ff;
+  }
+  .hero-overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(180deg, rgba(0,0,0,0.65) 0%, rgba(0,0,0,0.4) 35%, rgba(0,0,0,0.1) 100%);
+    border-radius: 14px;
+    pointer-events: none;
+    z-index: 0;
+  }
+  .hero-meta-inline { display: flex; }
+  .hero-meta-rows { display: none; }
+  .edit-profile-btn-mobile { display: none; }
+  .hero-overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(180deg, rgba(0,0,0,0.65) 0%, rgba(0,0,0,0.4) 35%, rgba(0,0,0,0.1) 100%);
+    border-radius: 14px;
+    pointer-events: none;
+    z-index: 0;
+  }
+  .edit-profile-btn-mobile { display: none; }
+  .hero-meta-rows { display: none; }
+</style>
+{% set accent = user.profile_accent_color or '#00bfff' %}
+{% set avatar_version = now.timestamp()|int %}
+<style>
+.profile-bg-wrap {
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    padding: 1rem 0;
+  }
+.profile-inner {
+    background: rgba(6,10,18,0.72);
+    border: 1px solid rgba(255,255,255,0.08);
+    border-radius: 16px;
+    box-shadow: 0 14px 32px rgba(0,0,0,0.45);
+    backdrop-filter: blur(6px);
+    padding: 1rem;
+  }
+  .hero-card .text-secondary {
+    color: #c9d2dd !important;
+    font-weight: 600;
+  }
+  .hero-meta-inline { display: flex; }
+  .hero-meta-rows { display: none; }
+  .edit-profile-btn-mobile { display: none; }
+  .banner-image {
+    width: 100%;
+    border-radius: 14px;
+    overflow: hidden;
+    border: 1px solid rgba(255,255,255,0.12);
+    box-shadow: 0 10px 26px rgba(0,0,0,0.4);
+  }
+  .banner-image img {
+    width: 100%;
+    height: 240px;
+    object-fit: cover;
+  }
+  @media (max-width: 767.98px) {
+    .profile-bg-wrap { padding-top: 0.35rem; }
+    .hero-card { padding: 0; }
+    .hero-card .card-body {
+      position: relative;
+      z-index: 1;
+      flex-direction: column !important;
+      align-items: center !important;
+      text-align: center;
+      padding: 1.1rem 1rem !important;
+      gap: 0.55rem !important;
+    }
+    .hero-meta-inline { display: none !important; }
+    .hero-meta-rows { display: flex; flex-direction: column; gap: 0.3rem; width: 100%; }
+    .hero-meta-row { display: flex; align-items: center; justify-content: center; gap: 0.4rem; color: #d9e5ff; font-size: 0.9rem; }
+    .edit-profile-btn { display: none; }
+    .edit-profile-btn-mobile { display: block; width: 100%; margin-top: 0.6rem; }
+    .hero-card .text-secondary { color: #d9e5ff !important; }
+  }
+  @media (max-width: 767.98px) {
+    .profile-bg-wrap { padding-top: 0.4rem; }
+    .hero-card { padding: 0; }
+    .hero-card .card-body {
+      position: relative;
+      z-index: 1;
+      flex-direction: column !important;
+      align-items: center !important;
+      text-align: center;
+      padding: 1.1rem 1rem !important;
+      gap: 0.55rem !important;
+    }
+    .hero-meta-inline { display: none !important; }
+    .hero-meta-rows { display: flex; flex-direction: column; gap: 0.3rem; width: 100%; }
+    .hero-meta-row { display: flex; align-items: center; justify-content: center; gap: 0.4rem; color: #d9e5ff; font-size: 0.9rem; }
+    .edit-profile-btn { display: none; }
+    .edit-profile-btn-mobile { display: block; width: 100%; margin-top: 0.6rem; }
+  }
+  .stat-tile {
+    background: #0c1523;
+    border: 1px solid rgba(255,255,255,0.12);
+    border-radius: 12px;
+    padding: 0.8rem;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.35);
+    transition: transform 0.15s ease, box-shadow 0.15s ease, border-color 0.15s ease;
+  }
+  .stat-tile.hoverable:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 12px 26px rgba(0,191,255,0.2);
+    border-color: rgba(0,191,255,0.4);
+    cursor: pointer;
+  }
+  .bg-preset-pill {
+    border: 1px solid rgba(255,255,255,.18);
+    background: rgba(255,255,255,.06);
+    border-radius: 10px;
+    padding: 0.35rem 0.6rem;
+    cursor: pointer;
+    font-size: .85rem;
+  }
+  .bg-preview {
+    height: 70px;
+    border-radius: 8px;
+    border: 1px solid rgba(255,255,255,.15);
+    background-size: cover;
+    background-position: center;
+  }
+  .neon-modal {
+    background: radial-gradient(circle at 20% 10%, rgba(0,229,255,0.15), transparent 30%),
+                radial-gradient(circle at 80% 0%, rgba(255,92,179,0.12), transparent 30%),
+                #070c14;
+    border: 1px solid rgba(0,229,255,0.25);
+    box-shadow: 0 24px 64px rgba(0,0,0,0.55), 0 0 18px rgba(0,229,255,0.25);
+  }
+  .bg-gradient-dark {
+    background: linear-gradient(135deg, #0b1220 0%, #0a0f1c 70%, #050810 100%);
+  }
+  .chip {
+    border: 1px solid rgba(0,229,255,0.35);
+    background: rgba(0,229,255,0.12);
+    color: #9be8ff;
+    border-radius: 999px;
+    padding: 0.25rem 0.75rem;
+    font-size: 0.85rem;
+    transition: all 0.15s ease;
+  }
+  .chip:hover { box-shadow: 0 0 12px rgba(0,229,255,0.35); }
+  .chip-bronze { background: rgba(205,127,50,0.15); border: 1px solid rgba(205,127,50,0.4); color: #f0c08a; }
+  .chip-silver { background: rgba(192,192,192,0.18); border: 1px solid rgba(192,192,192,0.4); color: #e6e6e6; }
+  .chip-gold { background: rgba(255,215,0,0.16); border: 1px solid rgba(255,215,0,0.45); color: #ffeb9c; }
+  .chip-platinum { background: rgba(180,224,255,0.18); border: 1px solid rgba(180,224,255,0.45); color: #e3f2ff; }
+  .chip-diamond { background: rgba(0,229,255,0.18); border: 1px solid rgba(0,229,255,0.5); color: #aaf6ff; }
+  .chip-mythic { background: rgba(255,92,179,0.18); border: 1px solid rgba(255,92,179,0.45); color: #ffc6ec; }
+  .chip-neutral { background: rgba(255,255,255,0.07); border: 1px solid rgba(255,255,255,0.15); color: #d6dde7; }
+  .chip.active { background: linear-gradient(135deg, #14b8a6, #0ea5e9); color: #04121c; border-color: transparent; }
+  .chip-amber { background: rgba(255,193,7,0.18); color: #ffda6a; border: 1px solid rgba(255,193,7,0.35); }  .table-header th {
+    background: rgba(255,255,255,0.04);
+    border-bottom: 1px solid rgba(255,255,255,0.08);
+    cursor: pointer;
+  }
+  .table-header th.sortable::after {
+    content: '⇅';
+    font-weight: 700;
+    margin-left: 6px;
+    opacity: 0.45;
+    font-size: 0.75rem;
+  }
+  .table-header th.sorted-asc::after { content: '▲'; opacity: 0.9; }
+  .table-header th.sorted-desc::after { content: '▼'; opacity: 0.9; }
+
+#matchHistoryTable tbody tr.match-row:hover {
+    background: linear-gradient(90deg, rgba(0,229,255,0.08), rgba(255,92,179,0.06));
+  }
+  #matchHistoryTable td { padding: 0.7rem 0.85rem; }
+  .bg-gradient-success { background: linear-gradient(135deg, #34d399, #10b981); }
+  .bg-gradient-warning { background: linear-gradient(135deg, #f59e0b, #fbbf24); }
+  .bg-gradient-info { background: linear-gradient(135deg, #22d3ee, #0ea5e9); }
+</style>
+
+<div class="profile-bg-wrap" {% if user.profile_background_url %}style="background-image:url('{{ user.profile_background_url }}');"{% endif %}>
+<div class="container py-4">
+<div class="profile-inner">
+  <!-- Hero Player Card -->
+  <div class="hero-card mb-3 position-relative overflow-hidden" id="heroCard" style="border-color: {{ accent }}; box-shadow: 0 18px 44px {{ accent }}33; {% if user.profile_banner_url %}background-image: url('{{ user.profile_banner_url }}'); background-size: cover; background-position: center;{% endif %}">
+    <div class="hero-overlay"></div>
+    {% if current_user and current_user.id == user.id %}
+      <button class="btn btn-outline-info edit-profile-btn" id="editProfileBtn" type="button" data-bs-toggle="modal" data-bs-target="#profileModal">Edit your profile</button>
+    {% endif %}
+    <div class="card-body d-flex flex-column flex-md-row align-items-center justify-content-start py-4 gap-4 ps-md-4">
+      <div class="d-flex justify-content-center align-items-center flex-shrink-0 ms-md-2">
+        <div class="avatar-wrapper">
+          {% if user.avatar_url %}
+            <img src="{{ user.avatar_url }}?v={{ avatar_version }}" alt="avatar" class="mx-auto" style="border:2px solid rgba(0,191,255,0.5);">
+          {% else %}
+            <div class="avatar-fallback d-flex align-items-center justify-content-center mx-auto" style="border:2px solid rgba(0,191,255,0.5); background:rgba(255,255,255,0.05);">
+              <span style="font-weight:700;font-size:1.2rem;">{{ user.initials or (user.username[:2]|upper) }}</span>
+            </div>
+          {% endif %}
+          {% if current_user and current_user.id == user.id %}
+          <div class="avatar-overlay">Change profile pic</div>
+          <input type="file" id="avatarFileInput" accept="image/*" class="d-none">
+          {% endif %}
+        </div>
+      </div>
+      <div class="flex-grow-1">
+        <div class="h4 mb-1" id="displayName">{{ user.display_name or user.username }}</div>
+        <div class="text-secondary small">@{{ user.username }}</div>
+        <div class="d-flex align-items-center gap-2 mt-1 hero-meta-inline">
+          <span class="pill">Role: {{ user.role|title if user.role else 'Player' }}</span>
+          <span class="text-secondary small">Joined on {{ user.created_at.strftime('%b %d, %Y') if user.created_at else '' }}</span>
+          {% if last_message and last_message.created_at %}
+          <span class="text-secondary small">
+            Last seen in Locker
+            {% if last_message.channel %} ({{ last_message.channel.name }}){% endif %}:
+            {{ last_message.created_at.strftime('%b %d, %I:%M %p') }}
+          </span>
+          {% endif %}
+        </div>
+        <div class="hero-meta-rows">
+          <div class="hero-meta-row"><i class="fa-solid fa-shield-halved text-info"></i>Role: {{ user.role|title if user.role else 'Player' }}</div>
+          <div class="hero-meta-row"><i class="fa-solid fa-calendar text-info"></i>Joined: {{ user.created_at.strftime('%b %d, %Y') if user.created_at else '' }}</div>
+          {% if last_message and last_message.created_at %}
+          <div class="hero-meta-row"><i class="fa-solid fa-comment-dots text-info"></i>Last seen in Locker{% if last_message.channel %} ({{ last_message.channel.name }}){% endif %}: {{ last_message.created_at.strftime('%b %d, %I:%M %p') }}</div>
+          {% endif %}
+        </div>
+        <div class="mt-2 d-flex align-items-center flex-wrap gap-2">
+          <div>
+            <span class="text-secondary small me-2">Nickname:</span>
+            <strong id="nicknameText">{{ user.display_name or user.username }}</strong>
+          </div>
+          {% if current_user and current_user.id != user.id %}
+          <a class="btn btn-sm btn-outline-info ms-1" href="{{ url_for('messenger', user=user.id) }}">
+            <i class="fa-solid fa-message me-1"></i> Message
+          </a>
+          {% endif %}
+        </div>
+        {% set history = user.get_nickname_history() %}
+        {% if history %}
+        <div class="text-secondary small mt-1">Previous nicknames: {{ history|join(', ') }}</div>
+        {% endif %}
+        <div class="mt-1 d-flex align-items-center flex-wrap gap-2">
+          <div>
+            <span class="text-secondary small me-2">Bio:</span>
+            <span class="text-secondary small" id="bioText">{{ user.bio or 'Add a bio' }}</span>
+</div>
+</div>
+</div>
+</div>
+    </div>
+  </div>
+  {% if current_user and current_user.id == user.id %}
+  <button class="btn btn-outline-info edit-profile-btn-mobile d-md-none" id="editProfileBtnMobile" type="button" data-bs-toggle="modal" data-bs-target="#profileModal">Edit profile</button>
+  {% endif %}
+
+  <!-- Quick Stats -->
+  <div class="row g-2 mb-3 mt-2">
+    <div class="col-12 col-md-3">
+      <div class="stat-tile">
+        <div class="text-secondary small">Locker Messages</div>
+        <div class="h5 mb-0">{{ message_count }}</div>
+      </div>
+    </div>
+    <div class="col-12 col-md-3">
+      <div class="stat-tile">
+        <div class="text-secondary small">Active Channels</div>
+        <div class="h5 mb-0">{{ channel_count }}</div>
+      </div>
+    </div>
+    <div class="col-12 col-md-3">
+      <div class="stat-tile">
+        <div class="text-secondary small">Joined</div>
+        {% set days = (now - user.created_at).days if user.created_at else 0 %}
+        <div class="h5 mb-0">{{ days }} days</div>
+      </div>
+    </div>
+    <div class="col-12 col-md-3">
+      <div class="stat-tile">
+        <div class="text-secondary small">Season Matches</div>
+        <div class="h5 mb-0 text-secondary">Coming soon</div>
+      </div>
+    </div>
+  </div>
+
+<!-- Match History Modal -->
+<div class="modal fade match-modal-sheet" id="matchHistoryModal" tabindex="-1" aria-labelledby="matchHistoryLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered modal-xl modal-fullscreen-sm-down">
+    <div class="modal-content neon-modal border-0">
+      <div class="modal-header border-0 rounded-top bg-gradient-dark text-light sticky-top">
+        <div>
+          <div class="h5 mb-0">Match History</div>
+          <div class="text-secondary small" id="matchHistorySub">Format — Player</div>
+        </div>
+        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body bg-dark text-light match-modal-body">
+        <div class="d-flex flex-column flex-lg-row align-items-lg-center justify-content-between gap-2 mb-3 sticky-top bg-dark pt-2">
+          <div class="d-flex flex-wrap gap-2" id="matchFilters">
+            <button class="chip active" data-filter="all">All</button>
+            <button class="chip" data-filter="win">Wins</button>
+            <button class="chip" data-filter="loss">Losses</button>
+            <button class="chip" data-filter="high">High Scoring</button>
+            <button class="chip" data-filter="upset">Upsets</button>
+          </div>
+          <div class="text-end ms-lg-auto">
+            <div class="text-secondary small" id="matchSummary">Last 0: 0-0 • Avg pts 0.0</div>
+            <div id="matchSpark" class="mt-1"></div>
+          </div>
+        </div>
+        <div class="match-table-wrap table-responsive rounded-3 border border-secondary-subtle overflow-hidden">
+          <table class="table table-dark align-middle mb-0" id="matchHistoryTable">
+            <thead class="table-header">
+              <tr>
+                <th scope="col" data-sort="week" class="sortable">Week</th>
+                <th scope="col" data-sort="date" class="sortable">Date</th>
+                <th scope="col" data-sort="opponent" class="sortable">Opponent (SL)</th>
+                <th scope="col" data-sort="points" class="sortable">Points</th>
+                <th scope="col" data-sort="result" class="sortable">Result</th>
+                <th scope="col" data-sort="difficulty" class="sortable">Difficulty</th>
+                <th scope="col"></th>
+              </tr>
+            </thead>
+            <tbody id="matchHistoryBody">
+              <tr><td colspan="7" class="text-secondary small">Loading...</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+  {% if player_insights %}
+  <div class="card bg-dark border-secondary mb-3">
+    <div class="card-body">
+      <div class="d-flex align-items-center justify-content-between flex-wrap gap-2 mb-2">
+        <div>
+          <div class="h5 mb-0">Player Card</div>
+          <div class="text-secondary small">SL snapshot, recent form, and earned patches.</div>
+        </div>
+        <div class="btn-group btn-group-sm" role="group" aria-label="Player card view">
+          <button type="button" class="btn btn-outline-info active playercard-toggle" data-target="current">Current Season</button>
+          <button type="button" class="btn btn-outline-info playercard-toggle" data-target="lifetime">Lifetime</button>
+          <button type="button" class="btn btn-outline-info playercard-toggle" data-target="past">Past Seasons</button>
+        </div>
+      </div>
+      <div id="playercard-current">
+        <div class="row g-3">
+          {% for fmt, stats in player_insights.formats.items() %}
+          <div class="col-12 col-md-6">
+            <div class="stat-tile h-100 hoverable" data-format="{{ fmt }}">
+              <div class="d-flex align-items-center justify-content-between mb-1">
+                <span class="badge bg-info text-dark">{{ fmt }}</span>
+                {% if stats.sl %}<span class="pill">SL {{ stats.sl }}</span>{% endif %}
+              </div>
+              <div class="d-flex flex-column gap-1">
+                <div class="text-secondary small">Win%: <strong>{{ stats.win_pct or '—' }}</strong></div>
+                <div class="text-secondary small">PPM: <strong>{{ stats.ppm or '—' }}</strong></div>
+                <div class="text-secondary small">PA%: <strong>{{ stats.pa or '—' }}</strong></div>
+                <div class="text-secondary small">Trend: <strong>{{ stats.trend or 'n/a' }}</strong></div>
+              </div>
+            </div>
+          </div>
+          {% endfor %}
+        </div>
+      </div>
+
+      <div id="playercard-lifetime" class="d-none">
+        <div class="text-secondary small mb-2">Lifetime stats</div>
+        {% if player_insights.lifetime %}
+          <pre class="text-light small mb-0" style="white-space: pre-wrap;">{{ player_insights.lifetime }}</pre>
+        {% else %}
+          <div class="text-light small">No lifetime stats available yet.</div>
+        {% endif %}
+      </div>
+
+      <div id="playercard-past" class="d-none">
+        <div class="text-secondary small mb-1">Past seasons</div>
+        <div class="text-light small">Past season breakdown coming soon.</div>
+      </div>
+    </div>
+  </div>
+  {% endif %}
+
+  {% if patch_showcase %}
+  <div class="card bg-dark soft-border shadow-soft mb-3">
+    <div class="card-body">
+      <div class="d-flex justify-content-between align-items-center mb-2">
+        <div>
+          <h6 class="text-info mb-0">Patches Earned</h6>
+          <div class="text-secondary small">Top 4 from this session</div>
+        </div>
+        <button class="btn btn-sm btn-outline-info" data-bs-toggle="modal" data-bs-target="#allBadgesModal">View All</button>
+      </div>
+      <div class="row g-2">
+        {% for p in patch_showcase %}
+        <div class="col-12 col-md-6">
+          <div class="patch-card {% if p.locked %}patch-locked{% endif %}">
+            <div class="d-flex align-items-center justify-content-between">
+              <div class="d-flex align-items-center">
+                <div class="patch-badge-icon {% if p.locked %}text-secondary{% endif %}">
+                  <i class="fa-solid fa-certificate"></i>
+                </div>
+                <div>
+                  <div class="fw-semibold">{{ p.name }}</div>
+                  <div class="text-secondary small">{{ p.description or 'Patch progress will show here.' }}</div>
+                </div>
+              </div>
+              <span class="chip chip-{{ (p.difficulty or 'neutral')|lower }}">{{ p.difficulty or 'Patch' }}</span>
+            </div>
+            {% if p.count and p.count > 0 %}
+            <div class="patch-count-bubble">x{{ p.count }}</div>
+            {% endif %}
+          </div>
+        </div>
+        {% endfor %}
+      </div>
+    </div>
+  </div>
+  {% else %}
+  <div class="card bg-dark soft-border shadow-soft mb-3">
+    <div class="card-body">
+      <div class="d-flex justify-content-between align-items-center mb-2">
+        <div>
+          <h6 class="text-info mb-0">Patches Earned</h6>
+          <div class="text-secondary small">Session progress</div>
+        </div>
+        <button class="btn btn-sm btn-outline-info" data-bs-toggle="modal" data-bs-target="#allBadgesModal">View All</button>
+      </div>
+      <div class="text-secondary small">No patches yet. As you play, earned patches will surface here.</div>
+    </div>
+  </div>
+  {% endif %}
+
+  <div class="row g-3">
+    <div class="col-12 col-lg-7">
+      <!-- About / Interests -->
+      <div class="card bg-dark soft-border shadow-soft mb-3">
+        <div class="card-body">
+          <div class="d-flex justify-content-between align-items-center mb-2">
+            <h6 class="text-info mb-0">About &amp; Interests</h6>
+          </div>
+          <div class="row g-3">
+            <div class="col-12 col-md-6">
+              <div class="text-secondary" id="aboutText" style="white-space:pre-line;">{{ user.about_me or 'No about text yet.' }}</div>
+            </div>
+            <div class="col-12 col-md-6">
+              <div class="text-secondary" id="interestsText" style="white-space:pre-line;">{{ user.interests or 'No interests shared yet.' }}</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Recent Locker Activity -->
+      <div class="card bg-dark soft-border shadow-soft h-100">
+        <div class="card-body">
+          <h6 class="text-info mb-2">Recent Locker Activity</h6>
+          {% if recent_messages %}
+          <div class="d-flex flex-column gap-2">
+            {% for msg in recent_messages %}
+            <div class="message-card">
+              <div class="d-flex justify-content-between">
+                <div class="d-flex align-items-center gap-2">
+                  <span class="badge bg-transparent border border-info text-info">#{{ msg.channel.slug if msg.channel else 'locker' }}</span>
+                  <span class="text-secondary small">{{ msg.created_at.strftime('%b %d, %I:%M %p') if msg.created_at else '' }}</span>
+                </div>
+              </div>
+              <div class="text-secondary mt-1">{{ msg.content | e | replace('\n','<br>') | safe }}</div>
+            </div>
+            {% endfor %}
+          </div>
+          {% else %}
+          <div class="text-secondary small">No messages yet. Say something in the Locker to start your history.</div>
+          {% endif %}
+        </div>
+      </div>
+    </div>
+
+    <div class="col-12 col-lg-5">
+      <!-- Now Playing -->
+      <div class="card bg-dark soft-border shadow-soft mb-3">
+        <div class="card-body">
+          <div class="d-flex align-items-center justify-content-between mb-2">
+            <div class="d-flex align-items-center gap-2">
+              <span class="h6 mb-0 text-info">🎵 Now Playing</span>
+            </div>
+            <div class="d-flex align-items-center gap-2">
+              {% if user.theme_song_url %}
+              <a class="btn btn-sm btn-outline-info" id="themePlay" href="{{ user.theme_song_url }}" target="_blank" rel="noopener">Play</a>
+              {% endif %}
+            </div>
+          </div>
+          <div class="text-secondary small" id="themeSongText">
+            {% if user.theme_song_url %}{{ user.theme_song_title or user.theme_song_url }}{% else %}No theme song set yet.{% endif %}
+          </div>
+        </div>
+      </div>
+
+      <!-- Badges -->
+      <div class="card bg-dark soft-border shadow-soft mb-3">
+        <div class="card-body">
+          <div class="d-flex justify-content-between align-items-center mb-2">
+            <h6 class="text-info mb-0">Badges &amp; Milestones</h6>
+            {% if all_badges|length > 6 %}
+            <button class="btn btn-sm btn-outline-info" data-bs-toggle="modal" data-bs-target="#allBadgesModal">View All</button>
+            {% endif %}
+          </div>
+          <div class="row g-2">
+            {% for b in badges_ordered %}
+            {% if loop.index <= 6 %}
+            {% set locked = b.name not in user_badges %}
+            {% set icon = b.icon or 'fa-star' %}
+            {% set title = b.name %}
+            {% set desc = b.description or '' %}
+            <div class="col-12 col-md-6">
+              <div class="badge-card {% if locked %}text-secondary{% endif %}" style="{% if locked %}opacity:0.6;{% endif %}">
+                <div class="d-flex align-items-center mb-1">
+                  <i class="fa-solid {{ icon }} me-2 {% if not locked %}text-info{% else %}text-secondary{% endif %}"></i>
+                  <strong>{{ title }}</strong>
+                </div>
+                <div class="text-secondary small">{{ desc }}</div>
+              </div>
+            </div>
+            {% endif %}
+            {% endfor %}
+          </div>
+        </div>
+      </div>
+
+      <!-- League & Team Links -->
+      <div class="card bg-dark soft-border shadow-soft">
+        <div class="card-body">
+          <h6 class="text-info mb-2">League &amp; Team Links</h6>
+          <div class="text-secondary small mb-1">
+            APA profile:
+            {% if apa_profile_url %}
+              <a href="{{ apa_profile_url }}" target="_blank" rel="noopener" class="text-info">View APA profile</a>
+            {% else %}
+              <span class="text-info">not linked yet</span>
+            {% endif %}
+          </div>
+          <div class="text-secondary small">Teams: Cüe-Ligans 8-Ball / 9-Ball</div>
+        </div>
+      </div>
+
+      <!-- Teammates preview -->
+      <div class="card bg-dark soft-border shadow-soft mt-3">
+        <div class="card-body">
+          <div class="d-flex justify-content-between align-items-center mb-2">
+            <h6 class="text-info mb-0">Teammates</h6>
+            <a href="{{ url_for('profiles') }}" class="btn btn-sm btn-outline-info">View all</a>
+          </div>
+          {% if other_users %}
+          <div class="row g-3">
+            {% for u in other_users %}
+            <div class="col-12">
+              <div class="d-flex align-items-center">
+                <div class="avatar-wrapper me-3" style="width:48px;height:48px;border-radius:50%;overflow:hidden;border:1px solid rgba(255,255,255,.2);">
+                  {% if u.avatar_url %}
+                    <img src="{{ u.avatar_url }}" alt="{{ u.display_name or u.username }}" class="img-fluid">
+                  {% else %}
+                    <div class="d-flex align-items-center justify-content-center h-100 w-100 bg-secondary text-dark fw-bold" style="font-size:1rem;">
+                      {{ (u.display_name or u.username)[:2] | upper }}
+                    </div>
+                  {% endif %}
+                </div>
+                <div class="flex-grow-1">
+                  <div class="fw-semibold">{{ u.display_name or u.username }}</div>
+                  <div class="text-secondary small">@{{ u.username }}</div>
+                </div>
+                <a class="btn btn-outline-info btn-sm" href="{{ url_for('profile_detail', username=u.username) }}">View</a>
+              </div>
+            </div>
+            {% endfor %}
+          </div>
+          {% else %}
+          <div class="text-secondary">No other profiles yet.</div>
+          {% endif %}
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Profile Flair -->
+  <div class="card bg-dark soft-border shadow-soft mt-3">
+    <div class="card-body">
+      <h6 class="text-info mb-2">Profile Flair</h6>
+      <div class="row g-2">
+        <div class="col-12 col-md-4">
+            <div class="settings-tile">
+              <div class="text-secondary small">Current Mood</div>
+              <div class="h6 mb-0" id="moodText">{{ user.current_mood or 'ÃƒÂ¢Ã¢â€šÂ¬Ã¢â‚¬' }}</div>
+            </div>
+          </div>
+          <div class="col-12 col-md-4">
+            <div class="settings-tile">
+              <div class="text-secondary small">Favorite Game</div>
+              <div class="h6 mb-0" id="favGameText">{{ user.favorite_game or 'ÃƒÂ¢Ã¢â€šÂ¬Ã¢â‚¬' }}</div>
+            </div>
+          </div>
+          <div class="col-12 col-md-4">
+            <div class="settings-tile">
+              <div class="text-secondary small">Favorite Quote</div>
+              <div class="text-secondary" id="favQuoteText">{{ user.favorite_quote or 'ÃƒÂ¢Ã¢â€šÂ¬Ã¢â‚¬' }}</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  <!-- Profile Wall -->
+  <div class="card bg-dark soft-border shadow-soft mt-3">
+    <div class="card-body">
+      <h6 class="text-info mb-3">Profile Wall</h6>
+      {% if current_user %}
+      <form class="mb-3" method="POST" action="{{ url_for('profile_comment', username=user.username) }}">
+        <div class="input-group">
+          <input type="text" name="content" class="form-control bg-dark text-light soft-border" placeholder="Leave a comment..." required maxlength="500">
+          <button class="btn btn-info text-dark">Post</button>
+        </div>
+      </form>
+      {% endif %}
+      {% if comments %}
+      <div class="d-flex flex-column gap-2">
+        {% for c in comments %}
+        {% set author = commenters.get(c.author_user_id) %}
+        <div class="message-card">
+          <div class="d-flex">
+            <div class="me-2">
+              <div class="rounded-circle d-flex align-items-center justify-content-center" style="width:40px;height:40px;border:1px solid rgba(0,191,255,0.4); background:rgba(255,255,255,0.04);">
+                <span class="small fw-bold">{{ author.initials if author else '??' }}</span>
+              </div>
+            </div>
+            <div class="flex-grow-1">
+              <div class="d-flex justify-content-between align-items-center">
+                <strong><a class="text-info text-decoration-none" href="{{ url_for('profile_detail', username=author.username) if author else '#' }}">{{ author.display_name or author.username if author else 'Unknown' }}</a></strong>
+                <span class="text-secondary small">{{ c.created_at.strftime('%b %d, %I:%M %p') if c.created_at else '' }}</span>
+              </div>
+              <div class="text-secondary small">{{ c.content }}</div>
+            </div>
+          </div>
+        </div>
+        {% endfor %}
+      </div>
+      {% else %}
+      <div class="text-secondary small">No comments yet. Be the first to say hi.</div>
+      {% endif %}
+    </div>
+  </div>
+</div>
+<!-- Avatar crop modal -->
+{% if current_user and current_user.id == user.id %}
+<div class="modal fade" id="avatarModal" tabindex="-1" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content bg-dark soft-border shadow-soft">
+      <div class="modal-header">
+        <h6 class="modal-title text-info">Adjust Profile Picture</h6>
+        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <div class="text-secondary small mb-2">Drag to reposition, use zoom to fit.</div>
+        <canvas id="avatarCanvas" width="240" height="240" style="background:rgba(255,255,255,0.03); border:1px solid rgba(255,255,255,0.08); border-radius:8px;"></canvas>
+        <div class="mt-3">
+          <label class="form-label text-secondary small">Zoom</label>
+          <input type="range" min="1" max="2" step="0.05" value="1" class="form-range" id="avatarZoom">
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Cancel</button>
+        <button type="button" class="btn btn-info text-dark" id="avatarSaveBtn">Save</button>
+      </div>
+    </div>
+  </div>
+</div>
+{% endif %}
+<!-- Edit profile modal -->
+{% if current_user and current_user.id == user.id %}
+<div class="modal fade" id="profileModal" tabindex="-1" aria-hidden="true">
+  <div class="modal-dialog modal-lg modal-dialog-scrollable">
+    <div class="modal-content bg-dark soft-border shadow-soft">
+      <div class="modal-header">
+        <h6 class="modal-title text-info">Edit your profile</h6>
+        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <form id="profileForm" method="POST" enctype="multipart/form-data" action="{{ url_for('profile_detail', username=user.username) }}">
+          <div class="row g-3">
+            <div class="col-12 col-md-6">
+              <label class="form-label text-secondary small">Nickname</label>
+              <input type="text" class="form-control bg-dark text-light soft-border" name="display_name" id="displayNameInput" minlength="2" maxlength="40">
+              <div class="text-secondary small">History is saved when you change nickname.</div>
+            </div>
+            <div class="col-12 col-md-6">
+              <label class="form-label text-secondary small">Select your player</label>
+              <select name="player_ref" id="playerRefInput" class="form-select bg-dark text-light soft-border">
+                <option value="">Select your player</option>
+                {% for p in player_options %}
+                <option value="{{ p.id }}">{{ p.name }}</option>
+                {% endfor %}
+              </select>
+              <div class="text-secondary small mt-1">Choose your player to auto-fill LAB defaults.</div>
+            </div>
+            <div class="col-12">
+              <label class="form-label text-secondary small">Bio</label>
+              <textarea name="bio" id="bioInput" class="form-control bg-dark text-light soft-border" maxlength="280" rows="2" placeholder="Add a short bio"></textarea>
+            </div>
+            <div class="col-12 col-md-6">
+              <label class="form-label text-secondary small mb-1">About me</label>
+              <textarea name="about_me" id="aboutInput" class="form-control bg-dark text-light soft-border" rows="3"></textarea>
+            </div>
+            <div class="col-12 col-md-6">
+              <label class="form-label text-secondary small mb-1">Interests / fun facts</label>
+              <textarea name="interests" id="interestsInput" class="form-control bg-dark text-light soft-border" rows="3"></textarea>
+            </div>
+            <div class="col-12 col-md-6">
+              <label class="form-label text-secondary small mb-1">Accent color</label>
+              <select name="profile_accent_color" id="accentInput" class="form-select bg-dark text-light soft-border">
+                {% set presets = [
+                  ('', 'Default'),
+                  ('#00bfff','Deep Sky Blue'),
+                  ('#7cf4ff','Ice Blue'),
+                  ('#ff74d9','Neon Pink'),
+                  ('#12ffb5','Mint'),
+                  ('#ffb347','Sunrise'),
+                  ('#ff7f50','Coral'),
+                  ('#8a2be2','Electric Purple'),
+                  ('#39ff14','Lime Glow'),
+                  ('#ffd700','Gold'),
+                  ('#ff4500','Orange Red'),
+                  ('#1e90ff','Dodger Blue'),
+                  ('#00fa9a','Medium Spring Green'),
+                  ('#ff1493','Deep Pink'),
+                  ('#00ced1','Dark Turquoise'),
+                  ('#adff2f','Green Yellow'),
+                  ('#e0ffff','Light Cyan'),
+                  ('#ff69b4','Hot Pink'),
+                  ('#b0e0e6','Powder Blue')
+                ] %}
+                {% for val, label in presets %}
+                <option value="{{ val }}">{{ label }}</option>
+                {% endfor %}
+              </select>
+            </div>
+            <div class="col-12 col-md-6">
+              <label class="form-label text-secondary small mb-1">Background image</label>
+              <input type="file" name="profile_background_file" id="bgFileInput" accept="image/*" class="form-control form-control-sm bg-dark text-light soft-border">
+              <div class="bg-preview mt-2" id="bgPreview" {% if user.profile_background_url %}style="background-image:url('{{ user.profile_background_url }}');"{% endif %}></div>
+            </div>
+            <div class="col-12 col-md-6">
+              <label class="form-label text-secondary small mb-1">Banner image</label>
+              <input type="file" name="profile_banner_file" id="bannerFileInput" accept="image/*" class="form-control form-control-sm bg-dark text-light soft-border">
+              <div class="bg-preview mt-2" id="bannerPreview" {% if user.profile_banner_url %}style="background-image:url('{{ user.profile_banner_url }}');"{% endif %}></div>
+            </div>
+            <div class="col-12 col-md-6">
+              <label class="form-label text-secondary small mb-1">Theme song URL</label>
+              <input type="text" name="theme_song_url" id="songUrlInput" class="form-control bg-dark text-light soft-border" placeholder="YouTube/Spotify link">
+            </div>
+            <div class="col-12 col-md-6">
+              <label class="form-label text-secondary small mb-1">Theme song title</label>
+              <input type="text" name="theme_song_title" id="songTitleInput" class="form-control bg-dark text-light soft-border" placeholder="Song title">
+            </div>
+            <div class="col-12 col-md-6">
+              <label class="form-label text-secondary small mb-1">Favorite quote</label>
+              <input type="text" name="favorite_quote" id="quoteInput" class="form-control bg-dark text-light soft-border">
+            </div>
+            <div class="col-12 col-md-6">
+              <label class="form-label text-secondary small mb-1">Favorite game</label>
+              <select name="favorite_game" id="gameInput" class="form-select bg-dark text-light soft-border">
+                <option value="">--</option>
+                <option value="8-Ball">8-Ball</option>
+                <option value="9-Ball">9-Ball</option>
+                <option value="Both">Both</option>
+              </select>
+            </div>
+            <div class="col-12 col-md-6">
+              <label class="form-label text-secondary small mb-1">Current mood</label>
+              <input type="text" name="current_mood" id="moodInput" class="form-control bg-dark text-light soft-border">
+            </div>
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Cancel</button>
+        <button type="submit" form="profileForm" class="btn btn-info text-dark" id="profileSaveBtn">Save</button>
+      </div>
+    </div>
+  </div>
+</div>
+{% endif %}
+<!-- All badges modal -->
+<div class="modal fade" id="allBadgesModal" tabindex="-1" aria-hidden="true">
+  <div class="modal-dialog modal-lg modal-dialog-scrollable">
+    <div class="modal-content neon-modal">
+      <div class="modal-header border-0 bg-gradient-dark text-light">
+        <div>
+          <div class="h5 mb-0">All Patches</div>
+          <div class="text-secondary small">Session progress by category</div>
+        </div>
+        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <div class="d-flex align-items-center gap-2 mb-3">
+          <button class="chip active" disabled>Current Season</button>
+          <button class="chip chip-neutral" disabled>All Seasons (coming soon)</button>
+        </div>
+        {% if patch_index and patch_index.categories %}
+          {% for cat in patch_index.categories %}
+          <div class="mb-3">
+            <div class="d-flex justify-content-between align-items-center mb-1">
+              <div class="h6 mb-0 text-info">{{ cat.name }}</div>
+              <span class="text-secondary small">{{ cat.patches|length }} patches</span>
+            </div>
+            <div class="row g-2">
+              {% for p in cat.patches %}
+              {% set cnt = patch_counts.get(p.code, 0) %}
+              {% set locked = cnt == 0 %}
+              <div class="col-12 col-md-6">
+                <div class="patch-card mini {% if locked %}patch-locked{% endif %}">
+                  <div class="d-flex justify-content-between align-items-start">
+                    <div>
+                      <div class="fw-semibold">{{ p.name }}</div>
+                      <div class="text-secondary small">{{ p.description }}</div>
+                      <div class="text-secondary small mt-1">
+                        Format: {{ p.format|title if p.format else 'Any' }} • Scope: {{ p.scope|title if p.scope else 'Individual' }}
+                      </div>
+                      <button class="btn btn-sm btn-outline-info mt-2 view-patch-btn" type="button"
+                              data-name="{{ p.name }}"
+                              data-description="{{ p.description }}"
+                              data-difficulty="{{ p.difficulty }}"
+                              data-format="{{ p.format }}"
+                              data-scope="{{ p.scope }}"
+                              data-official="{{ 'Yes' if p.official else 'No' }}"
+                              data-notes="{{ p.notes or '' }}">
+                        Details
+                      </button>
+                    </div>
+                    <span class="chip chip-{{ (p.difficulty or 'neutral')|lower }}">{{ p.difficulty or 'Patch' }}</span>
+                  </div>
+                  {% if cnt > 0 %}
+                  <div class="patch-count-bubble">x{{ cnt }}</div>
+                  {% endif %}
+                </div>
+              </div>
+              {% endfor %}
+            </div>
+          </div>
+          {% endfor %}
+        {% else %}
+        <div class="text-secondary small">Patch index not loaded yet.</div>
+        {% endif %}
+      </div>
+    </div>
+  </div>
+</div>
+</div>
+
+<!-- Patch detail modal -->
+<div class="modal fade" id="patchDetailModal" tabindex="-1" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content neon-modal">
+      <div class="modal-header border-0 bg-gradient-dark text-light">
+        <div>
+          <div class="h5 mb-0" id="patchDetailName">Patch</div>
+          <div class="text-secondary small" id="patchDetailDifficulty">Difficulty</div>
+        </div>
+        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body bg-dark text-light">
+        <div class="mb-2 text-secondary" id="patchDetailDescription"></div>
+        <div class="d-flex flex-wrap gap-2 mb-3">
+          <span class="chip chip-info" id="patchDetailFormat"></span>
+          <span class="chip chip-neutral" id="patchDetailScope"></span>
+          <span class="chip chip-success" id="patchDetailOfficial"></span>
+        </div>
+        <div class="text-secondary small" id="patchDetailNotes"></div>
+      </div>
+    </div>
+  </div>
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    const matchModalEl = document.getElementById('matchHistoryModal');
+    const matchModalBody = document.getElementById('matchHistoryBody');
+    const matchModal = matchModalEl ? new bootstrap.Modal(matchModalEl) : null;
+    const matchData = {{ match_history|default({})|tojson|safe }};
+    const avatarWrapper = document.querySelector('.avatar-wrapper');
+    const avatarInput = document.getElementById('avatarFileInput');
+    const modalEl = document.getElementById('avatarModal');
+    const canvas = document.getElementById('avatarCanvas');
+    const zoom = document.getElementById('avatarZoom');
+    const saveBtn = document.getElementById('avatarSaveBtn');
+    const editBtn = document.getElementById('editProfileBtn');
+    const matchModalInstance = matchModal;
+    let img = new Image();
+    let imgLoaded = false;
+    let scale = 1;
+    let offset = {x:0, y:0};
+    const ctx = canvas ? canvas.getContext('2d') : null;
+
+    const profileData = {{ {
+      "display_name": user.display_name or user.username,
+      "username": user.username,
+      "bio": user.bio or "",
+      "about_me": user.about_me or "",
+      "interests": user.interests or "",
+      "theme_song_url": user.theme_song_url or "",
+      "theme_song_title": user.theme_song_title or "",
+      "favorite_quote": user.favorite_quote or "",
+      "favorite_game": user.favorite_game or "",
+      "current_mood": user.current_mood or "",
+      "profile_accent_color": user.profile_accent_color or "",
+      "profile_background_url": user.profile_background_url or "",
+      "player_ref": user.player_ref or ""
+    } | tojson }};
+    const profileModalEl = document.getElementById('profileModal');
+    const profileForm = document.getElementById('profileForm');
+    const profileSaveBtn = document.getElementById('profileSaveBtn');
+    const profileModalInstance = profileModalEl ? bootstrap.Modal.getOrCreateInstance(profileModalEl) : null;
+
+    function draw() {
+      if (!ctx || !imgLoaded) return;
+      ctx.clearRect(0,0,canvas.width, canvas.height);
+      ctx.save();
+      ctx.beginPath();
+      ctx.arc(canvas.width/2, canvas.height/2, canvas.width/2 - 4, 0, Math.PI*2);
+      ctx.clip();
+      const sw = img.width * scale;
+      const sh = img.height * scale;
+      const dx = (canvas.width - sw)/2 + offset.x;
+      const dy = (canvas.height - sh)/2 + offset.y;
+      ctx.drawImage(img, dx, dy, sw, sh);
+      ctx.restore();
+      ctx.strokeStyle = 'rgba(0,191,255,0.6)';
+      ctx.lineWidth = 2;
+      ctx.beginPath();
+      ctx.arc(canvas.width/2, canvas.height/2, canvas.width/2 - 4, 0, Math.PI*2);
+      ctx.stroke();
+    }
+
+    let dragging = false;
+    let start = {x:0, y:0};
+    function onMove(e) {
+      if (!dragging) return;
+      const point = e.touches ? e.touches[0] : e;
+      offset.x += point.clientX - start.x;
+      offset.y += point.clientY - start.y;
+      start = {x: point.clientX, y: point.clientY};
+      draw();
+    }
+
+    if (canvas) {
+      canvas.addEventListener('mousedown', e => { dragging=true; start={x:e.clientX,y:e.clientY}; });
+      canvas.addEventListener('mousemove', onMove);
+      canvas.addEventListener('mouseup', ()=> dragging=false);
+      canvas.addEventListener('mouseleave', ()=> dragging=false);
+      canvas.addEventListener('touchstart', e => { dragging=true; start={x:e.touches[0].clientX,y:e.touches[0].clientY}; });
+      canvas.addEventListener('touchmove', onMove);
+      canvas.addEventListener('touchend', ()=> dragging=false);
+    }
+
+    if (zoom) {
+      zoom.addEventListener('input', () => { scale = parseFloat(zoom.value); draw(); });
+    }
+
+    function openModalWithFile(file) {
+      if (!file) return;
+      const reader = new FileReader();
+      reader.onload = ev => {
+        img.onload = () => {
+          imgLoaded = true;
+          scale = 1;
+          offset = {x:0,y:0};
+          zoom.value = 1;
+          draw();
+          const modal = bootstrap.Modal.getOrCreateInstance(modalEl);
+          modal.show();
+        };
+        img.src = ev.target.result;
+      };
+      reader.readAsDataURL(file);
+    }
+
+    if (avatarWrapper && avatarInput) {
+      avatarWrapper.addEventListener('click', () => avatarInput.click());
+      avatarInput.addEventListener('change', () => {
+        if (avatarInput.files.length) {
+          openModalWithFile(avatarInput.files[0]);
+        }
+      });
+    }
+
+    if (saveBtn && modalEl) {
+      saveBtn.addEventListener('click', () => {
+        if (!imgLoaded || !ctx) return;
+        canvas.toBlob(blob => {
+          if (!blob) return;
+          const fd = new FormData();
+          fd.append('avatar_file', blob, 'avatar.png');
+          fetch("{{ url_for('profile_detail', username=user.username) }}", {
+            method: 'POST',
+            body: fd,
+            headers: {'X-Requested-With': 'fetch-avatar'}
+          })
+          .then(async res => {
+            const ct = res.headers.get('content-type') || '';
+            if (!ct.includes('application/json')) {
+              const txt = await res.text();
+              throw new Error(`Unexpected response (${res.status}). Body: ${txt.slice(0,200)}`);
+            }
+            return res.json();
+          })
+          .then(data => {
+            if (data && data.ok && data.avatar_url) {
+              const imgEl = document.querySelector('.avatar-wrapper img');
+              if (imgEl) { imgEl.src = data.avatar_url; }
+              const toast = document.getElementById('profileToast');
+              if (toast) {
+                const body = toast.querySelector('.toast-body');
+                if (body) body.textContent = 'Profile picture updated';
+                bootstrap.Toast.getOrCreateInstance(toast).show();
+              }
+              bootstrap.Modal.getOrCreateInstance(modalEl).hide();
+            } else {
+              alert(data && data.error ? `Avatar save failed: ${data.error}` : 'Avatar save failed.');
+            }
+          })
+          .catch(err => {
+            alert(`Avatar save error: ${err.message}`);
+            window.location.reload();
+          });
+        });
+      });
+    }
+
+    function populateProfileModal() {
+      if (!profileForm) return;
+      profileForm.display_name.value = profileData.display_name || '';
+      profileForm.player_ref.value = profileData.player_ref || '';
+      profileForm.bio.value = profileData.bio || '';
+      profileForm.about_me.value = profileData.about_me || '';
+      profileForm.interests.value = profileData.interests || '';
+      profileForm.profile_accent_color.value = profileData.profile_accent_color || '';
+      profileForm.profile_background_url.value = profileData.profile_background_url || '';
+      profileForm.theme_song_url.value = profileData.theme_song_url || '';
+      profileForm.theme_song_title.value = profileData.theme_song_title || '';
+      profileForm.favorite_quote.value = profileData.favorite_quote || '';
+      profileForm.favorite_game.value = profileData.favorite_game || '';
+      profileForm.current_mood.value = profileData.current_mood || '';
+    }
+
+    function applyProfileData(data) {
+      profileData.display_name = data.display_name;
+      profileData.bio = data.bio;
+      profileData.about_me = data.about_me;
+      profileData.interests = data.interests;
+      profileData.theme_song_url = data.theme_song_url;
+      profileData.theme_song_title = data.theme_song_title;
+      profileData.favorite_quote = data.favorite_quote;
+      profileData.favorite_game = data.favorite_game;
+      profileData.current_mood = data.current_mood;
+      profileData.profile_accent_color = data.profile_accent_color;
+      profileData.profile_background_url = data.profile_background_url;
+      profileData.profile_banner_url = data.profile_banner_url;
+      profileData.player_ref = data.player_ref;
+      // preview background
+      const bgPrev = document.getElementById('bgPreview');
+      const bannerPrev = document.getElementById('bannerPreview');
+      const bgWrap = document.querySelector('.profile-bg-wrap');
+      const bannerImg = document.getElementById('bannerImage');
+      const bannerWrap = document.getElementById('bannerImageWrap');
+      const heroCard = document.getElementById('heroCard');
+      const accentColor = data.profile_accent_color || '#00bfff';
+      if (bgPrev) {
+        bgPrev.style.backgroundImage = data.profile_background_url ? `url('${data.profile_background_url}')` : '';
+      }
+      if (bannerPrev) {
+        bannerPrev.style.backgroundImage = data.profile_banner_url ? `url('${data.profile_banner_url}')` : '';
+      }
+      if (bgWrap) {
+        bgWrap.style.backgroundImage = data.profile_background_url ? `url('${data.profile_background_url}')` : '';
+      }
+      if (heroCard) {
+        heroCard.style.borderColor = accentColor;
+        heroCard.style.boxShadow = `0 18px 44px ${accentColor}33`;
+        heroCard.style.backgroundImage = data.profile_banner_url ? `url('${data.profile_banner_url}')` : '';
+        heroCard.style.backgroundSize = data.profile_banner_url ? 'cover' : '';
+        heroCard.style.backgroundPosition = data.profile_banner_url ? 'center' : '';
+      }
+      if (bannerImg && bannerWrap) {
+        if (data.profile_banner_url) {
+          bannerImg.src = data.profile_banner_url;
+          bannerWrap.classList.remove('d-none');
+        } else {
+          bannerImg.src = '';
+          bannerWrap.classList.add('d-none');
+        }
+      }
+
+      const displayNameEl = document.getElementById('displayName');
+      const nicknameEl = document.getElementById('nicknameText');
+      const bioEl = document.getElementById('bioText');
+      const aboutEl = document.getElementById('aboutText');
+      const interestsEl = document.getElementById('interestsText');
+      const themeText = document.getElementById('themeSongText');
+      const themePlay = document.getElementById('themePlay');
+      const moodEl = document.getElementById('moodText');
+      const gameEl = document.getElementById('favGameText');
+      const quoteEl = document.getElementById('favQuoteText');
+
+      if (displayNameEl) displayNameEl.textContent = data.display_name || data.username;
+      if (nicknameEl) nicknameEl.textContent = data.display_name || data.username;
+      if (bioEl) bioEl.textContent = data.bio || 'Add a bio';
+      if (aboutEl) aboutEl.textContent = data.about_me || 'No about text yet.';
+      if (interestsEl) interestsEl.textContent = data.interests || 'No interests shared yet.';
+
+      if (themeText) {
+        if (data.theme_song_url) {
+          themeText.textContent = data.theme_song_title || data.theme_song_url;
+        } else {
+          themeText.textContent = 'No theme song set yet.';
+        }
+      }
+      if (themePlay) {
+        if (data.theme_song_url) {
+          themePlay.classList.remove('d-none');
+          themePlay.href = data.theme_song_url;
+        } else {
+          themePlay.classList.add('d-none');
+        }
+      }
+      if (moodEl) moodEl.textContent = data.current_mood || 'ÃƒÂ¢Ã¢â€šÂ¬Ã¢â‚¬';
+      if (gameEl) gameEl.textContent = data.favorite_game || 'ÃƒÂ¢Ã¢â€šÂ¬Ã¢â‚¬';
+      if (quoteEl) quoteEl.textContent = data.favorite_quote || 'ÃƒÂ¢Ã¢â€šÂ¬Ã¢â‚¬';
+    }
+
+    if (profileModalEl) {
+      profileModalEl.addEventListener('show.bs.modal', populateProfileModal);
+    }
+
+    if (editBtn && profileModalInstance) {
+      editBtn.addEventListener('click', () => {
+        populateProfileModal();
+        profileModalInstance.show();
+      });
+    }
+
+    // Match history modal trigger + esports-style UI
+    if (matchModalInstance && matchData) {
+      const tiles = document.querySelectorAll('.stat-tile.hoverable[data-format]');
+      const filtersWrap = document.getElementById('matchFilters');
+      const summaryEl = document.getElementById('matchSummary');
+      const sparkEl = document.getElementById('matchSpark');
+      const subtitleEl = document.getElementById('matchHistorySub');
+      let currentFmt = '';
+      let sortField = 'date';
+      let sortDir = 'desc';
+      let activeFilter = 'all';
+
+      const renderSpark = (rows) => {
+        if (!sparkEl) return;
+        if (!rows.length) { sparkEl.innerHTML = ''; return; }
+        const pts = rows.map(r => Number(r.our_pts) || 0);
+        const max = Math.max(...pts, 1);
+        const min = Math.min(...pts, 0);
+        const w = 140, h = 32;
+        const step = pts.length > 1 ? (w / (pts.length - 1)) : 0;
+        const d = pts.map((p,i)=>{
+          const y = h - ((p - min)/(max-min||1))*h;
+          const x = step * i;
+          return `${x},${y}`;
+        }).join(' ');
+        sparkEl.innerHTML = `<svg width="${w}" height="${h}" viewBox="0 0 ${w} ${h}" preserveAspectRatio="none">
+          <polyline points="${d}" fill="none" stroke="#00e5ff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+        </svg>`;
+      };
+
+      const difficultyChip = (opp, ours) => {
+        const o = Number(opp) || 0, p = Number(ours) || 0;
+        if (!o || !p) return '<span class="badge bg-secondary-subtle text-secondary">n/a</span>';
+        if (o >= p + 2) return '<span class="badge bg-gradient-warning text-dark">Hard</span>';
+        if (o <= p - 2) return '<span class="badge bg-gradient-success text-dark">Favored</span>';
+        return '<span class="badge bg-gradient-info text-dark">Even</span>';
+      };
+
+      const resultCell = (row) => {
+        const iconWin = '<i class="fa-solid fa-circle-check me-1 text-success"></i>';
+        const iconLoss = '<i class="fa-solid fa-circle-xmark me-1 text-danger"></i>';
+        const txt = row.result || '-';
+        const closeTag = (row.diff !== undefined && Math.abs(row.diff) <= 3) ? '<span class="chip chip-amber ms-1">Close</span>' : '';
+        if ((txt||'').toLowerCase().startsWith('win')) {
+          return `<span class="text-success fw-bold d-inline-flex align-items-center">${iconWin}${txt}</span>${closeTag}`;
+        }
+        if ((txt||'').toLowerCase().startsWith('loss')) {
+          return `<span class="text-danger fw-bold d-inline-flex align-items-center">${iconLoss}${txt}</span>${closeTag}`;
+        }
+        return `${txt}${closeTag}`;
+      };
+
+      const applyFilter = (rows) => {
+        switch(activeFilter) {
+          case 'win': return rows.filter(r => (r.result||'').toLowerCase().startsWith('win'));
+          case 'loss': return rows.filter(r => (r.result||'').toLowerCase().startsWith('loss'));
+          case 'high': return rows.filter(r => (Number(r.our_pts)||0) >= 12);
+          case 'upset': return rows.filter(r => (Number(r.opponent_sl)||0) > (Number(r.our_sl)||0));
+          default: return rows;
+        }
+      };
+
+      const sortRows = (rows) => {
+        const dir = sortDir === 'asc' ? 1 : -1;
+        return [...rows].sort((a,b) => {
+          const av = a[sortField], bv = b[sortField];
+          if (sortField === 'date') {
+            return dir * ((av || '').localeCompare(bv || ''));
+          }
+          if (sortField === 'week' || sortField === 'points') {
+            return dir * (((Number(av) || 0) - (Number(bv) || 0)));
+          }
+          return dir * ((av||'').toString().localeCompare((bv||'').toString()));
+        });
+      };
+
+      const renderTable = (fmt, rows) => {
+        if (subtitleEl) subtitleEl.textContent = `${fmt} ÃƒÂ¢Ã¢â€šÂ¬Ã¢â‚¬Å“ {{ user.display_name or user.username }}`;
+        const enriched = rows.map(r => ({...r, diff: (Number(r.our_pts)||0) - (Number(r.opp_pts)||0)}));
+        const filtered = applyFilter(enriched);
+        const sorted = sortRows(filtered);
+        const tbody = matchModalBody;
+        if (!sorted.length) {
+          tbody.innerHTML = '<tr><td colspan="7" class="text-secondary small">No match history available.</td></tr>';
+        } else {
+          const html = sorted.map((r,idx) => {
+            const ptsLabel = `${r.our_pts ?? '-'} - ${r.opp_pts ?? '-'}`;
+            return `
+              <tr class="match-row" data-idx="${idx}">
+                <td>${r.week || '-'}</td>
+                <td>${r.date || ''}</td>
+                <td>${r.opponent || ''} ${r.opponent_sl ? `(SL ${r.opponent_sl})` : ''}</td>
+                <td>${ptsLabel}</td>
+                <td>${resultCell(r)}</td>
+                <td>${difficultyChip(r.opponent_sl, r.our_sl)}</td>
+                <td class="text-end"><i class="fa-solid fa-chevron-down text-secondary small toggle-detail" role="button"></i></td>
+              </tr>
+              <tr class="detail-row d-none"><td colspan="7" class="text-secondary small">Detailed breakdown coming soon.</td></tr>
+            `;
+          }).join('');
+          tbody.innerHTML = html;
+          tbody.querySelectorAll('.toggle-detail').forEach((icon, i) => {
+            icon.addEventListener('click', () => {
+              const detail = tbody.querySelectorAll('.detail-row')[i];
+              detail.classList.toggle('d-none');
+              icon.classList.toggle('fa-rotate-180');
+            });
+          });
+        }
+        if (summaryEl) {
+          const lastN = Math.min(5, rows.length);
+          const recent = rows.slice(0, lastN);
+          const wins = recent.filter(r => (r.result||'').toLowerCase().startsWith('win')).length;
+          const losses = recent.filter(r => (r.result||'').toLowerCase().startsWith('loss')).length;
+          const avg = recent.length ? (recent.reduce((sum,r)=>sum+(Number(r.our_pts)||0),0)/recent.length).toFixed(1) : '0.0';
+          summaryEl.textContent = `Last ${recent.length}: ${wins}-${losses} Ã¢â‚¬Â¢ Avg pts ${avg}`;
+        }
+        renderSpark(sorted.slice(-10));
+      };
+
+      const setFilter = (key) => {
+        activeFilter = key;
+        if (filtersWrap) {
+          filtersWrap.querySelectorAll('.chip').forEach(ch => {
+            ch.classList.toggle('active', ch.dataset.filter === key);
+          });
+        }
+        if (currentFmt) renderTable(currentFmt, matchData[currentFmt] || []);
+      };
+
+      if (filtersWrap) {
+        filtersWrap.querySelectorAll('.chip').forEach(ch => {
+          ch.addEventListener('click', () => setFilter(ch.dataset.filter));
+        });
+      }
+
+      const headers = document.querySelectorAll('#matchHistoryTable th.sortable');
+      headers.forEach(h => {
+        h.addEventListener('click', () => {
+          const key = h.dataset.sort;
+          if (sortField === key) {
+            sortDir = sortDir === 'asc' ? 'desc' : 'asc';
+          } else {
+            sortField = key;
+            sortDir = 'desc';
+          }
+          headers.forEach(x => x.classList.remove('sorted-asc','sorted-desc'));
+          h.classList.add(sortDir === 'asc' ? 'sorted-asc' : 'sorted-desc');
+          if (currentFmt) renderTable(currentFmt, matchData[currentFmt] || []);
+        });
+      });
+
+      tiles.forEach(tile => {
+        tile.addEventListener('click', () => {
+          currentFmt = tile.dataset.format || '';
+          const hist = matchData[currentFmt] || [];
+          renderTable(currentFmt, hist);
+          matchModalInstance.show();
+        });
+      });
+    }
+
+    // Intercept save to show clear errors and stay on page.
+    if (profileForm && profileSaveBtn && profileModalInstance) {
+      profileForm.addEventListener('submit', (e) => {
+        e.preventDefault();
+        profileSaveBtn.disabled = true;
+        const fd = new FormData(profileForm);
+        fetch("{{ url_for('profile_detail', username=user.username) }}", {
+          method: 'POST',
+          body: fd,
+          headers: {'X-Requested-With': 'fetch-profile'},
+          credentials: 'same-origin'
+        })
+        .then(async res => {
+          const ct = res.headers.get('content-type') || '';
+          if (!ct.includes('application/json')) {
+            const txt = await res.text();
+            throw new Error(`Unexpected response (${res.status}). Body: ${txt.slice(0,200)}`);
+          }
+          return res.json();
+        })
+        .then(data => {
+          profileSaveBtn.disabled = false;
+          console.log('Profile save response', data);
+          if (data && data.ok) {
+            applyProfileData(data.profile);
+            const toast = document.getElementById('profileToast');
+            if (toast) {
+              const body = toast.querySelector('.toast-body');
+              if (body) {
+                body.textContent = (data.message || 'Changes saved') + (data.changed_fields && data.changed_fields.length ? ` ÃƒÂ¢Ã¢â€šÂ¬Ã‚Â¢ ${data.changed_fields.join(', ')}` : '');
+              }
+              bootstrap.Toast.getOrCreateInstance(toast).show();
+            } else {
+              alert((data.message || 'Saved') + (data.changed_fields ? `\nChanged: ${data.changed_fields.join ? data.changed_fields.join(', ') : data.changed_fields}` : ''));
+            }
+            profileModalInstance.hide();
+          } else {
+            const dbg = data && data.debug ? `\\nDebug: ${JSON.stringify(data.debug).slice(0,400)}` : '';
+            const msg = data && data.error ? `Save failed: ${data.error}${data.detail ? ' - '+data.detail : ''}${dbg}` : 'Save failed (unknown).';
+            alert(msg);
+          }
+        })
+        .catch(err => {
+          profileSaveBtn.disabled = false;
+          alert(`Save error: ${err.message}`);
+        });
+      });
+    }
+
+    // Background URL preview
+    const bgFileInput = document.getElementById('bgFileInput');
+    if (bgFileInput) {
+      bgFileInput.addEventListener('change', () => {
+        const file = bgFileInput.files[0];
+        if (!file) return;
+        const reader = new FileReader();
+        reader.onload = e => {
+          const bgPrev = document.getElementById('bgPreview');
+          if (bgPrev) bgPrev.style.backgroundImage = `url('${e.target.result}')`;
+        };
+        reader.readAsDataURL(file);
+      });
+    }
+    const bannerFileInput = document.getElementById('bannerFileInput');
+    if (bannerFileInput) {
+      bannerFileInput.addEventListener('change', () => {
+        const file = bannerFileInput.files[0];
+        if (!file) return;
+        const reader = new FileReader();
+        reader.onload = e => {
+          const bannerPrev = document.getElementById('bannerPreview');
+          if (bannerPrev) bannerPrev.style.backgroundImage = `url('${e.target.result}')`;
+        };
+        reader.readAsDataURL(file);
+      });
+    }
+    // Player card toggle
+    const toggleButtons = document.querySelectorAll('.playercard-toggle');
+    toggleButtons.forEach(btn => {
+      btn.addEventListener('click', () => {
+        toggleButtons.forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        const target = btn.dataset.target;
+        ['current','lifetime','past'].forEach(key => {
+          const el = document.getElementById(`playercard-${key}`);
+          if (el) el.classList.toggle('d-none', key !== target);
+        });
+      });
+    });
+    // Patch detail modal
+    const patchDetailModalEl = document.getElementById('patchDetailModal');
+    const patchDetailModal = patchDetailModalEl ? new bootstrap.Modal(patchDetailModalEl) : null;
+    const nameEl = document.getElementById('patchDetailName');
+    const diffEl = document.getElementById('patchDetailDifficulty');
+    const descEl = document.getElementById('patchDetailDescription');
+    const fmtEl = document.getElementById('patchDetailFormat');
+    const scopeEl = document.getElementById('patchDetailScope');
+    const officialEl = document.getElementById('patchDetailOfficial');
+    const notesEl = document.getElementById('patchDetailNotes');
+    document.querySelectorAll('.view-patch-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        if (!patchDetailModal) return;
+        nameEl.textContent = btn.dataset.name || 'Patch';
+        diffEl.textContent = (btn.dataset.difficulty || '').trim();
+        descEl.textContent = btn.dataset.description || '';
+        fmtEl.textContent = `Format: ${btn.dataset.format || 'Any'}`;
+        scopeEl.textContent = `Scope: ${btn.dataset.scope || 'Individual'}`;
+        officialEl.textContent = `Official: ${btn.dataset.official || 'No'}`;
+        notesEl.textContent = btn.dataset.notes || '';
+        patchDetailModal.show();
+      });
+    });
+  });
+</script>
+<div class="position-fixed top-0 end-0 p-3" style="z-index: 1080;">
+  <div id="profileToast" class="toast align-items-center text-bg-success border-0 shadow" role="status" aria-live="polite" aria-atomic="true">
+    <div class="d-flex">
+      <div class="toast-body">
+        Changes saved.
+      </div>
+      <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
+    </div>
+  </div>
+</div>
+{% endblock %}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

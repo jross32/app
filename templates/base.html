@@ -1,0 +1,387 @@
+<!DOCTYPE html>
+<html lang="en" data-bs-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>{% block title %}Cue-Ligans Team Manager{% endblock %}</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css" rel="stylesheet">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" rel="stylesheet">
+  <link href="/static/css/custom.css" rel="stylesheet">
+  {% block head %}{% endblock %}
+</head>
+<body>
+<style>
+  .nav-shell {
+    background: linear-gradient(135deg, #0d1b2a 0%, #081120 60%, #051622 100%);
+    border-bottom: 1px solid rgba(0,191,255,0.35);
+    box-shadow: 0 10px 30px #00bfff15;
+  }
+  .nav-pill {
+    border-radius: 999px;
+    padding: 0.35rem 0.9rem !important;
+    margin-right: 0.35rem;
+    border: 1px solid transparent;
+    transition: all 0.2s ease;
+    color: #d9f2ff !important;
+  }
+  .nav-pill:hover { border-color: rgba(0,191,255,0.35); background: rgba(0,191,255,0.1); }
+  .nav-brand-pill {
+    border-radius: 14px;
+    padding: 0.2rem 0.5rem;
+    background: transparent;
+    color: #d9f2ff !important;
+    box-shadow: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+  }
+  .nav-logo-icon {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    background: radial-gradient(circle at 30% 30%, #fff 0%, #f5f5f5 25%, #1b1b1b 70%, #0b0b0b 100%);
+    color: #0b0b0b;
+    font-weight: 800;
+    font-size: 0.95rem;
+    position: relative;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.35);
+  }
+  .nav-logo-icon::after {
+    content: '8';
+    color: #0b0b0b;
+    background: #fff;
+    width: 16px;
+    height: 16px;
+    border-radius: 50%;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.8rem;
+    font-weight: 800;
+  }
+  /* Global accent treatment for dark cards (applies sitewide) */
+  .card.bg-dark.soft-border.shadow-soft {
+    position: relative;
+    overflow: hidden;
+    border-radius: 12px;
+    border-color: rgba(255,255,255,.1)!important;
+    box-shadow: 0 10px 28px rgba(0,0,0,.55);
+  }
+  .card.bg-dark.soft-border.shadow-soft::before {
+    content:"";
+    position:absolute;
+    inset:0;
+    height:6px;
+    background:linear-gradient(90deg,#12d6ff,#7cf4ff,#12d6ff);
+    opacity:0.85;
+  }
+  .card.bg-dark.soft-border.shadow-soft .card-body {
+    background:
+      radial-gradient(circle at 12% 12%, rgba(18,214,255,0.08), transparent 28%),
+      radial-gradient(circle at 88% 18%, rgba(255,215,0,0.08), transparent 32%),
+      #0d1117;
+    border-radius: 10px;
+  }
+  /* Limit lift to elements that opt-in via .hover-lift */
+  .card.bg-dark.soft-border.shadow-soft.hover-lift { transition: transform 0.18s ease, box-shadow 0.18s ease, border-color 0.18s ease; }
+  .card.bg-dark.soft-border.shadow-soft.hover-lift:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 14px 34px rgba(0,0,0,0.6), 0 0 18px rgba(13, 208, 255, 0.25);
+    border-color: rgba(0,191,255,0.25)!important;
+  }
+  /* Mobile-first navbar tweaks */
+  .nav-mobile-title {
+    font-weight: 700;
+    color: #d9f2ff;
+    letter-spacing: 0.5px;
+    white-space: nowrap;
+    display: none;
+  }
+  .nav-mobile-pill {
+    background: linear-gradient(135deg, #12d6ff 0%, #7cf4ff 40%, #12d6ff 80%);
+    color: #04121c;
+    padding: 0.3rem 0.75rem;
+    border-radius: 14px;
+    font-weight: 800;
+    font-size: 0.95rem;
+    letter-spacing: 0.2px;
+    box-shadow: 0 12px 28px rgba(0,191,255,0.25);
+    align-items: center;
+    gap: 0.4rem;
+  }
+  /* Animated atmosphere + micro-interactions */
+  :root {
+    --glow: 0 0 18px rgba(13, 208, 255, 0.35);
+    --card-bg: #0d1117;
+  }
+  body {
+    background: radial-gradient(circle at 20% 20%, rgba(18,214,255,0.08), transparent 35%),
+                radial-gradient(circle at 80% 0%, rgba(255,215,0,0.05), transparent 30%),
+                #050910;
+  }
+  main { animation: fadeSlideIn 0.35s ease; }
+  .card.bg-dark.soft-border.shadow-soft {
+    transition: transform 0.18s ease, box-shadow 0.18s ease, border-color 0.18s ease;
+  }
+  .card.bg-dark.soft-border.shadow-soft:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 14px 34px rgba(0,0,0,0.6), var(--glow);
+    border-color: rgba(0,191,255,0.25)!important;
+  }
+  .btn {
+    transition: transform 0.15s ease, box-shadow 0.15s ease, border-color 0.15s ease;
+  }
+  .btn:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 10px 20px rgba(0,0,0,0.35);
+  }
+  .icon-btn {
+    transition: transform 0.15s ease, box-shadow 0.15s ease;
+  }
+  .icon-btn:hover { transform: translateY(-2px) scale(1.04); box-shadow: var(--glow); }
+  .table-hover tbody tr {
+    transition: background-color 0.15s ease, transform 0.15s ease;
+  }
+  .table-hover tbody tr:hover {
+    background: rgba(0,191,255,0.06);
+    transform: translateX(2px);
+  }
+  .form-control, .form-select {
+    transition: border-color 0.15s ease, box-shadow 0.15s ease;
+  }
+  .form-control:focus, .form-select:focus {
+    border-color: rgba(0,191,255,0.55);
+    box-shadow: 0 0 0 0.15rem rgba(0,191,255,0.25);
+  }
+  @keyframes fadeSlideIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  @media (max-width: 767.98px) {
+    .navbar.nav-shell {
+      padding-top: 0;
+      padding-bottom: 0;
+      min-height: 60px;
+      position: sticky;
+      top: 0;
+      z-index: 1030;
+      border-bottom: 1px solid rgba(0,191,255,0.3);
+      box-shadow: 0 6px 18px rgba(0,0,0,0.45);
+    }
+    .navbar .container-fluid {
+      min-height: 60px;
+      align-items: center;
+    }
+    .navbar-brand .nav-logo-icon {
+      width: 26px;
+      height: 26px;
+    }
+    .mobile-actions {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.85rem;
+    }
+    .mobile-actions button,
+    .mobile-actions .icon-btn {
+      background: none;
+      border: none;
+      color: #d9f2ff;
+      font-size: 1.1rem;
+      padding: 0.35rem;
+      line-height: 1;
+      min-width: 40px;
+      min-height: 40px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .navbar-toggler {
+      padding: 0.35rem;
+      border: none;
+      background: none;
+      min-width: 40px;
+      min-height: 40px;
+    }
+    .navbar-collapse {
+      background: #0b111a;
+      border-radius: 10px;
+      box-shadow: 0 12px 30px rgba(0,0,0,0.55);
+      padding: 0.5rem 0.75rem;
+      margin-top: 0.5rem;
+    }
+    .navbar-nav .nav-link {
+      text-align: left;
+      padding: 0.55rem 0.4rem;
+      width: 100%;
+    }
+    .nav-pill {
+      margin-right: 0;
+      width: 100%;
+      justify-content: flex-start;
+    }
+    .nav-mobile-title {
+      font-size: 0.95rem;
+    }
+    main {
+      padding-top: 0.9rem;
+    }
+  }
+</style>
+<nav class="navbar navbar-expand-lg navbar-dark nav-shell mb-4">
+  <div class="container-fluid">
+    <a class="navbar-brand d-flex align-items-center nav-brand-pill" href="/">
+      <span class="nav-mobile-pill d-inline-flex"><i class="fa-solid fa-shield-halved"></i><span>Cue-Ligans</span></span>
+    </a>
+    <div class="mobile-actions ms-auto d-lg-none">
+      <a class="icon-btn me-2" href="{{ url_for('locker') }}" title="Locker"><i class="fa-solid fa-vault"></i></a>
+      <a class="icon-btn me-2" href="{{ url_for('lab') }}" title="LAB"><i class="fa-solid fa-flask"></i></a>
+      <a class="icon-btn me-2" href="{{ url_for('ai_page') }}" title="AI"><i class="fa-solid fa-robot"></i></a>
+      {% if current_user %}
+      <div class="dropdown">
+        <button class="icon-btn" id="mobileUserDropdown" data-bs-toggle="dropdown" aria-expanded="false">
+          <span class="position-relative">
+            <i class="fa-solid fa-user"></i>
+            {% if unread_dm_count and unread_dm_count > 0 %}
+            <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger" style="font-size:0.65rem;">{{ unread_dm_count }}</span>
+            {% endif %}
+          </span>
+        </button>
+        <ul class="dropdown-menu dropdown-menu-end bg-dark text-light soft-border mt-2" aria-labelledby="mobileUserDropdown" style="min-width: 12rem;">
+          <li><a class="dropdown-item text-light" href="{{ url_for('profile_detail', username=current_user.username) }}"><i class="fa-solid fa-id-card me-2 text-info"></i>Profile</a></li>
+          <li><a class="dropdown-item text-light" href="{{ url_for('get_started') }}"><i class="fa-solid fa-rocket me-2 text-info"></i>Get Started</a></li>
+          <li><a class="dropdown-item text-light" href="{{ url_for('messenger') }}"><i class="fa-solid fa-message me-2 text-info"></i>Messenger</a></li>
+          <li><a class="dropdown-item text-light" href="{{ url_for('dues') }}"><i class="fa-solid fa-wallet me-2 text-info"></i>Dues</a></li>
+          <li><a class="dropdown-item text-light" href="{{ url_for('about') }}"><i class="fa-solid fa-circle-info me-2 text-info"></i>About</a></li>
+          <li><a class="dropdown-item text-light" href="{{ url_for('resources') }}"><i class="fa-solid fa-book-open me-2 text-info"></i>Rules & Resources</a></li>
+          <li><a class="dropdown-item text-light" href="{{ url_for('settings') }}"><i class="fa-solid fa-gear me-2 text-info"></i>Settings</a></li>
+          <li><a class="dropdown-item text-light" href="{{ url_for('profile_detail', username=current_user.username) + '#badges' }}"><i class="fa-solid fa-certificate me-2 text-info"></i>Badges</a></li>
+          {% if current_user.role and current_user.role.lower() == 'admin' %}
+          <li><a class="dropdown-item text-light" href="{{ url_for('admin') }}"><i class="fa-solid fa-shield-halved me-2 text-info"></i>Admin</a></li>
+          {% endif %}
+          <li><hr class="dropdown-divider"></li>
+          <li><a class="dropdown-item text-light" href="{{ url_for('logout') }}"><i class="fa-solid fa-right-from-bracket me-2 text-info"></i>Logout</a></li>
+        </ul>
+      </div>
+      {% else %}
+      <a class="icon-btn" href="{{ url_for('login') }}" title="Login / Sign up"><i class="fa-solid fa-user"></i></a>
+      {% endif %}
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mainNav" aria-controls="mainNav" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+    </div>
+    <div class="collapse navbar-collapse" id="mainNav">
+      <div class="d-flex align-items-center flex-column flex-lg-row w-100">
+        <ul class="navbar-nav mb-2 mb-lg-0 flex-grow-1 justify-content-center">
+          <li class="nav-item"><a class="nav-link nav-pill" href="/">Dashboard</a></li>
+          <li class="nav-item"><a class="nav-link nav-pill" href="/roster">Roster</a></li>
+          <li class="nav-item"><a class="nav-link nav-pill" href="/standings">Standings</a></li>
+          <li class="nav-item"><a class="nav-link nav-pill" href="/schedule">Schedule</a></li>
+          <li class="nav-item"><a class="nav-link nav-pill" href="/scouting">Scouting</a></li>
+          {% if current_user and current_user.role and current_user.role|lower in ['admin','captain','coach','staff'] %}
+          <li class="nav-item"><a class="nav-link nav-pill" href="{{ url_for('coach_planner') }}">Coach</a></li>
+          {% endif %}
+        </ul>
+        <div class="d-flex align-items-center ms-lg-3 d-none d-lg-flex">
+          <a class="nav-link nav-pill d-flex align-items-center gap-1" href="/locker" title="Locker"><i class="fa-solid fa-vault"></i><span class="ms-1">Locker</span></a>
+          <a class="nav-link nav-pill d-flex align-items-center gap-1" href="/lab" title="LAB"><i class="fa-solid fa-flask"></i><span class="ms-1">LAB</span></a>
+          <a class="nav-link nav-pill d-flex align-items-center gap-1" href="{{ url_for('ai_page') }}" title="AI Assistant"><i class="fa-solid fa-robot"></i><span class="ms-1">AI</span></a>
+          {% if current_user %}
+            <div class="dropdown">
+              <a class="nav-link nav-pill dropdown-toggle d-flex align-items-center" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false" title="Account">
+                <span class="position-relative">
+                  <i class="fa-solid fa-user"></i>
+                  {% if unread_dm_count and unread_dm_count > 0 %}
+                  <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger" style="font-size:0.65rem;">
+                    {{ unread_dm_count }}
+                  </span>
+                  {% endif %}
+                </span>
+              </a>
+              <ul class="dropdown-menu dropdown-menu-end bg-dark text-light soft-border" style="min-width: 12rem;">
+                <li><a class="dropdown-item text-light" href="{{ url_for('profile_detail', username=current_user.username) }}"><i class="fa-solid fa-id-card me-2 text-info"></i>My Profile</a></li>
+                <li><a class="dropdown-item text-light" href="{{ url_for('get_started') }}"><i class="fa-solid fa-rocket me-2 text-info"></i>Get Started</a></li>
+                <li><a class="dropdown-item text-light" href="{{ url_for('messenger') }}"><i class="fa-solid fa-message me-2 text-info"></i>Messenger</a></li>
+                <li><a class="dropdown-item text-light" href="{{ url_for('dues') }}"><i class="fa-solid fa-wallet me-2 text-info"></i>Dues</a></li>
+                <li><a class="dropdown-item text-light" href="{{ url_for('about') }}"><i class="fa-solid fa-circle-info me-2 text-info"></i>About</a></li>
+                <li><a class="dropdown-item text-light" href="{{ url_for('resources') }}"><i class="fa-solid fa-book-open me-2 text-info"></i>Rules & Resources</a></li>
+                <li><a class="dropdown-item text-light" href="{{ url_for('settings') }}"><i class="fa-solid fa-gear me-2 text-info"></i>Settings</a></li>
+                <li><hr class="dropdown-divider"></li>
+                <li><a class="dropdown-item text-light" href="{{ url_for('logout') }}"><i class="fa-solid fa-right-from-bracket me-2 text-info"></i>Logout</a></li>
+              </ul>
+            </div>
+          {% else %}
+            <a class="nav-link nav-pill" href="{{ url_for('login') }}" title="Login / Sign up"><i class="fa-solid fa-user"></i></a>
+          {% endif %}
+        </div>
+      </div>
+    </div>
+  </div>
+</nav>
+
+<main class="section-fade">
+  {% block content %}{% endblock %}
+</main>
+
+{% block modals %}{% endblock %}
+
+<footer class="footer mt-5">
+  <div class="container">
+    <div class="d-flex flex-column flex-md-row justify-content-between align-items-center">
+      <div>
+        <span class="me-2">&copy; {{ 2025 }} Cue-Ligans APA Team</span>
+        <a href="https://poolplayers.com/" class="text-info text-decoration-none" target="_blank"><i class="fa-solid fa-link"></i> APA National</a>
+      </div>
+      <div>
+        <a href="https://facebook.com/" class="text-secondary me-2" target="_blank"><i class="fab fa-facebook fa-lg"></i></a>
+        <a href="https://instagram.com/" class="text-secondary me-2" target="_blank"><i class="fab fa-instagram fa-lg"></i></a>
+        <a href="mailto:captain@cue-ligans.com" class="text-secondary"><i class="fa-solid fa-envelope fa-lg"></i></a>
+      </div>
+    </div>
+    <div class="small mt-2 text-secondary">Built with Flask &amp; Bootstrap 5 | <a href="/admin" class="text-info">Admin</a></div>
+  </div>
+</footer>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script src="/static/js/app.js"></script>
+<script>
+  // Close mobile menu when clicking a link or outside the collapse
+  document.addEventListener('DOMContentLoaded', () => {
+    const navCollapse = document.getElementById('mainNav');
+    if (!navCollapse) return;
+    const bsCollapse = new bootstrap.Collapse(navCollapse, {toggle: false});
+    navCollapse.querySelectorAll('.nav-link').forEach(link => {
+      link.addEventListener('click', () => {
+        if (window.innerWidth < 992 && navCollapse.classList.contains('show')) {
+          bsCollapse.hide();
+        }
+      });
+    });
+    document.addEventListener('click', (e) => {
+      if (window.innerWidth >= 992) return;
+      const toggler = document.querySelector('.navbar-toggler');
+      if (!navCollapse.classList.contains('show')) return;
+      if (navCollapse.contains(e.target) || (toggler && toggler.contains(e.target))) return;
+      bsCollapse.hide();
+    });
+    const userDropdown = document.getElementById('mobileUserDropdown');
+    const userMenu = userDropdown ? userDropdown.nextElementSibling : null;
+    if (userDropdown) {
+      userDropdown.addEventListener('click', () => {
+        if (navCollapse.classList.contains('show')) bsCollapse.hide();
+      });
+    }
+    if (userMenu) {
+      userMenu.addEventListener('shown.bs.dropdown', () => {
+        if (navCollapse.classList.contains('show')) bsCollapse.hide();
+      });
+    }
+  });
+</script>
+{% block scripts %}{% endblock %}
+</body>
+</html>

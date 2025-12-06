@@ -1,0 +1,1636 @@
+{
+  "by_slug": {
+    "cue_ligans": {
+      "display_name": "Cue-ligans",
+      "alias_id": 12867593,
+      "member_id": null,
+      "stats": {
+        "eight_ball": {},
+        "nine_ball": {}
+      },
+      "slug": "cue_ligans",
+      "teams": []
+    },
+    "justin_ross": {
+      "display_name": "Justin Ross",
+      "alias_id": 91040488,
+      "member_id": 3400522,
+      "stats": {
+        "eight_ball": {},
+        "nine_ball": {}
+      },
+      "slug": "justin_ross",
+      "teams": [
+        "12867593"
+      ],
+      "extra": {
+        "memberNumber": "78502221",
+        "skillLevel": 2,
+        "pa": 0.45,
+        "ppm": 9
+      }
+    },
+    "william_mcginnis": {
+      "display_name": "William McGinnis",
+      "alias_id": 91052648,
+      "member_id": 1689161,
+      "stats": {
+        "eight_ball": {},
+        "nine_ball": {}
+      },
+      "slug": "william_mcginnis",
+      "teams": [
+        "12867593"
+      ],
+      "extra": {
+        "memberNumber": "78500261",
+        "skillLevel": 6,
+        "pa": 0.36428571428571427,
+        "ppm": 7.285714285714286
+      }
+    },
+    "rigo_almaraz": {
+      "display_name": "Rigo Almaraz",
+      "alias_id": 91040489,
+      "member_id": 3220735,
+      "stats": {
+        "eight_ball": {},
+        "nine_ball": {}
+      },
+      "slug": "rigo_almaraz",
+      "teams": [
+        "12867593"
+      ],
+      "extra": {
+        "memberNumber": "78503663",
+        "skillLevel": 5,
+        "pa": 0.5416666666666667,
+        "ppm": 10.833333333333334
+      }
+    },
+    "rik_cavazos": {
+      "display_name": "Rik Cavazos",
+      "alias_id": 91043355,
+      "member_id": 3432311,
+      "stats": {
+        "eight_ball": {},
+        "nine_ball": {}
+      },
+      "slug": "rik_cavazos",
+      "teams": [
+        "12867593"
+      ],
+      "extra": {
+        "memberNumber": "78504318",
+        "skillLevel": 3,
+        "pa": 0.7,
+        "ppm": 14
+      }
+    },
+    "ethan_boone": {
+      "display_name": "Ethan Boone",
+      "alias_id": 91041133,
+      "member_id": 2532146,
+      "stats": {
+        "eight_ball": {},
+        "nine_ball": {}
+      },
+      "slug": "ethan_boone",
+      "teams": [
+        "12867593"
+      ],
+      "extra": {
+        "memberNumber": "78501548",
+        "skillLevel": 7,
+        "pa": 0.6,
+        "ppm": 12
+      }
+    },
+    "bryan_edwards": {
+      "display_name": "Bryan Edwards",
+      "alias_id": 91052651,
+      "member_id": 3353843,
+      "stats": {
+        "eight_ball": {},
+        "nine_ball": {}
+      },
+      "slug": "bryan_edwards",
+      "teams": [
+        "12867593"
+      ],
+      "extra": {
+        "memberNumber": "78501902",
+        "skillLevel": 3,
+        "pa": 0.4375,
+        "ppm": 8.75
+      }
+    },
+    "luis_sandoval": {
+      "display_name": "Luis Sandoval",
+      "alias_id": 91074593,
+      "member_id": 3434645,
+      "stats": {
+        "eight_ball": {},
+        "nine_ball": {}
+      },
+      "slug": "luis_sandoval",
+      "teams": [
+        "12867593"
+      ],
+      "extra": {
+        "memberNumber": "78504465",
+        "skillLevel": 3,
+        "pa": 0.4714285714285714,
+        "ppm": 9.428571428571429
+      }
+    },
+    "arturo_rivera": {
+      "display_name": "Arturo Rivera",
+      "alias_id": 91109249,
+      "member_id": 3438913,
+      "stats": {
+        "eight_ball": {},
+        "nine_ball": {}
+      },
+      "slug": "arturo_rivera",
+      "teams": [
+        "12867592"
+      ],
+      "extra": {
+        "memberNumber": "78504232",
+        "skillLevel": 2,
+        "pa": 0.1111111111111111,
+        "ppm": 0.3333333333333333
+      }
+    },
+    "ivan_sanchez": {
+      "display_name": "Ivan Sanchez",
+      "alias_id": 91074586,
+      "member_id": 3434939,
+      "stats": {
+        "eight_ball": {},
+        "nine_ball": {}
+      },
+      "slug": "ivan_sanchez",
+      "teams": [
+        "12867593"
+      ],
+      "extra": {
+        "memberNumber": "78504506",
+        "skillLevel": 4,
+        "pa": 0.54,
+        "ppm": 10.8
+      }
+    },
+    "chris_garza": {
+      "display_name": "Chris Garza",
+      "alias_id": 91016687,
+      "member_id": 2311006,
+      "stats": {
+        "eight_ball": {},
+        "nine_ball": {}
+      },
+      "slug": "chris_garza",
+      "teams": [
+        "12864714"
+      ],
+      "extra": {
+        "memberNumber": "78501196",
+        "skillLevel": 6,
+        "pa": 0.4166666666666667,
+        "ppm": 1.25
+      }
+    },
+    "julia_jordan": {
+      "display_name": "Julia Jordan",
+      "alias_id": 91016686,
+      "member_id": 2073721,
+      "stats": {
+        "eight_ball": {},
+        "nine_ball": {}
+      },
+      "slug": "julia_jordan",
+      "teams": [
+        "12864714"
+      ],
+      "extra": {
+        "memberNumber": "78500754",
+        "skillLevel": 5,
+        "pa": 0.5,
+        "ppm": 1.5
+      }
+    },
+    "amanda_cantwell": {
+      "display_name": "Amanda Cantwell",
+      "alias_id": 91016689,
+      "member_id": 2993106,
+      "stats": {
+        "eight_ball": {},
+        "nine_ball": {}
+      },
+      "slug": "amanda_cantwell",
+      "teams": [
+        "12864714"
+      ],
+      "extra": {
+        "memberNumber": "78502883",
+        "skillLevel": 4,
+        "pa": 0.4444444444444444,
+        "ppm": 1.3333333333333333
+      }
+    },
+    "denise_garza": {
+      "display_name": "Denise Garza",
+      "alias_id": 91016691,
+      "member_id": 3316786,
+      "stats": {
+        "eight_ball": {},
+        "nine_ball": {}
+      },
+      "slug": "denise_garza",
+      "teams": [
+        "12864714"
+      ],
+      "extra": {
+        "memberNumber": "78502110",
+        "skillLevel": 4,
+        "pa": 0.2857142857142857,
+        "ppm": 0.8571428571428571
+      }
+    },
+    "juan_sordia": {
+      "display_name": "Juan Sordia",
+      "alias_id": 91046487,
+      "member_id": 2544750,
+      "stats": {
+        "eight_ball": {},
+        "nine_ball": {}
+      },
+      "slug": "juan_sordia",
+      "teams": [
+        "12864634"
+      ],
+      "extra": {
+        "memberNumber": "78501570",
+        "skillLevel": 5,
+        "pa": 0.45,
+        "ppm": 9
+      }
+    },
+    "melody_tijerina": {
+      "display_name": "Melody Tijerina",
+      "alias_id": 91016693,
+      "member_id": 3356943,
+      "stats": {
+        "eight_ball": {},
+        "nine_ball": {}
+      },
+      "slug": "melody_tijerina",
+      "teams": [
+        "12864714"
+      ],
+      "extra": {
+        "memberNumber": "78504051",
+        "skillLevel": 3,
+        "pa": 0.4166666666666667,
+        "ppm": 1.25
+      }
+    },
+    "alex_hernandez": {
+      "display_name": "Alex Hernandez",
+      "alias_id": 91016690,
+      "member_id": 3038547,
+      "stats": {
+        "eight_ball": {},
+        "nine_ball": {}
+      },
+      "slug": "alex_hernandez",
+      "teams": [
+        "12864714"
+      ],
+      "extra": {
+        "memberNumber": "78502880",
+        "skillLevel": 4,
+        "pa": 0.6296296296296297,
+        "ppm": 1.8888888888888888
+      }
+    },
+    "katelynn_lee": {
+      "display_name": "Katelynn Lee",
+      "alias_id": 91074786,
+      "member_id": 2934342,
+      "stats": {
+        "eight_ball": {},
+        "nine_ball": {}
+      },
+      "slug": "katelynn_lee",
+      "teams": [
+        "12864634"
+      ],
+      "extra": {
+        "memberNumber": "78502630",
+        "skillLevel": 6,
+        "pa": 0.47000000000000003,
+        "ppm": 9.4
+      }
+    },
+    "jose_vasquez": {
+      "display_name": "Jose Vasquez",
+      "alias_id": 91016697,
+      "member_id": 2324730,
+      "stats": {
+        "eight_ball": {},
+        "nine_ball": {}
+      },
+      "slug": "jose_vasquez",
+      "teams": [
+        "12864715"
+      ],
+      "extra": {
+        "memberNumber": "78501338",
+        "skillLevel": 6,
+        "pa": 0.16666666666666666,
+        "ppm": 0.5
+      }
+    },
+    "ashley_dartt": {
+      "display_name": "Ashley Dartt",
+      "alias_id": 91016694,
+      "member_id": 2099036,
+      "stats": {
+        "eight_ball": {},
+        "nine_ball": {}
+      },
+      "slug": "ashley_dartt",
+      "teams": [
+        "12864715"
+      ],
+      "extra": {
+        "memberNumber": "78500777",
+        "skillLevel": 5,
+        "pa": 0.5,
+        "ppm": 1.5
+      }
+    },
+    "rogerio_molina": {
+      "display_name": "Rogerio Molina",
+      "alias_id": 91016698,
+      "member_id": 2706283,
+      "stats": {
+        "eight_ball": {},
+        "nine_ball": {}
+      },
+      "slug": "rogerio_molina",
+      "teams": [
+        "12864715"
+      ],
+      "extra": {
+        "memberNumber": "78502483",
+        "skillLevel": 3,
+        "pa": 0.2777777777777778,
+        "ppm": 0.8333333333333334
+      }
+    },
+    "david_hernandez_garces": {
+      "display_name": "David Hernandez Garces",
+      "alias_id": 91016699,
+      "member_id": 3275748,
+      "stats": {
+        "eight_ball": {},
+        "nine_ball": {}
+      },
+      "slug": "david_hernandez_garces",
+      "teams": [
+        "12864715"
+      ],
+      "extra": {
+        "memberNumber": "78503865",
+        "skillLevel": 5,
+        "pa": 0.3333333333333333,
+        "ppm": 1
+      }
+    },
+    "steve_castillo": {
+      "display_name": "Steve Castillo",
+      "alias_id": 91016695,
+      "member_id": 2047605,
+      "stats": {
+        "eight_ball": {},
+        "nine_ball": {}
+      },
+      "slug": "steve_castillo",
+      "teams": [
+        "12864715"
+      ],
+      "extra": {
+        "memberNumber": "78500658",
+        "skillLevel": 5,
+        "pa": 0.48484848484848486,
+        "ppm": 1.4545454545454546
+      }
+    },
+    "gilbert_duran": {
+      "display_name": "Gilbert Duran",
+      "alias_id": 91016696,
+      "member_id": 1651980,
+      "stats": {
+        "eight_ball": {},
+        "nine_ball": {}
+      },
+      "slug": "gilbert_duran",
+      "teams": [
+        "12864715"
+      ],
+      "extra": {
+        "memberNumber": "78500114",
+        "skillLevel": 7,
+        "pa": 0.3333333333333333,
+        "ppm": 1
+      }
+    },
+    "yahir_silvan": {
+      "display_name": "Yahir Silvan",
+      "alias_id": 91016701,
+      "member_id": 3401143,
+      "stats": {
+        "eight_ball": {},
+        "nine_ball": {}
+      },
+      "slug": "yahir_silvan",
+      "teams": [
+        "12864715"
+      ],
+      "extra": {
+        "memberNumber": "78502249",
+        "skillLevel": 2,
+        "pa": 0.4285714285714286,
+        "ppm": 1.2857142857142858
+      }
+    },
+    "tristan_landgraf": {
+      "display_name": "Tristan Landgraf",
+      "alias_id": 91112156,
+      "member_id": 3439196,
+      "stats": {
+        "eight_ball": {},
+        "nine_ball": {}
+      },
+      "slug": "tristan_landgraf",
+      "teams": [
+        "12864715"
+      ],
+      "extra": {
+        "memberNumber": "78504251",
+        "skillLevel": 3,
+        "pa": 0.39999999999999997,
+        "ppm": 1.2
+      }
+    },
+    "eduardo_moreno": {
+      "display_name": "Eduardo Moreno",
+      "alias_id": 91016702,
+      "member_id": 2572365,
+      "stats": {
+        "eight_ball": {},
+        "nine_ball": {}
+      },
+      "slug": "eduardo_moreno",
+      "teams": [
+        "12864716"
+      ],
+      "extra": {
+        "memberNumber": "78501631",
+        "skillLevel": 7,
+        "pa": 0.5151515151515151,
+        "ppm": 1.5454545454545454
+      }
+    },
+    "richard_atkinson": {
+      "display_name": "Richard Atkinson",
+      "alias_id": 91016705,
+      "member_id": 3318162,
+      "stats": {
+        "eight_ball": {},
+        "nine_ball": {}
+      },
+      "slug": "richard_atkinson",
+      "teams": [
+        "12864716"
+      ],
+      "extra": {
+        "memberNumber": "78502111",
+        "skillLevel": 6,
+        "pa": 0.5,
+        "ppm": 1.5
+      }
+    },
+    "heather_galvan": {
+      "display_name": "Heather Galvan",
+      "alias_id": 91016707,
+      "member_id": 3374375,
+      "stats": {
+        "eight_ball": {},
+        "nine_ball": {}
+      },
+      "slug": "heather_galvan",
+      "teams": [
+        "12864716"
+      ],
+      "extra": {
+        "memberNumber": "78502187",
+        "skillLevel": 2,
+        "pa": 0,
+        "ppm": 0
+      }
+    },
+    "antonio_puente": {
+      "display_name": "Antonio Puente $$$$",
+      "alias_id": 91052530,
+      "member_id": 3222570,
+      "stats": {
+        "eight_ball": {},
+        "nine_ball": {}
+      },
+      "slug": "antonio_puente",
+      "teams": [
+        "12864716"
+      ],
+      "extra": {
+        "memberNumber": "78503632",
+        "skillLevel": 4,
+        "pa": 0.4666666666666666,
+        "ppm": 1.4
+      }
+    },
+    "humberto_sanchez": {
+      "display_name": "Humberto Sanchez $$$$",
+      "alias_id": 91052533,
+      "member_id": 3234729,
+      "stats": {
+        "eight_ball": {},
+        "nine_ball": {}
+      },
+      "slug": "humberto_sanchez",
+      "teams": [
+        "12864716"
+      ],
+      "extra": {
+        "memberNumber": "78503816",
+        "skillLevel": 4,
+        "pa": 0.3333333333333333,
+        "ppm": 1
+      }
+    },
+    "enedelia_castillo": {
+      "display_name": "Enedelia Castillo",
+      "alias_id": 91052540,
+      "member_id": 3416798,
+      "stats": {
+        "eight_ball": {},
+        "nine_ball": {}
+      },
+      "slug": "enedelia_castillo",
+      "teams": [
+        "12864716"
+      ],
+      "extra": {
+        "memberNumber": "78504112",
+        "skillLevel": 3,
+        "pa": 0.3888888888888889,
+        "ppm": 1.1666666666666667
+      }
+    },
+    "albert_rodriguez": {
+      "display_name": "Albert Rodriguez",
+      "alias_id": 91052536,
+      "member_id": 3361608,
+      "stats": {
+        "eight_ball": {},
+        "nine_ball": {}
+      },
+      "slug": "albert_rodriguez",
+      "teams": [
+        "12864716"
+      ],
+      "extra": {
+        "memberNumber": "78503993",
+        "skillLevel": 3,
+        "pa": 0.2857142857142857,
+        "ppm": 0.8571428571428571
+      }
+    },
+    "jose_luis_vargas": {
+      "display_name": "Jose Luis Vargas",
+      "alias_id": 91052538,
+      "member_id": 3413730,
+      "stats": {
+        "eight_ball": {},
+        "nine_ball": {}
+      },
+      "slug": "jose_luis_vargas",
+      "teams": [
+        "12864716"
+      ],
+      "extra": {
+        "memberNumber": "78504110",
+        "skillLevel": 4,
+        "pa": 0.2222222222222222,
+        "ppm": 0.6666666666666666
+      }
+    },
+    "javier_aguilar": {
+      "display_name": "Javier Aguilar",
+      "alias_id": 91016709,
+      "member_id": 2644424,
+      "stats": {
+        "eight_ball": {},
+        "nine_ball": {}
+      },
+      "slug": "javier_aguilar",
+      "teams": [
+        "12864717"
+      ],
+      "extra": {
+        "memberNumber": "78501894",
+        "skillLevel": 5,
+        "pa": 0.625,
+        "ppm": 1.875
+      }
+    },
+    "alberto_ramon": {
+      "display_name": "Alberto Ramon",
+      "alias_id": 91016710,
+      "member_id": 2644426,
+      "stats": {
+        "eight_ball": {},
+        "nine_ball": {}
+      },
+      "slug": "alberto_ramon",
+      "teams": [
+        "12864717"
+      ],
+      "extra": {
+        "memberNumber": "78501913",
+        "skillLevel": 6,
+        "pa": 0.26666666666666666,
+        "ppm": 0.8
+      }
+    },
+    "maribel_rebollar": {
+      "display_name": "Maribel Rebollar",
+      "alias_id": 91016711,
+      "member_id": 3128978,
+      "stats": {
+        "eight_ball": {},
+        "nine_ball": {}
+      },
+      "slug": "maribel_rebollar",
+      "teams": [
+        "12864717"
+      ],
+      "extra": {
+        "memberNumber": "78503211",
+        "skillLevel": 4,
+        "pa": 0.3333333333333333,
+        "ppm": 1
+      }
+    },
+    "alexander_banda": {
+      "display_name": "Alexander Banda",
+      "alias_id": 91016715,
+      "member_id": 3260483,
+      "stats": {
+        "eight_ball": {},
+        "nine_ball": {}
+      },
+      "slug": "alexander_banda",
+      "teams": [
+        "12864717"
+      ],
+      "extra": {
+        "memberNumber": "78503791",
+        "skillLevel": 4,
+        "pa": 0.4444444444444444,
+        "ppm": 1.3333333333333333
+      }
+    },
+    "eddie_gonzalez": {
+      "display_name": "Eddie Gonzalez",
+      "alias_id": 91016716,
+      "member_id": 3360510,
+      "stats": {
+        "eight_ball": {},
+        "nine_ball": {}
+      },
+      "slug": "eddie_gonzalez",
+      "teams": [
+        "12864717"
+      ],
+      "extra": {
+        "memberNumber": "78502160",
+        "skillLevel": 3,
+        "pa": 0.6190476190476191,
+        "ppm": 1.8571428571428572
+      }
+    },
+    "emilio_acosta": {
+      "display_name": "Emilio Acosta",
+      "alias_id": 91047962,
+      "member_id": 3374006,
+      "stats": {
+        "eight_ball": {},
+        "nine_ball": {}
+      },
+      "slug": "emilio_acosta",
+      "teams": [
+        "12864717"
+      ],
+      "extra": {
+        "memberNumber": "78502186",
+        "skillLevel": 3,
+        "pa": 0.39999999999999997,
+        "ppm": 1.2
+      }
+    },
+    "felipe_trevino": {
+      "display_name": "Felipe Trevino",
+      "alias_id": 91016712,
+      "member_id": 3156532,
+      "stats": {
+        "eight_ball": {},
+        "nine_ball": {}
+      },
+      "slug": "felipe_trevino",
+      "teams": [
+        "12864717"
+      ],
+      "extra": {
+        "memberNumber": "78503357",
+        "skillLevel": 7,
+        "pa": 0.611111111111111,
+        "ppm": 1.8333333333333333
+      }
+    },
+    "el_bo_tellez": {
+      "display_name": "El Bo Tellez",
+      "alias_id": 91109618,
+      "member_id": 3031992,
+      "stats": {
+        "eight_ball": {},
+        "nine_ball": {}
+      },
+      "slug": "el_bo_tellez",
+      "teams": [
+        "12864717"
+      ],
+      "extra": {
+        "memberNumber": "78502907",
+        "skillLevel": 5,
+        "pa": 0,
+        "ppm": 0
+      }
+    },
+    "noel_canales": {
+      "display_name": "Noel Canales",
+      "alias_id": 91016732,
+      "member_id": 3091445,
+      "stats": {
+        "eight_ball": {},
+        "nine_ball": {}
+      },
+      "slug": "noel_canales",
+      "teams": [
+        "12864719"
+      ],
+      "extra": {
+        "memberNumber": "78503069",
+        "skillLevel": 4,
+        "pa": 0.5333333333333333,
+        "ppm": 1.6
+      }
+    },
+    "enrique_espino": {
+      "display_name": "Enrique Espino",
+      "alias_id": 91016717,
+      "member_id": 2545076,
+      "stats": {
+        "eight_ball": {},
+        "nine_ball": {}
+      },
+      "slug": "enrique_espino",
+      "teams": [
+        "12864718"
+      ],
+      "extra": {
+        "memberNumber": "78501571",
+        "skillLevel": 6,
+        "pa": 0.6666666666666666,
+        "ppm": 2
+      }
+    },
+    "justin_urbano": {
+      "display_name": "Justin Urbano",
+      "alias_id": 91016722,
+      "member_id": 3314754,
+      "stats": {
+        "eight_ball": {},
+        "nine_ball": {}
+      },
+      "slug": "justin_urbano",
+      "teams": [
+        "12864718"
+      ],
+      "extra": {
+        "memberNumber": "78502109",
+        "skillLevel": 5,
+        "pa": 0.5416666666666666,
+        "ppm": 1.625
+      }
+    },
+    "francisco_preciado": {
+      "display_name": "Francisco Preciado",
+      "alias_id": 91016718,
+      "member_id": 2790949,
+      "stats": {
+        "eight_ball": {},
+        "nine_ball": {}
+      },
+      "slug": "francisco_preciado",
+      "teams": [
+        "12864718"
+      ],
+      "extra": {
+        "memberNumber": "78502399",
+        "skillLevel": 4,
+        "pa": 0.5833333333333334,
+        "ppm": 1.75
+      }
+    },
+    "marcos_saldivar": {
+      "display_name": "Marcos Saldivar",
+      "alias_id": 91016324,
+      "member_id": 2572364,
+      "stats": {
+        "eight_ball": {},
+        "nine_ball": {}
+      },
+      "slug": "marcos_saldivar",
+      "teams": [
+        "12864638"
+      ],
+      "extra": {
+        "memberNumber": "78501630",
+        "skillLevel": 5,
+        "pa": 0.65,
+        "ppm": 13
+      }
+    },
+    "agapito_gonzalez": {
+      "display_name": "Agapito Gonzalez",
+      "alias_id": 91016721,
+      "member_id": 3292337,
+      "stats": {
+        "eight_ball": {},
+        "nine_ball": {}
+      },
+      "slug": "agapito_gonzalez",
+      "teams": [
+        "12864718"
+      ],
+      "extra": {
+        "memberNumber": "78503919",
+        "skillLevel": 7,
+        "pa": 0.75,
+        "ppm": 2.25
+      }
+    },
+    "alex_pennington": {
+      "display_name": "Alex Pennington",
+      "alias_id": 91016719,
+      "member_id": 2756591,
+      "stats": {
+        "eight_ball": {},
+        "nine_ball": {}
+      },
+      "slug": "alex_pennington",
+      "teams": [
+        "12864718"
+      ],
+      "extra": {
+        "memberNumber": "78508336",
+        "skillLevel": 4,
+        "pa": 0.625,
+        "ppm": 1.875
+      }
+    },
+    "lizzetty_lara": {
+      "display_name": "Lizzetty Lara",
+      "alias_id": 91016723,
+      "member_id": 3399554,
+      "stats": {
+        "eight_ball": {},
+        "nine_ball": {}
+      },
+      "slug": "lizzetty_lara",
+      "teams": [
+        "12864718"
+      ],
+      "extra": {
+        "memberNumber": "78502242",
+        "skillLevel": 2,
+        "pa": 0.4761904761904762,
+        "ppm": 1.4285714285714286
+      }
+    },
+    "mami_salinas": {
+      "display_name": "Mami Salinas",
+      "alias_id": 91016730,
+      "member_id": 2936898,
+      "stats": {
+        "eight_ball": {},
+        "nine_ball": {}
+      },
+      "slug": "mami_salinas",
+      "teams": [
+        "12864719"
+      ],
+      "extra": {
+        "memberNumber": "78502607",
+        "skillLevel": 4,
+        "pa": 0.2962962962962963,
+        "ppm": 0.8888888888888888
+      }
+    },
+    "mr_vegas_camacho": {
+      "display_name": "Mr. Vegas Camacho",
+      "alias_id": 91016726,
+      "member_id": 2422506,
+      "stats": {
+        "eight_ball": {},
+        "nine_ball": {}
+      },
+      "slug": "mr_vegas_camacho",
+      "teams": [
+        "12864719"
+      ],
+      "extra": {
+        "memberNumber": "78501257",
+        "skillLevel": 7,
+        "pa": 0.3333333333333333,
+        "ppm": 1
+      }
+    },
+    "ceci_villafuerte": {
+      "display_name": "Ceci Villafuerte",
+      "alias_id": 91016334,
+      "member_id": 2910208,
+      "stats": {
+        "eight_ball": {},
+        "nine_ball": {}
+      },
+      "slug": "ceci_villafuerte",
+      "teams": [
+        "12864639"
+      ],
+      "extra": {
+        "memberNumber": "78502393",
+        "skillLevel": 3,
+        "pa": 0.425,
+        "ppm": 8.5
+      }
+    },
+    "daddy_salinas_jr": {
+      "display_name": "Daddy Salinas Jr",
+      "alias_id": 91016729,
+      "member_id": 2936897,
+      "stats": {
+        "eight_ball": {},
+        "nine_ball": {}
+      },
+      "slug": "daddy_salinas_jr",
+      "teams": [
+        "12864719"
+      ],
+      "extra": {
+        "memberNumber": "78502588",
+        "skillLevel": 5,
+        "pa": 0.4761904761904762,
+        "ppm": 1.4285714285714286
+      }
+    },
+    "hugo_teran": {
+      "display_name": "Hugo Teran",
+      "alias_id": 91016331,
+      "member_id": 2211324,
+      "stats": {
+        "eight_ball": {},
+        "nine_ball": {}
+      },
+      "slug": "hugo_teran",
+      "teams": [
+        "12864639"
+      ],
+      "extra": {
+        "memberNumber": "78500503",
+        "skillLevel": 6,
+        "pa": 0.49000000000000005,
+        "ppm": 9.8
+      }
+    },
+    "keyla_de_la_cerda": {
+      "display_name": "Keyla De La Cerda",
+      "alias_id": 91016731,
+      "member_id": 3073969,
+      "stats": {
+        "eight_ball": {},
+        "nine_ball": {}
+      },
+      "slug": "keyla_de_la_cerda",
+      "teams": [
+        "12864719"
+      ],
+      "extra": {
+        "memberNumber": "78503004",
+        "skillLevel": 3,
+        "pa": 0.8095238095238094,
+        "ppm": 2.4285714285714284
+      }
+    },
+    "la_bish_castaneda": {
+      "display_name": "La Bish Castaneda",
+      "alias_id": 91016725,
+      "member_id": 2292958,
+      "stats": {
+        "eight_ball": {},
+        "nine_ball": {}
+      },
+      "slug": "la_bish_castaneda",
+      "teams": [
+        "12864719"
+      ],
+      "extra": {
+        "memberNumber": "78501188",
+        "skillLevel": 4,
+        "pa": 0.6,
+        "ppm": 1.8
+      }
+    },
+    "don_popis_saldivar": {
+      "display_name": "Don Popis Saldivar",
+      "alias_id": 91016727,
+      "member_id": 2730496,
+      "stats": {
+        "eight_ball": {},
+        "nine_ball": {}
+      },
+      "slug": "don_popis_saldivar",
+      "teams": [
+        "12864719"
+      ],
+      "extra": {
+        "memberNumber": "78502531",
+        "skillLevel": 5,
+        "pa": 0.19999999999999998,
+        "ppm": 0.6
+      }
+    },
+    "carlos_orenday": {
+      "display_name": "Carlos Orenday",
+      "alias_id": 91016734,
+      "member_id": 3134543,
+      "stats": {
+        "eight_ball": {},
+        "nine_ball": {}
+      },
+      "slug": "carlos_orenday",
+      "teams": [
+        "12864720"
+      ],
+      "extra": {
+        "memberNumber": "78503287",
+        "skillLevel": 7,
+        "pa": 0.5925925925925926,
+        "ppm": 1.7777777777777777
+      }
+    },
+    "ernesto_lopez": {
+      "display_name": "Ernesto Lopez",
+      "alias_id": 91016733,
+      "member_id": 2815958,
+      "stats": {
+        "eight_ball": {},
+        "nine_ball": {}
+      },
+      "slug": "ernesto_lopez",
+      "teams": [
+        "12864720"
+      ],
+      "extra": {
+        "memberNumber": "78502689",
+        "skillLevel": 7,
+        "pa": 0.5238095238095238,
+        "ppm": 1.5714285714285714
+      }
+    },
+    "laura_vega_guevara": {
+      "display_name": "Laura Vega Guevara",
+      "alias_id": 91016737,
+      "member_id": 3275794,
+      "stats": {
+        "eight_ball": {},
+        "nine_ball": {}
+      },
+      "slug": "laura_vega_guevara",
+      "teams": [
+        "12864720"
+      ],
+      "extra": {
+        "memberNumber": "78503885",
+        "skillLevel": 4,
+        "pa": 0.611111111111111,
+        "ppm": 1.8333333333333333
+      }
+    },
+    "raul_mata": {
+      "display_name": "Raul Mata",
+      "alias_id": 91016735,
+      "member_id": 3166354,
+      "stats": {
+        "eight_ball": {},
+        "nine_ball": {}
+      },
+      "slug": "raul_mata",
+      "teams": [
+        "12864720"
+      ],
+      "extra": {
+        "memberNumber": "78502046",
+        "skillLevel": 4,
+        "pa": 0.5833333333333334,
+        "ppm": 1.75
+      }
+    },
+    "brian_ortiz": {
+      "display_name": "Brian Ortiz",
+      "alias_id": 91040677,
+      "member_id": 3183390,
+      "stats": {
+        "eight_ball": {},
+        "nine_ball": {}
+      },
+      "slug": "brian_ortiz",
+      "teams": [
+        "12864720"
+      ],
+      "extra": {
+        "memberNumber": "78503452",
+        "skillLevel": 4,
+        "pa": 0.4444444444444444,
+        "ppm": 1.3333333333333333
+      }
+    },
+    "javier_galvan": {
+      "display_name": "Javier Galvan",
+      "alias_id": 91052508,
+      "member_id": 3433016,
+      "stats": {
+        "eight_ball": {},
+        "nine_ball": {}
+      },
+      "slug": "javier_galvan",
+      "teams": [
+        "12864720"
+      ],
+      "extra": {
+        "memberNumber": "78504332",
+        "skillLevel": 3,
+        "pa": 0.5,
+        "ppm": 1.5
+      }
+    },
+    "arely_lugo": {
+      "display_name": "Arely Lugo",
+      "alias_id": 91052647,
+      "member_id": 3132086,
+      "stats": {
+        "eight_ball": {},
+        "nine_ball": {}
+      },
+      "slug": "arely_lugo",
+      "teams": [
+        "12864720"
+      ],
+      "extra": {
+        "memberNumber": "78503313",
+        "skillLevel": 3,
+        "pa": 0.3703703703703704,
+        "ppm": 1.1111111111111112
+      }
+    },
+    "jeffery_martinez": {
+      "display_name": "Jeffery Martinez",
+      "alias_id": 91094638,
+      "member_id": 3181524,
+      "stats": {
+        "eight_ball": {},
+        "nine_ball": {}
+      },
+      "slug": "jeffery_martinez",
+      "teams": [
+        "12864640"
+      ],
+      "extra": {
+        "memberNumber": "78503384",
+        "skillLevel": 5,
+        "pa": 0.5,
+        "ppm": 10
+      }
+    },
+    "andres_garcia": {
+      "display_name": "Andres Garcia",
+      "alias_id": 91046400,
+      "member_id": 3435110,
+      "stats": {
+        "eight_ball": {},
+        "nine_ball": {}
+      },
+      "slug": "andres_garcia",
+      "teams": [
+        "12864714"
+      ],
+      "extra": {
+        "memberNumber": "78504483",
+        "skillLevel": 5,
+        "pa": 0.2380952380952381,
+        "ppm": 0.7142857142857143
+      }
+    },
+    "kaylen_garcia": {
+      "display_name": "Kaylen Garcia",
+      "alias_id": 91074785,
+      "member_id": 3339664,
+      "stats": {
+        "eight_ball": {},
+        "nine_ball": {}
+      },
+      "slug": "kaylen_garcia",
+      "teams": [
+        "12864714"
+      ],
+      "extra": {
+        "memberNumber": "78504003",
+        "skillLevel": 4,
+        "pa": 0.5,
+        "ppm": 1.5
+      }
+    },
+    "jose_sierra": {
+      "display_name": "Jose Sierra",
+      "alias_id": 91016720,
+      "member_id": 3234695,
+      "stats": {
+        "eight_ball": {},
+        "nine_ball": {}
+      },
+      "slug": "jose_sierra",
+      "teams": [
+        "12864718"
+      ],
+      "extra": {
+        "memberNumber": "78503750",
+        "skillLevel": 4,
+        "pa": 0.4761904761904762,
+        "ppm": 1.4285714285714286
+      }
+    },
+    "noe_garza": {
+      "display_name": "Noe Garza",
+      "alias_id": 91016724,
+      "member_id": 3415339,
+      "stats": {
+        "eight_ball": {},
+        "nine_ball": {}
+      },
+      "slug": "noe_garza",
+      "teams": [
+        "12864718"
+      ],
+      "extra": {
+        "memberNumber": "78503662",
+        "skillLevel": 2,
+        "pa": 0.48484848484848486,
+        "ppm": 1.4545454545454546
+      }
+    },
+    "macho_alpha_contreras": {
+      "display_name": "Macho Alpha Contreras",
+      "alias_id": 91016728,
+      "member_id": 2792334,
+      "stats": {
+        "eight_ball": {},
+        "nine_ball": {}
+      },
+      "slug": "macho_alpha_contreras",
+      "teams": [
+        "12864719"
+      ],
+      "extra": {
+        "memberNumber": "78502539",
+        "skillLevel": 4,
+        "pa": 0.1111111111111111,
+        "ppm": 0.3333333333333333
+      }
+    },
+    "stephanie_alvear": {
+      "display_name": "Stephanie Alvear",
+      "alias_id": 91112157,
+      "member_id": 3439227,
+      "stats": {
+        "eight_ball": {},
+        "nine_ball": {}
+      },
+      "slug": "stephanie_alvear",
+      "teams": [
+        "12864720"
+      ],
+      "extra": {
+        "memberNumber": "78504259",
+        "skillLevel": 3,
+        "pa": 0.6666666666666666,
+        "ppm": 2
+      }
+    }
+  },
+  "member_to_alias": {
+    "3400522": [
+      91040482,
+      91040488
+    ],
+    "1689161": [
+      91052656,
+      91052648
+    ],
+    "3220735": [
+      91040487,
+      91040489
+    ],
+    "3432311": [
+      91043354,
+      91043355
+    ],
+    "2532146": [
+      91041128,
+      91041133
+    ],
+    "3353843": [
+      91052658,
+      91052651
+    ],
+    "3434645": [
+      91071833,
+      91074593
+    ],
+    "3438913": [
+      91109249
+    ],
+    "3434939": [
+      91074586
+    ],
+    "2311006": [
+      91016293,
+      91016687
+    ],
+    "2073721": [
+      91016291,
+      91016686
+    ],
+    "2993106": [
+      91016295,
+      91016689
+    ],
+    "3316786": [
+      91016297,
+      91016691
+    ],
+    "2544750": [
+      91046487
+    ],
+    "3356943": [
+      91016298,
+      91016693
+    ],
+    "3038547": [
+      91051208,
+      91016690
+    ],
+    "2934342": [
+      91074786
+    ],
+    "2324730": [
+      91016302,
+      91016697
+    ],
+    "2099036": [
+      91016299,
+      91016694
+    ],
+    "2706283": [
+      91016303,
+      91016698
+    ],
+    "3275748": [
+      91016304,
+      91016699
+    ],
+    "2047605": [
+      91016300,
+      91016695
+    ],
+    "1651980": [
+      91016301,
+      91016696
+    ],
+    "3401143": [
+      91016306,
+      91016701
+    ],
+    "3439196": [
+      91112162,
+      91112156
+    ],
+    "2572365": [
+      91016307,
+      91016702
+    ],
+    "3318162": [
+      91016311,
+      91016705
+    ],
+    "3374375": [
+      91016313,
+      91016707
+    ],
+    "3222570": [
+      91052541,
+      91052530
+    ],
+    "3234729": [
+      91052542,
+      91052533
+    ],
+    "3416798": [
+      91052544,
+      91052540
+    ],
+    "3361608": [
+      91052545,
+      91052536
+    ],
+    "3413730": [
+      91052586,
+      91052538
+    ],
+    "2644424": [
+      91016316,
+      91016709
+    ],
+    "2644426": [
+      91016317,
+      91016710
+    ],
+    "3128978": [
+      91016318,
+      91016711
+    ],
+    "3260483": [
+      91016321,
+      91016715
+    ],
+    "3360510": [
+      91016322,
+      91016716
+    ],
+    "3374006": [
+      91047965,
+      91047962
+    ],
+    "3156532": [
+      91094585,
+      91016712
+    ],
+    "3031992": [
+      91112159,
+      91109618
+    ],
+    "3091445": [
+      91016326,
+      91016732
+    ],
+    "2545076": [
+      91016323,
+      91016717
+    ],
+    "3314754": [
+      91016329,
+      91016722
+    ],
+    "2790949": [
+      91016325,
+      91016718
+    ],
+    "2572364": [
+      91016324
+    ],
+    "3292337": [
+      91016328,
+      91016721
+    ],
+    "2756591": [
+      91016327,
+      91016719
+    ],
+    "3399554": [
+      91016330,
+      91016723
+    ],
+    "2936898": [
+      91016337,
+      91016730
+    ],
+    "2422506": [
+      91016333,
+      91016726
+    ],
+    "2910208": [
+      91016334
+    ],
+    "2936897": [
+      91016336,
+      91016729
+    ],
+    "2211324": [
+      91016331
+    ],
+    "3073969": [
+      91016338,
+      91016731
+    ],
+    "2292958": [
+      91016332,
+      91016725
+    ],
+    "2730496": [
+      91016335,
+      91016727
+    ],
+    "3134543": [
+      91016340,
+      91016734
+    ],
+    "2815958": [
+      91016339,
+      91016733
+    ],
+    "3275794": [
+      91016344,
+      91016737
+    ],
+    "3166354": [
+      91016341,
+      91016735
+    ],
+    "3183390": [
+      91016342,
+      91040677
+    ],
+    "3433016": [
+      91052515,
+      91052508
+    ],
+    "3132086": [
+      91052650,
+      91052647
+    ],
+    "3181524": [
+      91094638
+    ],
+    "3435110": [
+      91046400
+    ],
+    "3339664": [
+      91074785
+    ],
+    "3234695": [
+      91016720
+    ],
+    "3415339": [
+      91016724
+    ],
+    "2792334": [
+      91016728
+    ],
+    "3439227": [
+      91112157
+    ]
+  }
+}

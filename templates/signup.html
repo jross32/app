@@ -1,0 +1,27 @@
+{% extends 'base.html' %}
+{% block title %}Sign Up | Cüe-Ligans{% endblock %}
+{% block content %}
+<div class="container py-5" style="max-width: 560px;">
+  <div class="card bg-dark soft-border shadow-soft">
+    <div class="card-body">
+      <h5 class="text-info mb-2"><i class="fa-solid fa-user-plus me-2"></i>Sign Up</h5>
+      {% if error %}<div class="alert alert-danger py-2">{{ error }}</div>{% endif %}
+      <form method="POST">
+        <div class="mb-3">
+          <label class="form-label">Username</label>
+          <input type="text" name="username" class="form-control bg-dark text-light soft-border" required minlength="3" maxlength="30">
+        </div>
+        <div class="mb-3">
+          <label class="form-label">Password</label>
+          <input type="password" name="password" class="form-control bg-dark text-light soft-border" required minlength="6">
+        </div>
+        <div class="mb-3">
+          <label class="form-label">Confirm password</label>
+          <input type="password" name="confirm_password" class="form-control bg-dark text-light soft-border" required minlength="6">
+        </div>
+        <button class="btn btn-info text-dark fw-bold" type="submit">Create account</button>
+      </form>
+    </div>
+  </div>
+</div>
+{% endblock %}

@@ -1,0 +1,25 @@
+.venv/
+__pycache__/
+*.pyc
+*.db
+*.sqlite
+*.log
+
+# Local data & captures
+data/backups/
+data/apa_api_captures/
+data/apa_url_discovery/
+scripts/scraper_sniffer/**/apa_api_captures/
+scripts/scraper_sniffer/**/apa_url_discovery/
+
+# OS/IDE
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/
+
+# Lockfiles/tmp
+*.tmp
+*.swp
+*.swo
+*.bak

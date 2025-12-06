@@ -1,0 +1,76 @@
+{
+  "title": "APA Team Manager - APA Rules & Scoring Reference",
+  "scoring": {
+    "8_ball": {
+      "on_hill_win": 2,
+      "on_hill_lose": 1,
+      "shutout_win": 3,
+      "shutout_lose": 0,
+      "default_lose": 0,
+      "notes": "If a player is on the hill and wins, they get 2 points. If they lose, they get 1 point. If a player wins and the opponent does not win a single game, the winner gets 3 points, loser gets 0. The loser always gets 0 unless they are on the hill."
+    },
+    "9_ball": {
+      "standard_apa": true,
+      "notes": "Standard APA 9-ball scoring applies. See team manual for details."
+    },
+    "bonus_points": {
+      "8_ball": 3,
+      "9_ball": 15,
+      "notes": "Bonus points are awarded for completing dues and paperwork on time. These are already reflected in final match scores in the data. In real matches, if your team gets 7 points in 8-ball, you may actually be awarded 7+3=10 points."
+    }
+  },
+  "general_rules": [
+    "Team rosters, match schedules, and standings are managed per APA guidelines.",
+    "Dues must be paid weekly and on time to avoid penalties.",
+    "All players must be registered and have valid skill levels.",
+    "Forfeits, substitutions, and match reschedules must follow APA policy.",
+    "Sportsmanship and league etiquette are required at all times.",
+    "For full rules, see the official team manual: data/team-manual-english.pdf."
+  ],
+  "app_usage": [
+    "Use the dashboard to track standings, dues, and schedule.",
+    "Roster and player stats are updated weekly.",
+    "Admins can upload new data files via the Admin Panel (password required).",
+    "All data is validated for APA compliance and integrity."
+  ],
+  "manual_summary": "See data/team-manual-english.pdf for full APA rules, match procedures, sportsmanship, and league policies. (Manual content can be summarized and added here as needed.)",
+  "etiquette": [
+    "Treat your opponent as you would like to be treated.",
+    "Wish your opponent good luck before the match begins.",
+    "Stay away from the table and out of your opponent’s line of sight when they are shooting.",
+    "Do not engage your opponent in conversation while they are shooting.",
+    "Call your own fouls – do not wait for a foul to be called on you, or to be asked if you committed a foul.",
+    "Pay attention to your match.",
+    "Be ready to shoot when it is your turn.",
+    "Do not break down your cue until your match is over.",
+    "If you are expected to play the next match, have your cue and enough money for the table (if needed) ready.",
+    "Begin your match as soon as the previous match is over.",
+    "Observe all time guidelines.",
+    "Show respect to your opponent, win or lose.",
+    "Cheer for your teammate, but don’t root against your opponent.",
+    "Be courteous and polite to the staff at host locations.",
+    "Respect the equipment and house rules.",
+    "Never smoke at the table or set drinks on the pool tables."
+  ],
+  "time_guidelines": {
+    "8_ball_team_match": "4 hours max",
+    "8_ball_individual_rack": "8-10 minutes average",
+    "9_ball_team_match": "3.5 hours max",
+    "9_ball_individual_match": "30-40 minutes average",
+    "masters_team_match": "3 hours max",
+    "doubles_team_match": "2 hours max",
+    "doubles_8_ball_rack": "8-10 minutes average",
+    "doubles_9_ball_match": "30-40 minutes average",
+    "doubles_match": "45 minutes average",
+    "average_shot": "20 seconds",
+    "special_shooting_situation": "45 seconds",
+    "timeout": "1 minute",
+    "new_player_selection": "1 minute",
+    "team_match_forfeit": "15 minutes past appointed start time"
+  },
+  "league_structure": {
+    "description": "APA operates through a network of independent franchise owners called League Operators (LOs). League Operators have full authority to make rulings concerning all aspects of the League in their local area. APA stays in close contact with its League Operators, keeps them informed of all changes, and provides support.",
+    "global": "The American Poolplayers Association spans the globe, including the Canadian Poolplayers Association (CPA), the Japanese Poolplayers Association (JPA), and the APA of Singapore. The League is over a quarter million members strong and growing.",
+    "spirit_of_rules": "It is impossible to cover every situation with written rules. Play within the Spirit of the Rules. Common sense must prevail. Teams that try to gain an advantage by creating their own interpretations are subject to sportsmanship violations. Win at the table and not from the chair."
+  }
+}

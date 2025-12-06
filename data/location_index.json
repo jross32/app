@@ -1,0 +1,22 @@
+{
+  "by_location_id": {
+    "1000": {
+      "id": 1000,
+      "name": "DK's Stix & Stuff"
+    },
+    "1001": {
+      "id": 1001,
+      "name": "The Lucky Barrel"
+    }
+  },
+  "by_name": {
+    "DK's Stix & Stuff": {
+      "id": 1000,
+      "name": "DK's Stix & Stuff"
+    },
+    "The Lucky Barrel": {
+      "id": 1001,
+      "name": "The Lucky Barrel"
+    }
+  }
+}

@@ -1,0 +1,1839 @@
+﻿{% extends 'base.html' %}
+{% block content %}
+<style>
+  .hero-badge {
+    background: radial-gradient(circle at 20% 20%, #0ff0ff 0%, #0fa5d9 45%, #0784b5 100%);
+    padding: 1rem 2rem;
+    border-radius: 16px;
+    box-shadow: 0 14px 32px rgba(13, 208, 255, 0.35);
+    display: inline-flex;
+    align-items: center;
+    gap: 0.75rem;
+    color: #04121f;
+    font-weight: 800;
+    letter-spacing: 0.6px;
+    font-size: 1.5rem;
+  }
+  .soft-border { border-color: rgba(255,255,255,.12)!important; }
+  .shadow-soft { box-shadow: 0 10px 28px rgba(0,0,0,.55); }
+  .subtle { color: rgba(255,255,255,.72); }
+  .pill { padding:.35rem .6rem; border-radius:999px; background:rgba(0,191,255,.12); color:#b8eaff; font-size:.8rem; border:1px solid rgba(0,191,255,.2); }
+  html, body { overflow-x:hidden; }
+  .lab-grid { display:grid; grid-template-columns: repeat(auto-fit, minmax(420px, 1fr)); gap:1.25rem; align-items:start; }
+  .lab-card { background:#0d1117; border:1px solid rgba(255,255,255,.08); }
+  .scroll-area { max-height: 320px; overflow:auto; }
+  .lab-card { position:relative; overflow:hidden; }
+  .lab-card::before { content:""; position:absolute; inset:0; height:6px; background:linear-gradient(90deg,#12d6ff,#7cf4ff,#12d6ff); opacity:0.8; }
+  .lab-card .card-body { background: radial-gradient(circle at 10% 10%, rgba(18,214,255,0.08), transparent 30%), radial-gradient(circle at 90% 20%, rgba(255,215,0,0.08), transparent 32%), #0d1117; border-radius: 8px; }
+  .lab-card h5 { letter-spacing:0.3px; }
+</style>
+
+<div class="container py-4">
+  <div class="position-relative mb-4" style="min-height:3.5rem;">
+    <div class="d-flex justify-content-center align-items-center" style="height:100%;">
+      <div class="hero-badge">
+        <i class="fa-solid fa-flask"></i>
+        <span>LAB — Advanced Tools</span>
+      </div>
+  </div>
+</div>
+
+<!-- Progression Modal -->
+<div class="modal fade" id="progressionModal" tabindex="-1" aria-labelledby="progressionModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered modal-lg">
+    <div class="modal-content bg-dark border-secondary">
+      <div class="modal-header">
+        <h5 class="modal-title" id="progressionModalLabel">Skill Progression</h5>
+        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body" id="progressionModalBody">
+        <div class="text-secondary small">Loading…</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+  <div class="alert alert-info bg-dark border-info text-light soft-border shadow-soft">
+    <div class="d-flex align-items-start">
+      <div class="me-3"><i class="fa-solid fa-book-open-reader fa-lg text-info"></i></div>
+      <div>
+        <div class="h6 mb-1">How LAB builds predictions</div>
+        <div class="small text-secondary">
+          We blend session stats (SL, PPM, PA%, win%) with match history: race-to charts, hill/hill results, performance vs higher/equal/lower SL, consistency/variance, and recent momentum. Each card uses the same data model so updates to your league JSON flow into every tool automatically.
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="lab-grid">
+    <!-- Skill Progression -->
+    <div class="card lab-card text-light shadow-soft">
+      <div class="card-body">
+        <div class="d-flex align-items-center justify-content-between" data-bs-toggle="collapse" data-bs-target="#progressionCollapse" role="button" aria-expanded="false">
+          <div>
+            <h5 class="mb-0">Skill Progression</h5>
+            <div class="text-secondary small">Track a player’s SL per week. Defaults to your linked profile.</div>
+          </div>
+          <i class="fa-solid fa-chevron-down text-secondary"></i>
+        </div>
+        <div class="collapse mt-3" id="progressionCollapse">
+          <form class="row g-3" id="progressionForm">
+            <input type="hidden" name="card" value="progression">
+            <div class="col-12 col-md-6">
+              <label class="form-label">Player</label>
+              <select name="progression_player" class="form-select bg-dark text-light soft-border">
+                {% for p in player_options %}
+                <option value="{{ p.id }}" {% if progression_result and progression_result.player_id==p.id %}selected{% elif not progression_result and current_user and current_user.player_ref==p.id %}selected{% endif %}>{{ p.name }}</option>
+                {% endfor %}
+              </select>
+            </div>
+            <div class="col-12 col-md-4">
+              <label class="form-label">Format</label>
+              <select name="progression_format" class="form-select bg-dark text-light soft-border">
+                <option value="8-ball" {% if progression_result and progression_result.format=='8-ball' %}selected{% endif %}>8-Ball</option>
+                <option value="9-ball" {% if progression_result and progression_result.format=='9-ball' %}selected{% endif %}>9-Ball</option>
+              </select>
+            </div>
+            <div class="col-12 col-md-2 d-flex align-items-end">
+              <button class="btn btn-info w-100" type="submit" id="progressionSubmit">View</button>
+            </div>
+          </form>
+          <div class="mt-3">
+            <div id="progressionInline" class="text-secondary small">Choose a player and click View to see progression.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- Matchup Predictor -->
+    <div class="card lab-card text-light shadow-soft">
+      <div class="card-body">
+        <div class="d-flex align-items-center justify-content-between" data-bs-toggle="collapse" data-bs-target="#predictorCollapse" role="button" aria-expanded="false">
+          <div>
+            <h5 class="mb-0">Matchup Predictor</h5>
+            <div class="text-secondary small">Race-aware team vs team projection with momentum and matchup bias.</div>
+          </div>
+          <i class="fa-solid fa-chevron-down text-secondary"></i>
+        </div>
+        <div class="collapse mt-3" id="predictorCollapse">
+          <form class="row g-3" id="predictorForm">
+            <div class="col-12 col-md-4">
+              <label class="form-label">Division</label>
+              <select class="form-select bg-dark text-light soft-border" name="division_id" id="predictDivision">
+                {% for d in divisions %}
+                <option value="{{ d.id }}" {% if predictor_div and predictor_div==d.id %}selected{% endif %}>{{ d.format|replace('-', ' ') }}</option>
+                {% endfor %}
+              </select>
+            </div>
+            <div class="col-12 col-md-4">
+              <label class="form-label">Our team</label>
+              {% set sel_div = predictor_div or divisions[0].id %}
+              <select class="form-select bg-dark text-light soft-border" name="our_team" id="predictOur">
+                {% for t in teams_by_div.get(sel_div, []) %}
+                <option value="{{ t.id }}" data-format="{{ t.format }}" {% if (predictor_our and predictor_our==t.id) or ((not predictor_our) and ('cue' in t.id)) %}selected{% endif %}>{{ t.name }}</option>
+                {% endfor %}
+              </select>
+            </div>
+            <div class="col-12 col-md-4">
+              <label class="form-label">Opponent team</label>
+              <select class="form-select bg-dark text-light soft-border" name="opp_team" id="predictOpp">
+                {% for t in teams_by_div.get(sel_div, []) %}
+                <option value="{{ t.id }}" data-format="{{ t.format }}" {% if predictor_opp and predictor_opp==t.id %}selected{% endif %}>{{ t.name }}</option>
+                {% endfor %}
+              </select>
+            </div>
+            <div class="col-12">
+              <button class="btn btn-outline-info" type="submit"><i class="fa-solid fa-chart-line me-1"></i> Predict</button>
+            </div>
+          </form>
+          <div class="mt-3" id="predictorResult">
+            <div class="text-secondary small">Select teams and predict.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Momentum Analyzer -->
+    <div class="card lab-card text-light shadow-soft">
+      <div class="card-body">
+        <div class="d-flex align-items-center justify-content-between" data-bs-toggle="collapse" data-bs-target="#momentumCollapse" role="button" aria-expanded="false">
+          <div>
+            <h5 class="mb-0">Momentum Analyzer</h5>
+            <div class="text-secondary small">See who is hot or cold by team or player over recent matches.</div>
+          </div>
+          <i class="fa-solid fa-chevron-down text-secondary"></i>
+        </div>
+        <div class="collapse mt-3" id="momentumCollapse">
+          <form class="row g-3" id="momentumForm">
+            <div class="col-12 col-md-4">
+              <label class="form-label">Scope</label>
+              <select class="form-select bg-dark text-light soft-border" name="momentum_scope">
+                <option value="team">Team Momentum</option>
+                <option value="player">Player Momentum</option>
+              </select>
+            </div>
+            <div class="col-6 col-md-4">
+              <label class="form-label">Format</label>
+              <select class="form-select bg-dark text-light soft-border" name="momentum_format">
+                <option value="8-ball">8-Ball</option>
+                <option value="9-ball" selected>9-Ball</option>
+              </select>
+            </div>
+            <div class="col-6 col-md-3">
+              <label class="form-label">Range</label>
+              <select class="form-select bg-dark text-light soft-border" name="momentum_range">
+                <option value="3">Last 3 matches</option>
+                <option value="5" selected>Last 5 matches</option>
+                <option value="3w">Last 3 weeks</option>
+                <option value="session">Full session</option>
+              </select>
+            </div>
+            <div class="col-12 col-md-1 d-flex align-items-end">
+              <button class="btn btn-outline-warning w-100" type="submit">Analyze</button>
+            </div>
+          </form>
+          <div class="mt-3" id="momentumResult">
+            <div class="text-secondary small">Run an analysis to see momentum.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Simulation Model -->
+    <div class="card lab-card text-light shadow-soft">
+      <div class="card-body">
+        <div class="d-flex align-items-center justify-content-between" data-bs-toggle="collapse" data-bs-target="#simulateCollapse" role="button" aria-expanded="false">
+          <div>
+            <h5 class="mb-0">Simulation Model</h5>
+            <div class="text-secondary small">Run season what-ifs with adjustable sims, weeks, and variance.</div>
+          </div>
+          <i class="fa-solid fa-chevron-down text-secondary"></i>
+        </div>
+        <div class="collapse mt-3" id="simulateCollapse">
+          <form class="row g-3" id="simulateForm">
+            <div class="col-12 col-md-4">
+              <label class="form-label">Division</label>
+              <select class="form-select bg-dark text-light soft-border" name="sim_division">
+                {% for d in divisions %}
+                <option value="{{ d.id }}">{{ d.name }} ({{ d.format }})</option>
+                {% endfor %}
+              </select>
+            </div>
+            <div class="col-6 col-md-4">
+              <label class="form-label">Simulations</label>
+              <input type="number" name="sim_count" class="form-control bg-dark text-light soft-border" value="200" min="10" max="2000">
+            </div>
+            <div class="col-6 col-md-4">
+              <label class="form-label">Remaining weeks</label>
+              <input type="number" name="sim_weeks" class="form-control bg-dark text-light soft-border" value="4" min="1" max="10">
+            </div>
+            <div class="col-12">
+              <label class="form-label">Variance (lower = steadier scores)</label>
+              <input type="range" name="sim_variance" class="form-range" min="0.02" max="0.5" step="0.02" value="0.1">
+            </div>
+            <div class="col-12">
+              <button class="btn btn-outline-warning" type="submit"><i class="fa-solid fa-rotate me-1"></i> Run Simulation</button>
+            </div>
+          </form>
+          <div class="table-responsive mt-3" id="simResult">
+            <div class="text-secondary small">Run a simulation to see probabilities.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Lineup Optimizer -->
+    <div class="card lab-card text-light shadow-soft">
+      <div class="card-body">
+        <div class="d-flex align-items-center justify-content-between" data-bs-toggle="collapse" data-bs-target="#lineupCollapse" role="button" aria-expanded="false">
+          <div>
+            <h5 class="mb-0">Lineup Optimizer</h5>
+            <div class="text-secondary small">Tinker with roster, SL caps, strategy modes, and see best 5-player builds.</div>
+          </div>
+          <i class="fa-solid fa-chevron-down text-secondary"></i>
+        </div>
+        <div class="collapse mt-3" id="lineupCollapse">
+          <form class="row g-3" id="lineupForm">
+            <div class="col-12 col-md-3">
+              <label class="form-label">Format</label>
+              <select class="form-select bg-dark text-light soft-border" name="lineup_format" id="lineupFormat">
+                <option value="8-ball" {% if lineup_default_format=='8-ball' %}selected{% endif %}>8-Ball</option>
+                <option value="9-ball" {% if lineup_default_format=='9-ball' %}selected{% endif %}>9-Ball</option>
+              </select>
+            </div>
+            <div class="col-12 col-md-4">
+              <label class="form-label">Team</label>
+              <select class="form-select bg-dark text-light soft-border" name="lineup_team" id="lineupTeam">
+                {% for div_id, team_list in teams_by_div.items() %}
+                  {% for t in team_list %}
+                  <option value="{{ t.id }}" data-format="{{ t.format }}" {% if lineup_default_team==t.id %}selected{% endif %}>{{ t.name }}</option>
+                  {% endfor %}
+                {% endfor %}
+              </select>
+            </div>
+            <div class="col-6 col-md-2">
+              <label class="form-label">SL Cap</label>
+              <input type="number" class="form-control bg-dark text-light soft-border" name="sl_cap" id="lineupCap" value="23" min="10" max="40">
+            </div>
+            <div class="col-6 col-md-3">
+              <label class="form-label">Strategy</label>
+              <select class="form-select bg-dark text-light soft-border" name="strategy" id="lineupStrategy">
+                <option value="balanced">Balanced</option>
+                <option value="max_points">Max Points</option>
+                <option value="upset">Upset Potential</option>
+              </select>
+            </div>
+            <div class="col-12 col-md-4">
+              <label class="form-label">Opponent (optional)</label>
+              <select class="form-select bg-dark text-light soft-border" name="lineup_opponent" id="lineupOpponent">
+                <option value="">None</option>
+                {% for div_id, team_list in teams_by_div.items() %}
+                  {% for t in team_list %}
+                  <option value="{{ t.id }}" data-format="{{ t.format }}">{{ t.name }}</option>
+                  {% endfor %}
+                {% endfor %}
+              </select>
+            </div>
+            <div class="col-6 col-md-2">
+              <label class="form-label">SL Min</label>
+              <input type="number" class="form-control bg-dark text-light soft-border" name="sl_min" id="lineupSLMin" placeholder="0">
+            </div>
+            <div class="col-6 col-md-2">
+              <label class="form-label">SL Max</label>
+              <input type="number" class="form-control bg-dark text-light soft-border" name="sl_max" id="lineupSLMax" placeholder="23">
+            </div>
+            <div class="col-6 col-md-2">
+              <label class="form-label">Min low SL (=4)</label>
+              <input type="number" class="form-control bg-dark text-light soft-border" name="min_low_sl" id="lineupMinLow" value="0" min="0" max="5">
+            </div>
+            <div class="col-6 col-md-2 d-flex align-items-end">
+              <div class="form-check">
+                <input class="form-check-input" type="checkbox" name="require_high_sl" id="lineupRequireHigh">
+                <label class="form-check-label" for="lineupRequireHigh">Require 6+</label>
+              </div>
+            </div>
+            <div class="col-12">
+              <button class="btn btn-outline-primary" type="submit"><i class="fa-solid fa-wand-magic-sparkles me-1"></i> Generate Lineups</button>
+            </div>
+          </form>
+          <div class="mt-3">
+            <h6 class="text-secondary mb-2">Roster</h6>
+            <div class="table-responsive" id="lineupRosterTable">
+              <table class="table table-dark table-sm align-middle mb-0">
+                <thead><tr><th>Include</th><th>Lock</th><th>Player</th><th>SL</th><th>PPM</th><th>Win%</th><th>PA%</th><th>Role</th></tr></thead>
+                <tbody>
+                  {% for p in lineup_roster %}
+                  <tr>
+                    <td><input class="form-check-input" type="checkbox" name="include_player" value="{{ p.id }}" form="lineupForm" checked></td>
+                    <td><input class="form-check-input" type="checkbox" name="lock_player" value="{{ p.id }}" form="lineupForm"></td>
+                    <td>{{ p.name }}</td>
+                    <td>{{ p.sl }}</td>
+                    <td>{{ p.ppm|round(2) }}</td>
+                    <td>{{ (p.win_pct*100)|round(1) }}%</td>
+                    <td>{{ (p.pa*100)|round(1) }}%</td>
+                    <td>{{ p.role }}</td>
+                  </tr>
+                  {% endfor %}
+                </tbody>
+              </table>
+            </div>
+          </div>
+          <div class="mt-3" id="lineupResult">
+            <div class="text-secondary small">Generate a lineup to see suggestions.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- Player Trends -->
+    <div class="card lab-card text-light shadow-soft">
+      <div class="card-body">
+        <div class="d-flex align-items-center justify-content-between" data-bs-toggle="collapse" data-bs-target="#trendCollapse" role="button" aria-expanded="false">
+          <div>
+            <h5 class="mb-0">Player Trends</h5>
+            <div class="text-secondary small">Check SL, PPM, win%, PA%, and momentum vs team averages.</div>
+          </div>
+          <i class="fa-solid fa-chevron-down text-secondary"></i>
+        </div>
+        <div class="collapse mt-3" id="trendCollapse">
+          <form class="row g-3" id="trendForm">
+            <div class="col-12 col-md-4">
+              <label class="form-label">Player</label>
+              <select class="form-select bg-dark text-light soft-border" name="trend_player">
+                {% for fmt, plist in cue_players.items() %}
+                  {% for p in plist %}
+                  <option value="{{ p.id }}" data-format="{{ fmt }}">{{ p.name }} ({{ fmt }})</option>
+                  {% endfor %}
+                {% endfor %}
+                {% for fmt, plist in other_players.items() %}
+                  {% for p in plist %}
+                  <option value="{{ p.id }}" data-format="{{ fmt }}">{{ p.name }} ({{ fmt }})</option>
+                  {% endfor %}
+                {% endfor %}
+              </select>
+            </div>
+            <div class="col-6 col-md-3">
+              <label class="form-label">Format</label>
+              <select class="form-select bg-dark text-light soft-border" name="trend_format">
+                <option value="8-ball">8-Ball</option>
+                <option value="9-ball">9-Ball</option>
+              </select>
+            </div>
+            <div class="col-6 col-md-3">
+              <label class="form-label">Range</label>
+              <select class="form-select bg-dark text-light soft-border" name="trend_range">
+                <option value="3">Last 3 matches</option>
+                <option value="5" selected>Last 5 matches</option>
+                <option value="session">Full session</option>
+              </select>
+            </div>
+            <div class="col-12 col-md-2 d-flex align-items-end">
+              <button class="btn btn-outline-success w-100" type="submit"><i class="fa-solid fa-chart-line me-1"></i> View Trends</button>
+            </div>
+          </form>
+          <div class="mt-3" id="trendResult">
+            <div class="text-secondary small">Select a player to view trends.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Win Probability -->
+    <div class="card lab-card text-light shadow-soft">
+      <div class="card-body">
+        <div class="d-flex align-items-center justify-content-between" data-bs-toggle="collapse" data-bs-target="#winprobCollapse" role="button" aria-expanded="false">
+          <div>
+            <h5 class="mb-0">Win Probability</h5>
+            <div class="text-secondary small">Estimate head-to-head odds using SL, PPM, PA% for any player matchup.</div>
+          </div>
+          <i class="fa-solid fa-chevron-down text-secondary"></i>
+        </div>
+        <div class="collapse mt-3" id="winprobCollapse">
+          <form class="row g-3" id="winprobForm">
+            <div class="col-12 col-md-4">
+              <label class="form-label">Format</label>
+              <select class="form-select bg-dark text-light soft-border" name="win_format">
+                <option value="8-ball">8-Ball</option>
+                <option value="9-ball" selected>9-Ball</option>
+              </select>
+            </div>
+            <div class="col-12 col-md-4">
+              <label class="form-label">Our player</label>
+              <select class="form-select bg-dark text-light soft-border" name="win_ours" id="winOurs">
+                {% for fmt, plist in cue_players.items() %}
+                  {% for p in plist %}
+                  <option value="{{ p.id }}" data-format="{{ fmt }}">{{ p.name }} ({{ fmt }})</option>
+                  {% endfor %}
+                {% endfor %}
+                {% for fmt, plist in other_players.items() %}
+                  {% for p in plist %}
+                  <option value="{{ p.id }}" data-format="{{ fmt }}">{{ p.name }} ({{ fmt }})</option>
+                  {% endfor %}
+                {% endfor %}
+              </select>
+            </div>
+            <div class="col-12 col-md-4">
+              <label class="form-label">Their player</label>
+              <select class="form-select bg-dark text-light soft-border" name="win_theirs" id="winTheirs">
+                {% for fmt, plist in other_players.items() %}
+                  {% for p in plist %}
+                  <option value="{{ p.id }}" data-format="{{ fmt }}">{{ p.name }} ({{ fmt }})</option>
+                  {% endfor %}
+                {% endfor %}
+              </select>
+            </div>
+            <div class="col-12">
+              <button class="btn btn-outline-danger" type="submit"><i class="fa-solid fa-bolt me-1"></i> Estimate</button>
+            </div>
+          </form>
+          <div class="mt-3" id="winprobResult">
+            <div class="text-secondary small">Choose players to estimate win probability.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Race Calculator -->
+    <div class="card lab-card text-light shadow-soft">
+      <div class="card-body">
+        <div class="d-flex align-items-center justify-content-between" data-bs-toggle="collapse" data-bs-target="#raceCollapse" role="button" aria-expanded="false">
+          <div>
+            <h5 class="mb-0">Race Calculator</h5>
+            <div class="text-secondary small">APA race-to values, hill odds, and matchup dynamics for any two players.</div>
+          </div>
+          <i class="fa-solid fa-chevron-down text-secondary"></i>
+        </div>
+        <div class="collapse mt-3" id="raceCollapse">
+          <form class="row g-3" id="raceForm">
+            <div class="col-12 col-md-3">
+              <label class="form-label">Format</label>
+              <select class="form-select bg-dark text-light soft-border" name="race_format">
+                <option value="8-ball">8-Ball</option>
+                <option value="9-ball" selected>9-Ball</option>
+              </select>
+            </div>
+            <div class="col-12 col-md-4">
+              <label class="form-label">Player A</label>
+              <select class="form-select bg-dark text-light soft-border" name="race_a" id="raceA">
+                {% for fmt, plist in cue_players.items() %}
+                  {% for p in plist %}
+                  <option value="{{ p.id }}" data-format="{{ fmt }}">{{ p.name }} ({{ fmt }})</option>
+                  {% endfor %}
+                {% endfor %}
+                {% for fmt, plist in other_players.items() %}
+                  {% for p in plist %}
+                  <option value="{{ p.id }}" data-format="{{ fmt }}">{{ p.name }} ({{ fmt }})</option>
+                  {% endfor %}
+                {% endfor %}
+              </select>
+            </div>
+            <div class="col-12 col-md-4">
+              <label class="form-label">Player B</label>
+              <select class="form-select bg-dark text-light soft-border" name="race_b" id="raceB">
+                {% for fmt, plist in cue_players.items() %}
+                  {% for p in plist %}
+                  <option value="{{ p.id }}" data-format="{{ fmt }}">{{ p.name }} ({{ fmt }})</option>
+                  {% endfor %}
+                {% endfor %}
+                {% for fmt, plist in other_players.items() %}
+                  {% for p in plist %}
+                  <option value="{{ p.id }}" data-format="{{ fmt }}">{{ p.name }} ({{ fmt }})</option>
+                  {% endfor %}
+                {% endfor %}
+              </select>
+            </div>
+            <div class="col-12 col-md-1 d-flex align-items-end">
+              <button class="btn btn-outline-info w-100" type="submit">Calculate</button>
+            </div>
+          </form>
+          <div class="mt-3" id="raceResult">
+            <div class="text-secondary small">Select two players to calculate race details.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- SL Tracker -->
+    <div class="card lab-card text-light shadow-soft">
+      <div class="card-body">
+        <div class="d-flex align-items-center justify-content-between" data-bs-toggle="collapse" data-bs-target="#slCollapse" role="button" aria-expanded="false">
+          <div>
+            <h5 class="mb-0">SL Tracker</h5>
+            <div class="text-secondary small">Monitor player SL trends and predict potential movements.</div>
+          </div>
+          <i class="fa-solid fa-chevron-down text-secondary"></i>
+        </div>
+        <div class="collapse mt-3" id="slCollapse">
+          <form class="row g-3" id="slForm">
+            <div class="col-12 col-md-4">
+              <label class="form-label">Player</label>
+              <select class="form-select bg-dark text-light soft-border" name="sl_player">
+                {% for fmt, plist in cue_players.items() %}
+                  {% for p in plist %}
+                  <option value="{{ p.id }}" data-format="{{ fmt }}">{{ p.name }} ({{ fmt }})</option>
+                  {% endfor %}
+                {% endfor %}
+                {% for fmt, plist in other_players.items() %}
+                  {% for p in plist %}
+                  <option value="{{ p.id }}" data-format="{{ fmt }}">{{ p.name }} ({{ fmt }})</option>
+                  {% endfor %}
+                {% endfor %}
+              </select>
+            </div>
+            <div class="col-6 col-md-3">
+              <label class="form-label">Format</label>
+              <select class="form-select bg-dark text-light soft-border" name="sl_format">
+                <option value="8-ball">8-Ball</option>
+                <option value="9-ball">9-Ball</option>
+              </select>
+            </div>
+            <div class="col-6 col-md-3">
+              <label class="form-label">Range</label>
+              <select class="form-select bg-dark text-light soft-border" name="sl_range">
+                <option value="3">Last 3</option>
+                <option value="5" selected>Last 5</option>
+                <option value="session">Full Session</option>
+              </select>
+            </div>
+            <div class="col-12 col-md-2 d-flex align-items-end">
+              <button class="btn btn-outline-info w-100" type="submit">View SL Trends</button>
+            </div>
+          </form>
+          <div class="mt-3" id="slResult">
+            <div class="text-secondary small">Select a player to view SL trends.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Power Rankings -->
+    <div class="card lab-card text-light shadow-soft">
+      <div class="card-body">
+        <div class="d-flex align-items-center justify-content-between" data-bs-toggle="collapse" data-bs-target="#powerCollapse" role="button" aria-expanded="false">
+          <div>
+            <h5 class="mb-0">Power Rankings</h5>
+            <div class="text-secondary small">Calculate team and player power scores with momentum and strength.</div>
+          </div>
+          <i class="fa-solid fa-chevron-down text-secondary"></i>
+        </div>
+        <div class="collapse mt-3" id="powerCollapse">
+          <form class="row g-3" id="powerForm">
+            <div class="col-12 col-md-3">
+              <label class="form-label">Ranking type</label>
+              <select class="form-select bg-dark text-light soft-border" name="power_type">
+                <option value="team">Team Rankings</option>
+                <option value="player">Player Rankings</option>
+              </select>
+            </div>
+            <div class="col-12 col-md-3">
+              <label class="form-label">Format</label>
+              <select class="form-select bg-dark text-light soft-border" name="power_format">
+                <option value="8-ball">8-Ball</option>
+                <option value="9-ball" selected>9-Ball</option>
+              </select>
+            </div>
+            <div class="col-12 col-md-3">
+              <label class="form-label">Scope</label>
+              <select class="form-select bg-dark text-light soft-border" name="power_scope">
+                <option value="division" selected>Division</option>
+                <option value="team_only">Team Only</option>
+                <option value="full_session">Full Session</option>
+                <option value="last3">Last 3 Weeks</option>
+              </select>
+            </div>
+            <div class="col-12 col-md-3 d-flex align-items-end">
+              <button class="btn btn-outline-warning w-100" type="submit">Generate Rankings</button>
+            </div>
+          </form>
+          <div class="mt-3" id="powerResult">
+            <div class="text-secondary small">Generate rankings to see results.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Points Projection -->
+    <div class="card lab-card text-light shadow-soft">
+      <div class="card-body">
+        <div class="d-flex align-items-center justify-content-between" data-bs-toggle="collapse" data-bs-target="#projectionCollapse" role="button" aria-expanded="false">
+          <div>
+            <h5 class="mb-0">Points Projection</h5>
+            <div class="text-secondary small">Estimate expected points vs an opponent using lineup and trends.</div>
+          </div>
+          <i class="fa-solid fa-chevron-down text-secondary"></i>
+        </div>
+        <div class="collapse mt-3" id="projectionCollapse">
+          <form class="row g-3" id="projectionForm">
+            <div class="col-12 col-md-3">
+              <label class="form-label">Format</label>
+              <select class="form-select bg-dark text-light soft-border" name="proj_format">
+                <option value="8-ball">8-Ball</option>
+                <option value="9-ball" selected>9-Ball</option>
+              </select>
+            </div>
+            <div class="col-12 col-md-5">
+              <label class="form-label">Opponent</label>
+              <select class="form-select bg-dark text-light soft-border" name="proj_opp" id="projOpp">
+                {% for div_id, team_list in teams_by_div.items() %}
+                  {% for t in team_list %}
+                  {% if 'cue' not in t.id %}
+                  <option value="{{ t.id }}" data-format="{{ t.format }}">{{ t.name }}</option>
+                  {% endif %}
+                  {% endfor %}
+                {% endfor %}
+              </select>
+            </div>
+            <div class="col-12 col-md-4 d-flex align-items-end">
+              <div class="form-check">
+                <input class="form-check-input" type="checkbox" name="proj_lineup_mode" id="projCustom" value="custom">
+                <label class="form-check-label" for="projCustom">Use custom lineup</label>
+              </div>
+            </div>
+            <div class="col-12" id="projLineupSection" style="display:none;">
+              <div class="text-secondary small mb-1">Select lineup (max 5 shown).</div>
+              <div class="table-responsive">
+                <table class="table table-dark table-sm align-middle mb-0">
+                  <thead><tr><th>Select</th><th>Player</th><th>SL</th><th>PPM</th><th>PA%</th></tr></thead>
+                  <tbody>
+                    {% for p in lineup_roster %}
+                    <tr>
+                      <td><input class="form-check-input" type="checkbox" name="proj_player" value="{{ p.id }}" data-format="{{ lineup_default_format }}"></td>
+                      <td>{{ p.name }}</td>
+                      <td>{{ p.sl }}</td>
+                      <td>{{ p.ppm|round(2) }}</td>
+                      <td>{{ (p.pa*100)|round(1) }}%</td>
+                    </tr>
+                    {% endfor %}
+                  </tbody>
+                </table>
+              </div>
+            </div>
+            <div class="col-12">
+              <button class="btn btn-outline-info" type="submit"><i class="fa-solid fa-bullseye me-1"></i> Project Points</button>
+            </div>
+          </form>
+          <div class="mt-3" id="projectionResult">
+            <div class="text-secondary small">Choose format/opponent to project.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Vegas Path Tracker -->
+    <div class="card lab-card text-light shadow-soft">
+      <div class="card-body">
+        <div class="d-flex align-items-center justify-content-between" data-bs-toggle="collapse" data-bs-target="#vegasCollapse" role="button" aria-expanded="false">
+          <div>
+            <h5 class="mb-0">Vegas Path Tracker</h5>
+            <div class="text-secondary small">Targets, weekly needs, and probabilities for qualifying runs.</div>
+          </div>
+          <i class="fa-solid fa-chevron-down text-secondary"></i>
+        </div>
+        <div class="collapse mt-3" id="vegasCollapse">
+          <form class="row g-3" id="vegasForm">
+            <div class="col-12 col-md-3">
+              <label class="form-label">Format</label>
+              <select class="form-select bg-dark text-light soft-border" name="vegas_format">
+                <option value="8-ball">8-Ball</option>
+                <option value="9-ball" selected>9-Ball</option>
+              </select>
+            </div>
+            <div class="col-12 col-md-5">
+              <label class="form-label">Target</label>
+              <select class="form-select bg-dark text-light soft-border" name="vegas_target">
+                <option value="top3">Top 3 Finish</option>
+                <option value="tricup">Tri-Cup Qualification</option>
+                <option value="cities">Cities / LTC Qualification</option>
+                <option value="vegas">Vegas-Level Finish</option>
+              </select>
+            </div>
+            <div class="col-6 col-md-2">
+              <label class="form-label">Remaining weeks</label>
+              <input type="number" class="form-control bg-dark text-light soft-border" name="vegas_weeks" value="4" min="1" max="10">
+            </div>
+            <div class="col-12 col-md-2 d-flex align-items-end">
+              <button class="btn btn-outline-warning w-100" type="submit">Analyze Path</button>
+            </div>
+          </form>
+          <div class="mt-3" id="vegasResult">
+            <div class="text-secondary small">Select format and target to analyze.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Opponent Scout -->
+    <div class="card lab-card text-light shadow-soft">
+      <div class="card-body">
+        <div class="d-flex align-items-center justify-content-between" data-bs-toggle="collapse" data-bs-target="#oppCollapse" role="button" aria-expanded="false">
+          <div>
+            <h5 class="mb-0">Opponent Scout</h5>
+            <div class="text-secondary small">Generate scouting reports for any team: strengths, weaknesses, tendencies.</div>
+          </div>
+          <i class="fa-solid fa-chevron-down text-secondary"></i>
+        </div>
+        <div class="collapse mt-3" id="oppCollapse">
+          <form class="row g-3" id="oppForm">
+            <div class="col-12 col-md-4">
+              <label class="form-label">Format</label>
+              <select class="form-select bg-dark text-light soft-border" name="opp_format">
+                <option value="8-ball">8-Ball</option>
+                <option value="9-ball" selected>9-Ball</option>
+              </select>
+            </div>
+            <div class="col-12 col-md-6">
+              <label class="form-label">Opponent team</label>
+              <select class="form-select bg-dark text-light soft-border" name="opp_team" id="oppTeam">
+                {% for div_id, team_list in teams_by_div.items() %}
+                  {% for t in team_list %}
+                  {% if 'cue' not in t.id %}
+                  <option value="{{ t.id }}" data-format="{{ t.format }}">{{ t.name }}</option>
+                  {% endif %}
+                  {% endfor %}
+                {% endfor %}
+              </select>
+            </div>
+            <div class="col-12 col-md-2 d-flex align-items-end">
+              <button class="btn btn-outline-info w-100" type="submit">Generate Report</button>
+            </div>
+          </form>
+          <div class="mt-3" id="oppResult">
+            <div class="text-secondary small">Pick a team to see the scouting report.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Placeholders -->
+    {% set placeholders = [] %}
+    {% for title, desc in placeholders %}
+    <div class="card lab-card text-light shadow-soft">
+      <div class="card-body">
+        <h5 class="mb-1">{{ title }}</h5>
+        <div class="text-secondary small">{{ desc }}</div>
+        <div class="text-secondary small mt-2">Coming soon.</div>
+      </div>
+    </div>
+    {% endfor %}
+  </div>
+</div>
+{% endblock %}
+{% block scripts %}
+<script>
+  const showError = (el, msg) => { el.innerHTML = `<div class="text-danger small">${msg}</div>`; };
+  const currentUserPlayerId = "{{ current_user.player_ref if current_user and current_user.player_ref else '' }}";
+
+  const setIfExists = (selectEl, value) => {
+    if (!selectEl) return;
+    const opt = Array.from(selectEl.options || []).find(o => o.value === value);
+    if (opt) selectEl.value = value;
+    else if (selectEl.options.length) selectEl.selectedIndex = 0;
+  };
+  const teamsByDiv = {{ teams_by_div|tojson }};
+  const teamFormats = {{ team_formats|tojson }};
+  const divFormats = {{ div_formats|tojson }};
+
+  const filterSelectByFormat = (selectEl, fmt, excludeValue=null) => {
+    if (!selectEl) return;
+    let firstValid = null;
+    Array.from(selectEl.options).forEach(opt => {
+      const ofmt = opt.dataset.format || '';
+      const match = !fmt || !ofmt || ofmt === fmt;
+      opt.hidden = !match;
+      if (match && (!firstValid) && (!excludeValue || opt.value !== excludeValue)) {
+        firstValid = opt;
+      }
+    });
+    if (firstValid && selectEl.value === excludeValue) {
+      selectEl.value = firstValid.value;
+    } else if (firstValid && selectEl.value && selectEl.options[selectEl.selectedIndex]?.hidden) {
+      selectEl.value = firstValid.value;
+    }
+  };
+
+  const predictorForm = document.getElementById('predictorForm');
+  const predictorResult = document.getElementById('predictorResult');
+  const predictDivision = document.getElementById('predictDivision');
+  const predictOur = document.getElementById('predictOur');
+  const predictOpp = document.getElementById('predictOpp');
+
+  const rebuildPredictTeams = () => {
+    if (!predictDivision || !predictOur || !predictOpp) return;
+    const divId = predictDivision.value;
+    const teams = teamsByDiv[divId] || [];
+    predictOur.innerHTML = '';
+    predictOpp.innerHTML = '';
+    let defaultOur = teams.find(t => (t.id || '').includes('cue')) || teams[0];
+    teams.forEach(t => {
+      const opt = document.createElement('option');
+      opt.value = t.id; opt.textContent = t.name; opt.dataset.format = t.format || '';
+      if (defaultOur && t.id === defaultOur.id) opt.selected = true;
+      predictOur.appendChild(opt);
+    });
+    teams.forEach(t => {
+      const opt = document.createElement('option');
+      opt.value = t.id; opt.textContent = t.name; opt.dataset.format = t.format || '';
+      if (defaultOur && t.id !== defaultOur.id && !predictOpp.value) opt.selected = true;
+      predictOpp.appendChild(opt);
+    });
+  };
+  if (predictDivision) {
+    predictDivision.addEventListener('change', rebuildPredictTeams);
+    rebuildPredictTeams();
+  }
+  if (predictorForm && predictorResult) {
+    predictorForm.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const btn = predictorForm.querySelector('button[type="submit"]');
+      const formData = new FormData(predictorForm);
+      if (btn) { btn.disabled = true; btn.innerText = 'Predicting...'; }
+      try {
+        const res = await fetch('/lab/predict', { method:'POST', body:formData });
+        const data = await res.json();
+        if (!res.ok || data.error) throw new Error(data.error || 'Prediction failed');
+        const our = data.our || {};
+        const opp = data.opp || {};
+        const reasons = (data.reasons || []).map(r => `<li>${r}</li>`).join('');
+        predictorResult.innerHTML = `
+          <div class="d-flex justify-content-between align-items-center mb-2">
+            <div><strong>${data.our_name}</strong> rating ${our.rating?.toFixed(1) || '-'}</div>
+            <div><strong>${data.opp_name}</strong> rating ${opp.rating?.toFixed(1) || '-'}</div>
+          </div>
+          <div class="text-info mb-2">Projected: ${data.projection || ''}</div>
+          <div class="text-secondary small mb-1">Race advantage: ${data.race_edge || 'n/a'}</div>
+          ${reasons ? `<ul class="small text-secondary mb-1">${reasons}</ul>` : ''}
+        `;
+      } catch(err) {
+        showError(predictorResult, 'Prediction failed.');
+      } finally {
+        if (btn) { btn.disabled = false; btn.innerText = 'Predict'; }
+      }
+    });
+  }
+
+  const simulateForm = document.getElementById('simulateForm');
+  const simResult = document.getElementById('simResult');
+  if (simulateForm && simResult) {
+    simulateForm.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const btn = simulateForm.querySelector('button[type="submit"]');
+      const formData = new FormData(simulateForm);
+      if (btn) { btn.disabled = true; btn.innerText = 'Running...'; }
+      try {
+        const res = await fetch('/lab/simulate', { method:'POST', body:formData });
+        const data = await res.json();
+        if (!res.ok || data.error) throw new Error(data.error || 'Simulation failed');
+        const rows = (data.rows || data.results || []).map(r => {
+          const name = r.team || r.name || 'Team';
+          const pts = Number(r.current ?? r.points ?? 0);
+          const top3 = Number(r.pct_top3 ?? r.top3 ?? 0);
+          const first = Number(r.pct_first ?? r.first ?? 0);
+          return `
+            <tr>
+              <td>${name}</td>
+              <td>${pts.toFixed(1)}</td>
+              <td>${top3.toFixed(1)}%</td>
+              <td>${first.toFixed(1)}%</td>
+            </tr>`;
+        }).join('');
+        simResult.innerHTML = `
+          <div class="table-responsive">
+            <table class="table table-dark table-sm align-middle mb-0">
+              <thead><tr><th>Team</th><th>Current pts</th><th>Top 3</th><th>1st</th></tr></thead>
+              <tbody>${rows || '<tr><td colspan="4" class="text-secondary small">No results</td></tr>'}</tbody>
+            </table>
+          </div>`;
+      } catch(err) {
+        showError(simResult, 'Simulation failed.');
+      } finally {
+        if (btn) { btn.disabled = false; btn.innerText = 'Run Simulation'; }
+      }
+    });
+  }
+
+  const lineupForm = document.getElementById('lineupForm');
+  const lineupResult = document.getElementById('lineupResult');
+  const lineupRosterTable = document.getElementById('lineupRosterTable');
+  const lineupTeam = document.getElementById('lineupTeam');
+  const lineupFormat = document.getElementById('lineupFormat');
+  const lineupOpponent = document.getElementById('lineupOpponent');
+
+  async function fetchRoster() {
+    if (!lineupRosterTable || !lineupTeam || !lineupFormat) return;
+    const fd = new FormData();
+    fd.append('team_id', lineupTeam.value);
+    fd.append('format', lineupFormat.value);
+    const res = await fetch('/lab/roster', { method:'POST', body: fd });
+    const data = await res.json();
+    if (!res.ok || data.error) {
+      lineupRosterTable.innerHTML = '<div class="text-danger small">Roster unavailable.</div>';
+      return;
+    }
+    const rows = (data.roster || []).map(p => `
+      <tr>
+        <td><input class="form-check-input" type="checkbox" name="include_player" value="${p.id}" form="lineupForm" checked></td>
+        <td><input class="form-check-input" type="checkbox" name="lock_player" value="${p.id}" form="lineupForm"></td>
+        <td>${p.name}</td><td>${p.sl}</td><td>${p.ppm.toFixed(2)}</td>
+        <td>${(p.win_pct*100).toFixed(1)}%</td><td>${(p.pa*100).toFixed(1)}%</td><td>${p.role||''}</td>
+      </tr>`).join('');
+    lineupRosterTable.innerHTML = `
+      <table class="table table-dark table-sm align-middle mb-0">
+        <thead><tr><th>Include</th><th>Lock</th><th>Player</th><th>SL</th><th>PPM</th><th>Win%</th><th>PA%</th><th>Role</th></tr></thead>
+        <tbody>${rows || '<tr><td colspan="8" class="text-secondary small">No roster</td></tr>'}</tbody>
+      </table>`;
+  }
+    if (lineupTeam && lineupFormat) {
+      lineupTeam.addEventListener('change', fetchRoster);
+      lineupFormat.addEventListener('change', fetchRoster);
+      const applyLineupFilters = () => {
+        filterSelectByFormat(lineupTeam, lineupFormat.value);
+        filterSelectByFormat(lineupOpponent, lineupFormat.value, lineupTeam.value);
+      };
+      lineupFormat.addEventListener('change', applyLineupFilters);
+      applyLineupFilters();
+      fetchRoster();
+    }
+
+  if (lineupForm && lineupResult) {
+    lineupForm.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const btn = lineupForm.querySelector('button[type="submit"]');
+      const formData = new FormData(lineupForm);
+      if (btn) { btn.disabled = true; btn.innerText = 'Building...'; }
+      try {
+        const res = await fetch('/lab/lineup', { method:'POST', body: formData });
+        const data = await res.json();
+        if (!res.ok || data.error) throw new Error(data.error || 'Error');
+        if (!data.top && (!data.alternatives || !data.alternatives.length)) {
+          lineupResult.innerHTML = `<div class="text-secondary small">No valid lineup for this cap.</div>`;
+          return;
+        }
+        const top = data.top;
+        const alts = data.alternatives || [];
+        let html = '';
+        if (top) {
+          html += `
+            <div class="mb-3 p-2 rounded" style="background:rgba(0,191,255,.10); border:1px solid rgba(0,191,255,.25);">
+              <div class="d-flex justify-content-between align-items-center">
+                <div>
+                  <div class="badge bg-transparent text-info border border-info me-2">Top Lineup</div>
+                  <strong>Score: ${top.score.toFixed(2)}</strong>
+                </div>
+                <span class="subtle">Total SL: ${top.sl_total} | PPM Avg: ${top.ppm_avg.toFixed(2)} | PA Avg: ${(top.pa_avg*100).toFixed(1)}%</span>
+              </div>
+              <div class="table-responsive mt-2">
+                <table class="table table-dark table-sm align-middle mb-0">
+                  <thead><tr><th>Player</th><th>SL</th><th>PPM</th><th>PA%</th></tr></thead>
+                  <tbody>
+                    ${top.players.map(p=>`
+                      <tr><td>${p.name}</td><td>${p.sl}</td><td>${p.ppm.toFixed(2)}</td><td>${(p.pa*100).toFixed(1)}%</td></tr>`).join('')}
+                  </tbody>
+                </table>
+              </div>
+              <div class="text-secondary small mt-1">Highest lineup score while meeting SL cap and locks.</div>
+            </div>`;
+        }
+        if (alts.length) {
+          html += `<div class="text-secondary small mb-2">Alternatives</div><div class="scroll-area">`;
+          alts.forEach((line, idx) => {
+            html += `
+              <div class="mb-2 p-2 rounded" style="background:rgba(255,255,255,.04);">
+                <div class="d-flex justify-content-between">
+                  <strong>#${idx+2} Score: ${line.score.toFixed(2)}</strong>
+                  <span class="subtle">SL: ${line.sl_total} | PPM: ${line.ppm_avg.toFixed(2)} | PA: ${(line.pa_avg*100).toFixed(1)}%</span>
+                </div>
+                <div class="table-responsive mt-1">
+                  <table class="table table-dark table-sm align-middle mb-0">
+                    <thead><tr><th>Player</th><th>SL</th></tr></thead>
+                    <tbody>
+                      ${line.players.map(p=>`<tr><td>${p.name}</td><td>${p.sl}</td></tr>`).join('')}
+                    </tbody>
+                  </table>
+                </div>
+              </div>`;
+          });
+          html += `</div>`;
+        }
+        lineupResult.innerHTML = html || `<div class="text-secondary small">No valid lineup for this cap.</div>`;
+      } catch (err) {
+        showError(lineupResult, 'Lineup failed.');
+      } finally {
+        if (btn) { btn.disabled = false; btn.innerText = 'Generate Lineups'; }
+      }
+    });
+    fetchRoster();
+  }
+
+  const trendForm = document.getElementById('trendForm');
+  const trendResult = document.getElementById('trendResult');
+  const trendFormat = trendForm ? trendForm.querySelector('select[name="trend_format"]') : null;
+  const trendPlayer = trendForm ? trendForm.querySelector('select[name="trend_player"]') : null;
+  const applyTrendFilter = () => {
+    if (!trendFormat) return;
+    filterSelectByFormat(trendPlayer, trendFormat.value);
+    if (currentUserPlayerId) setIfExists(trendPlayer, currentUserPlayerId);
+  };
+  if (trendFormat) {
+    trendFormat.addEventListener('change', applyTrendFilter);
+    applyTrendFilter();
+  }
+  if (trendForm && trendResult) {
+    trendForm.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const btn = trendForm.querySelector('button[type="submit"]');
+      const formData = new FormData(trendForm);
+      if (btn) { btn.disabled = true; btn.innerText = 'Loading...'; }
+      try {
+        const res = await fetch('/lab/trend', { method:'POST', body: formData });
+        const data = await res.json();
+        if (!res.ok || data.error) throw new Error(data.error || 'Error');
+        const bands = (data.bands || []).map(b => `<div class="col-12 col-md-4"><div class="p-2 rounded" style="background:rgba(255,255,255,.03);"><div class="text-uppercase small subtle mb-1">Vs ${b.band}</div><div class="text-secondary small">Win% ${(b.win_pct*100).toFixed(0)}% | PPM ${b.ppm.toFixed(1)} (${b.count} matches)</div></div></div>`).join('');
+        trendResult.innerHTML = `
+          <div class="d-flex justify-content-between align-items-center mb-2">
+            <div>
+              <div class="h6 mb-1">${data.player} (${data.format})</div>
+              <div class="subtle">SL ${data.sl} | Trend: ${data.trend_label}</div>
+            </div>
+          </div>
+          <div class="row g-2">
+            <div class="col-12 col-md-6">
+              <div class="p-2 rounded" style="background:rgba(0,191,255,.06);">
+                <div class="text-secondary small">Session</div>
+                <div class="subtle">Win% ${(data.session.win_pct*100).toFixed(1)}% | PPM ${data.session.ppm.toFixed(2)} | PA ${(data.session.pa*100).toFixed(1)}%</div>
+              </div>
+            </div>
+            <div class="col-12 col-md-6">
+              <div class="p-2 rounded" style="background:rgba(0,191,255,.06);">
+                <div class="text-secondary small">Recent (${data.recent.count || 0} matches)</div>
+                <div class="subtle">Win% ${(data.recent.win_pct*100).toFixed(1)}% | PPM ${data.recent.ppm.toFixed(2)} | Avg opp SL ${data.recent.opp_sl.toFixed(1)}</div>
+              </div>
+            </div>
+          </div>
+          <div class="row g-2 mt-2">
+            <div class="col-12 col-md-6">
+              <div class="p-2 rounded" style="background:rgba(255,255,255,.04);">
+                <div class="text-secondary small">Team Averages</div>
+                <div class="subtle">Win% ${(data.team.win_pct*100).toFixed(1)}% | PPM ${data.team.ppm.toFixed(2)} | PA ${(data.team.pa*100).toFixed(1)}%</div>
+              </div>
+            </div>
+            <div class="col-12 col-md-6">
+              <div class="p-2 rounded" style="background:rgba(255,255,255,.04);">
+                <div class="text-secondary small">Diff vs Team</div>
+                <div class="subtle">PPM ${(data.recent.ppm - data.team.ppm).toFixed(2)} | Win% ${(data.recent.win_pct*100 - data.team.win_pct*100).toFixed(1)} pts</div>
+              </div>
+            </div>
+          </div>
+          <div class="row g-2 mt-2">${bands}</div>
+          <div class="text-info small mt-2">${data.summary || ''}</div>
+        `;
+      } catch (err) {
+        showError(trendResult, 'Trend failed.');
+      } finally {
+        if (btn) { btn.disabled = false; btn.innerText = 'View Trends'; }
+      }
+    });
+  }
+
+  const winprobForm = document.getElementById('winprobForm');
+  const winprobResult = document.getElementById('winprobResult');
+  const winFormat = winprobForm ? winprobForm.querySelector('select[name="win_format"]') : null;
+  const winOurs = document.getElementById('winOurs');
+  const winTheirs = document.getElementById('winTheirs');
+  const applyWinprobFilter = () => {
+    if (!winFormat) return;
+    const fmt = winFormat.value;
+    filterSelectByFormat(winOurs, fmt);
+    filterSelectByFormat(winTheirs, fmt);
+    if (currentUserPlayerId) setIfExists(winOurs, currentUserPlayerId);
+  };
+  if (winFormat) {
+    winFormat.addEventListener('change', applyWinprobFilter);
+    applyWinprobFilter();
+  }
+  if (winprobForm && winprobResult) {
+    winprobForm.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const btn = winprobForm.querySelector('button[type="submit"]');
+      const formData = new FormData(winprobForm);
+      if (btn) { btn.disabled = true; btn.innerText = 'Estimating...'; }
+      try {
+        const res = await fetch('/lab/winprob', { method:'POST', body: formData });
+        const data = await res.json();
+        if (!res.ok || data.error) throw new Error(data.error || 'Error');
+        const table = `
+          <div class="table-responsive mb-2">
+            <table class="table table-dark table-sm align-middle mb-0">
+              <thead><tr><th></th><th>${data.our_name}</th><th>${data.their_name}</th></tr></thead>
+              <tbody>
+                <tr><td>SL</td><td>${data.ours.sl}</td><td>${data.theirs.sl}</td></tr>
+                <tr><td>Win%</td><td>${(data.ours.win_pct*100).toFixed(1)}%</td><td>${(data.theirs.win_pct*100).toFixed(1)}%</td></tr>
+                <tr><td>PPM</td><td>${data.ours.ppm.toFixed(2)}</td><td>${data.theirs.ppm.toFixed(2)}</td></tr>
+                <tr><td>PA%</td><td>${(data.ours.pa*100).toFixed(1)}%</td><td>${(data.theirs.pa*100).toFixed(1)}%</td></tr>
+                <tr><td>Recent PPM</td><td>${data.ours.recent_ppm.toFixed(2)}</td><td>${data.theirs.recent_ppm.toFixed(2)}</td></tr>
+              </tbody>
+            </table>
+          </div>`;
+        const notes = (data.notes || []).map(n => `<li>${n}</li>`).join('');
+        winprobResult.innerHTML = `
+          <div class="h6 mb-1">Estimated win probability: ${data.prob}%</div>
+          <div class="subtle">${data.our_name} vs ${data.their_name} (${data.format})</div>
+          ${table}
+          <div class="text-secondary small mb-1">Ratings: ${data.ratings.ours} vs ${data.ratings.theirs}</div>
+          ${(notes ? `<ul class="small text-secondary mb-1">${notes}</ul>` : '')}
+        `;
+      } catch (err) {
+        showError(winprobResult, 'Win probability failed.');
+      } finally {
+        if (btn) { btn.disabled = false; btn.innerText = 'Estimate'; }
+      }
+    });
+  }
+
+  const slForm = document.getElementById('slForm');
+  const slResult = document.getElementById('slResult');
+  const slFormat = slForm ? slForm.querySelector('select[name="sl_format"]') : null;
+  const slPlayer = slForm ? slForm.querySelector('select[name="sl_player"]') : null;
+  const applySLFilter = () => {
+    if (!slFormat) return;
+    filterSelectByFormat(slPlayer, slFormat.value);
+    if (currentUserPlayerId) setIfExists(slPlayer, currentUserPlayerId);
+  };
+  if (slFormat) {
+    slFormat.addEventListener('change', applySLFilter);
+    applySLFilter();
+  }
+  if (slForm && slResult) {
+    slForm.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const btn = slForm.querySelector('button[type="submit"]');
+      const formData = new FormData(slForm);
+      if (btn) { btn.disabled = true; btn.innerText = 'Loading...'; }
+      try {
+        const res = await fetch('/lab/sltracker', { method:'POST', body: formData });
+        const data = await res.json();
+        if (!res.ok || data.error) throw new Error(data.error || 'Error');
+        const matches = (data.matches || []).map(m => `
+          <tr>
+            <td>${m.date || ''}</td><td>${m.opp_sl}</td><td>${m.points}</td><td>${m.outcome}</td><td>${m.delta.toFixed(1)}</td>
+          </tr>`).join('');
+        const band = data.bands || {};
+        slResult.innerHTML = `
+          <div class="row g-2">
+            <div class="col-12 col-md-6">
+              <div class="p-2 rounded" style="background:rgba(0,191,255,.08);">
+                <div class="text-secondary small">Overview</div>
+                <div class="subtle">SL ${data.session.sl} | Matches ${data.total_matches || 0}</div>
+                <div class="subtle">Win% ${(data.session.win_pct*100).toFixed(1)}% | PPM ${data.session.ppm.toFixed(2)} | PA ${(data.session.pa*100).toFixed(1)}%</div>
+              </div>
+            </div>
+            <div class="col-12 col-md-6">
+              <div class="p-2 rounded" style="background:rgba(255,255,255,.06);">
+                <div class="text-secondary small">Status</div>
+                <div class="subtle">${data.status}</div>
+                <div class="text-secondary small">Recent: Win% ${(data.recent.win_pct*100).toFixed(1)}% | PPM ${data.recent.ppm.toFixed(2)}</div>
+              </div>
+            </div>
+          </div>
+          <div class="row g-2 mt-2">
+            <div class="col-12 col-md-4"><div class="p-2 rounded" style="background:rgba(255,255,255,.04);"><div class="text-secondary small">Vs Lower SL</div><div class="subtle">Win% ${((band.lower?.win_pct||0)*100).toFixed(0)}% | PPM ${(band.lower?.ppm||0).toFixed(1)}</div></div></div>
+            <div class="col-12 col-md-4"><div class="p-2 rounded" style="background:rgba(255,255,255,.04);"><div class="text-secondary small">Vs Equal SL</div><div class="subtle">Win% ${((band.equal?.win_pct||0)*100).toFixed(0)}% | PPM ${(band.equal?.ppm||0).toFixed(1)}</div></div></div>
+            <div class="col-12 col-md-4"><div class="p-2 rounded" style="background:rgba(255,255,255,.04);"><div class="text-secondary small">Vs Higher SL</div><div class="subtle">Win% ${((band.higher?.win_pct||0)*100).toFixed(0)}% | PPM ${(band.higher?.ppm||0).toFixed(1)}</div></div></div>
+          </div>
+          <div class="mt-2 text-info small">${data.summary || ''}</div>
+          <div class="table-responsive mt-2">
+            <table class="table table-dark table-sm align-middle mb-0">
+              <thead><tr><th>Date</th><th>Opp SL</th><th>Points</th><th>Result</th><th>Delta vs expected</th></tr></thead>
+              <tbody>${matches || '<tr><td colspan="5" class="text-secondary small">No match data</td></tr>'}</tbody>
+            </table>
+          </div>
+        `;
+      } catch (err) {
+        showError(slResult, 'SL tracking failed.');
+      } finally {
+        if (btn) { btn.disabled = false; btn.innerText = 'View SL Trends'; }
+      }
+    });
+  }
+
+  // Power Rankings
+  const powerForm = document.getElementById('powerForm');
+  const powerResult = document.getElementById('powerResult');
+  if (powerForm && powerResult) {
+    powerForm.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const btn = powerForm.querySelector('button[type="submit"]');
+      const formData = new FormData(powerForm);
+      if (btn) { btn.disabled = true; btn.innerText = 'Loading...'; }
+      try {
+        const res = await fetch('/lab/powerrank', { method:'POST', body: formData });
+        const data = await res.json();
+        if (!res.ok || data.error) throw new Error(data.error || 'Error');
+        if (!data.rankings || !Array.isArray(data.rankings)) throw new Error('No rankings returned');
+
+        const safeNum = (v, def = 0) => {
+          const n = Number(v);
+          return Number.isFinite(n) ? n : def;
+        };
+        const pct = (v) => `${(safeNum(v) * 100).toFixed(1)}%`;
+
+        const rows = data.rankings.map((r, idx) => {
+          const rating = safeNum(r.rating).toFixed(1);
+          const winPct = pct(r.win_pct);
+          const ppm = safeNum(r.ppm).toFixed(2);
+          const pa = pct(r.pa);
+          const momentum = safeNum(r.momentum).toFixed(1);
+          const strength = safeNum(r.strength).toFixed(1);
+          const trend = r.trend || '→';
+          const name = r.name || r.id || `Team/Player ${idx+1}`;
+          return `
+          <tr>
+            <td>${idx+1}</td>
+            <td>${name}</td>
+            <td>${rating}</td>
+            <td>${winPct}</td>
+            <td>${ppm}</td>
+            <td>${pa}</td>
+            <td>${momentum}</td>
+            <td>${strength}</td>
+            <td>${trend}</td>
+          </tr>`;
+        }).join('');
+
+        const top = data.top;
+        const snapshot = top ? `
+          <div class="p-2 rounded mb-2" style="background:rgba(0,191,255,.08);">
+            <div class="d-flex justify-content-between align-items-center">
+              <strong>#1 ${top.name || 'Leader'}</strong>
+              <span class="badge bg-transparent text-info border border-info">Rating ${safeNum(top.rating).toFixed(1)}</span>
+            </div>
+            <div class="text-secondary small">Win% ${pct(top.win_pct)} | PPM ${safeNum(top.ppm).toFixed(2)} | PA ${pct(top.pa)}</div>
+            <div class="text-secondary small">Momentum ${safeNum(top.momentum).toFixed(1)} | Strength ${safeNum(top.strength).toFixed(1)}</div>
+          </div>` : '';
+        powerResult.innerHTML = `
+          ${snapshot}
+          <div class="table-responsive">
+            <table class="table table-dark table-sm align-middle mb-0">
+              <thead><tr><th>#</th><th>Name</th><th>Rating</th><th>Win%</th><th>PPM</th><th>PA%</th><th>Momentum</th><th>Strength</th><th>Trend</th></tr></thead>
+              <tbody>${rows || '<tr><td colspan="9" class="text-secondary small">No rankings</td></tr>'}</tbody>
+            </table>
+          </div>
+          <div class="text-secondary small mt-2">
+            Ratings blend: Strength = PPM (60%) + PA% (20%) + Win% (20%); Momentum = last few match points; Rating = Strength + 0.3 x Momentum.
+            Trend shows short-term direction (up/down/flat). Scope/division filters use only selected format/teams.
+          </div>`;
+      } catch (err) {
+        showError(powerResult, 'Power rankings failed.');
+      } finally {
+        if (btn) { btn.disabled = false; btn.innerText = 'Generate Rankings'; }
+      }
+    });
+  }
+
+
+  const oppForm = document.getElementById('oppForm');
+  const oppResult = document.getElementById('oppResult');
+  const oppFormat = oppForm ? oppForm.querySelector('select[name="opp_format"]') : null;
+  const oppTeam = document.getElementById('oppTeam');
+  const applyOppFilter = () => {
+    if (!oppFormat) return;
+    filterSelectByFormat(oppTeam, oppFormat.value);
+  };
+  if (oppFormat) {
+    oppFormat.addEventListener('change', applyOppFilter);
+    applyOppFilter();
+  }
+  if (oppForm && oppResult) {
+    oppForm.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const btn = oppForm.querySelector('button[type="submit"]');
+      const formData = new FormData(oppForm);
+      if (btn) { btn.disabled = true; btn.innerText = 'Loading...'; }
+      try {
+        const res = await fetch('/lab/oppscout', { method:'POST', body: formData });
+        const data = await res.json();
+        if (!res.ok || data.error) throw new Error(data.error || 'Error');
+        const rosterRows = (data.roster || []).map(p => `
+          <tr class="${data.top?.some(tp => tp.id===p.id) ? 'table-success' : (data.weak?.some(w => w.id===p.id) ? 'table-danger' : '')}">
+            <td>${p.name}</td><td>${p.sl}</td><td>${p.ppm.toFixed(2)}</td><td>${(p.win_pct*100).toFixed(1)}%</td><td>${(p.pa*100).toFixed(1)}%</td>
+          </tr>`).join('');
+        const dist = data.distribution || {};
+        const warnings = (data.warnings || []).map(w => `<li>${w}</li>`).join('');
+        oppResult.innerHTML = `
+          <div class="p-2 rounded" style="background:rgba(0,191,255,.08);">
+            <div class="d-flex justify-content-between align-items-center">
+              <strong>${data.snapshot.name || ''}</strong>
+              <span class="badge bg-transparent text-info border border-info">Rating snapshot</span>
+            </div>
+            <div class="text-secondary small">Rank ${data.snapshot.rank || '-'} | Points ${data.snapshot.points || 0} | PPM ${(data.snapshot.avg_ppm||0).toFixed(2)} | PA ${((data.snapshot.avg_pa||0)*100).toFixed(1)}% | Momentum ${(data.snapshot.momentum||0).toFixed(1)} (${data.snapshot.trend||''})</div>
+          </div>
+          <div class="mt-2">
+            <h6 class="text-secondary">Roster Breakdown</h6>
+            <div class="table-responsive">
+              <table class="table table-dark table-sm align-middle mb-0">
+                <thead><tr><th>Player</th><th>SL</th><th>PPM</th><th>Win%</th><th>PA%</th></tr></thead>
+                <tbody>${rosterRows || '<tr><td colspan="5" class="text-secondary small">No roster data</td></tr>'}</tbody>
+              </table>
+            </div>
+          </div>
+          <div class="row g-2 mt-2">
+            <div class="col-12 col-md-6">
+              <div class="p-2 rounded" style="background:rgba(255,255,255,.04);">
+                <div class="text-secondary small">SL Distribution</div>
+                <div class="subtle">Low (2-3): ${dist.low||0} | Mid (4-5): ${dist.mid||0} | High (6+): ${dist.high||0}</div>
+              </div>
+            </div>
+            <div class="col-12 col-md-6">
+              <div class="p-2 rounded" style="background:rgba(255,255,255,.04);">
+                <div class="text-secondary small">Top Performers</div>
+                <div class="subtle">${(data.top||[]).map(p=>p.name+' (SL'+p.sl+')').join(', ') || 'N/A'}</div>
+              </div>
+            </div>
+          </div>
+          <div class="row g-2 mt-2">
+            <div class="col-12 col-md-6">
+              <div class="p-2 rounded" style="background:rgba(40,167,69,.1);">
+                <div class="text-secondary small">Strengths</div>
+                <div class="subtle">${data.strengths || 'High PPM core and balanced PA.'}</div>
+              </div>
+            </div>
+            <div class="col-12 col-md-6">
+              <div class="p-2 rounded" style="background:rgba(220,53,69,.1);">
+                <div class="text-secondary small">Weaknesses</div>
+                <div class="subtle">${data.weak_text || (data.weak||[]).map(p=>p.name+' (low PPM)').join(', ') || 'Few obvious weak links.'}</div>
+              </div>
+            </div>
+          </div>
+          <div class="mt-2">
+            <h6 class="text-secondary">Matchup Warnings</h6>
+            ${(warnings ? '<ul class="small text-secondary">'+warnings+'</ul>' : '<div class="text-secondary small">No specific warnings.</div>')}
+          </div>
+        `;
+      } catch (err) {
+        showError(oppResult, 'Unable to generate report.');
+      } finally {
+        if (btn) { btn.disabled = false; btn.innerText = 'Generate Report'; }
+      }
+    });
+  }
+
+  // Race Calculator
+  const raceForm = document.getElementById('raceForm');
+  const raceResult = document.getElementById('raceResult');
+  const raceFormat = raceForm ? raceForm.querySelector('select[name="race_format"]') : null;
+  const raceA = document.getElementById('raceA');
+  const raceB = document.getElementById('raceB');
+  const applyRaceFilter = () => {
+    if (!raceFormat) return;
+    filterSelectByFormat(raceA, raceFormat.value);
+    filterSelectByFormat(raceB, raceFormat.value);
+    if (currentUserPlayerId) setIfExists(raceA, currentUserPlayerId);
+  };
+  if (raceFormat) {
+    raceFormat.addEventListener('change', applyRaceFilter);
+    applyRaceFilter();
+  }
+  if (raceForm && raceResult) {
+    raceForm.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const btn = raceForm.querySelector('button[type="submit"]');
+      const formData = new FormData(raceForm);
+      if (btn) { btn.disabled = true; btn.innerText = 'Calculating...'; }
+      try {
+        const res = await fetch('/lab/racecalc', { method:'POST', body: formData });
+        const data = await res.json();
+        if (!res.ok || data.error) throw new Error(data.error || 'Error');
+        const fmt = (formData.get('race_format') || '').toLowerCase();
+        // Derive a simple win probability using PPM + PA as weights (UI only)
+        const estA = (data.a.ppm || 0) + (data.a.pa || 0) * 10 + (data.a.sl || 0);
+        const estB = (data.b.ppm || 0) + (data.b.pa || 0) * 10 + (data.b.sl || 0);
+        const probA = (estA + estB) > 0 ? estA / (estA + estB) : 0.5;
+        const probB = 1 - probA;
+        // Plausible score estimates
+        const dynamics = data.dynamics || {};
+        // For 9-ball use each player's APA race-to points instead of a fixed 75
+        const racePtsA = data.a.race || 0;
+        const racePtsB = data.b.race || 0;
+        const loserFraction = (p) => {
+          // loser gets at least 25% of their race, more if their win prob is higher
+          return Math.min(0.85, Math.max(0.25, 0.25 + p * 0.6));
+        };
+        let plausible9A, plausible9B;
+        if (probA >= probB) {
+          plausible9A = racePtsA || 50;
+          plausible9B = Math.round((racePtsB || 50) * loserFraction(probB));
+        } else {
+          plausible9B = racePtsB || 50;
+          plausible9A = Math.round((racePtsA || 50) * loserFraction(probA));
+        }
+        const plausible8 = probA >= probB
+          ? `${data.a.race} - ${Math.max(1, data.b.race - 1)}`
+          : `${Math.max(1, data.a.race - 1)} - ${data.b.race}`;
+        const summary = `
+          <div class="p-2 rounded" style="background:rgba(0,191,255,.08);">
+            <div class="d-flex justify-content-between">
+              <div><strong>${data.a.name}</strong> (SL ${data.a.sl}) — Race to ${data.a.race}</div>
+              <div><strong>${data.b.name}</strong> (SL ${data.b.sl}) — Race to ${data.b.race}</div>
+            </div>
+            <div class="text-secondary small">Projected win chance: ${ (probA*100).toFixed(0) }% vs ${ (probB*100).toFixed(0) }% (SL + PPM + PA)</div>
+            ${fmt === '8-ball'
+              ? `<div class="text-secondary small">To the hill: ${dynamics.a_hill || 0}% (A) | ${dynamics.b_hill || 0}% (B)</div>
+                 <div class="text-secondary small">To win: ${(probA*100).toFixed(0)}% (A) | ${(probB*100).toFixed(0)}% (B)</div>
+                 <div class="text-secondary small">Plausible finish: ${plausible8}</div>`
+              : `<div class="text-secondary small">To win: ${(probA*100).toFixed(0)}% (A) | ${(probB*100).toFixed(0)}% (B)</div>
+                 <div class="text-secondary small">Plausible points: ${plausible9A}/${racePtsA || 'race'} vs ${plausible9B}/${racePtsB || 'race'}</div>`}
+          </div>`;
+        const bandTriplet = (label, b) => {
+          if (!b) return `<div class="p-2 rounded" style="background:rgba(255,255,255,.04);"><div class="text-secondary small">Vs ${label}</div><div class="subtle">No band data</div></div>`;
+          const lower = b.lower || {};
+          const equal = b.equal || {};
+          const higher = b.higher || {};
+          return `<div class="p-2 rounded" style="background:rgba(255,255,255,.04);">
+            <div class="text-secondary small mb-1">Performance vs ${label}</div>
+            <div class="row g-1">
+              <div class="col-4 subtle">Lower: ${(lower.win_pct*100||0).toFixed(0)}% • PPM ${(lower.ppm||0).toFixed(1)}</div>
+              <div class="col-4 subtle">Equal: ${(equal.win_pct*100||0).toFixed(0)}% • PPM ${(equal.ppm||0).toFixed(1)}</div>
+              <div class="col-4 subtle">Higher: ${(higher.win_pct*100||0).toFixed(0)}% • PPM ${(higher.ppm||0).toFixed(1)}</div>
+            </div>
+          </div>`;
+        };
+        raceResult.innerHTML = `
+          ${summary}
+          <div class="row g-2 mt-2">
+            <div class="col-12 col-md-6">
+              <div class="p-2 rounded" style="background:rgba(0,191,255,.05);">
+                <div class="text-secondary small">Expected Dynamics</div>
+                <div class="subtle">A hill: ${dynamics.a_hill || 0}% | B hill: ${dynamics.b_hill || 0}%</div>
+                ${dynamics.innings ? `<div class="subtle">Expected innings: ${dynamics.innings}</div>` : ''}
+                ${dynamics.points_flow ? `<div class="subtle">Points share A/B: ${dynamics.points_flow.a_share}% / ${dynamics.points_flow.b_share}%</div>` : ''}
+              </div>
+            </div>
+            <div class="col-12 col-md-6">
+              <div class="p-2 rounded" style="background:rgba(255,255,255,.04);">
+                <div class="text-secondary small">Efficiency</div>
+                <div class="subtle">${data.a.name}: Win% ${(data.a.win_pct*100).toFixed(1)}% | PPM ${data.a.ppm.toFixed(1)} | PA ${(data.a.pa*100).toFixed(1)}%</div>
+                <div class="subtle">${data.b.name}: Win% ${(data.b.win_pct*100).toFixed(1)}% | PPM ${data.b.ppm.toFixed(1)} | PA ${(data.b.pa*100).toFixed(1)}%</div>
+              </div>
+            </div>
+          </div>
+          <div class="row g-2 mt-2">
+            <div class="col-12 col-md-6">${bandTriplet(data.b.name, data.a.band)}</div>
+            <div class="col-12 col-md-6">${bandTriplet(data.a.name, data.b.band)}</div>
+          </div>
+          <div class="text-secondary small mt-2">
+            How we arrive here: SL gap (race-to values), scoring pace (PPM), points capture (PA%), recent band performance, and hill-hill odds.
+          </div>
+          ${data.rules ? `<div class="text-secondary small mt-2">${data.rules}</div>` : ''}
+          ${(data.notes && data.notes.length) ? `<ul class="small text-secondary mt-2">${data.notes.map(n=>`<li>${n}</li>`).join('')}</ul>` : ''}
+        `;
+      } catch (err) {
+        showError(raceResult, 'Race calculation failed.');
+      } finally {
+        if (btn) { btn.disabled = false; btn.innerText = 'Calculate'; }
+      }
+    });
+  }
+
+  // Momentum Analyzer
+  const momentumForm = document.getElementById('momentumForm');
+  const momentumResult = document.getElementById('momentumResult');
+  if (momentumForm && momentumResult) {
+    momentumForm.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const btn = momentumForm.querySelector('button[type="submit"]');
+      const formData = new FormData(momentumForm);
+      if (btn) { btn.disabled = true; btn.innerText = 'Analyzing...'; }
+      try {
+        const res = await fetch('/lab/momentum', { method:'POST', body: formData });
+        const data = await res.json();
+        if (!res.ok || data.error) throw new Error(data.error || 'Error');
+        if (data.scope === 'team') {
+          const recentRows = (data.recent_matches || []).map(m => `
+            <tr>
+              <td>${m.date || ''}</td>
+              <td>${m.opp || ''}</td>
+              <td>${m.pf}-${m.pa}</td>
+              <td>${m.margin}</td>
+              <td>${m.win ? 'W' : 'L'}</td>
+            </tr>`).join('');
+          const swingRows = (data.swings || []).map(m => `
+            <tr><td>${m.date || ''}</td><td>${m.opp || ''}</td><td>${m.margin}</td><td>${m.pf}-${m.pa}</td></tr>`).join('');
+          momentumResult.innerHTML = `
+            <div class="p-2 rounded" style="background:rgba(0,191,255,.08);">
+              <div class="d-flex justify-content-between align-items-center">
+                <strong>${data.team} (${data.format})</strong>
+                <span class="badge bg-transparent text-info border border-info">${data.label}</span>
+              </div>
+              <div class="text-secondary small">Recent PPM ${data.recent.ppm.toFixed(2)} vs season ${data.season.ppm.toFixed(2)} | Win% ${(data.recent.win_pct*100).toFixed(1)} vs ${(data.season.win_pct*100).toFixed(1)}</div>
+              <div class="text-secondary small">Margin: ${data.recent.margin.toFixed(1)} (Δ ${data.delta_ppm.toFixed(2)} PPM, Δ ${(data.delta_win*100).toFixed(1)} win pts)</div>
+            </div>
+            <div class="mt-2">
+              <div class="text-secondary small mb-1">Recent Matches</div>
+              <div class="table-responsive">
+                <table class="table table-dark table-sm align-middle mb-0">
+                  <thead><tr><th>Date</th><th>Opponent</th><th>Score</th><th>Margin</th><th>W/L</th></tr></thead>
+                  <tbody>${recentRows || '<tr><td colspan="5" class="text-secondary small">No data</td></tr>'}</tbody>
+                </table>
+              </div>
+            </div>
+            <div class="mt-2">
+              <div class="text-secondary small mb-1">Swing Matches</div>
+              <div class="table-responsive">
+                <table class="table table-dark table-sm align-middle mb-0">
+                  <thead><tr><th>Date</th><th>Opponent</th><th>Margin</th><th>Score</th></tr></thead>
+                  <tbody>${swingRows || '<tr><td colspan="4" class="text-secondary small">No swings</td></tr>'}</tbody>
+                </table>
+              </div>
+            </div>
+          `;
+        } else {
+          const rows = (data.players || []).map((p, idx) => `
+            <tr class="momentum-row" data-player='${JSON.stringify(p)}' role="button">
+              <td>${idx+1}</td>
+              <td>${p.name}</td>
+              <td>${p.sl}</td>
+              <td>${p.recent_ppm.toFixed(2)} (${p.delta_ppm>=0?'+':''}${p.delta_ppm.toFixed(2)})</td>
+              <td>${(p.recent_win*100).toFixed(1)}%</td>
+              <td><span class="badge ${p.score>0?'bg-success':'bg-danger'}">${p.label}</span></td>
+            </tr>`).join('');
+          const hot = (data.hot || []).map(p => `<li>${p.name} (${p.label})</li>`).join('');
+          const cold = (data.cold || []).map(p => `<li>${p.name} (${p.label})</li>`).join('');
+          const first = (data.players || [])[0];
+          const details = first ? (first.recent_matches || []).map(m => `
+            <tr><td>${m.date||''}</td><td>Opp SL ${m.opp_sl||''}</td><td>${m.pts}</td><td>${m.outcome}</td></tr>`).join('') : '';
+          momentumResult.innerHTML = `
+            <div class="table-responsive mb-2">
+              <table class="table table-dark table-sm align-middle mb-0">
+                <thead><tr><th>#</th><th>Player</th><th>SL</th><th>Recent PPM (Δ)</th><th>Win%</th><th>Momentum</th></tr></thead>
+                <tbody>${rows || '<tr><td colspan="6" class="text-secondary small">No data</td></tr>'}</tbody>
+              </table>
+            </div>
+            <div class="row g-2">
+              <div class="col-12 col-md-6">
+                <div class="p-2 rounded" style="background:rgba(40,167,69,.1);">
+                  <div class="text-secondary small mb-1">Hot Players</div>
+                  <div class="subtle">${hot || 'None'}</div>
+                </div>
+              </div>
+              <div class="col-12 col-md-6">
+                <div class="p-2 rounded" style="background:rgba(220,53,69,.1);">
+                  <div class="text-secondary small mb-1">Cold Players</div>
+                  <div class="subtle">${cold || 'None'}</div>
+                </div>
+              </div>
+            </div>
+            <div class="mt-2" id="momentumDetail">
+              <div class="text-secondary small mb-1">Recent Match Samples</div>
+              <div class="table-responsive">
+                <table class="table table-dark table-sm align-middle mb-0">
+                  <thead><tr><th>Date</th><th>Opponent SL</th><th>Points</th><th>W/L</th></tr></thead>
+                  <tbody>${details || '<tr><td colspan="4" class="text-secondary small">Select a player above</td></tr>'}</tbody>
+                </table>
+              </div>
+            </div>
+          `;
+          // attach row click for details
+          momentumResult.querySelectorAll('.momentum-row').forEach(row => {
+            row.addEventListener('click', () => {
+              const pdata = JSON.parse(row.dataset.player);
+              const detailRows = (pdata.recent_matches || []).map(m => `
+                <tr><td>${m.date||''}</td><td>Opp SL ${m.opp_sl||''}</td><td>${m.pts}</td><td>${m.outcome}</td></tr>`).join('');
+              const detail = momentumResult.querySelector('#momentumDetail tbody');
+              if (detail) {
+                detail.innerHTML = detailRows || '<tr><td colspan="4" class="text-secondary small">No match data</td></tr>';
+              }
+            });
+          });
+        }
+      } catch (err) {
+        showError(momentumResult, 'Momentum analysis failed.');
+      } finally {
+        if (btn) { btn.disabled = false; btn.innerText = 'Analyze'; }
+      }
+    });
+  }
+
+  // Points Projection
+  const projectionForm = document.getElementById('projectionForm');
+  const projectionResult = document.getElementById('projectionResult');
+  const projCustom = document.getElementById('projCustom');
+  const projLineupSection = document.getElementById('projLineupSection');
+  const projFormat = projectionForm ? projectionForm.querySelector('select[name="proj_format"]') : null;
+  const projOpp = document.getElementById('projOpp');
+  const applyProjFilter = () => {
+    if (!projFormat) return;
+    const fmt = projFormat.value;
+    filterSelectByFormat(projOpp, fmt);
+    const checks = projLineupSection ? projLineupSection.querySelectorAll('input[name="proj_player"]') : [];
+    checks.forEach(cb => {
+      const match = !cb.dataset.format || cb.dataset.format === fmt;
+      cb.closest('tr')?.classList.toggle('d-none', !match);
+      if (!match) cb.checked = false;
+    });
+  };
+  if (projFormat) {
+    projFormat.addEventListener('change', applyProjFilter);
+    applyProjFilter();
+  }
+  if (projCustom && projLineupSection) {
+    projCustom.addEventListener('change', () => {
+      projLineupSection.style.display = projCustom.checked ? 'block' : 'none';
+    });
+  }
+  if (projectionForm && projectionResult) {
+    projectionForm.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const btn = projectionForm.querySelector('button[type="submit"]');
+      const formData = new FormData(projectionForm);
+      if (projCustom && projCustom.checked) formData.set('proj_lineup_mode', 'custom');
+      if (btn) { btn.disabled = true; btn.innerText = 'Projecting...'; }
+      try {
+        const res = await fetch('/lab/projection', { method:'POST', body: formData });
+        const data = await res.json();
+        if (!res.ok || data.error) throw new Error(data.error || 'Error');
+        const lineupRows = (data.lineup || []).map(p => `
+          <tr>
+            <td>${p.name}</td><td>${p.sl}</td><td>${p.ppm.toFixed(2)}</td><td>${(p.pa*100).toFixed(1)}%</td><td>${p.role || '—'}</td>
+          </tr>`).join('');
+        const history = data.history || {};
+        const histText = history.count ? `Avg ${history.avg} (hi ${history.high}, lo ${history.low}) over ${history.count} matches` : 'No prior meetings this session.';
+        const factors = (data.factors || []).map(f => `<li>${f}</li>`).join('');
+        const scenarios = (data.scenarios || []).map(s => `<li>${s.label}: ${s.range[0]}–${s.range[1]}</li>`).join('');
+        projectionResult.innerHTML = `
+          <div class="p-2 rounded" style="background:rgba(0,191,255,.08);">
+            <div class="d-flex justify-content-between align-items-center">
+              <strong>${data.opponent} (${data.format})</strong>
+              <span class="badge bg-transparent text-info border border-info">${data.projection.difficulty}</span>
+            </div>
+            <div class="display-6 mb-0">${data.projection.center}</div>
+            <div class="text-secondary small">Range: ${data.projection.low}–${data.projection.high}</div>
+          </div>
+          <div class="row g-2 mt-2">
+            <div class="col-12 col-md-7">
+              <div class="text-secondary small mb-1">Lineup Used</div>
+              <div class="table-responsive">
+                <table class="table table-dark table-sm align-middle mb-0">
+                  <thead><tr><th>Player</th><th>SL</th><th>PPM</th><th>PA%</th><th>Role</th></tr></thead>
+                  <tbody>${lineupRows || '<tr><td colspan="5" class="text-secondary small">No lineup</td></tr>'}</tbody>
+                </table>
+              </div>
+            </div>
+            <div class="col-12 col-md-5">
+              <div class="p-2 rounded" style="background:rgba(255,255,255,.04);">
+                <div class="text-secondary small mb-1">History vs Opponent</div>
+                <div class="subtle">${histText}</div>
+              </div>
+              <div class="p-2 rounded mt-2" style="background:rgba(255,255,255,.04);">
+                <div class="text-secondary small mb-1">Factors</div>
+                <ul class="small text-secondary mb-0">${factors || '<li>No factors</li>'}</ul>
+              </div>
+              ${scenarios ? `<div class="p-2 rounded mt-2" style="background:rgba(255,255,255,.04);"><div class="text-secondary small mb-1">Scenarios</div><ul class="small text-secondary mb-0">${scenarios}</ul></div>` : ''}
+            </div>
+          </div>
+        `;
+      } catch (err) {
+        showError(projectionResult, 'Projection failed.');
+      } finally {
+        if (btn) { btn.disabled = false; btn.innerText = 'Project Points'; }
+      }
+    });
+  }
+
+  // Vegas Path Tracker
+  const vegasForm = document.getElementById('vegasForm');
+  const vegasResult = document.getElementById('vegasResult');
+  // Progression popup/chart
+  const progForm = document.getElementById('progressionForm');
+  const progSubmit = document.getElementById('progressionSubmit');
+  const progInline = document.getElementById('progressionInline');
+  const progModalEl = document.getElementById('progressionModal');
+  const progBody = document.getElementById('progressionModalBody');
+  const progModal = progModalEl ? new bootstrap.Modal(progModalEl) : null;
+  if (progForm && progSubmit && progInline) {
+    const renderProg = (data) => {
+      const labels = data.labels || [];
+      const sls = data.data || [];
+      if (!labels.length) {
+        progInline.innerHTML = '<div class="text-secondary small">No progression data found.</div>';
+        if (progBody) progBody.innerHTML = progInline.innerHTML;
+        if (progModal) progModal.show();
+        return;
+      }
+      const pills = labels.map((w, idx) => {
+        const sl = sls[idx] ?? '—';
+        return `<div class="pill bg-dark border border-info text-info">W${w}: SL ${sl}</div>`;
+      }).join('');
+      progInline.innerHTML = `
+        <div class="text-secondary small mb-2">${data.player_name || data.player_id} • ${data.format}</div>
+        <div class="d-flex flex-wrap gap-2">${pills}</div>
+      `;
+      if (progBody) {
+        const bars = labels.map((w, idx) => {
+          const sl = sls[idx] ?? '—';
+          const width = Math.max(10, Math.min(100, (sl || 5) * 10));
+          return `
+            <div class="mb-2">
+              <div class="d-flex justify-content-between">
+                <span class="text-secondary small">Week ${w}</span>
+                <span class="text-info fw-bold">SL ${sl}</span>
+              </div>
+              <div class="progress bg-dark" style="height:8px;">
+                <div class="progress-bar bg-info" role="progressbar" style="width:${width}%"></div>
+              </div>
+            </div>`;
+        }).join('');
+        progBody.innerHTML = `
+          <div class="mb-2">
+            <strong>${data.player_name || data.player_id}</strong> • ${data.format}
+          </div>
+          ${bars}
+        `;
+      }
+    };
+    const fetchProg = async (showModal=false) => {
+      progSubmit.disabled = true;
+      progSubmit.innerText = 'Loading...';
+      const fd = new FormData(progForm);
+      try {
+        const res = await fetch('/lab/progression', { method:'POST', body: fd });
+        const data = await res.json();
+        if (!res.ok || data.error || !data.ok) throw new Error(data.error || 'Unable to load progression');
+        renderProg(data);
+        if (showModal && progModal) progModal.show();
+      } catch (err) {
+        progInline.innerHTML = '<div class="text-danger small">Could not load progression.</div>';
+        if (progBody) progBody.innerHTML = progInline.innerHTML;
+        if (showModal && progModal) progModal.show();
+      } finally {
+        progSubmit.disabled = false;
+        progSubmit.innerText = 'View';
+      }
+    };
+    progForm.addEventListener('submit', (e) => {
+      e.preventDefault();
+      fetchProg(true);
+    });
+    // Also refresh on player/format change without extra click
+    progForm.querySelectorAll('select').forEach(sel => {
+      sel.addEventListener('change', () => {
+        fetchProg(false); // update inline only, no modal
+      });
+    });
+    // initial load inline only
+    fetchProg(false);
+  }
+
+  if (vegasForm && vegasResult) {
+    vegasForm.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const btn = vegasForm.querySelector('button[type="submit"]');
+      const formData = new FormData(vegasForm);
+      if (btn) { btn.disabled = true; btn.innerText = 'Analyzing...'; }
+      try {
+        const res = await fetch('/lab/vegas', { method:'POST', body: formData });
+        const data = await res.json();
+        if (!res.ok || data.error) throw new Error(data.error || 'Error');
+        const scenarios = (data.scenarios || []).map(s => `
+          <tr><td>${s.label}</td><td>${s.per_week}</td><td>${s.final}</td><td>${s.status}</td></tr>
+        `).join('');
+        const rivals = (data.rivals || []).map(r => `
+          <li>${r.name} (Rank ${r.rank}, ${r.points} pts)</li>
+        `).join('');
+        vegasResult.innerHTML = `
+          <div class="p-2 rounded" style="background:rgba(0,191,255,.08);">
+            <div class="d-flex justify-content-between align-items-center">
+              <strong>Cue-ligans (${data.format})</strong>
+              <span class="badge bg-transparent text-info border border-info">${data.target_label}</span>
+            </div>
+            <div class="text-secondary small">Rank ${data.current.rank || '-'} | Points ${data.current.points || 0} | Gap 1st: ${data.current.gap_first || 0} | Gap 3rd: ${data.current.gap_third || 0}</div>
+            <div class="text-secondary small">Target: ${data.targets.target_points} pts; Need ${data.targets.points_needed} pts => ~${data.targets.required_avg} /week</div>
+          </div>
+          <div class="row g-2 mt-2">
+            <div class="col-12 col-md-7">
+              <div class="text-secondary small mb-1">Scenario Bands</div>
+              <div class="table-responsive">
+                <table class="table table-dark table-sm align-middle mb-0">
+                  <thead><tr><th>Scenario</th><th>Pts/week</th><th>Projected Total</th><th>Status</th></tr></thead>
+                  <tbody>${scenarios || '<tr><td colspan="4" class="text-secondary small">No scenarios</td></tr>'}</tbody>
+                </table>
+              </div>
+            </div>
+            <div class="col-12 col-md-5">
+              <div class="p-2 rounded" style="background:rgba(255,255,255,.04);">
+                <div class="text-secondary small mb-1">Rivals</div>
+                <div class="subtle">${rivals || 'No close rivals listed'}</div>
+              </div>
+              <div class="p-2 rounded mt-2" style="background:rgba(255,255,255,.04);">
+                <div class="text-secondary small mb-1">Probabilities</div>
+                <div class="subtle">Top 3: ${data.prob_top3 !== null && data.prob_top3 !== undefined ? data.prob_top3+'%' : 'n/a'} | 1st: ${data.prob_first !== null && data.prob_first !== undefined ? data.prob_first+'%' : 'n/a'}</div>
+              </div>
+              <div class="text-info small mt-2">${data.summary || ''}</div>
+            </div>
+          </div>
+        `;
+      } catch (err) {
+        showError(vegasResult, 'Vegas path analysis failed.');
+      } finally {
+        if (btn) { btn.disabled = false; btn.innerText = 'Analyze Path'; }
+      }
+    });
+  }
+</script>
+{% endblock %}

@@ -1,0 +1,230 @@
+{% extends 'base.html' %}
+{% block title %}AI Assistant | Cue-Ligans{% endblock %}
+{% block content %}
+<style>
+  .ai-card { border: 1px solid rgba(0,191,255,0.25); }
+  .ai-answer { min-height: 2.5rem; }
+  .thread-pill { cursor: pointer; border:1px solid rgba(0,191,255,0.25); background:rgba(0,191,255,0.05); }
+  .thread-pill.active { background: rgba(0,191,255,0.15); border-color: rgba(0,191,255,0.5); }
+  .bubble { border:1px solid rgba(255,255,255,0.08); background:rgba(255,255,255,0.04); border-radius:12px; padding:0.6rem 0.75rem; }
+  .bubble.me { border-color: rgba(0,191,255,0.35); background:rgba(0,191,255,0.08); }
+  .live-dots { display:inline-flex; gap:4px; align-items:center; }
+  .live-dots .dot { width:6px; height:6px; border-radius:50%; background:#0dcaf0; opacity:0.3; animation: pulse 1.2s infinite; }
+  .live-dots .dot:nth-child(2) { animation-delay:0.15s; }
+  .live-dots .dot:nth-child(3) { animation-delay:0.3s; }
+  @keyframes pulse { 0%{opacity:0.2; transform:translateY(0);} 50%{opacity:1; transform:translateY(-2px);} 100%{opacity:0.2; transform:translateY(0);} }
+</style>
+<div class="container py-4">
+  <div class="card bg-dark text-light soft-border shadow-soft ai-card">
+    <div class="card-body">
+      <div class="d-flex align-items-center mb-2">
+        <i class="fa-solid fa-robot text-info me-2"></i>
+        <h5 class="mb-0">AI Assistant</h5>
+        <span class="pill ms-2">Local (Ollama)</span>
+        <button class="btn btn-sm btn-outline-secondary ms-auto" id="aiReset"><i class="fa-solid fa-rotate-left me-1"></i> Begin new chat</button>
+      </div>
+      <div class="text-secondary small mb-3">Ask about standings, top players, your rank, or upcoming matches. Chats stay private to you (admins can audit). New chats run faster because they reset context.</div>
+      <div class="alert alert-{{ 'success' if ollama_ok else 'danger' }} py-2 px-3 small d-flex align-items-center gap-2">
+        {% if ollama_ok %}
+        <i class="fa-solid fa-circle-check text-success"></i><span>Ollama is running. You can send questions.</span>
+        {% else %}
+        <i class="fa-solid fa-circle-xmark text-danger"></i><span>Ollama not reachable. Start Ollama (default port 11434) to enable AI answers.</span>
+        {% endif %}
+      </div>
+      <div class="row g-3">
+        <div class="col-12 col-lg-4">
+          <div class="d-flex align-items-center mb-2">
+            <i class="fa-solid fa-folder-tree text-info me-2"></i>
+            <div class="fw-semibold">Chats</div>
+          </div>
+          <div class="d-flex flex-column gap-2" id="threadList">
+            {% for t in threads %}
+            <div class="thread-pill p-2 d-flex justify-content-between align-items-center {% if active_thread and active_thread.id == t.id %}active{% endif %}" data-thread-id="{{ t.id }}">
+              <span class="small">{{ t.title }}</span>
+              <i class="fa-solid fa-chevron-right small text-secondary"></i>
+            </div>
+            {% endfor %}
+            {% if not threads %}
+            <div class="text-secondary small">No chats yet.</div>
+            {% endif %}
+          </div>
+          <div class="text-secondary small mt-2">Tip: start a new chat for faster answers; resume an older chat to keep context.</div>
+        </div>
+        <div class="col-12 col-lg-8">
+          <form id="aiForm" class="row g-2">
+            <div class="col-12">
+              <textarea class="form-control bg-dark text-light soft-border" id="aiQuestion" rows="3" placeholder="e.g., Where does Cue-ligans rank this week?"></textarea>
+            </div>
+            <div class="col-12 col-md-8 d-flex gap-2 align-items-center">
+              <div class="small text-secondary">Model: <span class="text-info">phi3:mini (fixed, fast)</span></div>
+              <div id="aiStatus" class="text-secondary small"></div>
+            </div>
+            <div class="col-12 col-md-4">
+              <div class="d-flex gap-2">
+                <button type="submit" class="btn btn-outline-info w-100 d-flex align-items-center justify-content-center gap-2" id="aiSubmit">
+                  <span class="ask-label">Ask</span>
+                  <i class="fa-solid fa-spinner fa-spin d-none" id="aiSpinner"></i>
+                </button>
+              </div>
+            </div>
+          </form>
+          <div class="mt-3" id="chatFeed" style="min-height: 200px;"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+{{ super() }}
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    const form = document.getElementById('aiForm');
+    const qEl = document.getElementById('aiQuestion');
+    const modelEl = null; // model locked server-side
+    const statusEl = document.getElementById('aiStatus');
+    const submitBtn = document.getElementById('aiSubmit');
+    const spinner = document.getElementById('aiSpinner');
+    const askLabel = submitBtn ? submitBtn.querySelector('.ask-label') : null;
+    const resetBtn = document.getElementById('aiReset');
+    const threadList = document.getElementById('threadList');
+    const chatFeed = document.getElementById('chatFeed');
+    let activeThreadId = {{ active_thread.id if active_thread else 'null' }};
+    let threads = {{ threads|tojson }};
+    let messages = {{ messages|tojson }};
+
+    function setStatus(text, busy=false) {
+      if (!statusEl) return;
+      if (busy) {
+        statusEl.innerHTML = `<span class="live-dots"><span class="dot"></span><span class="dot"></span><span class="dot"></span></span> ${text}`;
+      } else {
+        statusEl.textContent = text;
+      }
+    }
+
+    function renderThreads() {
+      if (!threadList) return;
+      threadList.innerHTML = '';
+      if (!threads || !threads.length) {
+        threadList.innerHTML = '<div class="text-secondary small">No chats yet.</div>';
+        return;
+      }
+      threads.forEach(t => {
+        const div = document.createElement('div');
+        div.className = 'thread-pill p-2 d-flex justify-content-between align-items-center' + (t.id === activeThreadId ? ' active' : '');
+        div.dataset.threadId = t.id;
+        div.innerHTML = `<span class="small">${t.title || ('Chat ' + t.id)}</span><i class="fa-solid fa-chevron-right small text-secondary"></i>`;
+        div.addEventListener('click', () => switchThread(t.id));
+        threadList.appendChild(div);
+      });
+    }
+
+    function renderMessages() {
+      if (!chatFeed) return;
+      chatFeed.innerHTML = '';
+      if (!messages || !messages.length) {
+        chatFeed.innerHTML = '<div class="text-secondary small">No messages yet. Ask something to start.</div>';
+        return;
+      }
+      messages.forEach(m => {
+        const wrap = document.createElement('div');
+        wrap.className = 'mb-2';
+        const q = document.createElement('div');
+        q.className = 'bubble me';
+        q.textContent = m.question;
+        wrap.appendChild(q);
+        if (m.answer) {
+          const a = document.createElement('div');
+          a.className = 'bubble mt-1';
+          a.textContent = m.answer;
+          wrap.appendChild(a);
+        }
+        chatFeed.appendChild(wrap);
+      });
+      chatFeed.scrollTop = chatFeed.scrollHeight;
+    }
+
+    function switchThread(id) {
+      if (!id) return;
+      setStatus('Loading chat...', true);
+      fetch(`/ai/thread/${id}`)
+        .then(r => r.json())
+        .then(data => {
+          if (data.error) { setStatus(data.error, false); return; }
+          activeThreadId = data.thread_id;
+          messages = data.messages || [];
+          threads = threads.map(t => t.id === activeThreadId ? {...t, title: data.thread_title || t.title} : t);
+          renderThreads();
+          renderMessages();
+          setStatus('Ready', false);
+        })
+        .catch(() => setStatus('Network error', false));
+    }
+
+    renderThreads();
+    renderMessages();
+
+    if (resetBtn) {
+      resetBtn.addEventListener('click', async () => {
+        setStatus('Starting new chat...', true);
+        try {
+          const resp = await fetch('/ai/reset', {method: 'POST'});
+          const data = await resp.json();
+          if (!resp.ok) {
+            setStatus(data.error || 'Error starting new chat.', false);
+          } else {
+            activeThreadId = data.thread_id;
+            threads = data.threads || [];
+            messages = [];
+            renderThreads();
+            renderMessages();
+            setStatus('New chat ready. Faster answers now.', false);
+            qEl.value = '';
+          }
+        } catch (err) {
+          setStatus('Network error creating chat.', false);
+        }
+      });
+    }
+
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const question = (qEl.value || '').trim();
+      if (!question) {
+        setStatus('Enter a question.', false);
+        return;
+      }
+      setStatus('Thinking... analyzing prompt and context...', true);
+      submitBtn.disabled = true;
+      if (spinner) spinner.classList.remove('d-none');
+      if (askLabel) askLabel.textContent = 'Working...';
+      try {
+        const resp = await fetch('/ai/ask', {
+          method: 'POST',
+          headers: {'Content-Type': 'application/json'},
+          body: JSON.stringify({question, thread_id: activeThreadId})
+        });
+        const data = await resp.json();
+        if (!resp.ok) {
+          setStatus(data.error || 'Error calling AI.', false);
+        } else {
+          activeThreadId = data.thread_id || activeThreadId;
+          messages = data.messages || [];
+          threads = data.threads || threads;
+          renderThreads();
+          renderMessages();
+          setStatus('Done.', false);
+          qEl.value = '';
+        }
+      } catch (err) {
+        setStatus('Network error.', false);
+      } finally {
+        submitBtn.disabled = false;
+        if (spinner) spinner.classList.add('d-none');
+        if (askLabel) askLabel.textContent = 'Ask';
+      }
+    });
+  });
+</script>
+{% endblock %}

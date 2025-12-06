@@ -1,0 +1,198 @@
+{% extends 'base.html' %}
+{% block title %}Locker | Cüe-Ligans{% endblock %}
+{% block content %}
+<style>
+  .locker-hero {
+    position: relative;
+    border-radius: 14px;
+    padding: 1.5rem 1.25rem;
+    background: radial-gradient(circle at 15% 20%, rgba(18,214,255,0.25), transparent 32%),
+                radial-gradient(circle at 85% 15%, rgba(255,116,217,0.18), transparent 35%),
+                linear-gradient(135deg, #0d1b2a 0%, #0b1226 50%, #07101e 100%);
+    border: 1px solid rgba(0,191,255,0.35);
+    box-shadow: 0 15px 40px rgba(0,191,255,0.18);
+  }
+  .channel-pill {
+    border: 1px solid rgba(255,255,255,0.08);
+    border-radius: 10px;
+    padding: 0.6rem 0.8rem;
+    background: rgba(255,255,255,0.03);
+    transition: all 0.2s ease;
+    cursor: pointer;
+  }
+  .channel-pill:hover { border-color: rgba(0,191,255,0.4); box-shadow: 0 0 12px rgba(0,191,255,0.25); }
+  .channel-pill.active {
+    background: linear-gradient(90deg, rgba(0,191,255,0.18), rgba(15,235,167,0.12));
+    border-color: rgba(0,191,255,0.55);
+    box-shadow: 0 8px 20px rgba(0,191,255,0.25);
+  }
+  .message-card {
+    background: rgba(255,255,255,0.03);
+    border: 1px solid rgba(255,255,255,0.07);
+    border-radius: 12px;
+    padding: 0.9rem;
+    box-shadow: 0 10px 24px rgba(0,0,0,0.35);
+  }
+  .message-avatar {
+    width: 42px; height: 42px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #12d6ff, #0a6ef5);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    color: #0a0f16;
+    font-weight: 700;
+  }
+  .composer {
+    position: sticky;
+    bottom: 0;
+    backdrop-filter: blur(10px);
+    background: rgba(6,10,18,0.9);
+    border-top: 1px solid rgba(0,191,255,0.25);
+    border-radius: 12px;
+    padding: 0.75rem;
+  }
+  .glow-input {
+    background: rgba(255,255,255,0.05);
+    border: 1px solid rgba(255,255,255,0.08);
+    color: #e9f5ff;
+  }
+  .glow-input:focus { border-color: rgba(0,191,255,0.5); box-shadow: 0 0 0 0.2rem rgba(0,191,255,0.15); }
+</style>
+
+<div class="container py-4">
+  <div class="locker-hero mb-4 d-flex flex-column flex-md-row align-items-start align-items-md-center justify-content-between">
+    <div class="d-flex align-items-center">
+      <div class="hero-badge me-3">
+        <i class="fa-solid fa-comments"></i>
+        <span>Locker</span>
+      </div>
+      <div>
+        <div class="h5 mb-1 text-info">{{ active_channel.name if active_channel else 'Locker' }}</div>
+        <div class="text-secondary small">{{ active_channel.description or "Team Chat • Highlights • Strategy • Memes" }}</div>
+      </div>
+    </div>
+    <div class="text-secondary small mt-3 mt-md-0">
+      {% if current_user %}
+        Signed in as {{ current_user.username }} | <a class="text-info text-decoration-none" href="{{ url_for('logout') }}">Logout</a>
+      {% else %}
+        <a class="text-info text-decoration-none me-2" href="{{ url_for('login', next=request.url) }}">Login</a> |
+        <a class="text-info text-decoration-none ms-2" href="{{ url_for('signup') }}">Sign up</a>
+      {% endif %}
+    </div>
+  </div>
+
+  <div class="row g-3">
+    <!-- Sidebar -->
+    <div class="col-12 col-md-3">
+      <div class="card bg-dark soft-border shadow-soft h-100">
+        <div class="card-body">
+          <div class="d-flex justify-content-between align-items-center mb-2">
+            <div class="text-secondary small mb-0">Channels</div>
+            <button class="btn btn-sm btn-outline-info d-md-none" id="toggleChannels" type="button">Show all</button>
+          </div>
+          <div class="d-flex flex-column gap-2" id="channelList" style="max-height:65vh; overflow-y:auto;">
+            {% set icon_map = {
+              'general':'fa-comments','game-night':'fa-martini-glass-citrus','strategies':'fa-chess-knight',
+              'opponent-intel':'fa-user-secret','memes-media':'fa-photo-film','highlights':'fa-bolt',
+              'announcements':'fa-bullhorn','requests':'fa-hand-holding','profiles':'fa-id-card','cuetillery':'fa-wrench'
+            } %}
+            {% for ch in channels %}
+            <a href="{{ url_for('locker', channel=ch.slug) }}" class="text-decoration-none channel-link channel-item" data-slug="{{ ch.slug }}">
+              <div class="channel-pill {% if active_channel and active_channel.slug==ch.slug %}active{% endif %} d-flex align-items-center justify-content-between">
+                <div><i class="fa-solid {{ icon_map.get(ch.slug,'fa-circle') }} me-2 text-info"></i>{{ ch.name }}</div>
+                {% if message_counts and message_counts.get(ch.id) %}
+                <span class="badge bg-dark border text-secondary">{{ message_counts.get(ch.id) }}</span>
+                {% endif %}
+              </div>
+            </a>
+            {% endfor %}
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Main feed -->
+    <div class="col-12 col-lg-6">
+      <div class="card bg-dark soft-border shadow-soft h-100 d-flex flex-column" id="chatCard">
+        {% include 'locker_messages_fragment.html' %}
+      </div>
+    </div>
+
+    <!-- Right future panel -->
+    <div class="col-12 col-lg-3">
+      <div class="card bg-dark soft-border shadow-soft h-100">
+        <div class="card-body d-flex flex-column">
+          <div class="h6 mb-1 text-info">Future Panel</div>
+          <div class="text-secondary small mb-3">Online members • Notifications • Quick links • Match countdown.</div>
+          <div class="flex-grow-1 rounded-3 border border-dashed" style="border-color: rgba(255,255,255,0.2) !important; background: rgba(255,255,255,0.03); display:flex; align-items:center; justify-content:center;">
+            <span class="text-secondary small">Reserved for upcoming widgets</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+{{ super() }}
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+  const links = document.querySelectorAll('.channel-link');
+  const channelItems = Array.from(document.querySelectorAll('.channel-item'));
+  const toggleBtn = document.getElementById('toggleChannels');
+  let channelsExpanded = false;
+
+  function renderChannels() {
+    if (window.innerWidth >= 768) {
+      channelItems.forEach(el => el.classList.remove('d-none'));
+      if (toggleBtn) toggleBtn.classList.add('d-none');
+      return;
+    }
+    if (toggleBtn) toggleBtn.classList.remove('d-none');
+    channelItems.forEach((el, idx) => {
+      if (!channelsExpanded && idx >= 2) {
+        el.classList.add('d-none');
+      } else {
+        el.classList.remove('d-none');
+      }
+    });
+    if (toggleBtn) toggleBtn.textContent = channelsExpanded ? 'Hide' : 'Show all';
+  }
+
+  if (toggleBtn) {
+    toggleBtn.addEventListener('click', () => {
+      channelsExpanded = !channelsExpanded;
+      renderChannels();
+    });
+  }
+  window.addEventListener('resize', renderChannels);
+  renderChannels();
+    const chatCard = document.getElementById('chatCard');
+    const heroTitle = document.querySelector('.locker-hero .h5');
+    const heroDesc = document.querySelector('.locker-hero .text-secondary.small');
+
+    links.forEach(link => {
+      link.addEventListener('click', (e) => {
+        e.preventDefault();
+        const slug = link.dataset.slug;
+        const prevScroll = window.scrollY || document.documentElement.scrollTop || 0;
+        fetch(`${link.href}`, { headers: { 'X-Requested-With': 'fetch-locker' }})
+          .then(res => res.json())
+          .then(data => {
+            if (!data || !data.html) { window.location = link.href; return; }
+            chatCard.innerHTML = data.html;
+            // update active state
+            document.querySelectorAll('.channel-pill').forEach(p => p.classList.remove('active'));
+            link.querySelector('.channel-pill').classList.add('active');
+            if (heroTitle) heroTitle.textContent = data.channel_name;
+            if (heroDesc) heroDesc.textContent = data.channel_desc;
+            window.scrollTo({top: prevScroll, behavior: 'instant'});
+          })
+          .catch(() => window.location = link.href);
+      });
+    });
+  });
+</script>
+{% endblock %}

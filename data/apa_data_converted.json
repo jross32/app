@@ -1,0 +1,3877 @@
+{
+  "league": {},
+  "divisions": {
+    "417524": {
+      "id": 417524,
+      "name": "Thursday Brownsville 9 B",
+      "format": "9-ball",
+      "night": "Thursday",
+      "raw": {
+        "name": "Thursday Brownsville 9 B",
+        "format": null,
+        "type": null,
+        "divisionNight": null
+      },
+      "slug": "thursday_brownsville_9_b"
+    },
+    "417530": {
+      "id": 417530,
+      "name": "Thursday Brownsville DJ",
+      "format": "8-ball",
+      "night": "Thursday",
+      "raw": {
+        "name": "Thursday Brownsville DJ",
+        "format": null,
+        "type": null,
+        "divisionNight": null
+      },
+      "slug": "thursday_brownsville_dj"
+    }
+  },
+  "teams": {
+    "12867592": {
+      "id": 12867592,
+      "name": "Cue-ligans",
+      "division": {
+        "id": 417530,
+        "name": null,
+        "format": "8-ball",
+        "raw_format": "EIGHT"
+      },
+      "format": "8-ball",
+      "roster_alias_ids": [
+        91040482,
+        91052656,
+        91040487,
+        91043354,
+        91041128,
+        91052658,
+        91071833,
+        91109249
+      ],
+      "slug": "cue_ligans",
+      "matches": [
+        "48118020",
+        "48118023",
+        "48118027",
+        "48118030",
+        "48118033",
+        "48118039",
+        "48118044",
+        "48118048",
+        "48118051",
+        "48118055",
+        "48118058",
+        "48118061",
+        "48118067",
+        "48118072",
+        "48118076"
+      ],
+      "player_ids": [
+        91040482,
+        91052656,
+        91040487,
+        91043354,
+        91041128,
+        91052658,
+        91071833,
+        91109249
+      ]
+    },
+    "12867593": {
+      "id": 12867593,
+      "name": "Cue-ligans",
+      "division": {
+        "id": 417524,
+        "name": null,
+        "format": "9-ball",
+        "raw_format": "NINE"
+      },
+      "format": "9-ball",
+      "roster_alias_ids": [
+        91052648,
+        91040488,
+        91041133,
+        91043355,
+        91040489,
+        91052651,
+        91074593,
+        91074586
+      ],
+      "slug": "cue_ligans",
+      "matches": [
+        "48118080",
+        "48118083",
+        "48118087",
+        "48118090",
+        "48118093",
+        "48118099",
+        "48118104",
+        "48118108",
+        "48118111",
+        "48118115",
+        "48118118",
+        "48118121",
+        "48118139",
+        "48118144",
+        "48118148"
+      ],
+      "player_ids": [
+        91052648,
+        91040488,
+        91041133,
+        91043355,
+        91040489,
+        91052651,
+        91074593,
+        91074586
+      ]
+    },
+    "12864634": {
+      "id": 12864634,
+      "name": "Dead On",
+      "division": {
+        "id": 417524,
+        "name": null,
+        "format": "9-ball",
+        "raw_format": null
+      },
+      "format": "9-ball",
+      "roster_alias_ids": [
+        91016293,
+        91016291,
+        91016295,
+        91016297,
+        91046487,
+        91016298,
+        91051208,
+        91074786
+      ],
+      "slug": "dead_on",
+      "matches": [
+        "48118093",
+        "48118121"
+      ],
+      "player_ids": [
+        91016293,
+        91016291,
+        91016295,
+        91016297,
+        91046487,
+        91016298,
+        91051208,
+        91074786
+      ]
+    },
+    "12864635": {
+      "id": 12864635,
+      "name": "Chalk and Awe",
+      "division": {
+        "id": 417524,
+        "name": null,
+        "format": "9-ball",
+        "raw_format": null
+      },
+      "format": "9-ball",
+      "roster_alias_ids": [
+        91016302,
+        91016299,
+        91016303,
+        91016304,
+        91016300,
+        91016301,
+        91016306,
+        91112162
+      ],
+      "slug": "chalk_and_awe",
+      "matches": [
+        "48118080",
+        "48118108",
+        "48118148"
+      ],
+      "player_ids": [
+        91016302,
+        91016299,
+        91016303,
+        91016304,
+        91016300,
+        91016301,
+        91016306,
+        91112162
+      ]
+    },
+    "12864636": {
+      "id": 12864636,
+      "name": "Ballerz 956",
+      "division": {
+        "id": 417524,
+        "name": null,
+        "format": "9-ball",
+        "raw_format": null
+      },
+      "format": "9-ball",
+      "roster_alias_ids": [
+        91016307,
+        91016311,
+        91016313,
+        91052541,
+        91052542,
+        91052544,
+        91052545,
+        91052586
+      ],
+      "slug": "ballerz_956",
+      "matches": [
+        "48118104",
+        "48118144"
+      ],
+      "player_ids": [
+        91016307,
+        91016311,
+        91016313,
+        91052541,
+        91052542,
+        91052544,
+        91052545,
+        91052586
+      ]
+    },
+    "12864637": {
+      "id": 12864637,
+      "name": "Bad Boys",
+      "division": {
+        "id": 417524,
+        "name": null,
+        "format": "9-ball",
+        "raw_format": null
+      },
+      "format": "9-ball",
+      "roster_alias_ids": [
+        91016316,
+        91016317,
+        91016318,
+        91016321,
+        91016322,
+        91047965,
+        91094585,
+        91112159
+      ],
+      "slug": "bad_boys",
+      "matches": [
+        "48118083",
+        "48118111"
+      ],
+      "player_ids": [
+        91016316,
+        91016317,
+        91016318,
+        91016321,
+        91016322,
+        91047965,
+        91094585,
+        91112159
+      ]
+    },
+    "12864638": {
+      "id": 12864638,
+      "name": "Sour Patch Kids",
+      "division": {
+        "id": 417524,
+        "name": null,
+        "format": "9-ball",
+        "raw_format": null
+      },
+      "format": "9-ball",
+      "roster_alias_ids": [
+        91016326,
+        91016323,
+        91016329,
+        91016325,
+        91016324,
+        91016328,
+        91016327,
+        91016330
+      ],
+      "slug": "sour_patch_kids",
+      "matches": [
+        "48118090",
+        "48118118"
+      ],
+      "player_ids": [
+        91016326,
+        91016323,
+        91016329,
+        91016325,
+        91016324,
+        91016328,
+        91016327,
+        91016330
+      ]
+    },
+    "12864639": {
+      "id": 12864639,
+      "name": "Palochones",
+      "division": {
+        "id": 417524,
+        "name": null,
+        "format": "9-ball",
+        "raw_format": null
+      },
+      "format": "9-ball",
+      "roster_alias_ids": [
+        91016337,
+        91016333,
+        91016334,
+        91016336,
+        91016331,
+        91016338,
+        91016332,
+        91016335
+      ],
+      "slug": "palochones",
+      "matches": [
+        "48118087",
+        "48118115"
+      ],
+      "player_ids": [
+        91016337,
+        91016333,
+        91016334,
+        91016336,
+        91016331,
+        91016338,
+        91016332,
+        91016335
+      ]
+    },
+    "12864640": {
+      "id": 12864640,
+      "name": "Quete Importa",
+      "division": {
+        "id": 417524,
+        "name": null,
+        "format": "9-ball",
+        "raw_format": null
+      },
+      "format": "9-ball",
+      "roster_alias_ids": [
+        91016340,
+        91016339,
+        91016344,
+        91016341,
+        91016342,
+        91052515,
+        91052650,
+        91094638
+      ],
+      "slug": "quete_importa",
+      "matches": [
+        "48118099",
+        "48118139"
+      ],
+      "player_ids": [
+        91016340,
+        91016339,
+        91016344,
+        91016341,
+        91016342,
+        91052515,
+        91052650,
+        91094638
+      ]
+    },
+    "12864714": {
+      "id": 12864714,
+      "name": "Dead On",
+      "division": {
+        "id": 417530,
+        "name": null,
+        "format": "8-ball",
+        "raw_format": null
+      },
+      "format": "8-ball",
+      "roster_alias_ids": [
+        91016687,
+        91016686,
+        91016689,
+        91016691,
+        91016693,
+        91016690,
+        91046400,
+        91074785
+      ],
+      "slug": "dead_on",
+      "matches": [
+        "48118033",
+        "48118061"
+      ],
+      "player_ids": [
+        91016687,
+        91016686,
+        91016689,
+        91016691,
+        91016693,
+        91016690,
+        91046400,
+        91074785
+      ]
+    },
+    "12864715": {
+      "id": 12864715,
+      "name": "Chalk and Awe",
+      "division": {
+        "id": 417530,
+        "name": null,
+        "format": "8-ball",
+        "raw_format": null
+      },
+      "format": "8-ball",
+      "roster_alias_ids": [
+        91016694,
+        91016697,
+        91016698,
+        91016699,
+        91016695,
+        91016696,
+        91016701,
+        91112156
+      ],
+      "slug": "chalk_and_awe",
+      "matches": [
+        "48118020",
+        "48118048",
+        "48118076"
+      ],
+      "player_ids": [
+        91016694,
+        91016697,
+        91016698,
+        91016699,
+        91016695,
+        91016696,
+        91016701,
+        91112156
+      ]
+    },
+    "12864716": {
+      "id": 12864716,
+      "name": "Ballerz 956",
+      "division": {
+        "id": 417530,
+        "name": null,
+        "format": "8-ball",
+        "raw_format": null
+      },
+      "format": "8-ball",
+      "roster_alias_ids": [
+        91016705,
+        91016702,
+        91016707,
+        91052530,
+        91052533,
+        91052536,
+        91052538,
+        91052540
+      ],
+      "slug": "ballerz_956",
+      "matches": [
+        "48118044",
+        "48118072"
+      ],
+      "player_ids": [
+        91016705,
+        91016702,
+        91016707,
+        91052530,
+        91052533,
+        91052536,
+        91052538,
+        91052540
+      ]
+    },
+    "12864717": {
+      "id": 12864717,
+      "name": "Bad Boys",
+      "division": {
+        "id": 417530,
+        "name": null,
+        "format": "8-ball",
+        "raw_format": null
+      },
+      "format": "8-ball",
+      "roster_alias_ids": [
+        91016709,
+        91016710,
+        91016711,
+        91016712,
+        91016715,
+        91047962,
+        91016716,
+        91109618
+      ],
+      "slug": "bad_boys",
+      "matches": [
+        "48118023",
+        "48118051"
+      ],
+      "player_ids": [
+        91016709,
+        91016710,
+        91016711,
+        91016712,
+        91016715,
+        91047962,
+        91016716,
+        91109618
+      ]
+    },
+    "12864718": {
+      "id": 12864718,
+      "name": "Sour Patch Kids",
+      "division": {
+        "id": 417530,
+        "name": null,
+        "format": "8-ball",
+        "raw_format": null
+      },
+      "format": "8-ball",
+      "roster_alias_ids": [
+        91016719,
+        91016717,
+        91016721,
+        91016718,
+        91016720,
+        91016723,
+        91016722,
+        91016724
+      ],
+      "slug": "sour_patch_kids",
+      "matches": [
+        "48118030",
+        "48118058"
+      ],
+      "player_ids": [
+        91016719,
+        91016717,
+        91016721,
+        91016718,
+        91016720,
+        91016723,
+        91016722,
+        91016724
+      ]
+    },
+    "12864719": {
+      "id": 12864719,
+      "name": "Palochones",
+      "division": {
+        "id": 417530,
+        "name": null,
+        "format": "8-ball",
+        "raw_format": null
+      },
+      "format": "8-ball",
+      "roster_alias_ids": [
+        91016726,
+        91016727,
+        91016729,
+        91016730,
+        91016731,
+        91016732,
+        91016725,
+        91016728
+      ],
+      "slug": "palochones",
+      "matches": [
+        "48118027",
+        "48118055"
+      ],
+      "player_ids": [
+        91016726,
+        91016727,
+        91016729,
+        91016730,
+        91016731,
+        91016732,
+        91016725,
+        91016728
+      ]
+    },
+    "12864720": {
+      "id": 12864720,
+      "name": "Quete Importa",
+      "division": {
+        "id": 417530,
+        "name": null,
+        "format": "8-ball",
+        "raw_format": null
+      },
+      "format": "8-ball",
+      "roster_alias_ids": [
+        91016734,
+        91016733,
+        91016737,
+        91016735,
+        91040677,
+        91052508,
+        91052647,
+        91112157
+      ],
+      "slug": "quete_importa",
+      "matches": [
+        "48118039",
+        "48118067"
+      ],
+      "player_ids": [
+        91016734,
+        91016733,
+        91016737,
+        91016735,
+        91040677,
+        91052508,
+        91052647,
+        91112157
+      ]
+    }
+  },
+  "players": {
+    "12867592": {
+      "display_name": "Cue-ligans",
+      "alias_id": 12867592,
+      "member_id": null,
+      "stats": {
+        "eight_ball": {},
+        "nine_ball": {}
+      },
+      "slug": "cue_ligans",
+      "teams": []
+    },
+    "12867593": {
+      "display_name": "Cue-ligans",
+      "alias_id": 12867593,
+      "member_id": null,
+      "stats": {
+        "eight_ball": {},
+        "nine_ball": {}
+      },
+      "slug": "cue_ligans",
+      "teams": []
+    },
+    "91040482": {
+      "display_name": "Justin Ross",
+      "alias_id": 91040482,
+      "member_id": 3400522,
+      "stats": {
+        "eight_ball": {},
+        "nine_ball": {}
+      },
+      "slug": "justin_ross",
+      "teams": [
+        "12867592"
+      ],
+      "extra": {
+        "memberNumber": "78502221",
+        "skillLevel": 3,
+        "pa": 0.2916666666666667,
+        "ppm": 0.875
+      }
+    },
+    "91052656": {
+      "display_name": "William McGinnis",
+      "alias_id": 91052656,
+      "member_id": 1689161,
+      "stats": {
+        "eight_ball": {},
+        "nine_ball": {}
+      },
+      "slug": "william_mcginnis",
+      "teams": [
+        "12867592"
+      ],
+      "extra": {
+        "memberNumber": "78500261",
+        "skillLevel": 5,
+        "pa": 0.39999999999999997,
+        "ppm": 1.2
+      }
+    },
+    "91040487": {
+      "display_name": "Rigo Almaraz",
+      "alias_id": 91040487,
+      "member_id": 3220735,
+      "stats": {
+        "eight_ball": {},
+        "nine_ball": {}
+      },
+      "slug": "rigo_almaraz",
+      "teams": [
+        "12867592"
+      ],
+      "extra": {
+        "memberNumber": "78503663",
+        "skillLevel": 6,
+        "pa": 0.7333333333333334,
+        "ppm": 2.2
+      }
+    },
+    "91043354": {
+      "display_name": "Rik Cavazos",
+      "alias_id": 91043354,
+      "member_id": 3432311,
+      "stats": {
+        "eight_ball": {},
+        "nine_ball": {}
+      },
+      "slug": "rik_cavazos",
+      "teams": [
+        "12867592"
+      ],
+      "extra": {
+        "memberNumber": "78504318",
+        "skillLevel": 2,
+        "pa": 0.2916666666666667,
+        "ppm": 0.875
+      }
+    },
+    "91041128": {
+      "display_name": "Ethan Boone",
+      "alias_id": 91041128,
+      "member_id": 2532146,
+      "stats": {
+        "eight_ball": {},
+        "nine_ball": {}
+      },
+      "slug": "ethan_boone",
+      "teams": [
+        "12867592"
+      ],
+      "extra": {
+        "memberNumber": "78501548",
+        "skillLevel": 6,
+        "pa": 0.3333333333333333,
+        "ppm": 1
+      }
+    },
+    "91052658": {
+      "display_name": "Bryan Edwards",
+      "alias_id": 91052658,
+      "member_id": 3353843,
+      "stats": {
+        "eight_ball": {},
+        "nine_ball": {}
+      },
+      "slug": "bryan_edwards",
+      "teams": [
+        "12867592"
+      ],
+      "extra": {
+        "memberNumber": "78501902",
+        "skillLevel": 3,
+        "pa": 0.6,
+        "ppm": 1.8
+      }
+    },
+    "91071833": {
+      "display_name": "Luis Sandoval",
+      "alias_id": 91071833,
+      "member_id": 3434645,
+      "stats": {
+        "eight_ball": {},
+        "nine_ball": {}
+      },
+      "slug": "luis_sandoval",
+      "teams": [
+        "12867592"
+      ],
+      "extra": {
+        "memberNumber": "78504465",
+        "skillLevel": 3,
+        "pa": 0.5,
+        "ppm": 1.5
+      }
+    },
+    "91109249": {
+      "display_name": "Arturo Rivera",
+      "alias_id": 91109249,
+      "member_id": 3438913,
+      "stats": {
+        "eight_ball": {},
+        "nine_ball": {}
+      },
+      "slug": "arturo_rivera",
+      "teams": [
+        "12867592"
+      ],
+      "extra": {
+        "memberNumber": "78504232",
+        "skillLevel": 2,
+        "pa": 0.1111111111111111,
+        "ppm": 0.3333333333333333
+      }
+    },
+    "91052648": {
+      "display_name": "William McGinnis",
+      "alias_id": 91052648,
+      "member_id": 1689161,
+      "stats": {
+        "eight_ball": {},
+        "nine_ball": {}
+      },
+      "slug": "william_mcginnis",
+      "teams": [
+        "12867593"
+      ],
+      "extra": {
+        "memberNumber": "78500261",
+        "skillLevel": 6,
+        "pa": 0.36428571428571427,
+        "ppm": 7.285714285714286
+      }
+    },
+    "91040488": {
+      "display_name": "Justin Ross",
+      "alias_id": 91040488,
+      "member_id": 3400522,
+      "stats": {
+        "eight_ball": {},
+        "nine_ball": {}
+      },
+      "slug": "justin_ross",
+      "teams": [
+        "12867593"
+      ],
+      "extra": {
+        "memberNumber": "78502221",
+        "skillLevel": 2,
+        "pa": 0.45,
+        "ppm": 9
+      }
+    },
+    "91041133": {
+      "display_name": "Ethan Boone",
+      "alias_id": 91041133,
+      "member_id": 2532146,
+      "stats": {
+        "eight_ball": {},
+        "nine_ball": {}
+      },
+      "slug": "ethan_boone",
+      "teams": [
+        "12867593"
+      ],
+      "extra": {
+        "memberNumber": "78501548",
+        "skillLevel": 7,
+        "pa": 0.6,
+        "ppm": 12
+      }
+    },
+    "91043355": {
+      "display_name": "Rik Cavazos",
+      "alias_id": 91043355,
+      "member_id": 3432311,
+      "stats": {
+        "eight_ball": {},
+        "nine_ball": {}
+      },
+      "slug": "rik_cavazos",
+      "teams": [
+        "12867593"
+      ],
+      "extra": {
+        "memberNumber": "78504318",
+        "skillLevel": 3,
+        "pa": 0.7,
+        "ppm": 14
+      }
+    },
+    "91040489": {
+      "display_name": "Rigo Almaraz",
+      "alias_id": 91040489,
+      "member_id": 3220735,
+      "stats": {
+        "eight_ball": {},
+        "nine_ball": {}
+      },
+      "slug": "rigo_almaraz",
+      "teams": [
+        "12867593"
+      ],
+      "extra": {
+        "memberNumber": "78503663",
+        "skillLevel": 5,
+        "pa": 0.5416666666666667,
+        "ppm": 10.833333333333334
+      }
+    },
+    "91052651": {
+      "display_name": "Bryan Edwards",
+      "alias_id": 91052651,
+      "member_id": 3353843,
+      "stats": {
+        "eight_ball": {},
+        "nine_ball": {}
+      },
+      "slug": "bryan_edwards",
+      "teams": [
+        "12867593"
+      ],
+      "extra": {
+        "memberNumber": "78501902",
+        "skillLevel": 3,
+        "pa": 0.4375,
+        "ppm": 8.75
+      }
+    },
+    "91074593": {
+      "display_name": "Luis Sandoval",
+      "alias_id": 91074593,
+      "member_id": 3434645,
+      "stats": {
+        "eight_ball": {},
+        "nine_ball": {}
+      },
+      "slug": "luis_sandoval",
+      "teams": [
+        "12867593"
+      ],
+      "extra": {
+        "memberNumber": "78504465",
+        "skillLevel": 3,
+        "pa": 0.4714285714285714,
+        "ppm": 9.428571428571429
+      }
+    },
+    "91074586": {
+      "display_name": "Ivan Sanchez",
+      "alias_id": 91074586,
+      "member_id": 3434939,
+      "stats": {
+        "eight_ball": {},
+        "nine_ball": {}
+      },
+      "slug": "ivan_sanchez",
+      "teams": [
+        "12867593"
+      ],
+      "extra": {
+        "memberNumber": "78504506",
+        "skillLevel": 4,
+        "pa": 0.54,
+        "ppm": 10.8
+      }
+    },
+    "91016293": {
+      "display_name": "Chris Garza",
+      "alias_id": 91016293,
+      "member_id": 2311006,
+      "stats": {
+        "eight_ball": {},
+        "nine_ball": {}
+      },
+      "slug": "chris_garza",
+      "teams": [
+        "12864634"
+      ],
+      "extra": {
+        "memberNumber": "78501196",
+        "skillLevel": 7,
+        "pa": 0.55,
+        "ppm": 11
+      }
+    },
+    "91016291": {
+      "display_name": "Julia Jordan",
+      "alias_id": 91016291,
+      "member_id": 2073721,
+      "stats": {
+        "eight_ball": {},
+        "nine_ball": {}
+      },
+      "slug": "julia_jordan",
+      "teams": [
+        "12864634"
+      ],
+      "extra": {
+        "memberNumber": "78500754",
+        "skillLevel": 5,
+        "pa": 0.47000000000000003,
+        "ppm": 9.4
+      }
+    },
+    "91016295": {
+      "display_name": "Amanda Cantwell",
+      "alias_id": 91016295,
+      "member_id": 2993106,
+      "stats": {
+        "eight_ball": {},
+        "nine_ball": {}
+      },
+      "slug": "amanda_cantwell",
+      "teams": [
+        "12864634"
+      ],
+      "extra": {
+        "memberNumber": "78502883",
+        "skillLevel": 4,
+        "pa": 0.5111111111111111,
+        "ppm": 10.222222222222221
+      }
+    },
+    "91016297": {
+      "display_name": "Denise Garza",
+      "alias_id": 91016297,
+      "member_id": 3316786,
+      "stats": {
+        "eight_ball": {},
+        "nine_ball": {}
+      },
+      "slug": "denise_garza",
+      "teams": [
+        "12864634"
+      ],
+      "extra": {
+        "memberNumber": "78502110",
+        "skillLevel": 4,
+        "pa": 0.45625,
+        "ppm": 9.125
+      }
+    },
+    "91046487": {
+      "display_name": "Juan Sordia",
+      "alias_id": 91046487,
+      "member_id": 2544750,
+      "stats": {
+        "eight_ball": {},
+        "nine_ball": {}
+      },
+      "slug": "juan_sordia",
+      "teams": [
+        "12864634"
+      ],
+      "extra": {
+        "memberNumber": "78501570",
+        "skillLevel": 5,
+        "pa": 0.45,
+        "ppm": 9
+      }
+    },
+    "91016298": {
+      "display_name": "Melody Tijerina",
+      "alias_id": 91016298,
+      "member_id": 3356943,
+      "stats": {
+        "eight_ball": {},
+        "nine_ball": {}
+      },
+      "slug": "melody_tijerina",
+      "teams": [
+        "12864634"
+      ],
+      "extra": {
+        "memberNumber": "78504051",
+        "skillLevel": 3,
+        "pa": 0.43,
+        "ppm": 8.6
+      }
+    },
+    "91051208": {
+      "display_name": "Alex Hernandez",
+      "alias_id": 91051208,
+      "member_id": 3038547,
+      "stats": {
+        "eight_ball": {},
+        "nine_ball": {}
+      },
+      "slug": "alex_hernandez",
+      "teams": [
+        "12864634"
+      ],
+      "extra": {
+        "memberNumber": "78502880",
+        "skillLevel": 4,
+        "pa": 0.58,
+        "ppm": 11.6
+      }
+    },
+    "91074786": {
+      "display_name": "Katelynn Lee",
+      "alias_id": 91074786,
+      "member_id": 2934342,
+      "stats": {
+        "eight_ball": {},
+        "nine_ball": {}
+      },
+      "slug": "katelynn_lee",
+      "teams": [
+        "12864634"
+      ],
+      "extra": {
+        "memberNumber": "78502630",
+        "skillLevel": 6,
+        "pa": 0.47000000000000003,
+        "ppm": 9.4
+      }
+    },
+    "91016302": {
+      "display_name": "Jose Vasquez",
+      "alias_id": 91016302,
+      "member_id": 2324730,
+      "stats": {
+        "eight_ball": {},
+        "nine_ball": {}
+      },
+      "slug": "jose_vasquez",
+      "teams": [
+        "12864635"
+      ],
+      "extra": {
+        "memberNumber": "78501338",
+        "skillLevel": 7,
+        "pa": 0.65,
+        "ppm": 13
+      }
+    },
+    "91016299": {
+      "display_name": "Ashley Dartt",
+      "alias_id": 91016299,
+      "member_id": 2099036,
+      "stats": {
+        "eight_ball": {},
+        "nine_ball": {}
+      },
+      "slug": "ashley_dartt",
+      "teams": [
+        "12864635"
+      ],
+      "extra": {
+        "memberNumber": "78500777",
+        "skillLevel": 5,
+        "pa": 0.375,
+        "ppm": 7.5
+      }
+    },
+    "91016303": {
+      "display_name": "Rogerio Molina",
+      "alias_id": 91016303,
+      "member_id": 2706283,
+      "stats": {
+        "eight_ball": {},
+        "nine_ball": {}
+      },
+      "slug": "rogerio_molina",
+      "teams": [
+        "12864635"
+      ],
+      "extra": {
+        "memberNumber": "78502483",
+        "skillLevel": 4,
+        "pa": 0.47727272727272724,
+        "ppm": 9.545454545454545
+      }
+    },
+    "91016304": {
+      "display_name": "David Hernandez Garces",
+      "alias_id": 91016304,
+      "member_id": 3275748,
+      "stats": {
+        "eight_ball": {},
+        "nine_ball": {}
+      },
+      "slug": "david_hernandez_garces",
+      "teams": [
+        "12864635"
+      ],
+      "extra": {
+        "memberNumber": "78503865",
+        "skillLevel": 4,
+        "pa": 0.6125,
+        "ppm": 12.25
+      }
+    },
+    "91016300": {
+      "display_name": "Steve Castillo",
+      "alias_id": 91016300,
+      "member_id": 2047605,
+      "stats": {
+        "eight_ball": {},
+        "nine_ball": {}
+      },
+      "slug": "steve_castillo",
+      "teams": [
+        "12864635"
+      ],
+      "extra": {
+        "memberNumber": "78500658",
+        "skillLevel": 5,
+        "pa": 0.63125,
+        "ppm": 12.625
+      }
+    },
+    "91016301": {
+      "display_name": "Gilbert Duran",
+      "alias_id": 91016301,
+      "member_id": 1651980,
+      "stats": {
+        "eight_ball": {},
+        "nine_ball": {}
+      },
+      "slug": "gilbert_duran",
+      "teams": [
+        "12864635"
+      ],
+      "extra": {
+        "memberNumber": "78500114",
+        "skillLevel": 7,
+        "pa": 0.52,
+        "ppm": 10.4
+      }
+    },
+    "91016306": {
+      "display_name": "Yahir Silvan",
+      "alias_id": 91016306,
+      "member_id": 3401143,
+      "stats": {
+        "eight_ball": {},
+        "nine_ball": {}
+      },
+      "slug": "yahir_silvan",
+      "teams": [
+        "12864635"
+      ],
+      "extra": {
+        "memberNumber": "78502249",
+        "skillLevel": 2,
+        "pa": 0.5,
+        "ppm": 10
+      }
+    },
+    "91112162": {
+      "display_name": "Tristan Landgraf",
+      "alias_id": 91112162,
+      "member_id": 3439196,
+      "stats": {
+        "eight_ball": {},
+        "nine_ball": {}
+      },
+      "slug": "tristan_landgraf",
+      "teams": [
+        "12864635"
+      ],
+      "extra": {
+        "memberNumber": "78504251",
+        "skillLevel": 4,
+        "pa": 0.5599999999999999,
+        "ppm": 11.2
+      }
+    },
+    "91016307": {
+      "display_name": "Eduardo Moreno",
+      "alias_id": 91016307,
+      "member_id": 2572365,
+      "stats": {
+        "eight_ball": {},
+        "nine_ball": {}
+      },
+      "slug": "eduardo_moreno",
+      "teams": [
+        "12864636"
+      ],
+      "extra": {
+        "memberNumber": "78501631",
+        "skillLevel": 8,
+        "pa": 0.50625,
+        "ppm": 10.125
+      }
+    },
+    "91016311": {
+      "display_name": "Richard Atkinson",
+      "alias_id": 91016311,
+      "member_id": 3318162,
+      "stats": {
+        "eight_ball": {},
+        "nine_ball": {}
+      },
+      "slug": "richard_atkinson",
+      "teams": [
+        "12864636"
+      ],
+      "extra": {
+        "memberNumber": "78502111",
+        "skillLevel": 7,
+        "pa": 0.49444444444444446,
+        "ppm": 9.88888888888889
+      }
+    },
+    "91016313": {
+      "display_name": "Heather Galvan",
+      "alias_id": 91016313,
+      "member_id": 3374375,
+      "stats": {
+        "eight_ball": {},
+        "nine_ball": {}
+      },
+      "slug": "heather_galvan",
+      "teams": [
+        "12864636"
+      ],
+      "extra": {
+        "memberNumber": "78502187",
+        "skillLevel": 1,
+        "pa": 0.4642857142857143,
+        "ppm": 9.285714285714286
+      }
+    },
+    "91052541": {
+      "display_name": "Antonio Puente $$$$",
+      "alias_id": 91052541,
+      "member_id": 3222570,
+      "stats": {
+        "eight_ball": {},
+        "nine_ball": {}
+      },
+      "slug": "antonio_puente",
+      "teams": [
+        "12864636"
+      ],
+      "extra": {
+        "memberNumber": "78503632",
+        "skillLevel": 3,
+        "pa": 0.6,
+        "ppm": 12
+      }
+    },
+    "91052542": {
+      "display_name": "Humberto Sanchez $$$$",
+      "alias_id": 91052542,
+      "member_id": 3234729,
+      "stats": {
+        "eight_ball": {},
+        "nine_ball": {}
+      },
+      "slug": "humberto_sanchez",
+      "teams": [
+        "12864636"
+      ],
+      "extra": {
+        "memberNumber": "78503816",
+        "skillLevel": 4,
+        "pa": 0.5777777777777777,
+        "ppm": 11.555555555555555
+      }
+    },
+    "91052544": {
+      "display_name": "Enedelia Castillo",
+      "alias_id": 91052544,
+      "member_id": 3416798,
+      "stats": {
+        "eight_ball": {},
+        "nine_ball": {}
+      },
+      "slug": "enedelia_castillo",
+      "teams": [
+        "12864636"
+      ],
+      "extra": {
+        "memberNumber": "78504112",
+        "skillLevel": 1,
+        "pa": 0.1875,
+        "ppm": 3.75
+      }
+    },
+    "91052545": {
+      "display_name": "Albert Rodriguez",
+      "alias_id": 91052545,
+      "member_id": 3361608,
+      "stats": {
+        "eight_ball": {},
+        "nine_ball": {}
+      },
+      "slug": "albert_rodriguez",
+      "teams": [
+        "12864636"
+      ],
+      "extra": {
+        "memberNumber": "78503993",
+        "skillLevel": 4,
+        "pa": 0.5071428571428571,
+        "ppm": 10.142857142857142
+      }
+    },
+    "91052586": {
+      "display_name": "Jose Luis Vargas",
+      "alias_id": 91052586,
+      "member_id": 3413730,
+      "stats": {
+        "eight_ball": {},
+        "nine_ball": {}
+      },
+      "slug": "jose_luis_vargas",
+      "teams": [
+        "12864636"
+      ],
+      "extra": {
+        "memberNumber": "78504110",
+        "skillLevel": 5,
+        "pa": 0.55,
+        "ppm": 11
+      }
+    },
+    "91016316": {
+      "display_name": "Javier Aguilar",
+      "alias_id": 91016316,
+      "member_id": 2644424,
+      "stats": {
+        "eight_ball": {},
+        "nine_ball": {}
+      },
+      "slug": "javier_aguilar",
+      "teams": [
+        "12864637"
+      ],
+      "extra": {
+        "memberNumber": "78501894",
+        "skillLevel": 5,
+        "pa": 0.43,
+        "ppm": 8.6
+      }
+    },
+    "91016317": {
+      "display_name": "Alberto Ramon",
+      "alias_id": 91016317,
+      "member_id": 2644426,
+      "stats": {
+        "eight_ball": {},
+        "nine_ball": {}
+      },
+      "slug": "alberto_ramon",
+      "teams": [
+        "12864637"
+      ],
+      "extra": {
+        "memberNumber": "78501913",
+        "skillLevel": 5,
+        "pa": 0.45999999999999996,
+        "ppm": 9.2
+      }
+    },
+    "91016318": {
+      "display_name": "Maribel Rebollar",
+      "alias_id": 91016318,
+      "member_id": 3128978,
+      "stats": {
+        "eight_ball": {},
+        "nine_ball": {}
+      },
+      "slug": "maribel_rebollar",
+      "teams": [
+        "12864637"
+      ],
+      "extra": {
+        "memberNumber": "78503211",
+        "skillLevel": 4,
+        "pa": 0.5857142857142856,
+        "ppm": 11.714285714285714
+      }
+    },
+    "91016321": {
+      "display_name": "Alexander Banda",
+      "alias_id": 91016321,
+      "member_id": 3260483,
+      "stats": {
+        "eight_ball": {},
+        "nine_ball": {}
+      },
+      "slug": "alexander_banda",
+      "teams": [
+        "12864637"
+      ],
+      "extra": {
+        "memberNumber": "78503791",
+        "skillLevel": 4,
+        "pa": 0.34375,
+        "ppm": 6.875
+      }
+    },
+    "91016322": {
+      "display_name": "Eddie Gonzalez",
+      "alias_id": 91016322,
+      "member_id": 3360510,
+      "stats": {
+        "eight_ball": {},
+        "nine_ball": {}
+      },
+      "slug": "eddie_gonzalez",
+      "teams": [
+        "12864637"
+      ],
+      "extra": {
+        "memberNumber": "78502160",
+        "skillLevel": 3,
+        "pa": 0.5,
+        "ppm": 10
+      }
+    },
+    "91047965": {
+      "display_name": "Emilio Acosta",
+      "alias_id": 91047965,
+      "member_id": 3374006,
+      "stats": {
+        "eight_ball": {},
+        "nine_ball": {}
+      },
+      "slug": "emilio_acosta",
+      "teams": [
+        "12864637"
+      ],
+      "extra": {
+        "memberNumber": "78502186",
+        "skillLevel": 4,
+        "pa": 0.39166666666666666,
+        "ppm": 7.833333333333333
+      }
+    },
+    "91094585": {
+      "display_name": "Felipe Trevino",
+      "alias_id": 91094585,
+      "member_id": 3156532,
+      "stats": {
+        "eight_ball": {},
+        "nine_ball": {}
+      },
+      "slug": "felipe_trevino",
+      "teams": [
+        "12864637"
+      ],
+      "extra": {
+        "memberNumber": "78503357",
+        "skillLevel": 8,
+        "pa": 0.58,
+        "ppm": 11.6
+      }
+    },
+    "91112159": {
+      "display_name": "El Bo Tellez",
+      "alias_id": 91112159,
+      "member_id": 3031992,
+      "stats": {
+        "eight_ball": {},
+        "nine_ball": {}
+      },
+      "slug": "el_bo_tellez",
+      "teams": [
+        "12864637"
+      ],
+      "extra": {
+        "memberNumber": "78502907",
+        "skillLevel": 4,
+        "pa": 0.5333333333333333,
+        "ppm": 10.666666666666666
+      }
+    },
+    "91016326": {
+      "display_name": "Noel Canales",
+      "alias_id": 91016326,
+      "member_id": 3091445,
+      "stats": {
+        "eight_ball": {},
+        "nine_ball": {}
+      },
+      "slug": "noel_canales",
+      "teams": [
+        "12864638"
+      ],
+      "extra": {
+        "memberNumber": "78503069",
+        "skillLevel": 4,
+        "pa": 0.49375,
+        "ppm": 9.875
+      }
+    },
+    "91016323": {
+      "display_name": "Enrique Espino",
+      "alias_id": 91016323,
+      "member_id": 2545076,
+      "stats": {
+        "eight_ball": {},
+        "nine_ball": {}
+      },
+      "slug": "enrique_espino",
+      "teams": [
+        "12864638"
+      ],
+      "extra": {
+        "memberNumber": "78501571",
+        "skillLevel": 6,
+        "pa": 0.55,
+        "ppm": 11
+      }
+    },
+    "91016329": {
+      "display_name": "Justin Urbano",
+      "alias_id": 91016329,
+      "member_id": 3314754,
+      "stats": {
+        "eight_ball": {},
+        "nine_ball": {}
+      },
+      "slug": "justin_urbano",
+      "teams": [
+        "12864638"
+      ],
+      "extra": {
+        "memberNumber": "78502109",
+        "skillLevel": 5,
+        "pa": 0.47857142857142854,
+        "ppm": 9.571428571428571
+      }
+    },
+    "91016325": {
+      "display_name": "Francisco Preciado",
+      "alias_id": 91016325,
+      "member_id": 2790949,
+      "stats": {
+        "eight_ball": {},
+        "nine_ball": {}
+      },
+      "slug": "francisco_preciado",
+      "teams": [
+        "12864638"
+      ],
+      "extra": {
+        "memberNumber": "78502399",
+        "skillLevel": 4,
+        "pa": 0.45,
+        "ppm": 9
+      }
+    },
+    "91016324": {
+      "display_name": "Marcos Saldivar",
+      "alias_id": 91016324,
+      "member_id": 2572364,
+      "stats": {
+        "eight_ball": {},
+        "nine_ball": {}
+      },
+      "slug": "marcos_saldivar",
+      "teams": [
+        "12864638"
+      ],
+      "extra": {
+        "memberNumber": "78501630",
+        "skillLevel": 5,
+        "pa": 0.65,
+        "ppm": 13
+      }
+    },
+    "91016328": {
+      "display_name": "Agapito Gonzalez",
+      "alias_id": 91016328,
+      "member_id": 3292337,
+      "stats": {
+        "eight_ball": {},
+        "nine_ball": {}
+      },
+      "slug": "agapito_gonzalez",
+      "teams": [
+        "12864638"
+      ],
+      "extra": {
+        "memberNumber": "78503919",
+        "skillLevel": 8,
+        "pa": 0.5,
+        "ppm": 10
+      }
+    },
+    "91016327": {
+      "display_name": "Alex Pennington",
+      "alias_id": 91016327,
+      "member_id": 2756591,
+      "stats": {
+        "eight_ball": {},
+        "nine_ball": {}
+      },
+      "slug": "alex_pennington",
+      "teams": [
+        "12864638"
+      ],
+      "extra": {
+        "memberNumber": "78508336",
+        "skillLevel": 4,
+        "pa": 0.5125,
+        "ppm": 10.25
+      }
+    },
+    "91016330": {
+      "display_name": "Lizzetty Lara",
+      "alias_id": 91016330,
+      "member_id": 3399554,
+      "stats": {
+        "eight_ball": {},
+        "nine_ball": {}
+      },
+      "slug": "lizzetty_lara",
+      "teams": [
+        "12864638"
+      ],
+      "extra": {
+        "memberNumber": "78502242",
+        "skillLevel": 2,
+        "pa": 0.4611111111111111,
+        "ppm": 9.222222222222221
+      }
+    },
+    "91016337": {
+      "display_name": "Mami Salinas",
+      "alias_id": 91016337,
+      "member_id": 2936898,
+      "stats": {
+        "eight_ball": {},
+        "nine_ball": {}
+      },
+      "slug": "mami_salinas",
+      "teams": [
+        "12864639"
+      ],
+      "extra": {
+        "memberNumber": "78502607",
+        "skillLevel": 3,
+        "pa": 0.4111111111111111,
+        "ppm": 8.222222222222221
+      }
+    },
+    "91016333": {
+      "display_name": "Mr. Vegas Camacho",
+      "alias_id": 91016333,
+      "member_id": 2422506,
+      "stats": {
+        "eight_ball": {},
+        "nine_ball": {}
+      },
+      "slug": "mr_vegas_camacho",
+      "teams": [
+        "12864639"
+      ],
+      "extra": {
+        "memberNumber": "78501257",
+        "skillLevel": 8,
+        "pa": 0.4611111111111111,
+        "ppm": 9.222222222222221
+      }
+    },
+    "91016334": {
+      "display_name": "Ceci Villafuerte",
+      "alias_id": 91016334,
+      "member_id": 2910208,
+      "stats": {
+        "eight_ball": {},
+        "nine_ball": {}
+      },
+      "slug": "ceci_villafuerte",
+      "teams": [
+        "12864639"
+      ],
+      "extra": {
+        "memberNumber": "78502393",
+        "skillLevel": 3,
+        "pa": 0.425,
+        "ppm": 8.5
+      }
+    },
+    "91016336": {
+      "display_name": "Daddy Salinas Jr",
+      "alias_id": 91016336,
+      "member_id": 2936897,
+      "stats": {
+        "eight_ball": {},
+        "nine_ball": {}
+      },
+      "slug": "daddy_salinas_jr",
+      "teams": [
+        "12864639"
+      ],
+      "extra": {
+        "memberNumber": "78502588",
+        "skillLevel": 6,
+        "pa": 0.4875,
+        "ppm": 9.75
+      }
+    },
+    "91016331": {
+      "display_name": "Hugo Teran",
+      "alias_id": 91016331,
+      "member_id": 2211324,
+      "stats": {
+        "eight_ball": {},
+        "nine_ball": {}
+      },
+      "slug": "hugo_teran",
+      "teams": [
+        "12864639"
+      ],
+      "extra": {
+        "memberNumber": "78500503",
+        "skillLevel": 6,
+        "pa": 0.49000000000000005,
+        "ppm": 9.8
+      }
+    },
+    "91016338": {
+      "display_name": "Keyla De La Cerda",
+      "alias_id": 91016338,
+      "member_id": 3073969,
+      "stats": {
+        "eight_ball": {},
+        "nine_ball": {}
+      },
+      "slug": "keyla_de_la_cerda",
+      "teams": [
+        "12864639"
+      ],
+      "extra": {
+        "memberNumber": "78503004",
+        "skillLevel": 3,
+        "pa": 0.5583333333333333,
+        "ppm": 11.166666666666666
+      }
+    },
+    "91016332": {
+      "display_name": "La Bish Castaneda",
+      "alias_id": 91016332,
+      "member_id": 2292958,
+      "stats": {
+        "eight_ball": {},
+        "nine_ball": {}
+      },
+      "slug": "la_bish_castaneda",
+      "teams": [
+        "12864639"
+      ],
+      "extra": {
+        "memberNumber": "78501188",
+        "skillLevel": 3,
+        "pa": 0.42142857142857143,
+        "ppm": 8.428571428571429
+      }
+    },
+    "91016335": {
+      "display_name": "Don Popis Saldivar",
+      "alias_id": 91016335,
+      "member_id": 2730496,
+      "stats": {
+        "eight_ball": {},
+        "nine_ball": {}
+      },
+      "slug": "don_popis_saldivar",
+      "teams": [
+        "12864639"
+      ],
+      "extra": {
+        "memberNumber": "78502531",
+        "skillLevel": 5,
+        "pa": 0.5333333333333333,
+        "ppm": 10.666666666666666
+      }
+    },
+    "91016340": {
+      "display_name": "Carlos Orenday",
+      "alias_id": 91016340,
+      "member_id": 3134543,
+      "stats": {
+        "eight_ball": {},
+        "nine_ball": {}
+      },
+      "slug": "carlos_orenday",
+      "teams": [
+        "12864640"
+      ],
+      "extra": {
+        "memberNumber": "78503287",
+        "skillLevel": 7,
+        "pa": 0.4583333333333333,
+        "ppm": 9.166666666666666
+      }
+    },
+    "91016339": {
+      "display_name": "Ernesto Lopez",
+      "alias_id": 91016339,
+      "member_id": 2815958,
+      "stats": {
+        "eight_ball": {},
+        "nine_ball": {}
+      },
+      "slug": "ernesto_lopez",
+      "teams": [
+        "12864640"
+      ],
+      "extra": {
+        "memberNumber": "78502689",
+        "skillLevel": 8,
+        "pa": 0.4375,
+        "ppm": 8.75
+      }
+    },
+    "91016344": {
+      "display_name": "Laura Vega Guevara",
+      "alias_id": 91016344,
+      "member_id": 3275794,
+      "stats": {
+        "eight_ball": {},
+        "nine_ball": {}
+      },
+      "slug": "laura_vega_guevara",
+      "teams": [
+        "12864640"
+      ],
+      "extra": {
+        "memberNumber": "78503885",
+        "skillLevel": 3,
+        "pa": 0.4636363636363637,
+        "ppm": 9.272727272727273
+      }
+    },
+    "91016341": {
+      "display_name": "Raul Mata",
+      "alias_id": 91016341,
+      "member_id": 3166354,
+      "stats": {
+        "eight_ball": {},
+        "nine_ball": {}
+      },
+      "slug": "raul_mata",
+      "teams": [
+        "12864640"
+      ],
+      "extra": {
+        "memberNumber": "78502046",
+        "skillLevel": 4,
+        "pa": 0.4611111111111111,
+        "ppm": 9.222222222222221
+      }
+    },
+    "91016342": {
+      "display_name": "Brian Ortiz",
+      "alias_id": 91016342,
+      "member_id": 3183390,
+      "stats": {
+        "eight_ball": {},
+        "nine_ball": {}
+      },
+      "slug": "brian_ortiz",
+      "teams": [
+        "12864640"
+      ],
+      "extra": {
+        "memberNumber": "78503452",
+        "skillLevel": 4,
+        "pa": 0.7583333333333333,
+        "ppm": 15.166666666666666
+      }
+    },
+    "91052515": {
+      "display_name": "Javier Galvan",
+      "alias_id": 91052515,
+      "member_id": 3433016,
+      "stats": {
+        "eight_ball": {},
+        "nine_ball": {}
+      },
+      "slug": "javier_galvan",
+      "teams": [
+        "12864640"
+      ],
+      "extra": {
+        "memberNumber": "78504332",
+        "skillLevel": 5,
+        "pa": 0.74,
+        "ppm": 14.8
+      }
+    },
+    "91052650": {
+      "display_name": "Arely Lugo",
+      "alias_id": 91052650,
+      "member_id": 3132086,
+      "stats": {
+        "eight_ball": {},
+        "nine_ball": {}
+      },
+      "slug": "arely_lugo",
+      "teams": [
+        "12864640"
+      ],
+      "extra": {
+        "memberNumber": "78503313",
+        "skillLevel": 4,
+        "pa": 0.4722222222222222,
+        "ppm": 9.444444444444445
+      }
+    },
+    "91094638": {
+      "display_name": "Jeffery Martinez",
+      "alias_id": 91094638,
+      "member_id": 3181524,
+      "stats": {
+        "eight_ball": {},
+        "nine_ball": {}
+      },
+      "slug": "jeffery_martinez",
+      "teams": [
+        "12864640"
+      ],
+      "extra": {
+        "memberNumber": "78503384",
+        "skillLevel": 5,
+        "pa": 0.5,
+        "ppm": 10
+      }
+    },
+    "91016687": {
+      "display_name": "Chris Garza",
+      "alias_id": 91016687,
+      "member_id": 2311006,
+      "stats": {
+        "eight_ball": {},
+        "nine_ball": {}
+      },
+      "slug": "chris_garza",
+      "teams": [
+        "12864714"
+      ],
+      "extra": {
+        "memberNumber": "78501196",
+        "skillLevel": 6,
+        "pa": 0.4166666666666667,
+        "ppm": 1.25
+      }
+    },
+    "91016686": {
+      "display_name": "Julia Jordan",
+      "alias_id": 91016686,
+      "member_id": 2073721,
+      "stats": {
+        "eight_ball": {},
+        "nine_ball": {}
+      },
+      "slug": "julia_jordan",
+      "teams": [
+        "12864714"
+      ],
+      "extra": {
+        "memberNumber": "78500754",
+        "skillLevel": 5,
+        "pa": 0.5,
+        "ppm": 1.5
+      }
+    },
+    "91016689": {
+      "display_name": "Amanda Cantwell",
+      "alias_id": 91016689,
+      "member_id": 2993106,
+      "stats": {
+        "eight_ball": {},
+        "nine_ball": {}
+      },
+      "slug": "amanda_cantwell",
+      "teams": [
+        "12864714"
+      ],
+      "extra": {
+        "memberNumber": "78502883",
+        "skillLevel": 4,
+        "pa": 0.4444444444444444,
+        "ppm": 1.3333333333333333
+      }
+    },
+    "91016691": {
+      "display_name": "Denise Garza",
+      "alias_id": 91016691,
+      "member_id": 3316786,
+      "stats": {
+        "eight_ball": {},
+        "nine_ball": {}
+      },
+      "slug": "denise_garza",
+      "teams": [
+        "12864714"
+      ],
+      "extra": {
+        "memberNumber": "78502110",
+        "skillLevel": 4,
+        "pa": 0.2857142857142857,
+        "ppm": 0.8571428571428571
+      }
+    },
+    "91016693": {
+      "display_name": "Melody Tijerina",
+      "alias_id": 91016693,
+      "member_id": 3356943,
+      "stats": {
+        "eight_ball": {},
+        "nine_ball": {}
+      },
+      "slug": "melody_tijerina",
+      "teams": [
+        "12864714"
+      ],
+      "extra": {
+        "memberNumber": "78504051",
+        "skillLevel": 3,
+        "pa": 0.4166666666666667,
+        "ppm": 1.25
+      }
+    },
+    "91016690": {
+      "display_name": "Alex Hernandez",
+      "alias_id": 91016690,
+      "member_id": 3038547,
+      "stats": {
+        "eight_ball": {},
+        "nine_ball": {}
+      },
+      "slug": "alex_hernandez",
+      "teams": [
+        "12864714"
+      ],
+      "extra": {
+        "memberNumber": "78502880",
+        "skillLevel": 4,
+        "pa": 0.6296296296296297,
+        "ppm": 1.8888888888888888
+      }
+    },
+    "91046400": {
+      "display_name": "Andres Garcia",
+      "alias_id": 91046400,
+      "member_id": 3435110,
+      "stats": {
+        "eight_ball": {},
+        "nine_ball": {}
+      },
+      "slug": "andres_garcia",
+      "teams": [
+        "12864714"
+      ],
+      "extra": {
+        "memberNumber": "78504483",
+        "skillLevel": 5,
+        "pa": 0.2380952380952381,
+        "ppm": 0.7142857142857143
+      }
+    },
+    "91074785": {
+      "display_name": "Kaylen Garcia",
+      "alias_id": 91074785,
+      "member_id": 3339664,
+      "stats": {
+        "eight_ball": {},
+        "nine_ball": {}
+      },
+      "slug": "kaylen_garcia",
+      "teams": [
+        "12864714"
+      ],
+      "extra": {
+        "memberNumber": "78504003",
+        "skillLevel": 4,
+        "pa": 0.5,
+        "ppm": 1.5
+      }
+    },
+    "91016694": {
+      "display_name": "Ashley Dartt",
+      "alias_id": 91016694,
+      "member_id": 2099036,
+      "stats": {
+        "eight_ball": {},
+        "nine_ball": {}
+      },
+      "slug": "ashley_dartt",
+      "teams": [
+        "12864715"
+      ],
+      "extra": {
+        "memberNumber": "78500777",
+        "skillLevel": 5,
+        "pa": 0.5,
+        "ppm": 1.5
+      }
+    },
+    "91016697": {
+      "display_name": "Jose Vasquez",
+      "alias_id": 91016697,
+      "member_id": 2324730,
+      "stats": {
+        "eight_ball": {},
+        "nine_ball": {}
+      },
+      "slug": "jose_vasquez",
+      "teams": [
+        "12864715"
+      ],
+      "extra": {
+        "memberNumber": "78501338",
+        "skillLevel": 6,
+        "pa": 0.16666666666666666,
+        "ppm": 0.5
+      }
+    },
+    "91016698": {
+      "display_name": "Rogerio Molina",
+      "alias_id": 91016698,
+      "member_id": 2706283,
+      "stats": {
+        "eight_ball": {},
+        "nine_ball": {}
+      },
+      "slug": "rogerio_molina",
+      "teams": [
+        "12864715"
+      ],
+      "extra": {
+        "memberNumber": "78502483",
+        "skillLevel": 3,
+        "pa": 0.2777777777777778,
+        "ppm": 0.8333333333333334
+      }
+    },
+    "91016699": {
+      "display_name": "David Hernandez Garces",
+      "alias_id": 91016699,
+      "member_id": 3275748,
+      "stats": {
+        "eight_ball": {},
+        "nine_ball": {}
+      },
+      "slug": "david_hernandez_garces",
+      "teams": [
+        "12864715"
+      ],
+      "extra": {
+        "memberNumber": "78503865",
+        "skillLevel": 5,
+        "pa": 0.3333333333333333,
+        "ppm": 1
+      }
+    },
+    "91016695": {
+      "display_name": "Steve Castillo",
+      "alias_id": 91016695,
+      "member_id": 2047605,
+      "stats": {
+        "eight_ball": {},
+        "nine_ball": {}
+      },
+      "slug": "steve_castillo",
+      "teams": [
+        "12864715"
+      ],
+      "extra": {
+        "memberNumber": "78500658",
+        "skillLevel": 5,
+        "pa": 0.48484848484848486,
+        "ppm": 1.4545454545454546
+      }
+    },
+    "91016696": {
+      "display_name": "Gilbert Duran",
+      "alias_id": 91016696,
+      "member_id": 1651980,
+      "stats": {
+        "eight_ball": {},
+        "nine_ball": {}
+      },
+      "slug": "gilbert_duran",
+      "teams": [
+        "12864715"
+      ],
+      "extra": {
+        "memberNumber": "78500114",
+        "skillLevel": 7,
+        "pa": 0.3333333333333333,
+        "ppm": 1
+      }
+    },
+    "91016701": {
+      "display_name": "Yahir Silvan",
+      "alias_id": 91016701,
+      "member_id": 3401143,
+      "stats": {
+        "eight_ball": {},
+        "nine_ball": {}
+      },
+      "slug": "yahir_silvan",
+      "teams": [
+        "12864715"
+      ],
+      "extra": {
+        "memberNumber": "78502249",
+        "skillLevel": 2,
+        "pa": 0.4285714285714286,
+        "ppm": 1.2857142857142858
+      }
+    },
+    "91112156": {
+      "display_name": "Tristan Landgraf",
+      "alias_id": 91112156,
+      "member_id": 3439196,
+      "stats": {
+        "eight_ball": {},
+        "nine_ball": {}
+      },
+      "slug": "tristan_landgraf",
+      "teams": [
+        "12864715"
+      ],
+      "extra": {
+        "memberNumber": "78504251",
+        "skillLevel": 3,
+        "pa": 0.39999999999999997,
+        "ppm": 1.2
+      }
+    },
+    "91016705": {
+      "display_name": "Richard Atkinson",
+      "alias_id": 91016705,
+      "member_id": 3318162,
+      "stats": {
+        "eight_ball": {},
+        "nine_ball": {}
+      },
+      "slug": "richard_atkinson",
+      "teams": [
+        "12864716"
+      ],
+      "extra": {
+        "memberNumber": "78502111",
+        "skillLevel": 6,
+        "pa": 0.5,
+        "ppm": 1.5
+      }
+    },
+    "91016702": {
+      "display_name": "Eduardo Moreno",
+      "alias_id": 91016702,
+      "member_id": 2572365,
+      "stats": {
+        "eight_ball": {},
+        "nine_ball": {}
+      },
+      "slug": "eduardo_moreno",
+      "teams": [
+        "12864716"
+      ],
+      "extra": {
+        "memberNumber": "78501631",
+        "skillLevel": 7,
+        "pa": 0.5151515151515151,
+        "ppm": 1.5454545454545454
+      }
+    },
+    "91016707": {
+      "display_name": "Heather Galvan",
+      "alias_id": 91016707,
+      "member_id": 3374375,
+      "stats": {
+        "eight_ball": {},
+        "nine_ball": {}
+      },
+      "slug": "heather_galvan",
+      "teams": [
+        "12864716"
+      ],
+      "extra": {
+        "memberNumber": "78502187",
+        "skillLevel": 2,
+        "pa": 0,
+        "ppm": 0
+      }
+    },
+    "91052530": {
+      "display_name": "Antonio Puente $$$$",
+      "alias_id": 91052530,
+      "member_id": 3222570,
+      "stats": {
+        "eight_ball": {},
+        "nine_ball": {}
+      },
+      "slug": "antonio_puente",
+      "teams": [
+        "12864716"
+      ],
+      "extra": {
+        "memberNumber": "78503632",
+        "skillLevel": 4,
+        "pa": 0.4666666666666666,
+        "ppm": 1.4
+      }
+    },
+    "91052533": {
+      "display_name": "Humberto Sanchez $$$$",
+      "alias_id": 91052533,
+      "member_id": 3234729,
+      "stats": {
+        "eight_ball": {},
+        "nine_ball": {}
+      },
+      "slug": "humberto_sanchez",
+      "teams": [
+        "12864716"
+      ],
+      "extra": {
+        "memberNumber": "78503816",
+        "skillLevel": 4,
+        "pa": 0.3333333333333333,
+        "ppm": 1
+      }
+    },
+    "91052536": {
+      "display_name": "Albert Rodriguez",
+      "alias_id": 91052536,
+      "member_id": 3361608,
+      "stats": {
+        "eight_ball": {},
+        "nine_ball": {}
+      },
+      "slug": "albert_rodriguez",
+      "teams": [
+        "12864716"
+      ],
+      "extra": {
+        "memberNumber": "78503993",
+        "skillLevel": 3,
+        "pa": 0.2857142857142857,
+        "ppm": 0.8571428571428571
+      }
+    },
+    "91052538": {
+      "display_name": "Jose Luis Vargas",
+      "alias_id": 91052538,
+      "member_id": 3413730,
+      "stats": {
+        "eight_ball": {},
+        "nine_ball": {}
+      },
+      "slug": "jose_luis_vargas",
+      "teams": [
+        "12864716"
+      ],
+      "extra": {
+        "memberNumber": "78504110",
+        "skillLevel": 4,
+        "pa": 0.2222222222222222,
+        "ppm": 0.6666666666666666
+      }
+    },
+    "91052540": {
+      "display_name": "Enedelia Castillo",
+      "alias_id": 91052540,
+      "member_id": 3416798,
+      "stats": {
+        "eight_ball": {},
+        "nine_ball": {}
+      },
+      "slug": "enedelia_castillo",
+      "teams": [
+        "12864716"
+      ],
+      "extra": {
+        "memberNumber": "78504112",
+        "skillLevel": 3,
+        "pa": 0.3888888888888889,
+        "ppm": 1.1666666666666667
+      }
+    },
+    "91016709": {
+      "display_name": "Javier Aguilar",
+      "alias_id": 91016709,
+      "member_id": 2644424,
+      "stats": {
+        "eight_ball": {},
+        "nine_ball": {}
+      },
+      "slug": "javier_aguilar",
+      "teams": [
+        "12864717"
+      ],
+      "extra": {
+        "memberNumber": "78501894",
+        "skillLevel": 5,
+        "pa": 0.625,
+        "ppm": 1.875
+      }
+    },
+    "91016710": {
+      "display_name": "Alberto Ramon",
+      "alias_id": 91016710,
+      "member_id": 2644426,
+      "stats": {
+        "eight_ball": {},
+        "nine_ball": {}
+      },
+      "slug": "alberto_ramon",
+      "teams": [
+        "12864717"
+      ],
+      "extra": {
+        "memberNumber": "78501913",
+        "skillLevel": 6,
+        "pa": 0.26666666666666666,
+        "ppm": 0.8
+      }
+    },
+    "91016711": {
+      "display_name": "Maribel Rebollar",
+      "alias_id": 91016711,
+      "member_id": 3128978,
+      "stats": {
+        "eight_ball": {},
+        "nine_ball": {}
+      },
+      "slug": "maribel_rebollar",
+      "teams": [
+        "12864717"
+      ],
+      "extra": {
+        "memberNumber": "78503211",
+        "skillLevel": 4,
+        "pa": 0.3333333333333333,
+        "ppm": 1
+      }
+    },
+    "91016712": {
+      "display_name": "Felipe Trevino",
+      "alias_id": 91016712,
+      "member_id": 3156532,
+      "stats": {
+        "eight_ball": {},
+        "nine_ball": {}
+      },
+      "slug": "felipe_trevino",
+      "teams": [
+        "12864717"
+      ],
+      "extra": {
+        "memberNumber": "78503357",
+        "skillLevel": 7,
+        "pa": 0.611111111111111,
+        "ppm": 1.8333333333333333
+      }
+    },
+    "91016715": {
+      "display_name": "Alexander Banda",
+      "alias_id": 91016715,
+      "member_id": 3260483,
+      "stats": {
+        "eight_ball": {},
+        "nine_ball": {}
+      },
+      "slug": "alexander_banda",
+      "teams": [
+        "12864717"
+      ],
+      "extra": {
+        "memberNumber": "78503791",
+        "skillLevel": 4,
+        "pa": 0.4444444444444444,
+        "ppm": 1.3333333333333333
+      }
+    },
+    "91047962": {
+      "display_name": "Emilio Acosta",
+      "alias_id": 91047962,
+      "member_id": 3374006,
+      "stats": {
+        "eight_ball": {},
+        "nine_ball": {}
+      },
+      "slug": "emilio_acosta",
+      "teams": [
+        "12864717"
+      ],
+      "extra": {
+        "memberNumber": "78502186",
+        "skillLevel": 3,
+        "pa": 0.39999999999999997,
+        "ppm": 1.2
+      }
+    },
+    "91016716": {
+      "display_name": "Eddie Gonzalez",
+      "alias_id": 91016716,
+      "member_id": 3360510,
+      "stats": {
+        "eight_ball": {},
+        "nine_ball": {}
+      },
+      "slug": "eddie_gonzalez",
+      "teams": [
+        "12864717"
+      ],
+      "extra": {
+        "memberNumber": "78502160",
+        "skillLevel": 3,
+        "pa": 0.6190476190476191,
+        "ppm": 1.8571428571428572
+      }
+    },
+    "91109618": {
+      "display_name": "El Bo Tellez",
+      "alias_id": 91109618,
+      "member_id": 3031992,
+      "stats": {
+        "eight_ball": {},
+        "nine_ball": {}
+      },
+      "slug": "el_bo_tellez",
+      "teams": [
+        "12864717"
+      ],
+      "extra": {
+        "memberNumber": "78502907",
+        "skillLevel": 5,
+        "pa": 0,
+        "ppm": 0
+      }
+    },
+    "91016719": {
+      "display_name": "Alex Pennington",
+      "alias_id": 91016719,
+      "member_id": 2756591,
+      "stats": {
+        "eight_ball": {},
+        "nine_ball": {}
+      },
+      "slug": "alex_pennington",
+      "teams": [
+        "12864718"
+      ],
+      "extra": {
+        "memberNumber": "78508336",
+        "skillLevel": 4,
+        "pa": 0.625,
+        "ppm": 1.875
+      }
+    },
+    "91016717": {
+      "display_name": "Enrique Espino",
+      "alias_id": 91016717,
+      "member_id": 2545076,
+      "stats": {
+        "eight_ball": {},
+        "nine_ball": {}
+      },
+      "slug": "enrique_espino",
+      "teams": [
+        "12864718"
+      ],
+      "extra": {
+        "memberNumber": "78501571",
+        "skillLevel": 6,
+        "pa": 0.6666666666666666,
+        "ppm": 2
+      }
+    },
+    "91016721": {
+      "display_name": "Agapito Gonzalez",
+      "alias_id": 91016721,
+      "member_id": 3292337,
+      "stats": {
+        "eight_ball": {},
+        "nine_ball": {}
+      },
+      "slug": "agapito_gonzalez",
+      "teams": [
+        "12864718"
+      ],
+      "extra": {
+        "memberNumber": "78503919",
+        "skillLevel": 7,
+        "pa": 0.75,
+        "ppm": 2.25
+      }
+    },
+    "91016718": {
+      "display_name": "Francisco Preciado",
+      "alias_id": 91016718,
+      "member_id": 2790949,
+      "stats": {
+        "eight_ball": {},
+        "nine_ball": {}
+      },
+      "slug": "francisco_preciado",
+      "teams": [
+        "12864718"
+      ],
+      "extra": {
+        "memberNumber": "78502399",
+        "skillLevel": 4,
+        "pa": 0.5833333333333334,
+        "ppm": 1.75
+      }
+    },
+    "91016720": {
+      "display_name": "Jose Sierra",
+      "alias_id": 91016720,
+      "member_id": 3234695,
+      "stats": {
+        "eight_ball": {},
+        "nine_ball": {}
+      },
+      "slug": "jose_sierra",
+      "teams": [
+        "12864718"
+      ],
+      "extra": {
+        "memberNumber": "78503750",
+        "skillLevel": 4,
+        "pa": 0.4761904761904762,
+        "ppm": 1.4285714285714286
+      }
+    },
+    "91016723": {
+      "display_name": "Lizzetty Lara",
+      "alias_id": 91016723,
+      "member_id": 3399554,
+      "stats": {
+        "eight_ball": {},
+        "nine_ball": {}
+      },
+      "slug": "lizzetty_lara",
+      "teams": [
+        "12864718"
+      ],
+      "extra": {
+        "memberNumber": "78502242",
+        "skillLevel": 2,
+        "pa": 0.4761904761904762,
+        "ppm": 1.4285714285714286
+      }
+    },
+    "91016722": {
+      "display_name": "Justin Urbano",
+      "alias_id": 91016722,
+      "member_id": 3314754,
+      "stats": {
+        "eight_ball": {},
+        "nine_ball": {}
+      },
+      "slug": "justin_urbano",
+      "teams": [
+        "12864718"
+      ],
+      "extra": {
+        "memberNumber": "78502109",
+        "skillLevel": 5,
+        "pa": 0.5416666666666666,
+        "ppm": 1.625
+      }
+    },
+    "91016724": {
+      "display_name": "Noe Garza",
+      "alias_id": 91016724,
+      "member_id": 3415339,
+      "stats": {
+        "eight_ball": {},
+        "nine_ball": {}
+      },
+      "slug": "noe_garza",
+      "teams": [
+        "12864718"
+      ],
+      "extra": {
+        "memberNumber": "78503662",
+        "skillLevel": 2,
+        "pa": 0.48484848484848486,
+        "ppm": 1.4545454545454546
+      }
+    },
+    "91016726": {
+      "display_name": "Mr. Vegas Camacho",
+      "alias_id": 91016726,
+      "member_id": 2422506,
+      "stats": {
+        "eight_ball": {},
+        "nine_ball": {}
+      },
+      "slug": "mr_vegas_camacho",
+      "teams": [
+        "12864719"
+      ],
+      "extra": {
+        "memberNumber": "78501257",
+        "skillLevel": 7,
+        "pa": 0.3333333333333333,
+        "ppm": 1
+      }
+    },
+    "91016727": {
+      "display_name": "Don Popis Saldivar",
+      "alias_id": 91016727,
+      "member_id": 2730496,
+      "stats": {
+        "eight_ball": {},
+        "nine_ball": {}
+      },
+      "slug": "don_popis_saldivar",
+      "teams": [
+        "12864719"
+      ],
+      "extra": {
+        "memberNumber": "78502531",
+        "skillLevel": 5,
+        "pa": 0.19999999999999998,
+        "ppm": 0.6
+      }
+    },
+    "91016729": {
+      "display_name": "Daddy Salinas Jr",
+      "alias_id": 91016729,
+      "member_id": 2936897,
+      "stats": {
+        "eight_ball": {},
+        "nine_ball": {}
+      },
+      "slug": "daddy_salinas_jr",
+      "teams": [
+        "12864719"
+      ],
+      "extra": {
+        "memberNumber": "78502588",
+        "skillLevel": 5,
+        "pa": 0.4761904761904762,
+        "ppm": 1.4285714285714286
+      }
+    },
+    "91016730": {
+      "display_name": "Mami Salinas",
+      "alias_id": 91016730,
+      "member_id": 2936898,
+      "stats": {
+        "eight_ball": {},
+        "nine_ball": {}
+      },
+      "slug": "mami_salinas",
+      "teams": [
+        "12864719"
+      ],
+      "extra": {
+        "memberNumber": "78502607",
+        "skillLevel": 4,
+        "pa": 0.2962962962962963,
+        "ppm": 0.8888888888888888
+      }
+    },
+    "91016731": {
+      "display_name": "Keyla De La Cerda",
+      "alias_id": 91016731,
+      "member_id": 3073969,
+      "stats": {
+        "eight_ball": {},
+        "nine_ball": {}
+      },
+      "slug": "keyla_de_la_cerda",
+      "teams": [
+        "12864719"
+      ],
+      "extra": {
+        "memberNumber": "78503004",
+        "skillLevel": 3,
+        "pa": 0.8095238095238094,
+        "ppm": 2.4285714285714284
+      }
+    },
+    "91016732": {
+      "display_name": "Noel Canales",
+      "alias_id": 91016732,
+      "member_id": 3091445,
+      "stats": {
+        "eight_ball": {},
+        "nine_ball": {}
+      },
+      "slug": "noel_canales",
+      "teams": [
+        "12864719"
+      ],
+      "extra": {
+        "memberNumber": "78503069",
+        "skillLevel": 4,
+        "pa": 0.5333333333333333,
+        "ppm": 1.6
+      }
+    },
+    "91016725": {
+      "display_name": "La Bish Castaneda",
+      "alias_id": 91016725,
+      "member_id": 2292958,
+      "stats": {
+        "eight_ball": {},
+        "nine_ball": {}
+      },
+      "slug": "la_bish_castaneda",
+      "teams": [
+        "12864719"
+      ],
+      "extra": {
+        "memberNumber": "78501188",
+        "skillLevel": 4,
+        "pa": 0.6,
+        "ppm": 1.8
+      }
+    },
+    "91016728": {
+      "display_name": "Macho Alpha Contreras",
+      "alias_id": 91016728,
+      "member_id": 2792334,
+      "stats": {
+        "eight_ball": {},
+        "nine_ball": {}
+      },
+      "slug": "macho_alpha_contreras",
+      "teams": [
+        "12864719"
+      ],
+      "extra": {
+        "memberNumber": "78502539",
+        "skillLevel": 4,
+        "pa": 0.1111111111111111,
+        "ppm": 0.3333333333333333
+      }
+    },
+    "91016734": {
+      "display_name": "Carlos Orenday",
+      "alias_id": 91016734,
+      "member_id": 3134543,
+      "stats": {
+        "eight_ball": {},
+        "nine_ball": {}
+      },
+      "slug": "carlos_orenday",
+      "teams": [
+        "12864720"
+      ],
+      "extra": {
+        "memberNumber": "78503287",
+        "skillLevel": 7,
+        "pa": 0.5925925925925926,
+        "ppm": 1.7777777777777777
+      }
+    },
+    "91016733": {
+      "display_name": "Ernesto Lopez",
+      "alias_id": 91016733,
+      "member_id": 2815958,
+      "stats": {
+        "eight_ball": {},
+        "nine_ball": {}
+      },
+      "slug": "ernesto_lopez",
+      "teams": [
+        "12864720"
+      ],
+      "extra": {
+        "memberNumber": "78502689",
+        "skillLevel": 7,
+        "pa": 0.5238095238095238,
+        "ppm": 1.5714285714285714
+      }
+    },
+    "91016737": {
+      "display_name": "Laura Vega Guevara",
+      "alias_id": 91016737,
+      "member_id": 3275794,
+      "stats": {
+        "eight_ball": {},
+        "nine_ball": {}
+      },
+      "slug": "laura_vega_guevara",
+      "teams": [
+        "12864720"
+      ],
+      "extra": {
+        "memberNumber": "78503885",
+        "skillLevel": 4,
+        "pa": 0.611111111111111,
+        "ppm": 1.8333333333333333
+      }
+    },
+    "91016735": {
+      "display_name": "Raul Mata",
+      "alias_id": 91016735,
+      "member_id": 3166354,
+      "stats": {
+        "eight_ball": {},
+        "nine_ball": {}
+      },
+      "slug": "raul_mata",
+      "teams": [
+        "12864720"
+      ],
+      "extra": {
+        "memberNumber": "78502046",
+        "skillLevel": 4,
+        "pa": 0.5833333333333334,
+        "ppm": 1.75
+      }
+    },
+    "91040677": {
+      "display_name": "Brian Ortiz",
+      "alias_id": 91040677,
+      "member_id": 3183390,
+      "stats": {
+        "eight_ball": {},
+        "nine_ball": {}
+      },
+      "slug": "brian_ortiz",
+      "teams": [
+        "12864720"
+      ],
+      "extra": {
+        "memberNumber": "78503452",
+        "skillLevel": 4,
+        "pa": 0.4444444444444444,
+        "ppm": 1.3333333333333333
+      }
+    },
+    "91052508": {
+      "display_name": "Javier Galvan",
+      "alias_id": 91052508,
+      "member_id": 3433016,
+      "stats": {
+        "eight_ball": {},
+        "nine_ball": {}
+      },
+      "slug": "javier_galvan",
+      "teams": [
+        "12864720"
+      ],
+      "extra": {
+        "memberNumber": "78504332",
+        "skillLevel": 3,
+        "pa": 0.5,
+        "ppm": 1.5
+      }
+    },
+    "91052647": {
+      "display_name": "Arely Lugo",
+      "alias_id": 91052647,
+      "member_id": 3132086,
+      "stats": {
+        "eight_ball": {},
+        "nine_ball": {}
+      },
+      "slug": "arely_lugo",
+      "teams": [
+        "12864720"
+      ],
+      "extra": {
+        "memberNumber": "78503313",
+        "skillLevel": 3,
+        "pa": 0.3703703703703704,
+        "ppm": 1.1111111111111112
+      }
+    },
+    "91112157": {
+      "display_name": "Stephanie Alvear",
+      "alias_id": 91112157,
+      "member_id": 3439227,
+      "stats": {
+        "eight_ball": {},
+        "nine_ball": {}
+      },
+      "slug": "stephanie_alvear",
+      "teams": [
+        "12864720"
+      ],
+      "extra": {
+        "memberNumber": "78504259",
+        "skillLevel": 3,
+        "pa": 0.6666666666666666,
+        "ppm": 2
+      }
+    }
+  },
+  "matches": {
+    "48118020": {
+      "id": 48118020,
+      "format": "8-ball",
+      "date": "2025-09-04T20:00:00-05:00",
+      "week": 1,
+      "home_team_id": 12864715,
+      "home_team_name": "Chalk and Awe",
+      "away_team_id": 12867592,
+      "away_team_name": "Cue-ligans",
+      "team_scores": {
+        "home_total": 14,
+        "away_total": 6
+      },
+      "location": "DK's Stix & Stuff",
+      "division_id": 417530,
+      "sets": [],
+      "status": "COMPLETED",
+      "result": {
+        "winner": "home",
+        "home_total": 14,
+        "away_total": 6,
+        "note": "8-ball total 14-6 (per-board 3-0 or 2-1 scoring)"
+      },
+      "home_team_slug": "chalk_and_awe",
+      "away_team_slug": "cue_ligans"
+    },
+    "48118023": {
+      "id": 48118023,
+      "format": "8-ball",
+      "date": "2025-09-11T20:00:00-05:00",
+      "week": 2,
+      "home_team_id": 12867592,
+      "home_team_name": "Cue-ligans",
+      "away_team_id": 12864717,
+      "away_team_name": "Bad Boys",
+      "team_scores": {
+        "home_total": 10,
+        "away_total": 10
+      },
+      "location": "DK's Stix & Stuff",
+      "division_id": 417530,
+      "sets": [],
+      "status": "COMPLETED",
+      "result": {
+        "winner": "tie",
+        "home_total": 10,
+        "away_total": 10,
+        "note": "8-ball total 10-10 (per-board 3-0 or 2-1 scoring)"
+      },
+      "home_team_slug": "cue_ligans",
+      "away_team_slug": "bad_boys"
+    },
+    "48118027": {
+      "id": 48118027,
+      "format": "8-ball",
+      "date": "2025-09-18T20:00:00-05:00",
+      "week": 3,
+      "home_team_id": 12864719,
+      "home_team_name": "Palochones",
+      "away_team_id": 12867592,
+      "away_team_name": "Cue-ligans",
+      "team_scores": {
+        "home_total": 10,
+        "away_total": 9
+      },
+      "location": "The Lucky Barrel",
+      "division_id": 417530,
+      "sets": [],
+      "status": "COMPLETED",
+      "result": {
+        "winner": "home",
+        "home_total": 10,
+        "away_total": 9,
+        "note": "8-ball total 10-9 (per-board 3-0 or 2-1 scoring)"
+      },
+      "home_team_slug": "palochones",
+      "away_team_slug": "cue_ligans"
+    },
+    "48118030": {
+      "id": 48118030,
+      "format": "8-ball",
+      "date": "2025-09-25T20:00:00-05:00",
+      "week": 4,
+      "home_team_id": 12864718,
+      "home_team_name": "Sour Patch Kids",
+      "away_team_id": 12867592,
+      "away_team_name": "Cue-ligans",
+      "team_scores": {
+        "home_total": 11,
+        "away_total": 9
+      },
+      "location": "The Lucky Barrel",
+      "division_id": 417530,
+      "sets": [],
+      "status": "COMPLETED",
+      "result": {
+        "winner": "home",
+        "home_total": 11,
+        "away_total": 9,
+        "note": "8-ball total 11-9 (per-board 3-0 or 2-1 scoring)"
+      },
+      "home_team_slug": "sour_patch_kids",
+      "away_team_slug": "cue_ligans"
+    },
+    "48118033": {
+      "id": 48118033,
+      "format": "8-ball",
+      "date": "2025-10-02T20:00:00-05:00",
+      "week": 5,
+      "home_team_id": 12867592,
+      "home_team_name": "Cue-ligans",
+      "away_team_id": 12864714,
+      "away_team_name": "Dead On",
+      "team_scores": {
+        "home_total": 8,
+        "away_total": 12
+      },
+      "location": "DK's Stix & Stuff",
+      "division_id": 417530,
+      "sets": [],
+      "status": "COMPLETED",
+      "result": {
+        "winner": "away",
+        "home_total": 8,
+        "away_total": 12,
+        "note": "8-ball total 8-12 (per-board 3-0 or 2-1 scoring)"
+      },
+      "home_team_slug": "cue_ligans",
+      "away_team_slug": "dead_on"
+    },
+    "48118039": {
+      "id": 48118039,
+      "format": "8-ball",
+      "date": "2025-10-09T20:00:00-05:00",
+      "week": 6,
+      "home_team_id": 12864720,
+      "home_team_name": "Quete Importa",
+      "away_team_id": 12867592,
+      "away_team_name": "Cue-ligans",
+      "team_scores": {
+        "home_total": 10,
+        "away_total": 11
+      },
+      "location": "The Lucky Barrel",
+      "division_id": 417530,
+      "sets": [],
+      "status": "COMPLETED",
+      "result": {
+        "winner": "away",
+        "home_total": 10,
+        "away_total": 11,
+        "note": "8-ball total 10-11 (per-board 3-0 or 2-1 scoring)"
+      },
+      "home_team_slug": "quete_importa",
+      "away_team_slug": "cue_ligans"
+    },
+    "48118044": {
+      "id": 48118044,
+      "format": "8-ball",
+      "date": "2025-10-16T20:00:00-05:00",
+      "week": 7,
+      "home_team_id": 12867592,
+      "home_team_name": "Cue-ligans",
+      "away_team_id": 12864716,
+      "away_team_name": "Ballerz 956",
+      "team_scores": {
+        "home_total": 9,
+        "away_total": 11
+      },
+      "location": "DK's Stix & Stuff",
+      "division_id": 417530,
+      "sets": [],
+      "status": "COMPLETED",
+      "result": {
+        "winner": "away",
+        "home_total": 9,
+        "away_total": 11,
+        "note": "8-ball total 9-11 (per-board 3-0 or 2-1 scoring)"
+      },
+      "home_team_slug": "cue_ligans",
+      "away_team_slug": "ballerz_956"
+    },
+    "48118048": {
+      "id": 48118048,
+      "format": "8-ball",
+      "date": "2025-10-23T20:00:00-05:00",
+      "week": 8,
+      "home_team_id": 12867592,
+      "home_team_name": "Cue-ligans",
+      "away_team_id": 12864715,
+      "away_team_name": "Chalk and Awe",
+      "team_scores": {
+        "home_total": 7,
+        "away_total": 12
+      },
+      "location": "DK's Stix & Stuff",
+      "division_id": 417530,
+      "sets": [],
+      "status": "COMPLETED",
+      "result": {
+        "winner": "away",
+        "home_total": 7,
+        "away_total": 12,
+        "note": "8-ball total 7-12 (per-board 3-0 or 2-1 scoring)"
+      },
+      "home_team_slug": "cue_ligans",
+      "away_team_slug": "chalk_and_awe"
+    },
+    "48118051": {
+      "id": 48118051,
+      "format": "8-ball",
+      "date": "2025-10-30T20:00:00-05:00",
+      "week": 9,
+      "home_team_id": 12864717,
+      "home_team_name": "Bad Boys",
+      "away_team_id": 12867592,
+      "away_team_name": "Cue-ligans",
+      "team_scores": {
+        "home_total": 11,
+        "away_total": 9
+      },
+      "location": "The Lucky Barrel",
+      "division_id": 417530,
+      "sets": [],
+      "status": "COMPLETED",
+      "result": {
+        "winner": "home",
+        "home_total": 11,
+        "away_total": 9,
+        "note": "8-ball total 11-9 (per-board 3-0 or 2-1 scoring)"
+      },
+      "home_team_slug": "bad_boys",
+      "away_team_slug": "cue_ligans"
+    },
+    "48118055": {
+      "id": 48118055,
+      "format": "8-ball",
+      "date": "2025-11-06T20:00:00-06:00",
+      "week": 10,
+      "home_team_id": 12867592,
+      "home_team_name": "Cue-ligans",
+      "away_team_id": 12864719,
+      "away_team_name": "Palochones",
+      "team_scores": {
+        "home_total": 10,
+        "away_total": 9
+      },
+      "location": "DK's Stix & Stuff",
+      "division_id": 417530,
+      "sets": [],
+      "status": "COMPLETED",
+      "result": {
+        "winner": "home",
+        "home_total": 10,
+        "away_total": 9,
+        "note": "8-ball total 10-9 (per-board 3-0 or 2-1 scoring)"
+      },
+      "home_team_slug": "cue_ligans",
+      "away_team_slug": "palochones"
+    },
+    "48118058": {
+      "id": 48118058,
+      "format": "8-ball",
+      "date": "2025-11-13T20:00:00-06:00",
+      "week": 11,
+      "home_team_id": 12867592,
+      "home_team_name": "Cue-ligans",
+      "away_team_id": 12864718,
+      "away_team_name": "Sour Patch Kids",
+      "team_scores": {
+        "home_total": 7,
+        "away_total": 13
+      },
+      "location": "DK's Stix & Stuff",
+      "division_id": 417530,
+      "sets": [],
+      "status": "COMPLETED",
+      "result": {
+        "winner": "away",
+        "home_total": 7,
+        "away_total": 13,
+        "note": "8-ball total 7-13 (per-board 3-0 or 2-1 scoring)"
+      },
+      "home_team_slug": "cue_ligans",
+      "away_team_slug": "sour_patch_kids"
+    },
+    "48118061": {
+      "id": 48118061,
+      "format": "8-ball",
+      "date": "2025-11-20T20:00:00-06:00",
+      "week": 12,
+      "home_team_id": 12864714,
+      "home_team_name": "Dead On",
+      "away_team_id": 12867592,
+      "away_team_name": "Cue-ligans",
+      "team_scores": {
+        "home_total": null,
+        "away_total": null
+      },
+      "location": "DK's Stix & Stuff",
+      "division_id": 417530,
+      "sets": [],
+      "status": "COMPLETED",
+      "result": {
+        "winner": null,
+        "home_total": null,
+        "away_total": null
+      },
+      "home_team_slug": "dead_on",
+      "away_team_slug": "cue_ligans"
+    },
+    "48118067": {
+      "id": 48118067,
+      "format": "8-ball",
+      "date": "2025-12-04T20:00:00-06:00",
+      "week": 13,
+      "home_team_id": 12867592,
+      "home_team_name": "Cue-ligans",
+      "away_team_id": 12864720,
+      "away_team_name": "Quete Importa",
+      "team_scores": {
+        "home_total": null,
+        "away_total": null
+      },
+      "location": "DK's Stix & Stuff",
+      "division_id": 417530,
+      "sets": [],
+      "status": "UNPLAYED",
+      "result": {
+        "winner": null,
+        "home_total": null,
+        "away_total": null
+      },
+      "home_team_slug": "cue_ligans",
+      "away_team_slug": "quete_importa"
+    },
+    "48118072": {
+      "id": 48118072,
+      "format": "8-ball",
+      "date": "2025-12-11T20:00:00-06:00",
+      "week": 14,
+      "home_team_id": 12864716,
+      "home_team_name": "Ballerz 956",
+      "away_team_id": 12867592,
+      "away_team_name": "Cue-ligans",
+      "team_scores": {
+        "home_total": null,
+        "away_total": null
+      },
+      "location": "The Lucky Barrel",
+      "division_id": 417530,
+      "sets": [],
+      "status": "UNPLAYED",
+      "result": {
+        "winner": null,
+        "home_total": null,
+        "away_total": null
+      },
+      "home_team_slug": "ballerz_956",
+      "away_team_slug": "cue_ligans"
+    },
+    "48118076": {
+      "id": 48118076,
+      "format": "8-ball",
+      "date": "2025-12-18T20:00:00-06:00",
+      "week": 15,
+      "home_team_id": 12864715,
+      "home_team_name": "Chalk and Awe",
+      "away_team_id": 12867592,
+      "away_team_name": "Cue-ligans",
+      "team_scores": {
+        "home_total": null,
+        "away_total": null
+      },
+      "location": "DK's Stix & Stuff",
+      "division_id": 417530,
+      "sets": [],
+      "status": "UNPLAYED",
+      "result": {
+        "winner": null,
+        "home_total": null,
+        "away_total": null
+      },
+      "home_team_slug": "chalk_and_awe",
+      "away_team_slug": "cue_ligans"
+    },
+    "48118080": {
+      "id": 48118080,
+      "format": "9-ball",
+      "date": "2025-09-04T20:00:00-05:00",
+      "week": 1,
+      "home_team_id": 12864635,
+      "home_team_name": "Chalk and Awe",
+      "away_team_id": 12867593,
+      "away_team_name": "Cue-ligans",
+      "team_scores": {
+        "home_total": 78,
+        "away_total": 52
+      },
+      "location": "DK's Stix & Stuff",
+      "division_id": 417524,
+      "sets": [],
+      "status": "COMPLETED",
+      "result": {
+        "winner": "home",
+        "home_total": 78,
+        "away_total": 52,
+        "note": "9-ball total 78-52 (20-point boards)"
+      },
+      "home_team_slug": "chalk_and_awe",
+      "away_team_slug": "cue_ligans"
+    },
+    "48118083": {
+      "id": 48118083,
+      "format": "9-ball",
+      "date": "2025-09-11T20:00:00-05:00",
+      "week": 2,
+      "home_team_id": 12867593,
+      "home_team_name": "Cue-ligans",
+      "away_team_id": 12864637,
+      "away_team_name": "Bad Boys",
+      "team_scores": {
+        "home_total": 75,
+        "away_total": 55
+      },
+      "location": "DK's Stix & Stuff",
+      "division_id": 417524,
+      "sets": [],
+      "status": "COMPLETED",
+      "result": {
+        "winner": "home",
+        "home_total": 75,
+        "away_total": 55,
+        "note": "9-ball total 75-55 (20-point boards)"
+      },
+      "home_team_slug": "cue_ligans",
+      "away_team_slug": "bad_boys"
+    },
+    "48118087": {
+      "id": 48118087,
+      "format": "9-ball",
+      "date": "2025-09-18T20:00:00-05:00",
+      "week": 3,
+      "home_team_id": 12864639,
+      "home_team_name": "Palochones",
+      "away_team_id": 12867593,
+      "away_team_name": "Cue-ligans",
+      "team_scores": {
+        "home_total": 33,
+        "away_total": 82
+      },
+      "location": "The Lucky Barrel",
+      "division_id": 417524,
+      "sets": [],
+      "status": "COMPLETED",
+      "result": {
+        "winner": "away",
+        "home_total": 33,
+        "away_total": 82,
+        "note": "9-ball total 33-82 (20-point boards)"
+      },
+      "home_team_slug": "palochones",
+      "away_team_slug": "cue_ligans"
+    },
+    "48118090": {
+      "id": 48118090,
+      "format": "9-ball",
+      "date": "2025-09-25T20:00:00-05:00",
+      "week": 4,
+      "home_team_id": 12864638,
+      "home_team_name": "Sour Patch Kids",
+      "away_team_id": 12867593,
+      "away_team_name": "Cue-ligans",
+      "team_scores": {
+        "home_total": 63,
+        "away_total": 67
+      },
+      "location": "The Lucky Barrel",
+      "division_id": 417524,
+      "sets": [],
+      "status": "COMPLETED",
+      "result": {
+        "winner": "away",
+        "home_total": 63,
+        "away_total": 67,
+        "note": "9-ball total 63-67 (20-point boards)"
+      },
+      "home_team_slug": "sour_patch_kids",
+      "away_team_slug": "cue_ligans"
+    },
+    "48118093": {
+      "id": 48118093,
+      "format": "9-ball",
+      "date": "2025-10-02T20:00:00-05:00",
+      "week": 5,
+      "home_team_id": 12867593,
+      "home_team_name": "Cue-ligans",
+      "away_team_id": 12864634,
+      "away_team_name": "Dead On",
+      "team_scores": {
+        "home_total": 82,
+        "away_total": 48
+      },
+      "location": "DK's Stix & Stuff",
+      "division_id": 417524,
+      "sets": [],
+      "status": "COMPLETED",
+      "result": {
+        "winner": "home",
+        "home_total": 82,
+        "away_total": 48,
+        "note": "9-ball total 82-48 (20-point boards)"
+      },
+      "home_team_slug": "cue_ligans",
+      "away_team_slug": "dead_on"
+    },
+    "48118099": {
+      "id": 48118099,
+      "format": "9-ball",
+      "date": "2025-10-09T20:00:00-05:00",
+      "week": 6,
+      "home_team_id": 12864640,
+      "home_team_name": "Quete Importa",
+      "away_team_id": 12867593,
+      "away_team_name": "Cue-ligans",
+      "team_scores": {
+        "home_total": 70,
+        "away_total": 60
+      },
+      "location": "The Lucky Barrel",
+      "division_id": 417524,
+      "sets": [],
+      "status": "COMPLETED",
+      "result": {
+        "winner": "home",
+        "home_total": 70,
+        "away_total": 60,
+        "note": "9-ball total 70-60 (20-point boards)"
+      },
+      "home_team_slug": "quete_importa",
+      "away_team_slug": "cue_ligans"
+    },
+    "48118104": {
+      "id": 48118104,
+      "format": "9-ball",
+      "date": "2025-10-16T20:00:00-05:00",
+      "week": 7,
+      "home_team_id": 12867593,
+      "home_team_name": "Cue-ligans",
+      "away_team_id": 12864636,
+      "away_team_name": "Ballerz 956",
+      "team_scores": {
+        "home_total": 59,
+        "away_total": 71
+      },
+      "location": "DK's Stix & Stuff",
+      "division_id": 417524,
+      "sets": [],
+      "status": "COMPLETED",
+      "result": {
+        "winner": "away",
+        "home_total": 59,
+        "away_total": 71,
+        "note": "9-ball total 59-71 (20-point boards)"
+      },
+      "home_team_slug": "cue_ligans",
+      "away_team_slug": "ballerz_956"
+    },
+    "48118108": {
+      "id": 48118108,
+      "format": "9-ball",
+      "date": "2025-10-23T20:00:00-05:00",
+      "week": 8,
+      "home_team_id": 12867593,
+      "home_team_name": "Cue-ligans",
+      "away_team_id": 12864635,
+      "away_team_name": "Chalk and Awe",
+      "team_scores": {
+        "home_total": 64,
+        "away_total": 66
+      },
+      "location": "DK's Stix & Stuff",
+      "division_id": 417524,
+      "sets": [],
+      "status": "COMPLETED",
+      "result": {
+        "winner": "away",
+        "home_total": 64,
+        "away_total": 66,
+        "note": "9-ball total 64-66 (20-point boards)"
+      },
+      "home_team_slug": "cue_ligans",
+      "away_team_slug": "chalk_and_awe"
+    },
+    "48118111": {
+      "id": 48118111,
+      "format": "9-ball",
+      "date": "2025-10-30T20:00:00-05:00",
+      "week": 9,
+      "home_team_id": 12864637,
+      "home_team_name": "Bad Boys",
+      "away_team_id": 12867593,
+      "away_team_name": "Cue-ligans",
+      "team_scores": {
+        "home_total": 66,
+        "away_total": 64
+      },
+      "location": "The Lucky Barrel",
+      "division_id": 417524,
+      "sets": [],
+      "status": "COMPLETED",
+      "result": {
+        "winner": "home",
+        "home_total": 66,
+        "away_total": 64,
+        "note": "9-ball total 66-64 (20-point boards)"
+      },
+      "home_team_slug": "bad_boys",
+      "away_team_slug": "cue_ligans"
+    },
+    "48118115": {
+      "id": 48118115,
+      "format": "9-ball",
+      "date": "2025-11-06T20:00:00-06:00",
+      "week": 10,
+      "home_team_id": 12867593,
+      "home_team_name": "Cue-ligans",
+      "away_team_id": 12864639,
+      "away_team_name": "Palochones",
+      "team_scores": {
+        "home_total": 67,
+        "away_total": 63
+      },
+      "location": "DK's Stix & Stuff",
+      "division_id": 417524,
+      "sets": [],
+      "status": "COMPLETED",
+      "result": {
+        "winner": "home",
+        "home_total": 67,
+        "away_total": 63,
+        "note": "9-ball total 67-63 (20-point boards)"
+      },
+      "home_team_slug": "cue_ligans",
+      "away_team_slug": "palochones"
+    },
+    "48118118": {
+      "id": 48118118,
+      "format": "9-ball",
+      "date": "2025-11-13T20:00:00-06:00",
+      "week": 11,
+      "home_team_id": 12867593,
+      "home_team_name": "Cue-ligans",
+      "away_team_id": 12864638,
+      "away_team_name": "Sour Patch Kids",
+      "team_scores": {
+        "home_total": 48,
+        "away_total": 82
+      },
+      "location": "DK's Stix & Stuff",
+      "division_id": 417524,
+      "sets": [],
+      "status": "COMPLETED",
+      "result": {
+        "winner": "away",
+        "home_total": 48,
+        "away_total": 82,
+        "note": "9-ball total 48-82 (20-point boards)"
+      },
+      "home_team_slug": "cue_ligans",
+      "away_team_slug": "sour_patch_kids"
+    },
+    "48118121": {
+      "id": 48118121,
+      "format": "9-ball",
+      "date": "2025-11-20T20:00:00-06:00",
+      "week": 12,
+      "home_team_id": 12864634,
+      "home_team_name": "Dead On",
+      "away_team_id": 12867593,
+      "away_team_name": "Cue-ligans",
+      "team_scores": {
+        "home_total": null,
+        "away_total": null
+      },
+      "location": "DK's Stix & Stuff",
+      "division_id": 417524,
+      "sets": [],
+      "status": "COMPLETED",
+      "result": {
+        "winner": null,
+        "home_total": null,
+        "away_total": null
+      },
+      "home_team_slug": "dead_on",
+      "away_team_slug": "cue_ligans"
+    },
+    "48118139": {
+      "id": 48118139,
+      "format": "9-ball",
+      "date": "2025-12-04T20:00:00-06:00",
+      "week": 13,
+      "home_team_id": 12867593,
+      "home_team_name": "Cue-ligans",
+      "away_team_id": 12864640,
+      "away_team_name": "Quete Importa",
+      "team_scores": {
+        "home_total": null,
+        "away_total": null
+      },
+      "location": "DK's Stix & Stuff",
+      "division_id": 417524,
+      "sets": [],
+      "status": "UNPLAYED",
+      "result": {
+        "winner": null,
+        "home_total": null,
+        "away_total": null
+      },
+      "home_team_slug": "cue_ligans",
+      "away_team_slug": "quete_importa"
+    },
+    "48118144": {
+      "id": 48118144,
+      "format": "9-ball",
+      "date": "2025-12-11T20:00:00-06:00",
+      "week": 14,
+      "home_team_id": 12864636,
+      "home_team_name": "Ballerz 956",
+      "away_team_id": 12867593,
+      "away_team_name": "Cue-ligans",
+      "team_scores": {
+        "home_total": null,
+        "away_total": null
+      },
+      "location": "The Lucky Barrel",
+      "division_id": 417524,
+      "sets": [],
+      "status": "UNPLAYED",
+      "result": {
+        "winner": null,
+        "home_total": null,
+        "away_total": null
+      },
+      "home_team_slug": "ballerz_956",
+      "away_team_slug": "cue_ligans"
+    },
+    "48118148": {
+      "id": 48118148,
+      "format": "9-ball",
+      "date": "2025-12-18T20:00:00-06:00",
+      "week": 15,
+      "home_team_id": 12864635,
+      "home_team_name": "Chalk and Awe",
+      "away_team_id": 12867593,
+      "away_team_name": "Cue-ligans",
+      "team_scores": {
+        "home_total": null,
+        "away_total": null
+      },
+      "location": "DK's Stix & Stuff",
+      "division_id": 417524,
+      "sets": [],
+      "status": "UNPLAYED",
+      "result": {
+        "winner": null,
+        "home_total": null,
+        "away_total": null
+      },
+      "home_team_slug": "chalk_and_awe",
+      "away_team_slug": "cue_ligans"
+    }
+  },
+  "locations": {
+    "1000": {
+      "id": 1000,
+      "name": "DK's Stix & Stuff"
+    },
+    "1001": {
+      "id": 1001,
+      "name": "The Lucky Barrel"
+    }
+  }
+}

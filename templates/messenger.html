@@ -1,0 +1,66 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="container">
+  <div class="card bg-dark soft-border shadow-soft">
+    <div class="card-body">
+      <div class="d-flex justify-content-between align-items-center mb-3">
+        <div>
+          <div class="h5 mb-0 text-info">Messenger</div>
+          <div class="text-secondary small">Direct messages with teammates</div>
+        </div>
+      </div>
+      <div class="row g-3">
+        <div class="col-12 col-md-4">
+          <div class="list-group">
+            {% if threads %}
+              {% for t in threads %}
+              <a href="{{ url_for('messenger', user=t.user.id) }}" class="list-group-item list-group-item-action bg-dark text-light d-flex justify-content-between align-items-center {% if target and t.user.id==target.id %}active{% endif %}">
+                <div>
+                  <div class="fw-semibold">{{ t.user.display_name or t.user.username }}</div>
+                  <div class="small text-secondary">{{ t.last.content[:40] }}{% if t.last.content|length > 40 %}…{% endif %}</div>
+                </div>
+                {% if t.unread and t.unread > 0 %}
+                <span class="badge bg-info text-dark">{{ t.unread }}</span>
+                {% endif %}
+              </a>
+              {% endfor %}
+            {% else %}
+              <div class="text-secondary small">No conversations yet.</div>
+            {% endif %}
+          </div>
+        </div>
+        <div class="col-12 col-md-8">
+          {% if target %}
+          <div class="d-flex justify-content-between align-items-center mb-2">
+            <div class="fw-semibold">{{ target.display_name or target.username }}</div>
+          </div>
+          <div class="border rounded p-2 bg-dark" style="height: 50vh; overflow-y:auto;">
+            {% if messages %}
+              {% for m in messages %}
+              <div class="mb-2">
+                <div class="small {% if m.sender_id == current_user.id %}text-info{% else %}text-secondary{% endif %}">
+                  {{ m.sender.display_name or m.sender.username }} • {{ m.created_at.strftime('%b %d, %I:%M %p') if m.created_at else '' }}
+                </div>
+                <div class="text-light">{{ m.content }}</div>
+              </div>
+              {% endfor %}
+            {% else %}
+              <div class="text-secondary small">No messages yet.</div>
+            {% endif %}
+          </div>
+          <form class="mt-2" method="post" action="{{ url_for('send_direct_message') }}">
+            <input type="hidden" name="recipient" value="{{ target.username }}">
+            <div class="input-group">
+              <input type="text" name="content" class="form-control bg-dark text-light soft-border" placeholder="Type a message">
+              <button class="btn btn-info text-dark" type="submit">Send</button>
+            </div>
+          </form>
+          {% else %}
+          <div class="text-secondary small">Select a conversation to start messaging.</div>
+          {% endif %}
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

@@ -1,0 +1,36 @@
+{% extends 'base.html' %}
+{% block title %}Rules & Resources{% endblock %}
+{% block content %}
+<div class="container py-4 section-fade">
+  <div class="row g-3 mb-3">
+    <div class="col-12">
+      <div class="about-card p-3 h-100">
+        <div class="d-flex align-items-center mb-2">
+          <i class="fa-solid fa-book-open text-info me-2"></i>
+          <h5 class="mb-0">Rules & Resources</h5>
+        </div>
+        <div class="subtle small mb-2">Quick links to APA references and site data helpers.</div>
+        <div class="row g-3">
+          <div class="col-12 col-md-6">
+            <div class="callout d-flex justify-content-between align-items-center h-100">
+              <div>
+                <div class="small-muted text-uppercase">APA Manual</div>
+                <div class="subtle">Rules & scoring reference</div>
+              </div>
+              <a class="btn btn-sm btn-outline-info" href="/apa-manual" target="_blank"><i class="fa-solid fa-book-open me-1"></i>Open</a>
+            </div>
+          </div>
+          <div class="col-12 col-md-6">
+            <div class="callout h-100">
+              <div class="small-muted text-uppercase">Data Tips</div>
+              <div class="subtle mb-1">- Use Admin → Data to refresh from dumps (backup auto).</div>
+              <div class="subtle mb-1">- Decode/Merge before Apply if you want to inspect first.</div>
+              <div class="subtle">- AI runs locally via Ollama; start it if AI says unavailable.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

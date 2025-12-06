@@ -1,0 +1,114 @@
+{% extends 'base.html' %}
+{% block title %}Settings | Cüe-Ligans{% endblock %}
+{% block content %}
+<style>
+  .settings-hero {
+    background: radial-gradient(circle at 10% 15%, rgba(18,214,255,0.15), transparent 30%),
+                radial-gradient(circle at 85% 10%, rgba(255,116,217,0.12), transparent 32%),
+                linear-gradient(135deg, #0d1b2a 0%, #0b1226 55%, #07101e 100%);
+    border: 1px solid rgba(0,191,255,0.35);
+    box-shadow: 0 16px 36px rgba(0,191,255,0.2);
+    border-radius: 14px;
+  }
+  .settings-tile {
+    background: rgba(255,255,255,0.03);
+    border: 1px solid rgba(255,255,255,0.08);
+    border-radius: 12px;
+    padding: 0.9rem;
+    box-shadow: 0 10px 24px rgba(0,0,0,0.3);
+  }
+</style>
+<div class="container py-4">
+  <div class="settings-hero mb-3">
+    <div class="card-body d-flex flex-column flex-md-row align-items-start align-items-md-center gap-3">
+      <div class="hero-badge"><i class="fa-solid fa-gear"></i><span>Settings</span></div>
+      <div>
+        <div class="h5 mb-1 text-info">Manage your account</div>
+        <div class="text-secondary small">Profile, preferences, and quick answers.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="row g-3">
+    <div class="col-12 col-lg-7">
+      <div class="card bg-dark soft-border shadow-soft mb-3">
+        <div class="card-body">
+          <h6 class="text-info mb-2">Profile</h6>
+          <div class="settings-tile mb-2">
+            <div class="d-flex justify-content-between align-items-center">
+              <div>
+                <div class="text-secondary small">Display Name</div>
+                <div class="h6 mb-0">{{ user.display_name or user.username }}</div>
+              </div>
+              <a class="btn btn-sm btn-outline-info" href="{{ url_for('profile_detail', username=user.username) }}">Edit</a>
+            </div>
+          </div>
+          <div class="settings-tile mb-2">
+            <div class="d-flex justify-content-between align-items-center">
+              <div>
+                <div class="text-secondary small">Bio</div>
+                <div class="text-secondary">{{ user.bio or 'Add a bio on your profile page' }}</div>
+              </div>
+              <a class="btn btn-sm btn-outline-info" href="{{ url_for('profile_detail', username=user.username) }}">Edit</a>
+            </div>
+          </div>
+          <div class="settings-tile">
+            <div class="text-secondary small">Profile Picture</div>
+            <div class="text-secondary small">Change it on your profile by clicking your avatar.</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="card bg-dark soft-border shadow-soft">
+        <div class="card-body">
+          <h6 class="text-info mb-2">Notifications & Preferences</h6>
+          <div class="settings-tile mb-2">
+            <div class="d-flex justify-content-between align-items-center">
+              <div class="text-secondary small">Email updates</div>
+              <span class="badge bg-secondary">Coming soon</span>
+            </div>
+          </div>
+          <div class="settings-tile">
+            <div class="d-flex justify-content-between align-items-center">
+              <div class="text-secondary small">Mobile push</div>
+              <span class="badge bg-secondary">Coming soon</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-12 col-lg-5">
+      <div class="card bg-dark soft-border shadow-soft mb-3">
+        <div class="card-body">
+          <h6 class="text-info mb-2">FAQ</h6>
+          <div class="accordion" id="faqAccordion">
+            {% for q, a in faq %}
+            <div class="accordion-item bg-dark text-light">
+              <h2 class="accordion-header" id="faqHeading{{ loop.index }}">
+                <button class="accordion-button collapsed bg-dark text-light" type="button" data-bs-toggle="collapse" data-bs-target="#faqCollapse{{ loop.index }}" aria-expanded="false" aria-controls="faqCollapse{{ loop.index }}">
+                  {{ q }}
+                </button>
+              </h2>
+              <div id="faqCollapse{{ loop.index }}" class="accordion-collapse collapse" aria-labelledby="faqHeading{{ loop.index }}" data-bs-parent="#faqAccordion">
+                <div class="accordion-body text-secondary">
+                  {{ a }}
+                </div>
+              </div>
+            </div>
+            {% endfor %}
+          </div>
+        </div>
+      </div>
+
+      <div class="card bg-dark soft-border shadow-soft">
+        <div class="card-body">
+          <h6 class="text-info mb-2">Support</h6>
+          <div class="text-secondary small">Need help? Reach out to your captain or email: <a class="text-info" href="mailto:captain@cue-ligans.com">captain@cue-ligans.com</a></div>
+          <div class="text-secondary small mt-1">Locker tips: pick your player on your profile so LAB defaults to you.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

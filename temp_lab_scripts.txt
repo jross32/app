@@ -1,0 +1,482 @@
+{% block scripts %}
+{{ super() }}
+<script>
+  // Helper to render tables
+  function renderSimTable(rows) {
+    if (!rows || !rows.length) return '<div class="text-secondary small">No data.</div>';
+    return `
+      <table class="table table-dark align-middle mb-0">
+        <thead>
+          <tr><th>Team</th><th>Current</th><th>Top 3</th><th>1st</th></tr>
+        </thead>
+        <tbody>
+          ${rows.map(r => `
+            <tr class="${r.cue ? 'table-success' : ''}">
+              <td>${r.team}</td>
+              <td>${r.current}</td>
+              <td>${r.pct_top3}%</td>
+              <td>${r.pct_first}%</td>
+            </tr>
+          `).join('')}
+        </tbody>
+      </table>`;
+  }
+
+  const predictorForm = document.getElementById('predictorForm');
+  const predictorResult = document.getElementById('predictorResult');
+  if (predictorForm && predictorResult) {
+    predictorForm.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const formData = new FormData(predictorForm);
+      const btn = predictorForm.querySelector('button[type="submit"]');
+      if (btn) { btn.disabled = true; btn.innerText = 'Predicting...'; }
+      try {
+        const res = await fetch('/lab/predict', { method: 'POST', body: formData });
+        const data = await res.json();
+        if (!res.ok || data.error) throw new Error(data.error || 'Error');
+        predictorResult.innerHTML = `
+          <div class="d-flex justify-content-between">
+            <div><strong>${data.our_team}</strong>: ${data.our_rating}</div>
+            <div><strong>${data.opp_team}</strong>: ${data.their_rating}</div>
+          </div>
+          <div class="subtle mt-1">Projected: ${data.our_team} ${data.proj_us} – ${data.opp_team} ${data.proj_them}</div>
+          <div class="text-info mt-1">${data.summary}</div>
+          ${(data.reasons && data.reasons.length) ? `<ul class="small text-secondary mt-1 mb-0">${data.reasons.map(r=>`<li>${r}</li>`).join('')}</ul>` : ''}
+          <div class="small text-secondary mt-2">
+            Race-based advantage: ${(data.ours?.components?.race_eff || 0).toFixed(2)} vs ${(data.theirs?.components?.race_eff || 0).toFixed(2)}<br>
+            Hill-hill confidence: ${(data.ours?.components?.hill_conf || 0).toFixed(2)} vs ${(data.theirs?.components?.hill_conf || 0).toFixed(2)}<br>
+            SL matchup difficulty factored by opponent roster.
+          </div>
+        `;
+      } catch (err) {
+        predictorResult.innerHTML = `<div class="text-danger small">Prediction failed.</div>`;
+      } finally {
+        if (btn) { btn.disabled = false; btn.innerText = 'Predict'; }
+      }
+    });
+  }
+
+  const simulateForm = document.getElementById('simulateForm');
+  const simResult = document.getElementById('simResult');
+  if (simulateForm && simResult) {
+    simulateForm.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const formData = new FormData(simulateForm);
+      const btn = simulateForm.querySelector('button[type="submit"]');
+      if (btn) { btn.disabled = true; btn.innerText = 'Running...'; }
+      try {
+        const res = await fetch('/lab/simulate', { method: 'POST', body: formData });
+        const data = await res.json();
+        if (!res.ok || data.error) throw new Error(data.error || 'Error');
+        simResult.innerHTML = renderSimTable(data.rows);
+      } catch (err) {
+        simResult.innerHTML = `<div class="text-danger small">Simulation failed.</div>`;
+      } finally {
+        if (btn) { btn.disabled = false; btn.innerText = 'Run Simulation'; }
+      }
+    });
+  }
+
+  const lineupForm = document.getElementById('lineupForm');
+  const lineupResult = document.getElementById('lineupResult');
+  const lineupTeam = document.getElementById('lineupTeam');
+  const lineupFormat = document.getElementById('lineupFormat');
+  const lineupRosterTable = document.getElementById('lineupRosterTable');
+  if (lineupForm && lineupResult) {
+    async function fetchRoster() {
+      if (!lineupTeam || !lineupFormat || !lineupRosterTable) return;
+      const fd = new FormData();
+      fd.append('team_id', lineupTeam.value);
+      fd.append('format', lineupFormat.value);
+      try {
+        const res = await fetch('/lab/roster', { method: 'POST', body: fd });
+        const data = await res.json();
+        if (!res.ok || data.error) throw new Error();
+        const roster = data.roster || [];
+        const rows = roster.map(p => `
+          <tr>
+            <td><input class="form-check-input" type="checkbox" name="include_player" value="${p.id}" form="lineupForm" checked></td>
+            <td><input class="form-check-input" type="checkbox" name="lock_player" value="${p.id}" form="lineupForm"></td>
+            <td>${p.name}</td>
+            <td>${p.sl}</td>
+            <td>${(p.ppm||0).toFixed(2)}</td>
+            <td>${((p.win_pct||0)*100).toFixed(1)}%</td>
+            <td>${((p.pa||0)*100).toFixed(1)}%</td>
+            <td>${p.role||'Contributor'}</td>
+          </tr>
+        `).join('');
+        lineupRosterTable.innerHTML = `
+          <table class="table table-dark table-sm align-middle mb-0">
+            <thead><tr><th>Include</th><th>Lock</th><th>Player</th><th>SL</th><th>PPM</th><th>Win%</th><th>PA%</th><th>Role</th></tr></thead>
+            <tbody>${rows}</tbody>
+          </table>`;
+      } catch (err) {
+        lineupRosterTable.innerHTML = `<div class="text-danger small">Unable to load roster.</div>`;
+      }
+    }
+
+    if (lineupTeam) lineupTeam.addEventListener('change', fetchRoster);
+    if (lineupFormat) lineupFormat.addEventListener('change', fetchRoster);
+
+    lineupForm.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const formData = new FormData(lineupForm);
+      const btn = lineupForm.querySelector('button[type="submit"]');
+      if (btn) { btn.disabled = true; btn.innerText = 'Building...'; }
+      try {
+        const res = await fetch('/lab/lineup', { method: 'POST', body: formData });
+        const data = await res.json();
+        if (!res.ok || data.error) throw new Error(data.error || 'Error');
+        if (!data.top && (!data.alternatives || !data.alternatives.length)) {
+          lineupResult.innerHTML = `<div class="text-secondary small">No valid lineup for this cap.</div>`;
+          return;
+        }
+        const top = data.top;
+        const alts = data.alternatives || [];
+        let html = '';
+        if (top) {
+          html += `
+            <div class="mb-3 p-2 rounded" style="background:rgba(0,191,255,.10); border:1px solid rgba(0,191,255,.25);">
+              <div class="d-flex justify-content-between align-items-center">
+                <div>
+                  <div class="badge badge-outline me-2">Top Lineup</div>
+                  <strong>Score: ${top.score.toFixed(2)}</strong>
+                </div>
+                <span class="subtle">Total SL: ${top.sl_total} | PPM Avg: ${top.ppm_avg.toFixed(2)} | PA Avg: ${(top.pa_avg*100).toFixed(1)}%</span>
+              </div>
+              <div class="table-responsive mt-2">
+                <table class="table table-dark table-sm align-middle mb-0">
+                  <thead><tr><th>Player</th><th>SL</th><th>PPM</th><th>PA%</th></tr></thead>
+                  <tbody>
+                    ${top.players.map(p=>`
+                      <tr>
+                        <td>${p.name}</td>
+                        <td>${p.sl}</td>
+                        <td>${p.ppm.toFixed(2)}</td>
+                        <td>${(p.pa*100).toFixed(1)}%</td>
+                      </tr>`).join('')}
+                  </tbody>
+                </table>
+              </div>
+              <div class="text-secondary small mt-1">Highest lineup score while meeting SL cap and locks.</div>
+            </div>`;
+        }
+        if (alts.length) {
+          html += `<div class="text-secondary small mb-2">Alternatives</div><div class="scroll-area">`;
+          alts.forEach((line, idx) => {
+            html += `
+              <div class="mb-2 p-2 rounded" style="background:rgba(255,255,255,.04);">
+                <div class="d-flex justify-content-between">
+                  <strong>#${idx+2} Score: ${line.score.toFixed(2)}</strong>
+                  <span class="subtle">SL: ${line.sl_total} | PPM: ${line.ppm_avg.toFixed(2)} | PA: ${(line.pa_avg*100).toFixed(1)}%</span>
+                </div>
+                <div class="table-responsive mt-1">
+                  <table class="table table-dark table-sm align-middle mb-0">
+                    <thead><tr><th>Player</th><th>SL</th></tr></thead>
+                    <tbody>
+                      ${line.players.map(p=>`<tr><td>${p.name}</td><td>${p.sl}</td></tr>`).join('')}
+                    </tbody>
+                  </table>
+                </div>
+              </div>`;
+          });
+          html += `</div>`;
+        }
+        lineupResult.innerHTML = html || `<div class="text-secondary small">No valid lineup for this cap.</div>`;
+      } catch (err) {
+        lineupResult.innerHTML = `<div class="text-danger small">Lineup failed.</div>`;
+      } finally {
+        if (btn) { btn.disabled = false; btn.innerText = 'Generate'; }
+      }
+    });
+    // initial roster render ensures includes/locks visible for defaults
+    fetchRoster();
+  }
+
+  const trendForm = document.getElementById('trendForm');
+  const trendResult = document.getElementById('trendResult');
+  if (trendForm && trendResult) {
+    trendForm.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const formData = new FormData(trendForm);
+      const btn = trendForm.querySelector('button[type="submit"]');
+      if (btn) { btn.disabled = true; btn.innerText = 'Loading...'; }
+      try {
+        const res = await fetch('/lab/trend', { method: 'POST', body: formData });
+        const data = await res.json();
+        if (!res.ok || data.error) throw new Error(data.error || 'Error');
+        const bands = (data.bands || []).map(b => `<div class="col-12 col-md-4"><div class="p-2 rounded" style="background:rgba(255,255,255,.03);"><div class="text-uppercase small subtle mb-1">Vs ${b.band}</div><div class="text-secondary small">Win% ${(b.win_pct*100).toFixed(0)}% | PPM ${b.ppm.toFixed(1)} (${b.count} matches)</div></div></div>`).join('');
+        trendResult.innerHTML = `
+          <div class="d-flex justify-content-between align-items-center mb-2">
+            <div>
+              <div class="h6 mb-1">${data.player} (${data.format})</div>
+              <div class="subtle">SL ${data.sl} | Trend: ${data.trend_label}</div>
+            </div>
+          </div>
+          <div class="row g-2">
+            <div class="col-12 col-md-6">
+              <div class="p-2 rounded" style="background:rgba(0,191,255,.06);">
+                <div class="text-secondary small">Session</div>
+                <div class="subtle">Win% ${(data.session.win_pct*100).toFixed(1)}% | PPM ${data.session.ppm.toFixed(2)} | PA ${(data.session.pa*100).toFixed(1)}%</div>
+              </div>
+            </div>
+            <div class="col-12 col-md-6">
+              <div class="p-2 rounded" style="background:rgba(0,191,255,.06);">
+                <div class="text-secondary small">Recent (${data.recent.count || 0} matches)</div>
+                <div class="subtle">Win% ${(data.recent.win_pct*100).toFixed(1)}% | PPM ${data.recent.ppm.toFixed(2)} | Avg opp SL ${data.recent.opp_sl.toFixed(1)}</div>
+              </div>
+            </div>
+          </div>
+          <div class="row g-2 mt-2">
+            <div class="col-12 col-md-6">
+              <div class="p-2 rounded" style="background:rgba(255,255,255,.04);">
+                <div class="text-secondary small">Team Averages</div>
+                <div class="subtle">Win% ${(data.team.win_pct*100).toFixed(1)}% | PPM ${data.team.ppm.toFixed(2)} | PA ${(data.team.pa*100).toFixed(1)}%</div>
+              </div>
+            </div>
+            <div class="col-12 col-md-6">
+              <div class="p-2 rounded" style="background:rgba(255,255,255,.04);">
+                <div class="text-secondary small">Diff vs Team</div>
+                <div class="subtle">PPM ${(data.recent.ppm - data.team.ppm).toFixed(2)} vs team | Win% ${(data.recent.win_pct*100 - data.team.win_pct*100).toFixed(1)} pts</div>
+              </div>
+            </div>
+          </div>
+          <div class="row g-2 mt-2">${bands}</div>
+          <div class="text-info small mt-2">${data.summary || ''}</div>
+        `;
+      } catch (err) {
+        trendResult.innerHTML = `<div class="text-danger small">Trend failed.</div>`;
+      } finally {
+        if (btn) { btn.disabled = false; btn.innerText = 'Show Trend'; }
+      }
+    });
+  }
+
+  const winprobForm = document.getElementById('winprobForm');
+  const winprobResult = document.getElementById('winprobResult');
+  if (winprobForm && winprobResult) {
+    winprobForm.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const formData = new FormData(winprobForm);
+      const btn = winprobForm.querySelector('button[type="submit"]');
+      if (btn) { btn.disabled = true; btn.innerText = 'Estimating...'; }
+      try {
+        const res = await fetch('/lab/winprob', { method: 'POST', body: formData });
+        const data = await res.json();
+        if (!res.ok || data.error) throw new Error(data.error || 'Error');
+        const table = `
+          <div class="table-responsive mb-2">
+            <table class="table table-dark table-sm align-middle mb-0">
+              <thead><tr><th></th><th>${data.our_name}</th><th>${data.their_name}</th></tr></thead>
+              <tbody>
+                <tr><td>SL</td><td>${data.ours.sl}</td><td>${data.theirs.sl}</td></tr>
+                <tr><td>Win%</td><td>${(data.ours.win_pct*100).toFixed(1)}%</td><td>${(data.theirs.win_pct*100).toFixed(1)}%</td></tr>
+                <tr><td>PPM</td><td>${data.ours.ppm.toFixed(2)}</td><td>${data.theirs.ppm.toFixed(2)}</td></tr>
+                <tr><td>PA%</td><td>${(data.ours.pa*100).toFixed(1)}%</td><td>${(data.theirs.pa*100).toFixed(1)}%</td></tr>
+                <tr><td>Recent PPM</td><td>${data.ours.recent_ppm.toFixed(2)}</td><td>${data.theirs.recent_ppm.toFixed(2)}</td></tr>
+              </tbody>
+            </table>
+          </div>`;
+        const notes = (data.notes || []).map(n => `<li>${n}</li>`).join('');
+        winprobResult.innerHTML = `
+          <div class="h6 mb-1">Estimated win probability: ${data.prob}%</div>
+          <div class="subtle">${data.our_name} vs ${data.their_name} (${data.format})</div>
+          ${table}
+          <div class="text-secondary small mb-1">Ratings: ${data.ratings.ours} vs ${data.ratings.theirs}</div>
+          ${(notes ? `<ul class="small text-secondary mb-1">${notes}</ul>` : '')}
+        `;
+      } catch (err) {
+        winprobResult.innerHTML = `<div class="text-danger small">Win probability failed.</div>`;
+      } finally {
+        if (btn) { btn.disabled = false; btn.innerText = 'Estimate'; }
+      }
+    });
+  }
+
+  // SL Tracker
+  const slForm = document.getElementById('slForm');
+  const slResult = document.getElementById('slResult');
+  if (slForm && slResult) {
+    slForm.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const formData = new FormData(slForm);
+      const btn = slForm.querySelector('button[type="submit"]');
+      if (btn) { btn.disabled = true; btn.innerText = 'Loading...'; }
+      try {
+        const res = await fetch('/lab/sltracker', { method: 'POST', body: formData });
+        const data = await res.json();
+        if (!res.ok || data.error) throw new Error(data.error || 'Error');
+        const matches = (data.matches || []).map(m => `
+          <tr>
+            <td>${m.date || ''}</td><td>${m.opp_sl}</td><td>${m.points}</td><td>${m.outcome}</td><td>${m.delta.toFixed(1)}</td>
+          </tr>`).join('');
+        const band = data.bands || {};
+        slResult.innerHTML = `
+          <div class="row g-2">
+            <div class="col-12 col-md-6">
+              <div class="p-2 rounded" style="background:rgba(0,191,255,.08);">
+                <div class="text-secondary small">Overview</div>
+                <div class="subtle">SL ${data.session.sl} | Matches ${data.total_matches || 0}</div>
+                <div class="subtle">Win% ${(data.session.win_pct*100).toFixed(1)}% | PPM ${data.session.ppm.toFixed(2)} | PA ${(data.session.pa*100).toFixed(1)}%</div>
+              </div>
+            </div>
+            <div class="col-12 col-md-6">
+              <div class="p-2 rounded" style="background:rgba(255,255,255,.06);">
+                <div class="text-secondary small">Status</div>
+                <div class="subtle">${data.status}</div>
+                <div class="text-secondary small">Recent: Win% ${(data.recent.win_pct*100).toFixed(1)}% | PPM ${data.recent.ppm.toFixed(2)}</div>
+              </div>
+            </div>
+          </div>
+          <div class="row g-2 mt-2">
+            <div class="col-12 col-md-4"><div class="p-2 rounded" style="background:rgba(255,255,255,.04);"><div class="text-secondary small">Vs Lower SL</div><div class="subtle">Win% ${((band.lower?.win_pct||0)*100).toFixed(0)}% | PPM ${(band.lower?.ppm||0).toFixed(1)}</div></div></div>
+            <div class="col-12 col-md-4"><div class="p-2 rounded" style="background:rgba(255,255,255,.04);"><div class="text-secondary small">Vs Equal SL</div><div class="subtle">Win% ${((band.equal?.win_pct||0)*100).toFixed(0)}% | PPM ${(band.equal?.ppm||0).toFixed(1)}</div></div></div>
+            <div class="col-12 col-md-4"><div class="p-2 rounded" style="background:rgba(255,255,255,.04);"><div class="text-secondary small">Vs Higher SL</div><div class="subtle">Win% ${((band.higher?.win_pct||0)*100).toFixed(0)}% | PPM ${(band.higher?.ppm||0).toFixed(1)}</div></div></div>
+          </div>
+          <div class="mt-2 text-info small">${data.summary || ''}</div>
+          <div class="table-responsive mt-2">
+            <table class="table table-dark table-sm align-middle mb-0">
+              <thead><tr><th>Date</th><th>Opp SL</th><th>Points</th><th>Result</th><th>Δ vs expected</th></tr></thead>
+              <tbody>${matches || '<tr><td colspan="5" class="text-secondary small">No match data</td></tr>'}</tbody>
+            </table>
+          </div>
+        `;
+      } catch (err) {
+        slResult.innerHTML = `<div class="text-danger small">SL tracking failed.</div>`;
+      } finally {
+        if (btn) { btn.disabled = false; btn.innerText = 'View SL Trends'; }
+      }
+    });
+  }
+
+  // Power Rankings
+  const powerForm = document.getElementById('powerForm');
+  const powerResult = document.getElementById('powerResult');
+  if (powerForm && powerResult) {
+    powerForm.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const formData = new FormData(powerForm);
+      const btn = powerForm.querySelector('button[type="submit"]');
+      if (btn) { btn.disabled = true; btn.innerText = 'Loading...'; }
+      try {
+        const res = await fetch('/lab/powerrank', { method: 'POST', body: formData });
+        const data = await res.json();
+        if (!res.ok || data.error) throw new Error(data.error || 'Error');
+        const rows = (data.rankings || []).map((r, idx) => `
+          <tr>
+            <td>${idx+1}</td>
+            <td>${r.name}</td>
+            <td>${r.rating.toFixed(1)}</td>
+            <td>${(r.win_pct*100).toFixed(1)}%</td>
+            <td>${(r.ppm||0).toFixed(2)}</td>
+            <td>${((r.pa||0)*100).toFixed(1)}%</td>
+            <td>${(r.momentum||0).toFixed(1)}</td>
+            <td>${(r.strength||0).toFixed(1)}</td>
+            <td>${r.trend || '→'}</td>
+          </tr>`).join('');
+        const top = data.top;
+        const snapshot = top ? `
+          <div class="p-2 rounded mb-2" style="background:rgba(0,191,255,.08);">
+            <div class="d-flex justify-content-between align-items-center">
+              <strong>#1 ${top.name}</strong>
+              <span class="badge badge-outline">Rating ${top.rating.toFixed(1)}</span>
+            </div>
+            <div class="text-secondary small">Win% ${(top.win_pct*100).toFixed(1)}% | PPM ${(top.ppm||0).toFixed(2)} | PA ${((top.pa||0)*100).toFixed(1)}%</div>
+            <div class="text-secondary small">Momentum ${(top.momentum||0).toFixed(1)} | Strength ${(top.strength||0).toFixed(1)}</div>
+          </div>` : '';
+        powerResult.innerHTML = `
+          ${snapshot}
+          <div class="table-responsive">
+            <table class="table table-dark table-sm align-middle mb-0">
+              <thead><tr><th>#</th><th>Name</th><th>Rating</th><th>Win%</th><th>PPM</th><th>PA%</th><th>Momentum</th><th>Strength</th><th>Trend</th></tr></thead>
+              <tbody>${rows || '<tr><td colspan="9" class="text-secondary small">No rankings</td></tr>'}</tbody>
+            </table>
+          </div>`;
+      } catch (err) {
+        powerResult.innerHTML = `<div class="text-danger small">Power rankings failed.</div>`;
+      } finally {
+        if (btn) { btn.disabled = false; btn.innerText = 'Generate Rankings'; }
+      }
+    });
+  }
+
+  // Opponent Scout
+  const oppForm = document.getElementById('oppForm');
+  const oppResult = document.getElementById('oppResult');
+  if (oppForm && oppResult) {
+    oppForm.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const formData = new FormData(oppForm);
+      const btn = oppForm.querySelector('button[type="submit"]');
+      if (btn) { btn.disabled = true; btn.innerText = 'Loading...'; }
+      try {
+        const res = await fetch('/lab/oppscout', { method: 'POST', body: formData });
+        const data = await res.json();
+        if (!res.ok || data.error) throw new Error(data.error || 'Error');
+        const rosterRows = (data.roster || []).map(p => `
+          <tr class="${data.top?.some(tp => tp.id===p.id) ? 'table-success' : (data.weak?.some(w => w.id===p.id) ? 'table-danger' : '')}">
+            <td>${p.name}</td><td>${p.sl}</td><td>${p.ppm.toFixed(2)}</td><td>${(p.win_pct*100).toFixed(1)}%</td><td>${(p.pa*100).toFixed(1)}%</td>
+          </tr>`).join('');
+        const dist = data.distribution || {};
+        const warnings = (data.warnings || []).map(w => `<li>${w}</li>`).join('');
+        oppResult.innerHTML = `
+          <div class="p-2 rounded" style="background:rgba(0,191,255,.08);">
+            <div class="d-flex justify-content-between align-items-center">
+              <strong>${data.snapshot.name || ''}</strong>
+              <span class="badge badge-outline">Rating snapshot</span>
+            </div>
+            <div class="text-secondary small">Rank ${data.snapshot.rank || '-'} | Points ${data.snapshot.points || 0} | PPM ${ (data.snapshot.avg_ppm||0).toFixed(2)} | PA ${(data.snapshot.avg_pa*100||0).toFixed(1)}% | Momentum ${(data.snapshot.momentum||0).toFixed(1)} (${data.snapshot.trend||''})</div>
+          </div>
+          <div class="mt-2">
+            <h6 class="text-secondary">Roster Breakdown</h6>
+            <div class="table-responsive">
+              <table class="table table-dark table-sm align-middle mb-0">
+                <thead><tr><th>Player</th><th>SL</th><th>PPM</th><th>Win%</th><th>PA%</th></tr></thead>
+                <tbody>${rosterRows || '<tr><td colspan="5" class="text-secondary small">No roster data</td></tr>'}</tbody>
+              </table>
+            </div>
+          </div>
+          <div class="row g-2 mt-2">
+            <div class="col-12 col-md-6">
+              <div class="p-2 rounded" style="background:rgba(255,255,255,.04);">
+                <div class="text-secondary small">SL Distribution</div>
+                <div class="subtle">Low (=3): ${dist.low||0} | Mid (4-5): ${dist.mid||0} | High (6+): ${dist.high||0}</div>
+              </div>
+            </div>
+            <div class="col-12 col-md-6">
+              <div class="p-2 rounded" style="background:rgba(255,255,255,.04);">
+                <div class="text-secondary small">Top Performers</div>
+                <div class="subtle">${(data.top||[]).map(p=>p.name+' (SL'+p.sl+')').join(', ') || 'N/A'}</div>
+              </div>
+            </div>
+          </div>
+          <div class="row g-2 mt-2">
+            <div class="col-12 col-md-6">
+              <div class="p-2 rounded" style="background:rgba(40,167,69,.1);">
+                <div class="text-secondary small">Strengths</div>
+                <div class="subtle">High PPM core and balanced PA; momentum ${data.snapshot.trend||'Stable'}.</div>
+              </div>
+            </div>
+            <div class="col-12 col-md-6">
+              <div class="p-2 rounded" style="background:rgba(220,53,69,.1);">
+                <div class="text-secondary small">Weaknesses</div>
+                <div class="subtle">${(data.weak||[]).map(p=>p.name+' (low PPM)').join(', ') || 'Few obvious weak links.'}</div>
+              </div>
+            </div>
+          </div>
+          <div class="mt-2">
+            <h6 class="text-secondary">Matchup Warnings</h6>
+            ${(warnings ? '<ul class="small text-secondary">'+warnings+'</ul>' : '<div class="text-secondary small">No specific warnings.</div>')}
+          </div>
+        `;
+      } catch (err) {
+        oppResult.innerHTML = `<div class="text-danger small">Unable to generate report.</div>`;
+      } finally {
+        if (btn) { btn.disabled = false; btn.innerText = 'Generate Report'; }
+      }
+    });
+  }
+</script>
+{% endblock %}
+
+

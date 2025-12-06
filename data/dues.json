@@ -1,0 +1,687 @@
+{
+  "weeks": [
+    {
+      "week": 1,
+      "date": "2025-09-04",
+      "note": "",
+      "status": {
+        "Ethan Boone": {
+          "eight": "unpaid",
+          "nine": "unpaid"
+        },
+        "Arturo Rivera": {
+          "eight": "unpaid",
+          "nine": "dnp"
+        },
+        "Bryan Edwards": {
+          "eight": "unpaid",
+          "nine": "unpaid"
+        },
+        "Ivan Sanchez": {
+          "eight": "dnp",
+          "nine": "unpaid"
+        },
+        "Justin Ross": {
+          "eight": "unpaid",
+          "nine": "unpaid"
+        },
+        "Luis Sandoval": {
+          "eight": "unpaid",
+          "nine": "unpaid"
+        },
+        "Rigo Almaraz": {
+          "eight": "unpaid",
+          "nine": "unpaid"
+        },
+        "Rik Cavazos": {
+          "eight": "unpaid",
+          "nine": "unpaid"
+        },
+        "William McGinnis": {
+          "eight": "unpaid",
+          "nine": "unpaid"
+        }
+      }
+    },
+    {
+      "week": 2,
+      "date": "2025-09-11",
+      "note": "",
+      "status": {
+        "Arturo Rivera": {
+          "eight": "unpaid",
+          "nine": "dnp"
+        },
+        "Bryan Edwards": {
+          "eight": "unpaid",
+          "nine": "unpaid"
+        },
+        "Ethan Boone": {
+          "eight": "unpaid",
+          "nine": "unpaid"
+        },
+        "Ivan Sanchez": {
+          "eight": "dnp",
+          "nine": "unpaid"
+        },
+        "Justin Ross": {
+          "eight": "unpaid",
+          "nine": "unpaid"
+        },
+        "Luis Sandoval": {
+          "eight": "unpaid",
+          "nine": "unpaid"
+        },
+        "Rigo Almaraz": {
+          "eight": "unpaid",
+          "nine": "unpaid"
+        },
+        "Rik Cavazos": {
+          "eight": "unpaid",
+          "nine": "unpaid"
+        },
+        "William McGinnis": {
+          "eight": "unpaid",
+          "nine": "unpaid"
+        }
+      }
+    },
+    {
+      "week": 3,
+      "date": "2025-09-18",
+      "note": "",
+      "status": {
+        "Arturo Rivera": {
+          "eight": "unpaid",
+          "nine": "dnp"
+        },
+        "Bryan Edwards": {
+          "eight": "unpaid",
+          "nine": "unpaid"
+        },
+        "Ethan Boone": {
+          "eight": "unpaid",
+          "nine": "unpaid"
+        },
+        "Ivan Sanchez": {
+          "eight": "dnp",
+          "nine": "unpaid"
+        },
+        "Justin Ross": {
+          "eight": "unpaid",
+          "nine": "unpaid"
+        },
+        "Luis Sandoval": {
+          "eight": "unpaid",
+          "nine": "unpaid"
+        },
+        "Rigo Almaraz": {
+          "eight": "unpaid",
+          "nine": "unpaid"
+        },
+        "Rik Cavazos": {
+          "eight": "unpaid",
+          "nine": "unpaid"
+        },
+        "William McGinnis": {
+          "eight": "unpaid",
+          "nine": "unpaid"
+        }
+      }
+    },
+    {
+      "week": 4,
+      "date": "2025-09-25",
+      "note": "",
+      "status": {
+        "Arturo Rivera": {
+          "eight": "unpaid",
+          "nine": "dnp"
+        },
+        "Bryan Edwards": {
+          "eight": "unpaid",
+          "nine": "unpaid"
+        },
+        "Ethan Boone": {
+          "eight": "unpaid",
+          "nine": "unpaid"
+        },
+        "Ivan Sanchez": {
+          "eight": "dnp",
+          "nine": "unpaid"
+        },
+        "Justin Ross": {
+          "eight": "unpaid",
+          "nine": "unpaid"
+        },
+        "Luis Sandoval": {
+          "eight": "unpaid",
+          "nine": "unpaid"
+        },
+        "Rigo Almaraz": {
+          "eight": "unpaid",
+          "nine": "unpaid"
+        },
+        "Rik Cavazos": {
+          "eight": "unpaid",
+          "nine": "unpaid"
+        },
+        "William McGinnis": {
+          "eight": "unpaid",
+          "nine": "unpaid"
+        }
+      }
+    },
+    {
+      "week": 5,
+      "date": "2025-10-02",
+      "note": "",
+      "status": {
+        "Arturo Rivera": {
+          "eight": "unpaid",
+          "nine": "dnp"
+        },
+        "Bryan Edwards": {
+          "eight": "unpaid",
+          "nine": "unpaid"
+        },
+        "Ethan Boone": {
+          "eight": "unpaid",
+          "nine": "unpaid"
+        },
+        "Ivan Sanchez": {
+          "eight": "dnp",
+          "nine": "unpaid"
+        },
+        "Justin Ross": {
+          "eight": "unpaid",
+          "nine": "unpaid"
+        },
+        "Luis Sandoval": {
+          "eight": "unpaid",
+          "nine": "unpaid"
+        },
+        "Rigo Almaraz": {
+          "eight": "unpaid",
+          "nine": "unpaid"
+        },
+        "Rik Cavazos": {
+          "eight": "unpaid",
+          "nine": "unpaid"
+        },
+        "William McGinnis": {
+          "eight": "unpaid",
+          "nine": "unpaid"
+        }
+      }
+    },
+    {
+      "week": 6,
+      "date": "2025-10-09",
+      "note": "",
+      "status": {
+        "Arturo Rivera": {
+          "eight": "unpaid",
+          "nine": "dnp"
+        },
+        "Bryan Edwards": {
+          "eight": "unpaid",
+          "nine": "unpaid"
+        },
+        "Ethan Boone": {
+          "eight": "unpaid",
+          "nine": "unpaid"
+        },
+        "Ivan Sanchez": {
+          "eight": "dnp",
+          "nine": "unpaid"
+        },
+        "Justin Ross": {
+          "eight": "unpaid",
+          "nine": "unpaid"
+        },
+        "Luis Sandoval": {
+          "eight": "unpaid",
+          "nine": "unpaid"
+        },
+        "Rigo Almaraz": {
+          "eight": "unpaid",
+          "nine": "unpaid"
+        },
+        "Rik Cavazos": {
+          "eight": "unpaid",
+          "nine": "unpaid"
+        },
+        "William McGinnis": {
+          "eight": "unpaid",
+          "nine": "unpaid"
+        }
+      }
+    },
+    {
+      "week": 7,
+      "date": "2025-10-16",
+      "note": "",
+      "status": {
+        "Arturo Rivera": {
+          "eight": "unpaid",
+          "nine": "dnp"
+        },
+        "Bryan Edwards": {
+          "eight": "unpaid",
+          "nine": "unpaid"
+        },
+        "Ethan Boone": {
+          "eight": "unpaid",
+          "nine": "unpaid"
+        },
+        "Ivan Sanchez": {
+          "eight": "dnp",
+          "nine": "unpaid"
+        },
+        "Justin Ross": {
+          "eight": "unpaid",
+          "nine": "unpaid"
+        },
+        "Luis Sandoval": {
+          "eight": "unpaid",
+          "nine": "unpaid"
+        },
+        "Rigo Almaraz": {
+          "eight": "unpaid",
+          "nine": "unpaid"
+        },
+        "Rik Cavazos": {
+          "eight": "unpaid",
+          "nine": "unpaid"
+        },
+        "William McGinnis": {
+          "eight": "unpaid",
+          "nine": "unpaid"
+        }
+      }
+    },
+    {
+      "week": 8,
+      "date": "2025-10-23",
+      "note": "",
+      "status": {
+        "Arturo Rivera": {
+          "eight": "unpaid",
+          "nine": "dnp"
+        },
+        "Bryan Edwards": {
+          "eight": "unpaid",
+          "nine": "unpaid"
+        },
+        "Ethan Boone": {
+          "eight": "unpaid",
+          "nine": "unpaid"
+        },
+        "Ivan Sanchez": {
+          "eight": "dnp",
+          "nine": "unpaid"
+        },
+        "Justin Ross": {
+          "eight": "unpaid",
+          "nine": "unpaid"
+        },
+        "Luis Sandoval": {
+          "eight": "unpaid",
+          "nine": "unpaid"
+        },
+        "Rigo Almaraz": {
+          "eight": "unpaid",
+          "nine": "unpaid"
+        },
+        "Rik Cavazos": {
+          "eight": "unpaid",
+          "nine": "unpaid"
+        },
+        "William McGinnis": {
+          "eight": "unpaid",
+          "nine": "unpaid"
+        }
+      }
+    },
+    {
+      "week": 9,
+      "date": "2025-10-30",
+      "note": "",
+      "status": {
+        "Arturo Rivera": {
+          "eight": "unpaid",
+          "nine": "dnp"
+        },
+        "Bryan Edwards": {
+          "eight": "unpaid",
+          "nine": "unpaid"
+        },
+        "Ethan Boone": {
+          "eight": "unpaid",
+          "nine": "unpaid"
+        },
+        "Ivan Sanchez": {
+          "eight": "dnp",
+          "nine": "unpaid"
+        },
+        "Justin Ross": {
+          "eight": "unpaid",
+          "nine": "unpaid"
+        },
+        "Luis Sandoval": {
+          "eight": "unpaid",
+          "nine": "unpaid"
+        },
+        "Rigo Almaraz": {
+          "eight": "unpaid",
+          "nine": "unpaid"
+        },
+        "Rik Cavazos": {
+          "eight": "unpaid",
+          "nine": "unpaid"
+        },
+        "William McGinnis": {
+          "eight": "unpaid",
+          "nine": "unpaid"
+        }
+      }
+    },
+    {
+      "week": 10,
+      "date": "2025-11-06",
+      "note": "",
+      "status": {
+        "Arturo Rivera": {
+          "eight": "unpaid",
+          "nine": "dnp"
+        },
+        "Bryan Edwards": {
+          "eight": "unpaid",
+          "nine": "unpaid"
+        },
+        "Ethan Boone": {
+          "eight": "unpaid",
+          "nine": "unpaid"
+        },
+        "Ivan Sanchez": {
+          "eight": "dnp",
+          "nine": "unpaid"
+        },
+        "Justin Ross": {
+          "eight": "unpaid",
+          "nine": "unpaid"
+        },
+        "Luis Sandoval": {
+          "eight": "unpaid",
+          "nine": "unpaid"
+        },
+        "Rigo Almaraz": {
+          "eight": "unpaid",
+          "nine": "unpaid"
+        },
+        "Rik Cavazos": {
+          "eight": "unpaid",
+          "nine": "unpaid"
+        },
+        "William McGinnis": {
+          "eight": "unpaid",
+          "nine": "unpaid"
+        }
+      }
+    },
+    {
+      "week": 11,
+      "date": "2025-11-13",
+      "note": "",
+      "status": {
+        "Arturo Rivera": {
+          "eight": "unpaid",
+          "nine": "dnp"
+        },
+        "Bryan Edwards": {
+          "eight": "unpaid",
+          "nine": "unpaid"
+        },
+        "Ethan Boone": {
+          "eight": "unpaid",
+          "nine": "unpaid"
+        },
+        "Ivan Sanchez": {
+          "eight": "dnp",
+          "nine": "unpaid"
+        },
+        "Justin Ross": {
+          "eight": "unpaid",
+          "nine": "unpaid"
+        },
+        "Luis Sandoval": {
+          "eight": "unpaid",
+          "nine": "unpaid"
+        },
+        "Rigo Almaraz": {
+          "eight": "unpaid",
+          "nine": "unpaid"
+        },
+        "Rik Cavazos": {
+          "eight": "unpaid",
+          "nine": "unpaid"
+        },
+        "William McGinnis": {
+          "eight": "unpaid",
+          "nine": "unpaid"
+        }
+      }
+    },
+    {
+      "week": 12,
+      "date": "2025-11-20",
+      "note": "",
+      "status": {
+        "Arturo Rivera": {
+          "eight": "unpaid",
+          "nine": "dnp"
+        },
+        "Bryan Edwards": {
+          "eight": "unpaid",
+          "nine": "unpaid"
+        },
+        "Ethan Boone": {
+          "eight": "unpaid",
+          "nine": "unpaid"
+        },
+        "Ivan Sanchez": {
+          "eight": "dnp",
+          "nine": "unpaid"
+        },
+        "Justin Ross": {
+          "eight": "unpaid",
+          "nine": "unpaid"
+        },
+        "Luis Sandoval": {
+          "eight": "unpaid",
+          "nine": "unpaid"
+        },
+        "Rigo Almaraz": {
+          "eight": "unpaid",
+          "nine": "unpaid"
+        },
+        "Rik Cavazos": {
+          "eight": "unpaid",
+          "nine": "unpaid"
+        },
+        "William McGinnis": {
+          "eight": "unpaid",
+          "nine": "unpaid"
+        }
+      }
+    },
+    {
+      "week": 14,
+      "date": "2025-12-04",
+      "note": "",
+      "status": {
+        "Arturo Rivera": {
+          "eight": "unpaid",
+          "nine": "dnp"
+        },
+        "Bryan Edwards": {
+          "eight": "unpaid",
+          "nine": "unpaid"
+        },
+        "Ethan Boone": {
+          "eight": "unpaid",
+          "nine": "unpaid"
+        },
+        "Ivan Sanchez": {
+          "eight": "dnp",
+          "nine": "unpaid"
+        },
+        "Justin Ross": {
+          "eight": "unpaid",
+          "nine": "unpaid"
+        },
+        "Luis Sandoval": {
+          "eight": "unpaid",
+          "nine": "unpaid"
+        },
+        "Rigo Almaraz": {
+          "eight": "unpaid",
+          "nine": "unpaid"
+        },
+        "Rik Cavazos": {
+          "eight": "unpaid",
+          "nine": "unpaid"
+        },
+        "William McGinnis": {
+          "eight": "unpaid",
+          "nine": "unpaid"
+        }
+      }
+    },
+    {
+      "week": 15,
+      "date": "2025-12-11",
+      "note": "",
+      "status": {
+        "Arturo Rivera": {
+          "eight": "unpaid",
+          "nine": "dnp"
+        },
+        "Bryan Edwards": {
+          "eight": "unpaid",
+          "nine": "unpaid"
+        },
+        "Ethan Boone": {
+          "eight": "unpaid",
+          "nine": "unpaid"
+        },
+        "Ivan Sanchez": {
+          "eight": "dnp",
+          "nine": "unpaid"
+        },
+        "Justin Ross": {
+          "eight": "unpaid",
+          "nine": "unpaid"
+        },
+        "Luis Sandoval": {
+          "eight": "unpaid",
+          "nine": "unpaid"
+        },
+        "Rigo Almaraz": {
+          "eight": "unpaid",
+          "nine": "unpaid"
+        },
+        "Rik Cavazos": {
+          "eight": "unpaid",
+          "nine": "unpaid"
+        },
+        "William McGinnis": {
+          "eight": "unpaid",
+          "nine": "unpaid"
+        }
+      }
+    },
+    {
+      "week": 16,
+      "date": "2025-12-18",
+      "note": "",
+      "status": {
+        "Arturo Rivera": {
+          "eight": "unpaid",
+          "nine": "unpaid"
+        },
+        "Bryan Edwards": {
+          "eight": "unpaid",
+          "nine": "unpaid"
+        },
+        "Ethan Boone": {
+          "eight": "unpaid",
+          "nine": "unpaid"
+        },
+        "Ivan Sanchez": {
+          "eight": "dnp",
+          "nine": "unpaid"
+        },
+        "Justin Ross": {
+          "eight": "unpaid",
+          "nine": "unpaid"
+        },
+        "Luis Sandoval": {
+          "eight": "unpaid",
+          "nine": "unpaid"
+        },
+        "Rigo Almaraz": {
+          "eight": "unpaid",
+          "nine": "unpaid"
+        },
+        "Rik Cavazos": {
+          "eight": "unpaid",
+          "nine": "unpaid"
+        },
+        "William McGinnis": {
+          "eight": "unpaid",
+          "nine": "unpaid"
+        }
+      }
+    }
+  ],
+  "players": {
+    "Justin Ross": {
+      "paid8": true,
+      "paid9": true
+    },
+    "William McGinnis": {
+      "paid8": true,
+      "paid9": true
+    },
+    "Rigo Almaraz": {
+      "paid8": true,
+      "paid9": true
+    },
+    "Rik Cavazos": {
+      "paid8": true,
+      "paid9": true
+    },
+    "Ethan Boone": {
+      "paid8": true,
+      "paid9": true
+    },
+    "Bryan Edwards": {
+      "paid8": true,
+      "paid9": true
+    },
+    "Luis Sandoval": {
+      "paid8": true,
+      "paid9": true
+    },
+    "Arturo Rivera": {
+      "paid8": true,
+      "paid9": true
+    },
+    "Ivan Sanchez": {
+      "paid8": true,
+      "paid9": true
+    }
+  }
+}

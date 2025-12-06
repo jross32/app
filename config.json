@@ -1,0 +1,7 @@
+{
+  "developer_mode": false,
+  "data_file": "league_data_final_week11.json"
+}
+
+// NOTE: When changing the data file or schema, also update the mapping guide:
+// see data/api_dump_v2_mapping.md

@@ -1,0 +1,34 @@
+# APA Team Manager - APA Rules & Scoring Reference
+
+## 8-Ball Scoring (Division-Specific)
+- If a player is **on the hill** (one game away from winning) and wins, they earn **2 points** for their team.
+- If a player is on the hill and loses, they earn **1 point** for their team.
+- If a player wins and the opponent does **not win a single game**, the winner gets **3 points** for their team, the loser gets **0**.
+- The loser always gets **0** unless they are on the hill (then they get 1 point).
+
+## 9-Ball Scoring
+- Standard APA 9-ball scoring applies (see team manual for details).
+
+## Bonus Points
+- **Bonus points** are awarded for completing dues and paperwork on time:
+  - **+3 points** for 8-ball
+  - **+15 points** for 9-ball
+- These bonuses are already reflected in the final match scores in the data.
+- In real matches, if your team gets 7 points in 8-ball, you may actually be awarded 7+3=10 points.
+
+## General APA Team Rules (from Team Manual)
+- Team rosters, match schedules, and standings are managed per APA guidelines.
+- Dues must be paid weekly and on time to avoid penalties.
+- All players must be registered and have valid skill levels.
+- Forfeits, substitutions, and match reschedules must follow APA policy.
+- Sportsmanship and league etiquette are required at all times.
+- For full rules, see the official team manual: `data/team-manual-english.pdf`.
+
+## Using This App
+- Use the dashboard to track standings, dues, and schedule.
+- Roster and player stats are updated weekly.
+- Admins can upload new data files via the Admin Panel (password required).
+- All data is validated for APA compliance and integrity.
+
+---
+For more details, consult the full team manual PDF in the `data` folder.

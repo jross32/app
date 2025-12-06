@@ -1,0 +1,43 @@
+{% extends 'base.html' %}
+{% block title %}Get Started | Cüe-Ligans{% endblock %}
+{% block content %}
+<div class="container py-5" style="max-width: 720px;">
+  <div class="card bg-dark soft-border shadow-soft">
+    <div class="card-body">
+      <div class="d-flex align-items-center mb-3">
+        <div class="hero-badge me-3"><i class="fa-solid fa-handshake-angle"></i><span>Welcome</span></div>
+        <div>
+          <div class="h5 text-info mb-1">Thanks for being a Cue-Ligan!</div>
+          <div class="text-secondary small">Jump into the Locker, set your profile, and explore the tools.</div>
+        </div>
+      </div>
+      <div class="text-secondary mb-3">
+        <p class="mb-2">Nicknames: change them anytime in Profile settings (we’ll still remember your history). If you have a player link, set your player so stats, patches, and match history line up automatically.</p>
+        <p class="mb-0">Pick a channel, say hi, and check the tools below.</p>
+      </div>
+
+      <div class="d-flex flex-wrap gap-2 mb-3">
+        <a class="btn btn-info text-dark fw-bold" href="{{ url_for('locker') }}">Go to Locker</a>
+        {% if current_user %}
+        <a class="btn btn-outline-info" href="{{ url_for('profile_detail', username=current_user.username) }}">Profile settings</a>
+        <a class="btn btn-outline-info" href="{{ url_for('lab') }}">Open LAB</a>
+        {% endif %}
+      </div>
+
+      <div class="list-group small text-secondary">
+        <div class="list-group-item bg-dark text-light border-secondary">
+          <div class="fw-semibold text-info mb-1">Quick tour</div>
+          <ul class="mb-0 ps-3">
+            <li>Dashboard: hero card, week/next-game pills, division cards, trends.</li>
+            <li>Standings / Schedule: clean tables, APA-style dates, bye/holiday callouts.</li>
+            <li>Locker: channels, DMs, profile pics, badges, and team threads.</li>
+            <li>Profiles: player card, match history modal, patches/badges, theme song, backgrounds, avatar cropping.</li>
+            <li>LAB: Matchup Predictor, Simulation, Lineup Optimizer, Player Trends, Win Probability, Race Calculator, Momentum, Points Projection, Power Rankings, Vegas Path, and more.</li>
+            <li>Dues: track weekly payments, statuses, and outstanding totals.</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

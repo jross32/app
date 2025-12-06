@@ -1,0 +1,95 @@
+[
+  {"week": 1, "date": "2025-09-04", "matches": [
+    {"home": "Chalk and Awe", "away": "Cue-ligans", "venue": "DK's Stix & Stuff"},
+    {"home": "Palochones", "away": "Ballerz 956", "venue": "The Lucky Barrel"},
+    {"home": "Dead On", "away": "Sour Patch Kids", "venue": "DK's Stix & Stuff"},
+    {"home": "Quete Importa", "away": "Bad Boys", "venue": "The Lucky Barrel"}
+  ]},
+  {"week": 2, "date": "2025-09-11", "matches": [
+    {"home": "Cue-ligans", "away": "Bad Boys", "venue": "DK's Stix & Stuff"},
+    {"home": "Chalk and Awe", "away": "Dead On", "venue": "DK's Stix & Stuff"},
+    {"home": "Sour Patch Kids", "away": "Palochones", "venue": "The Lucky Barrel"},
+    {"home": "Quete Importa", "away": "Ballerz 956", "venue": "The Lucky Barrel"}
+  ]},
+  {"week": 3, "date": "2025-09-18", "matches": [
+    {"home": "Palochones", "away": "Cue-ligans", "venue": "The Lucky Barrel"},
+    {"home": "Dead On", "away": "Chalk and Awe", "venue": "DK's Stix & Stuff"},
+    {"home": "Sour Patch Kids", "away": "Quete Importa", "venue": "The Lucky Barrel"},
+    {"home": "Bad Boys", "away": "Ballerz 956", "venue": "The Lucky Barrel"}
+  ]},
+  {"week": 4, "date": "2025-09-25", "matches": [
+    {"home": "Sour Patch Kids", "away": "Cue-ligans", "venue": "The Lucky Barrel"},
+    {"home": "Palochones", "away": "Dead On", "venue": "The Lucky Barrel"},
+    {"home": "Chalk and Awe", "away": "Bad Boys", "venue": "DK's Stix & Stuff"},
+    {"home": "Quete Importa", "away": "Ballerz 956", "venue": "The Lucky Barrel"}
+  ]},
+  {"week": 5, "date": "2025-10-02", "matches": [
+    {"home": "Chalk and Awe", "away": "Cue-ligans", "venue": "DK's Stix & Stuff"},
+    {"home": "Palochones", "away": "Ballerz 956", "venue": "The Lucky Barrel"},
+    {"home": "Dead On", "away": "Sour Patch Kids", "venue": "DK's Stix & Stuff"},
+    {"home": "Quete Importa", "away": "Bad Boys", "venue": "The Lucky Barrel"}
+  ]},
+  {"week": 6, "date": "2025-10-09", "matches": [
+    {"home": "Cue-ligans", "away": "Bad Boys", "venue": "DK's Stix & Stuff"},
+    {"home": "Chalk and Awe", "away": "Dead On", "venue": "DK's Stix & Stuff"},
+    {"home": "Sour Patch Kids", "away": "Palochones", "venue": "The Lucky Barrel"},
+    {"home": "Quete Importa", "away": "Ballerz 956", "venue": "The Lucky Barrel"}
+  ]},
+  {"week": 7, "date": "2025-10-16", "matches": [
+    {"home": "Palochones", "away": "Cue-ligans", "venue": "The Lucky Barrel"},
+    {"home": "Dead On", "away": "Chalk and Awe", "venue": "DK's Stix & Stuff"},
+    {"home": "Sour Patch Kids", "away": "Quete Importa", "venue": "The Lucky Barrel"},
+    {"home": "Bad Boys", "away": "Ballerz 956", "venue": "The Lucky Barrel"}
+  ]},
+  {"week": 8, "date": "2025-10-23", "matches": [
+    {"home": "Sour Patch Kids", "away": "Cue-ligans", "venue": "The Lucky Barrel"},
+    {"home": "Palochones", "away": "Dead On", "venue": "The Lucky Barrel"},
+    {"home": "Chalk and Awe", "away": "Bad Boys", "venue": "DK's Stix & Stuff"},
+    {"home": "Quete Importa", "away": "Ballerz 956", "venue": "The Lucky Barrel"}
+  ]},
+  {"week": 9, "date": "2025-10-30", "matches": [
+    {"home": "Chalk and Awe", "away": "Dead On", "venue": "DK's Stix & Stuff"},
+    {"home": "Bad Boys", "away": "Quete Importa", "venue": "The Lucky Barrel"},
+    {"home": "Palochones", "away": "Sour Patch Kids", "venue": "The Lucky Barrel"},
+    {"home": "Ballerz 956", "away": "Cue-ligans", "venue": "The Lucky Barrel"}
+  ]},
+  {"week": 10, "date": "2025-11-06", "matches": [
+    {"home": "Dead On", "away": "Palochones", "venue": "The Lucky Barrel"},
+    {"home": "Chalk and Awe", "away": "Bad Boys", "venue": "DK's Stix & Stuff"},
+    {"home": "Quete Importa", "away": "Ballerz 956", "venue": "The Lucky Barrel"},
+    {"home": "Sour Patch Kids", "away": "Cue-ligans", "venue": "The Lucky Barrel"}
+  ]},
+  {"week": 11, "date": "2025-11-13", "matches": [
+    {"home": "Chalk and Awe", "away": "Cue-ligans", "venue": "DK's Stix & Stuff"},
+    {"home": "Bad Boys", "away": "Sour Patch Kids", "venue": "The Lucky Barrel"},
+    {"home": "Palochones", "away": "Quete Importa", "venue": "The Lucky Barrel"},
+    {"home": "Ballerz 956", "away": "Dead On", "venue": "The Lucky Barrel"}
+  ]},
+  {"week": 12, "date": "2025-11-20", "matches": [
+    {"home": "Dead On", "away": "Sour Patch Kids", "venue": "The Lucky Barrel"},
+    {"home": "Chalk and Awe", "away": "Palochones", "venue": "The Lucky Barrel"},
+    {"home": "Bad Boys", "away": "Ballerz 956", "venue": "DK's Stix & Stuff"},
+    {"home": "Cue-ligans", "away": "Quete Importa", "venue": "The Lucky Barrel"}
+  ]},
+  {"week": 13, "date": "2025-11-27", "matches": [] , "note": "No Play - Thanksgiving" },
+  {"week": 14, "date": "2025-12-04", "matches": [
+    {"home": "Dead On", "away": "Bad Boys", "venue": "The Lucky Barrel"},
+    {"home": "Chalk and Awe", "away": "Ballerz 956", "venue": "DK's Stix & Stuff"},
+    {"home": "Quete Importa", "away": "Palochones", "venue": "The Lucky Barrel"},
+    {"home": "Sour Patch Kids", "away": "Cue-ligans", "venue": "The Lucky Barrel"}
+  ]},
+  {"week": 15, "date": "2025-12-11", "matches": [
+    {"home": "Dead On", "away": "Chalk and Awe", "venue": "DK's Stix & Stuff"},
+    {"home": "Bad Boys", "away": "Quete Importa", "venue": "The Lucky Barrel"},
+    {"home": "Palochones", "away": "Sour Patch Kids", "venue": "The Lucky Barrel"},
+    {"home": "Cue-ligans", "away": "Ballerz 956", "venue": "The Lucky Barrel"}
+  ]},
+  {"week": 16, "date": "2025-12-18", "matches": [
+    {"home": "Chalk and Awe", "away": "Cue-ligans", "venue": "DK's Stix & Stuff"},
+    {"home": "Bad Boys", "away": "Dead On", "venue": "The Lucky Barrel"},
+    {"home": "Palochones", "away": "Quete Importa", "venue": "The Lucky Barrel"},
+    {"home": "Sour Patch Kids", "away": "Ballerz 956", "venue": "DK's Stix & Stuff"}
+  ]},
+  {"week": 17, "date": "2025-12-25", "matches": [] , "note": "No Play - Christmas" },
+  {"week": 18, "date": "2026-01-01", "matches": [] , "note": "No Play - New Year's / Playoff Week" }
+]

@@ -1,0 +1,312 @@
+{% extends 'base.html' %}
+{% block content %}
+<style>
+  .schedule-hero {
+    background: radial-gradient(circle at 15% 20%, #0d2942 0, #081728 45%, #060f1b 100%);
+    border: 1px solid rgba(0, 191, 255, 0.25);
+    box-shadow: 0 10px 40px #00bfff17, 0 0 0 1px #00bfff22;
+    border-radius: 18px;
+    padding: 18px 22px;
+  }
+  .chip {
+    border-radius: 999px;
+    padding: 0.25rem 0.7rem;
+    font-size: 0.8rem;
+    font-weight: 600;
+    border: 1px solid rgba(255,255,255,0.15);
+    color: #b8eaff;
+    background: rgba(255,255,255,0.06);
+  }
+  .chip-note { border-color: rgba(255,215,0,0.5); color: #ffd700; background: rgba(255,215,0,0.08); }
+  /* cue-ligans specific chip removed */
+  .chip-bye { border-color: rgba(255,99,71,0.5); background: rgba(255,99,71,0.12); color: #ffb5a1; }
+  .week-card { border: 1px solid rgba(255,255,255,0.08); }
+  .match-row { transition: all 0.2s ease; }
+  .match-row:hover { background: rgba(0,191,255,0.08)!important; box-shadow: inset 0 0 0 1px #00bfff33; }
+  .timeline-dot { width: 12px; height: 12px; border-radius: 50%; background: #0dd0ff; box-shadow: 0 0 0 3px rgba(13,208,255,0.18); }
+  .date-box {
+    display: inline-flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 0.2rem 0.6rem;
+    border-radius: 10px;
+    border: 1px solid rgba(0,191,255,0.4);
+    background: linear-gradient(135deg, rgba(0,191,255,0.16), rgba(0,191,255,0.05));
+    min-width: 60px;
+  }
+  .date-box .month { text-transform: capitalize; font-weight: 700; color: #bfeeff; letter-spacing: 0.5px; }
+  .date-box .day { font-size: 1.15rem; font-weight: 800; color: #e8f8ff; line-height: 1; }
+</style>
+
+<div class="container py-4">
+  <div class="schedule-hero mb-4">
+    <div class="d-flex flex-column flex-md-row justify-content-between align-items-md-center gap-3">
+      <div>
+        <div class="text-uppercase subtle small">Rio Grande Valley APA</div>
+        <h2 class="fw-bold mb-1">Weekly Schedule</h2>
+        <div class="text-secondary">Upcoming, past, bye weeks, and playoffs at a glance.</div>
+      </div>
+      <div class="d-flex gap-2 flex-wrap">
+        <span class="chip chip-cue"><i class="fa-solid fa-clock me-1"></i> Thursday @ 8PM</span>
+        <span class="chip chip-bye"><i class="fa-solid fa-bed me-1"></i> No play / bye</span>
+        <span class="chip chip-note"><i class="fa-solid fa-trophy me-1"></i> Playoffs or special</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="d-flex gap-2 mb-3">
+    <button class="btn btn-outline-info btn-sm filter-btn active" data-filter="upcoming">Upcoming only</button>
+    <button class="btn btn-outline-secondary btn-sm filter-btn" data-filter="past">Past only</button>
+    <button class="btn btn-outline-light btn-sm filter-btn" data-filter="all">Show all</button>
+  </div>
+
+  <div class="accordion" id="scheduleAccordion">
+    {% for week in schedule %}
+      {# Opponent badge removed per request; keep data in case needed later #}
+      {% set cue_matches = (week.matches | selectattr('home', 'equalto', 'Cue-ligans') | list) + (week.matches | selectattr('away', 'equalto', 'Cue-ligans') | list) %}
+      {% set cue_match = cue_matches[0] if cue_matches else None %}
+      {% set cue_is_away = cue_match and cue_match.away == 'Cue-ligans' %}
+      {% set has_matches = week.matches and (week.matches|length) %}
+      {% set is_bye = not has_matches %}
+      {% set is_past = (week.status == 'played') %}
+      <div class="accordion-item mb-2 week-card {% if is_past %}schedule-past{% else %}schedule-upcoming{% endif %}" data-status="{{ week.status }}">
+        <h2 class="accordion-header" id="heading{{ week.week }}">
+          <button class="accordion-button bg-dark text-light collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse{{ week.week }}" aria-expanded="false" aria-controls="collapse{{ week.week }}">
+            <div class="d-flex align-items-center gap-2 w-100">
+              <span class="timeline-dot"></span>
+              <span class="fw-bold">Week {{ week.week }}</span>
+              {% if week.status == 'played' %}<span class="chip chip-note"><i class="fa-solid fa-flag-checkered me-1"></i>Played</span>{% endif %}
+              {% if is_bye %}<span class="chip chip-bye">No play</span>{% endif %}
+              {% if week.note %}<span class="chip chip-note">{{ week.note }}</span>{% endif %}
+              {% if cue_is_away %}<span class="badge bg-warning text-dark"><i class="fa-solid fa-car me-1"></i>Away</span>{% endif %}
+              <span class="ms-auto date-box" data-date="{{ week.date }}">
+                <span class="month">---</span>
+                <span class="day">--</span>
+              </span>
+            </div>
+          </button>
+        </h2>
+        <div id="collapse{{ week.week }}" class="accordion-collapse collapse" aria-labelledby="heading{{ week.week }}" data-bs-parent="#scheduleAccordion">
+          <div class="accordion-body">
+            {% if not has_matches %}
+              <div class="text-center py-3 text-warning">
+                <i class="fa-solid fa-circle-info me-2"></i>{{ week.note or "No scheduled matches this week." }}
+              </div>
+            {% elif week.status != 'played' %}
+              <div class="table-responsive">
+                <table class="table table-dark table-striped mb-0 align-middle">
+                  <thead>
+                    <tr>
+                      <th class="text-start ps-3">Matchup</th>
+                      <th>Venue</th>
+                      <th style="width:120px;">Format</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {% for match in week.matches %}
+                      {% set is_cue = match.home == 'Cue-ligans' or match.away == 'Cue-ligans' %}
+                      <tr class="match-row">
+                        <td class="text-start ps-3">
+                          <span class="fw-semibold">{{ match.home }}</span>
+                          <span class="text-secondary">vs</span>
+                          <span class="fw-semibold">{{ match.away }}</span>
+                        </td>
+                        <td>{{ match.venue or 'TBD' }}</td>
+                        <td><span class="badge bg-info text-dark">8 & 9</span></td>
+                      </tr>
+                    {% endfor %}
+                  </tbody>
+                </table>
+              </div>
+            {% endif %}
+            {% if week.results %}
+            <div class="mt-3">
+              <div class="d-flex flex-wrap align-items-center gap-2 mb-2">
+                <div class="d-flex align-items-center gap-2">
+                  <i class="fa-solid fa-flag-checkered text-warning"></i>
+                  <span class="fw-semibold">Results</span>
+                </div>
+                <div class="ms-auto d-flex gap-2 flex-wrap">
+                  <button class="btn btn-outline-info btn-sm result-filter active" data-filter="all">All</button>
+                  <button class="btn btn-outline-light btn-sm result-filter" data-filter="8-ball">8-Ball</button>
+                  <button class="btn btn-outline-light btn-sm result-filter" data-filter="9-ball">9-Ball</button>
+                </div>
+              </div>
+              {% set has_scores = week.results | selectattr('home_total','none') | list | length < week.results|length %}
+              {% if not has_scores %}
+                <div class="text-secondary">Scores not available yet for this week.</div>
+              {% else %}
+                <div class="row g-3">
+                  {% for res in week.results %}
+                  {% set is_cue = res.home|lower == 'cue ligans' or res.away|lower == 'cue ligans' %}
+                  {% set home_total = res.home_total %}
+                  {% set away_total = res.away_total %}
+                  {% set winner = 'home' if (home_total is number and away_total is number and home_total > away_total) else 'away' if (home_total is number and away_total is number and away_total > home_total) else 'tie' %}
+                  <div class="col-12 col-md-6">
+                    <div class="card bg-dark border-secondary h-100 result-card" role="button"
+                         data-match='{{ res | tojson | e }}' data-format="{{ res.format|lower }}">
+                      <div class="card-body">
+                        <div class="d-flex justify-content-between align-items-center mb-1">
+                          <span class="badge bg-info text-dark text-uppercase">{{ res.format }}</span>
+                          <span class="text-secondary small">{{ res.date or week.date }}</span>
+                        </div>
+                        <div class="d-flex justify-content-between align-items-center">
+                          <div class="fw-semibold {% if winner == 'home' %}text-warning{% endif %}">{{ res.home }}</div>
+                          <div class="display-6 m-0">{{ home_total if home_total is not none else '—' }}</div>
+                        </div>
+                        <div class="d-flex justify-content-between align-items-center mt-1">
+                          <div class="fw-semibold {% if winner == 'away' %}text-warning{% endif %}">{{ res.away }}</div>
+                          <div class="display-6 m-0">{{ away_total if away_total is not none else '—' }}</div>
+                        </div>
+                        {% if res.top_scorers %}
+                        <div class="mt-2">
+                          <div class="small text-secondary mb-1"><i class="fa-solid fa-chart-line me-1"></i>Top scorers</div>
+                          <div class="d-flex flex-wrap gap-1">
+                            {% for p in res.top_scorers %}
+                            <span class="chip chip-cue">{{ p.player }} <span class="text-secondary">({{ p.team }})</span> · {{ p.points }}</span>
+                            {% endfor %}
+                          </div>
+                        </div>
+                        {% endif %}
+                        <div class="mt-2 text-info small"><i class="fa-solid fa-table-list me-1"></i>Click for full board breakdown</div>
+                      </div>
+                    </div>
+                  </div>
+                  {% endfor %}
+                </div>
+              {% endif %}
+            </div>
+            {% endif %}
+          </div>
+        </div>
+      </div>
+    {% endfor %}
+  </div>
+</div>
+
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    // Format date helper like APA (month abbrev + padded day)
+    function formatMatchDate(input) {
+      const d = (input instanceof Date) ? input : new Date(input);
+      if (isNaN(d)) return { month: '---', day: '--' };
+      const months = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+      const month = months[d.getMonth()];
+      const day = String(d.getDate()).padStart(2, '0');
+      return { month, day };
+    }
+
+    // Apply formatted dates to date-box elements
+    document.querySelectorAll('.date-box[data-date]').forEach(el => {
+      const raw = el.getAttribute('data-date');
+      const { month, day } = formatMatchDate(raw);
+      const mEl = el.querySelector('.month');
+      const dEl = el.querySelector('.day');
+      if (mEl) mEl.textContent = month;
+      if (dEl) dEl.textContent = day;
+    });
+
+    const buttons = Array.from(document.querySelectorAll('.filter-btn'));
+  const cards = Array.from(document.querySelectorAll('.week-card'));
+  const resultCards = Array.from(document.querySelectorAll('.result-card'));
+  const resultFilters = Array.from(document.querySelectorAll('.result-filter'));
+  const modalEl = document.getElementById('matchModal');
+  const modal = modalEl ? new bootstrap.Modal(modalEl) : null;
+  const modalBody = modalEl ? modalEl.querySelector('.modal-body') : null;
+
+  const applyFilter = (filter) => {
+    cards.forEach(card => {
+      const isPast = card.classList.contains('schedule-past');
+      const isUpcoming = card.classList.contains('schedule-upcoming');
+        let show = true;
+        if (filter === 'past') show = isPast;
+        else if (filter === 'upcoming') show = isUpcoming;
+        card.style.display = show ? '' : 'none';
+        // If hiding a card, collapse any open accordion within it to avoid jumpiness.
+        if (!show) {
+          const collapse = card.querySelector('.accordion-collapse');
+          if (collapse && collapse.classList.contains('show')) {
+            collapse.classList.remove('show');
+          }
+        }
+    });
+  };
+
+  if (modal && modalBody) {
+    resultCards.forEach(card => {
+      card.addEventListener('click', () => {
+        const data = JSON.parse(card.getAttribute('data-match') || '{}');
+        const sets = data.sets || [];
+        modalBody.innerHTML = `
+          <div class="mb-2 d-flex justify-content-between align-items-center">
+            <div>
+              <div class="small text-secondary">${data.date || ''}</div>
+              <div class="fw-semibold">${data.home || ''} vs ${data.away || ''}</div>
+            </div>
+            <span class="badge bg-info text-dark text-uppercase">${data.format || ''}</span>
+          </div>
+          <div class="table-responsive">
+            <table class="table table-dark table-striped align-middle mb-0">
+              <thead><tr><th>Board</th><th>${data.home || 'Home'}</th><th>${data.away || 'Away'}</th><th>Score</th></tr></thead>
+              <tbody>
+                ${sets.length ? sets.map(s => `
+                  <tr>
+                    <td>#${s.order || ''}</td>
+                    <td>${s.home_player || ''} ${s.home_sl ? '(SL ' + s.home_sl + ')' : ''}</td>
+                    <td>${s.away_player || ''} ${s.away_sl ? '(SL ' + s.away_sl + ')' : ''}</td>
+                    <td>${(s.home_points ?? '—')} - ${(s.away_points ?? '—')}</td>
+                  </tr>
+                `).join('') : '<tr><td colspan="4" class="text-secondary">No per-board detail.</td></tr>'}
+              </tbody>
+            </table>
+          </div>
+        `;
+        modal.show();
+      });
+    });
+  }
+
+  buttons.forEach(btn => {
+    btn.addEventListener('click', () => {
+      buttons.forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      applyFilter(btn.dataset.filter);
+      });
+    });
+
+    const applyResultFilter = (fmt) => {
+      resultCards.forEach(card => {
+        const cf = (card.getAttribute('data-format') || '').toLowerCase();
+        const show = fmt === 'all' || cf === fmt;
+        card.closest('.col-12')?.classList.toggle('d-none', !show);
+      });
+    };
+
+    resultFilters.forEach(btn => {
+      btn.addEventListener('click', () => {
+        resultFilters.forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        applyResultFilter(btn.dataset.filter || 'all');
+      });
+    });
+
+    // Default to upcoming filter on load.
+    applyFilter('upcoming');
+    applyResultFilter('all');
+  });
+</script>
+
+<!-- Match detail modal -->
+<div class="modal fade" id="matchModal" tabindex="-1" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered modal-lg">
+    <div class="modal-content bg-dark text-light border border-info">
+      <div class="modal-header border-secondary">
+        <h5 class="modal-title"><i class="fa-solid fa-table-list me-2 text-info"></i>Match Breakdown</h5>
+        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body"></div>
+    </div>
+  </div>
+</div>
+{% endblock %}

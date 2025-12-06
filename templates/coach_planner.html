@@ -1,0 +1,473 @@
+{% extends 'base.html' %}
+{% block title %}Coach / Matchup Planner{% endblock %}
+{% block content %}
+<style>
+  .coach-hero { background: linear-gradient(135deg, #0f1a2d, #0a1120); border:1px solid rgba(0,229,255,0.2); border-radius:14px; box-shadow:0 20px 40px rgba(0,0,0,0.35); }
+  .slot-card { background: rgba(255,255,255,0.03); border:1px solid rgba(255,255,255,0.08); border-radius:10px; padding:10px; min-height:76px; }
+  .player-card { background: rgba(0,229,255,0.06); border:1px solid rgba(0,229,255,0.15); border-radius:10px; padding:10px; cursor:grab; transition:transform .1s ease, box-shadow .1s ease; }
+  .player-card:hover { transform: translateY(-2px); box-shadow:0 10px 20px rgba(0,0,0,0.35); }
+  .risk-chip { border-radius:999px; padding:0.2rem 0.6rem; font-size:0.8rem; }
+  .risk-green { background:rgba(34,197,94,0.16); color:#64f0a8; border:1px solid rgba(34,197,94,0.4); }
+  .risk-yellow { background:rgba(250,204,21,0.16); color:#ffd166; border:1px solid rgba(250,204,21,0.4); }
+  .risk-red { background:rgba(239,68,68,0.16); color:#ff7b7b; border:1px solid rgba(239,68,68,0.4); }
+  .intel-panel { background: linear-gradient(135deg, #0f172a, #0b1223); border:1px solid rgba(255,255,255,0.08); border-radius:12px; }
+  .sticky-summary { position: sticky; bottom: 10px; z-index: 5; }
+  .music-card { background: linear-gradient(145deg, #0e1627 0%, #0b111f 55%, #090e19 100%); border: 1px solid rgba(255,255,255,0.08); border-radius: 14px; box-shadow: 0 20px 38px rgba(0,0,0,0.4); }
+  .sparkline { height: 24px; }
+  .coach-tabs .nav-link.active { background: linear-gradient(135deg, #00e5ff, #7c5dff); color: #0a0f1c; }
+</style>
+<div class="coach-hero p-3 mb-3">
+  <div class="d-flex flex-wrap align-items-center justify-content-between gap-2">
+    <div class="d-flex align-items-center gap-2">
+      <span class="h5 mb-0 text-info"><i class="fa-solid fa-clipboard-list me-2"></i>Coach / Matchup Planner</span>
+      <span class="badge bg-secondary">War Room</span>
+    </div>
+    <div class="d-flex flex-wrap gap-2">
+      <a class="btn btn-sm btn-outline-info" href="#" onclick="window.print();return false;">Export PDF</a>
+      <button class="btn btn-sm btn-outline-info" type="button" id="exportTextBtn">Export Text</button>
+      <button class="btn btn-sm btn-outline-info" type="button" id="whatIfToggle">What-If Mode</button>
+    </div>
+  </div>
+  <form class="row g-2 mt-2 align-items-end" method="get">
+    <div class="col-12 col-md-3">
+      <label class="form-label text-secondary small mb-0">Format</label>
+      <select name="format" class="form-select form-select-sm bg-dark text-light">
+        {% for f in formats %}
+        <option value="{{ f }}" {% if f == selected_fmt %}selected{% endif %}>{{ f|upper }}</option>
+        {% endfor %}
+      </select>
+    </div>
+    <div class="col-12 col-md-3">
+      <label class="form-label text-secondary small mb-0">Division</label>
+      <select name="division" class="form-select form-select-sm bg-dark text-light">
+        {% for did, d in divisions %}
+        <option value="{{ did }}" {% if did == selected_div %}selected{% endif %}>{{ d.name }}</option>
+        {% endfor %}
+      </select>
+    </div>
+    <div class="col-12 col-md-3">
+      <label class="form-label text-secondary small mb-0">Week</label>
+      <select name="week" class="form-select form-select-sm bg-dark text-light">
+        {% for w in weeks %}
+        <option value="{{ w }}" {% if w == selected_week %}selected{% endif %}>{{ w }}</option>
+        {% endfor %}
+      </select>
+    </div>
+    <div class="col-12 col-md-3">
+      <label class="form-label text-secondary small mb-0">Opponent</label>
+      <select name="opponent" class="form-select form-select-sm bg-dark text-light">
+        {% for o in opponents %}
+        <option value="{{ o }}" {% if o == selected_opp %}selected{% endif %}>{{ o }}</option>
+        {% endfor %}
+      </select>
+    </div>
+    <div class="col-12 text-end">
+      <button class="btn btn-info btn-sm text-dark">Update</button>
+    </div>
+  </form>
+
+  <ul class="nav nav-pills coach-tabs mt-3" id="plannerTabs" role="tablist">
+    <li class="nav-item" role="presentation">
+      <button class="nav-link active" id="lineup-tab" data-bs-toggle="pill" data-bs-target="#lineup-panel" type="button" role="tab">Lineup Builder</button>
+    </li>
+    <li class="nav-item" role="presentation">
+      <button class="nav-link" id="insights-tab" data-bs-toggle="pill" data-bs-target="#insights-panel" type="button" role="tab">Roster &amp; Insights</button>
+    </li>
+  </ul>
+</div>
+
+<div class="tab-content">
+  <div class="tab-pane fade show active" id="lineup-panel">
+    <div class="row g-3">
+      <div class="col-12 col-lg-6">
+        <div class="card bg-dark soft-border shadow-soft h-100">
+          <div class="card-body">
+            <div class="d-flex justify-content-between align-items-center mb-2">
+              <div>
+                <div class="h6 mb-0 text-info">Your Team Lineup Builder</div>
+                <div class="text-secondary xsmall">Drag players into Match 1–5</div>
+              </div>
+              <button class="btn btn-sm btn-outline-info" id="smartSuggest">Smart Suggestions</button>
+            </div>
+            <div class="row g-2">
+              <div class="col-12 col-md-6">
+                <div class="text-secondary xsmall mb-1">Roster</div>
+                <div class="vstack gap-2" id="myRoster">
+                  {% for p in my_roster %}
+                  <div class="player-card" draggable="true" data-id="{{ p.id }}" data-name="{{ p.name }}" data-sl="{{ p.sl or '' }}" data-ppm="{{ p.stats.ppm or '' }}" data-pa="{{ p.stats.pa or '' }}" data-win="{{ p.stats.win_pct or '' }}" data-recent="{{ recent_results.get(p.id|string, [])|tojson|safe }}">
+                    <div class="d-flex justify-content-between">
+                      <span class="fw-semibold player-name">{{ p.name }}</span>
+                      <span class="pill-soft">SL {{ p.sl or '-' }}</span>
+                    </div>
+                    <div class="text-secondary xsmall">PPM {{ p.stats.ppm or '-' }} • PA {{ p.stats.pa or '-' }} • Win% {{ p.stats.win_pct or '-' }}</div>
+                    <div class="sparkline" data-recent="{{ recent_results.get(p.id|string, [])|tojson|safe }}"></div>
+                  </div>
+                  {% endfor %}
+                </div>
+              </div>
+              <div class="col-12 col-md-6">
+                <div class="text-secondary xsmall mb-1">Match Slots</div>
+                <form method="post" id="lineupForm">
+                  <div class="vstack gap-2" id="slots">
+                    {% for i in range(1,6) %}
+                    <div class="slot-card" data-slot="{{ i }}">
+                      <div class="d-flex justify-content-between align-items-center">
+                        <span class="fw-semibold">Match {{ i }}</span>
+                        <span class="risk-chip risk-neutral" id="risk-{{ i }}">Risk</span>
+                      </div>
+                      <div class="text-secondary xsmall" id="slot-label-{{ i }}">Drag a player here</div>
+                      <textarea name="note_{{ i }}" class="form-control form-control-sm bg-dark text-light mt-1 note-field" placeholder="Notes (auto-save)">{% if plan.notes %}{{ plan.notes.get('slot_'~i,'') }}{% endif %}</textarea>
+                      <input type="hidden" name="slot_{{ i }}" id="slot-input-{{ i }}" value="{{ plan.lineup[i-1] if plan.lineup else '' }}">
+                      <select class="form-select form-select-sm bg-dark text-light mt-1 opp-select" name="opp_slot_{{ i }}">
+                        <option value="">Opponent for this match (optional)</option>
+                        {% for o in opp_roster %}
+                        <option value="{{ o.id }}" {% if plan.opp_lineup and plan.opp_lineup[i-1]==o.id %}selected{% endif %}>{{ o.name }} (SL {{ o.sl or '-' }})</option>
+                        {% endfor %}
+                      </select>
+                    </div>
+                    {% endfor %}
+                  </div>
+                  <div class="sticky-summary mt-3 p-2 rounded bg-dark border border-secondary">
+                    <div class="d-flex justify-content-between">
+                      <span>Total SL:</span>
+                      <span id="totalSL">0</span>
+                    </div>
+                    <div class="text-secondary xsmall" id="ruleStatus">23-rule status</div>
+                    <div class="d-flex gap-2 mt-2">
+                      <button class="btn btn-sm btn-info text-dark" type="submit">Save lineup</button>
+                      <span class="text-secondary xsmall" id="autoSaveMsg"></span>
+                    </div>
+                  </div>
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-12 col-lg-6">
+        <div class="card bg-dark soft-border shadow-soft h-100">
+          <div class="card-body">
+            <div class="d-flex justify-content-between align-items-center mb-2">
+              <div>
+                <div class="h6 mb-0 text-info">Opponent Roster</div>
+                <div class="text-secondary xsmall">{{ selected_opp }}</div>
+              </div>
+            </div>
+            <div class="text-secondary xsmall mb-1">Roster by SL</div>
+            <div class="vstack gap-2" id="oppRoster">
+              {% for p in opp_roster %}
+              <div class="player-card" data-id="{{ p.id }}" data-name="{{ p.name }}" data-sl="{{ p.sl or '' }}" data-ppm="{{ p.stats.ppm or '' }}" data-pa="{{ p.stats.pa or '' }}" data-win="{{ p.stats.win_pct or '' }}" data-recent="{{ recent_results.get(p.id|string, [])|tojson|safe }}">
+                <div class="d-flex justify-content-between">
+                  <span class="fw-semibold player-name">{{ p.name }}</span>
+                  <span class="pill-soft">SL {{ p.sl or '-' }}</span>
+                </div>
+                <div class="text-secondary xsmall">PPM {{ p.stats.ppm or '-' }} • PA {{ p.stats.pa or '-' }} • Win% {{ p.stats.win_pct or '-' }}</div>
+                <div class="sparkline" data-recent="{{ recent_results.get(p.id|string, [])|tojson|safe }}"></div>
+              </div>
+              {% endfor %}
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="intel-panel p-3 mt-3">
+      <div class="d-flex justify-content-between align-items-center">
+        <div class="h6 mb-0 text-info">Matchup Intelligence</div>
+        <button class="btn btn-sm btn-outline-info" data-bs-toggle="collapse" data-bs-target="#intelBody">Toggle</button>
+      </div>
+      <div class="collapse show mt-2" id="intelBody">
+        <div id="intelContent" class="text-secondary small">Assign matchups to see scouting intel.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="tab-pane fade" id="insights-panel">
+    <div class="card bg-dark soft-border shadow-soft">
+      <div class="card-body">
+        <div class="d-flex justify-content-between align-items-center mb-2">
+          <div class="h6 mb-0 text-info">Roster &amp; Insights</div>
+          <div class="text-secondary xsmall">Click any player for details</div>
+        </div>
+        <div class="row g-3">
+          <div class="col-12 col-lg-6">
+            <div class="text-secondary small mb-1">Your roster</div>
+            <div class="list-group bg-transparent" id="insightsMy">
+              {% for p in my_roster %}
+              <button type="button" class="list-group-item list-group-item-action bg-dark text-light d-flex justify-content-between align-items-center insight-player" data-id="{{ p.id }}">
+                <span>{{ p.name }}</span>
+                <span class="text-secondary xsmall">SL {{ p.sl or '-' }} • PPM {{ p.stats.ppm or '-' }} • PA {{ p.stats.pa or '-' }}</span>
+              </button>
+              {% endfor %}
+            </div>
+          </div>
+          <div class="col-12 col-lg-6">
+            <div class="text-secondary small mb-1">Opponent roster</div>
+            <div class="list-group bg-transparent" id="insightsOpp">
+              {% for p in opp_roster %}
+              <button type="button" class="list-group-item list-group-item-action bg-dark text-light d-flex justify-content-between align-items-center insight-player" data-id="{{ p.id }}">
+                <span>{{ p.name }}</span>
+                <span class="text-secondary xsmall">SL {{ p.sl or '-' }} • PPM {{ p.stats.ppm or '-' }} • PA {{ p.stats.pa or '-' }}</span>
+              </button>
+              {% endfor %}
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Player detail modal -->
+<div class="modal fade" id="playerModal" tabindex="-1" aria-hidden="true">
+  <div class="modal-dialog modal-lg modal-dialog-centered">
+    <div class="modal-content bg-dark soft-border shadow-soft">
+      <div class="modal-header">
+        <div>
+          <div class="h6 mb-0 text-info" id="pmName">Player</div>
+          <div class="text-secondary xsmall" id="pmMeta"></div>
+        </div>
+        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+      </div>
+      <div class="modal-body">
+        <div class="row g-3">
+          <div class="col-12 col-md-4">
+            <div class="fw-semibold text-info">Overview</div>
+            <div class="text-secondary small" id="pmOverview"></div>
+          </div>
+          <div class="col-12 col-md-4">
+            <div class="fw-semibold text-info">Session Stats</div>
+            <div class="text-secondary small" id="pmStats"></div>
+          </div>
+          <div class="col-12 col-md-4">
+            <div class="fw-semibold text-info">Insights</div>
+            <div class="text-secondary small" id="pmInsights"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  const myRoster = {{ my_roster|tojson|safe }};
+  const oppRoster = {{ opp_roster|tojson|safe }};
+  const playerMap = {{ player_map|tojson|safe }};
+  const recentResults = {{ recent_results|tojson|safe }};
+  const selectedFmt = "{{ selected_fmt }}";
+  const planKey = "{{ selected_fmt }}|{{ selected_div }}|{{ selected_week }}|{{ selected_opp }}";
+  const formEl = document.getElementById('lineupForm');
+  const slotsEl = document.getElementById('slots');
+  const intel = document.getElementById('intelContent');
+
+  function sparkline(el, arr) {
+    if (!el) return;
+    const vals = Array.isArray(arr) ? arr : [];
+    const w = 80, h = 24;
+    const barW = vals.length ? w / vals.length : w;
+    const colors = vals.map(v => v > 0 ? '#3dd598' : v < 0 ? '#ff7b7b' : '#9fa6b2');
+    const bars = vals.map((v,i) => {
+      const height = v > 0 ? 18 : v < 0 ? 12 : 6;
+      const y = h - height;
+      return `<rect x="${i*barW}" y="${y}" width="${barW-2}" height="${height}" rx="2" fill="${colors[i]}"/>`;
+    }).join('');
+    el.innerHTML = `<svg width="${w}" height="${h}" viewBox="0 0 ${w} ${h}" role="presentation">${bars}</svg>`;
+  }
+
+  function buildMomentumClass(pid) {
+    const arr = recentResults[pid] || [];
+    const wins = arr.filter(v=>v>0).length;
+    if (wins >=3) return 'risk-green';
+    if (wins <=1 && arr.length>=3) return 'risk-red';
+    return 'risk-yellow';
+  }
+
+  function updateTotals() {
+    const slotInputs = [...document.querySelectorAll('[id^="slot-input-"]')];
+    let total = 0;
+    slotInputs.forEach(inp => {
+      const val = inp.value;
+      const p = myRoster.find(x => x.id === val);
+      if (p && p.sl) total += Number(p.sl) || 0;
+    });
+    document.getElementById('totalSL').textContent = total;
+    const status = document.getElementById('ruleStatus');
+    if (selectedFmt.includes('8') && total > 23) {
+      status.textContent = '⚠️ SL cap exceeded (23-rule)';
+      status.classList.add('text-warning');
+    } else {
+      status.textContent = 'Within SL rule';
+      status.classList.remove('text-warning');
+    }
+  }
+
+  function riskColor(diff) {
+    if (diff <= -1) return 'risk-green';
+    if (diff <= 1) return 'risk-yellow';
+    return 'risk-red';
+  }
+
+  function updateRisk() {
+    for (let i=1;i<=5;i++) {
+      const slotId = document.getElementById(`slot-input-${i}`).value;
+      const oppSel = document.querySelector(`[name="opp_slot_${i}"]`).value;
+      const our = myRoster.find(p => p.id === slotId);
+      const their = oppRoster.find(p => p.id === oppSel);
+      const chip = document.getElementById(`risk-${i}`);
+      if (!chip) continue;
+      chip.className = 'risk-chip';
+      if (our && their && our.sl && their.sl) {
+        const diff = (their.sl || 0) - (our.sl || 0);
+        chip.classList.add(riskColor(diff));
+        chip.textContent = diff > 0 ? `Risk +${diff}` : diff < 0 ? `Adv ${Math.abs(diff)}` : 'Even';
+      } else {
+        chip.classList.add('risk-neutral');
+        chip.textContent = 'Risk';
+      }
+    }
+  }
+
+  function renderIntel() {
+    const rows = [];
+    for (let i=1;i<=5;i++) {
+      const slotId = document.getElementById(`slot-input-${i}`).value;
+      const oppSel = document.querySelector(`[name="opp_slot_${i}"]`).value;
+      const our = myRoster.find(p => p.id === slotId);
+      const their = oppRoster.find(p => p.id === oppSel);
+      if (!our && !their) continue;
+      const ourSL = our && our.sl ? our.sl : '-';
+      const theirSL = their && their.sl ? their.sl : '-';
+      let note = 'Even matchup.';
+      if (our && their && our.sl && their.sl) {
+        const diff = (their.sl||0)-(our.sl||0);
+        if (diff >= 2) note = 'Caution: higher SL opponent.';
+        else if (diff <= -2) note = 'Leverage advantage; push early.';
+      }
+      rows.push(`<div class="border-bottom border-secondary py-1"><strong>Match ${i}:</strong> ${our ? our.name : 'TBD'} (SL ${ourSL}) vs ${their ? their.name : 'TBD'} (SL ${theirSL}) — ${note}</div>`);
+    }
+    intel.innerHTML = rows.length ? rows.join('') : 'Assign matchups to see scouting intel.';
+  }
+
+  function enableDrag() {
+    document.querySelectorAll('.player-card').forEach(card => {
+      card.addEventListener('dragstart', ev => {
+        ev.dataTransfer.setData('text/plain', card.dataset.id);
+      });
+    });
+    document.querySelectorAll('.slot-card').forEach(slot => {
+      slot.addEventListener('dragover', ev => ev.preventDefault());
+      slot.addEventListener('drop', ev => {
+        ev.preventDefault();
+        const pid = ev.dataTransfer.getData('text/plain');
+        assignPlayerToSlot(pid, slot.dataset.slot);
+      });
+    });
+  }
+
+  function assignPlayerToSlot(pid, slotNum) {
+    const p = myRoster.find(x => x.id === pid);
+    if (!p) return;
+    document.getElementById(`slot-input-${slotNum}`).value = pid;
+    document.getElementById(`slot-label-${slotNum}`).textContent = `${p.name} (SL ${p.sl || '-'})`;
+    updateTotals(); updateRisk(); renderIntel(); autoSave();
+  }
+
+  function smartSuggest() {
+    const sortedOur = [...myRoster].sort((a,b)=>(b.sl||0)-(a.sl||0));
+    const sortedOpp = [...oppRoster].sort((a,b)=>(b.sl||0)-(a.sl||0));
+    for (let i=0;i<5;i++) {
+      const our = sortedOur[i] || null;
+      const opp = sortedOpp[i] || null;
+      if (our) assignPlayerToSlot(our.id, i+1);
+      if (opp) document.querySelector(`[name="opp_slot_${i+1}"]`).value = opp.id;
+    }
+    updateRisk(); renderIntel();
+  }
+
+  function autoSave() {
+    const notes = {};
+    document.querySelectorAll('.note-field').forEach((area, idx) => {
+      notes[`slot_${idx+1}`] = area.value;
+    });
+    const payload = {
+      plan_key: planKey,
+      lineup: [...document.querySelectorAll('[id^="slot-input-"]')].map(i=>i.value),
+      opp_lineup: [...document.querySelectorAll('.opp-select')].map(s=>s.value),
+      notes: notes
+    };
+    fetch("{{ url_for('coach_planner_save') }}", {
+      method:'POST',
+      headers:{'Content-Type':'application/json'},
+      body: JSON.stringify(payload)
+    }).then(r=>r.json()).then(()=> {
+      const m = document.getElementById('autoSaveMsg');
+      if (m) { m.textContent = 'Saved'; setTimeout(()=>m.textContent='',1200); }
+    }).catch(()=>{});
+  }
+
+  function initNotesAutoSave() {
+    document.querySelectorAll('.note-field, .opp-select').forEach(el => {
+      el.addEventListener('change', autoSave);
+    });
+  }
+
+  function renderSparklines() {
+    document.querySelectorAll('.sparkline').forEach(el => {
+      const data = el.dataset.recent ? JSON.parse(el.dataset.recent) : [];
+      sparkline(el, data);
+    });
+  }
+
+  // Insights modal
+  const pmModal = document.getElementById('playerModal');
+  const pmName = document.getElementById('pmName');
+  const pmMeta = document.getElementById('pmMeta');
+  const pmOverview = document.getElementById('pmOverview');
+  const pmStats = document.getElementById('pmStats');
+  const pmInsights = document.getElementById('pmInsights');
+
+  function showPlayer(id) {
+    const p = playerMap[id] || {};
+    pmName.textContent = p.full_name || p.short_name || id;
+    pmMeta.textContent = `${p.alias_id || ''} ${p.member_id ? '(APA ' + p.member_id + ')' : ''}`;
+    const csl = (p.current_skill_levels||{})[selectedFmt] || (p.current_skill_levels||{})[selectedFmt.replace('-','_')] || '-';
+    pmOverview.innerHTML = `SL ${csl}<br>Team: ${(p.team_name||'')}<br>Format: ${selectedFmt}`;
+    const sess = (p.sessions||{})[selectedFmt] || {};
+    pmStats.innerHTML = `
+      Matches: ${sess.matches_played||sess.matchesPlayed||'-'}<br>
+      Wins: ${sess.matches_won||sess.matchesWon||'-'}<br>
+      PPM: ${sess.points_per_match||sess.ppm||'-'}<br>
+      PA: ${sess.percent_points_avail||sess.pa||'-'}<br>
+      Win%: ${sess.win_pct||'-'}
+    `;
+    const trendData = recentResults[id] || [];
+    const wins = trendData.filter(v=>v>0).length;
+    let insight = 'No data yet.';
+    if (trendData.length) {
+      if (wins >=3) insight = 'Hot last 5.';
+      else if (wins <=1) insight = 'Cold last 5.';
+      else insight = 'Even momentum.';
+    }
+    pmInsights.innerHTML = insight;
+    bootstrap.Modal.getOrCreateInstance(pmModal).show();
+  }
+
+  document.addEventListener('DOMContentLoaded', () => {
+    enableDrag();
+    updateTotals();
+    updateRisk();
+    renderIntel();
+    initNotesAutoSave();
+    renderSparklines();
+    document.getElementById('smartSuggest')?.addEventListener('click', smartSuggest);
+    document.querySelectorAll('.opp-select').forEach(sel => sel.addEventListener('change', ()=>{updateRisk();renderIntel();autoSave();}));
+    document.getElementById('exportTextBtn')?.addEventListener('click', () => {
+      const text = intel?.innerText || '';
+      navigator.clipboard.writeText(text + "\nTotal SL: " + document.getElementById('totalSL').innerText);
+      alert('Export copied to clipboard.');
+    });
+    document.querySelectorAll('.insight-player').forEach(btn => {
+      btn.addEventListener('click', () => showPlayer(btn.dataset.id));
+    });
+  });
+</script>
+{% endblock %}

@@ -1,0 +1,331 @@
+{% extends 'base.html' %}
+{% block content %}
+<style>
+  .roster-hero {
+    background: radial-gradient(circle at 20% 20%, #0d2942 0, #081728 45%, #060f1b 100%);
+    border: 1px solid rgba(0, 191, 255, 0.25);
+    box-shadow: 0 10px 40px #00bfff17, 0 0 0 1px #00bfff22;
+    border-radius: 18px;
+    padding: 18px 22px;
+  }
+  .roster-chip {
+    border-radius: 999px;
+    padding: 0.3rem 0.8rem;
+    font-size: 0.85rem;
+    font-weight: 600;
+    border: 1px solid rgba(0,191,255,0.35);
+    background: rgba(0,191,255,0.12);
+    color: #b8eaff;
+  }
+  .hero-band {
+    background: linear-gradient(120deg, rgba(18,214,255,0.18), rgba(255,215,0,0.12));
+    border:1px solid rgba(255,255,255,0.08);
+    border-radius: 14px;
+    padding: 0.85rem 1rem;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.35);
+  }
+  .section-fade { animation: fadeUp 0.35s ease; }
+  .stagger > * { animation: fadeUp 0.4s ease; }
+  .stagger > *:nth-child(2) { animation-delay: 0.05s; }
+  .stagger > *:nth-child(3) { animation-delay: 0.1s; }
+  .stagger > *:nth-child(4) { animation-delay: 0.15s; }
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+</style>
+
+<div class="container py-4 section-fade">
+  <div class="roster-hero mb-4">
+    <div class="d-flex flex-column flex-md-row align-items-md-center justify-content-between gap-3">
+      <div>
+        <div class="text-uppercase subtle small">Rio Grande Valley APA</div>
+        <h2 class="fw-bold mb-1">Team Roster - {{ team_name }}</h2>
+        <div class="subtle">{{ division }}</div>
+      </div>
+      <div class="d-flex gap-2 flex-wrap">
+        <span class="roster-chip"><i class="fa-solid fa-users me-1"></i>Cue-ligans</span>
+      </div>
+    </div>
+  </div>
+  <div class="row g-3 mb-4">
+    <div class="col-12 col-lg-6">
+      <div class="card bg-dark text-light soft-border shadow-soft hover-lift">
+        <div class="card-body d-flex justify-content-between align-items-center">
+          <div>
+            <div class="fw-semibold">APA Rules & Scoring Manual</div>
+            <div class="subtle small">Quick reference for match play, scoring, and procedures.</div>
+          </div>
+          <a class="btn btn-outline-info btn-sm" href="/apa-manual" target="_blank"><i class="fa-solid fa-book-open me-1"></i>Open</a>
+        </div>
+      </div>
+    </div>
+    <div class="col-12 col-lg-6">
+      <div class="card bg-dark text-light soft-border shadow-soft hover-lift">
+        <div class="card-body">
+          <div class="fw-semibold mb-1">Data tips</div>
+          <div class="subtle small">Use the 8/9 toggles to switch divisions; search and SL filter stack together. Top performers glow; spotlight updates with the toggle.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <nav aria-label="breadcrumb" class="mb-4">
+    <ol class="breadcrumb bg-dark text-light d-flex align-items-center mb-0">
+      <li class="breadcrumb-item"><a href="/" class="text-secondary">Dashboard</a></li>
+      <li class="breadcrumb-item active text-light" aria-current="page">Roster</li>
+      <li class="ms-auto">
+        <a href="/division_roster" class="btn btn-outline-warning btn-sm" style="font-weight:600;letter-spacing:.5px;">
+          <i class="fa-solid fa-users-viewfinder me-1"></i> View Division Rosters
+        </a>
+      </li>
+    </ol>
+  </nav>
+  <div class="row g-4 mb-4 stagger">
+    <div class="col-12 col-md-4">
+      <div class="card kpi-card text-center hover-lift">
+        <div class="card-body">
+          <div class="kpi-label subtle mb-1">Total Players</div>
+          <div class="display-5 kpi-value text-info">{{ total_players }}</div>
+        </div>
+      </div>
+    </div>
+    <div class="col-12 col-md-4">
+      <div class="card kpi-card text-center hover-lift">
+        <div class="card-body">
+          <div class="kpi-label subtle mb-1">Avg Skill Level</div>
+          <div class="display-5 kpi-value text-success" id="avgSL">{{ avg_sl_8 }}</div>
+        </div>
+      </div>
+    </div>
+    <div class="col-12 col-md-4">
+      <div class="card kpi-card text-center hover-lift">
+        <div class="card-body">
+          <div class="kpi-label subtle mb-1">Team Win %</div>
+          <div class="display-5 kpi-value text-warning" id="avgWin">{{ avg_win_8 }}</div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="row mb-4 align-items-end stagger">
+    <div class="col-md-6 mb-2 mb-md-0">
+      <input id="rosterSearch" type="text" class="form-control bg-dark text-light" placeholder="Search player...">
+    </div>
+    <div class="col-md-3">
+      <select id="slFilter" class="form-select bg-dark text-light">
+        <option value="">All SL</option>
+        {% for sl in range(1,10) %}
+        <option value="{{ sl }}">SL {{ sl }}</option>
+        {% endfor %}
+      </select>
+    </div>
+    <div class="col-md-3 text-end">
+      <button type="button" class="btn btn-outline-info btn-sm me-2 active" id="toggle8" onclick="showRoster('8')">8-BALL</button>
+      <button type="button" class="btn btn-outline-primary btn-sm" id="toggle9" onclick="showRoster('9')">9-BALL</button>
+    </div>
+  </div>
+  <div class="card mb-4 hover-lift">
+    <div class="card-body">
+      <div class="table-responsive">
+        <table id="rosterTable8" class="table table-dark table-striped table-hover align-middle">
+          <thead>
+            <tr>
+              <th>Player</th>
+              <th>SL</th>
+              <th>Matches</th>
+              <th>Won</th>
+              <th>Win%</th>
+              <th>PPM</th>
+              <th>PA</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% set top8 = roster_8|sort(attribute='win_pct', reverse=True)|first %}
+            {% if not roster_8 %}
+            <tr>
+              <td colspan="7" class="text-center text-secondary py-3">
+                No 8-ball data found in the current dataset.
+              </td>
+            </tr>
+            {% endif %}
+            {% for p in roster_8 %}
+            <tr class="{% if p == top8 %}glow{% endif %}">
+              <td>{{ p.name }}</td>
+              <td>{{ p.sl }}</td>
+              <td>{{ p.matches }}</td>
+              <td>{{ p.won }}</td>
+              <td>{{ p.win_pct }}%</td>
+              <td>{{ p.ppm }}</td>
+              <td>{{ p.pa }}%</td>
+            </tr>
+            {% else %}
+            {% for _ in range(8) %}
+            <tr><td colspan="7"><div class="skeleton" style="height:18px;"></div></td></tr>
+            {% endfor %}
+            {% endfor %}
+          </tbody>
+        </table>
+        <table id="rosterTable9" class="table table-dark table-striped table-hover align-middle d-none">
+          <thead>
+            <tr>
+              <th>Player</th>
+              <th>SL</th>
+              <th>Matches</th>
+              <th>Won</th>
+              <th>Win%</th>
+              <th>PPM</th>
+              <th>PA</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% set top9 = roster_9|sort(attribute='win_pct', reverse=True)|first %}
+            {% for p in roster_9 %}
+            <tr class="{% if p == top9 %}glow{% endif %}">
+              <td>{{ p.name }}</td>
+              <td>{{ p.sl }}</td>
+              <td>{{ p.matches }}</td>
+              <td>{{ p.won }}</td>
+              <td>{{ p.win_pct }}%</td>
+              <td>{{ p.ppm }}</td>
+              <td>{{ p.pa }}%</td>
+            </tr>
+            {% else %}
+            {% for _ in range(8) %}
+            <tr><td colspan="7"><div class="skeleton" style="height:18px;"></div></td></tr>
+            {% endfor %}
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+  <div class="row g-4">
+    <div class="col-12 col-lg-7">
+      <div class="card bg-dark text-light shadow-soft hover-lift" id="spotlight8">
+        <div class="card-body">
+          <div class="d-flex justify-content-between align-items-center mb-3">
+            <div class="hero-band d-inline-flex align-items-center gap-2">
+              <i class="fa-solid fa-star text-warning"></i>
+              <span class="fw-semibold">Player Spotlight</span>
+            </div>
+            <span class="pill-ghost">8-Ball</span>
+          </div>
+          <div class="d-flex flex-column flex-md-row align-items-center gap-3">
+            <img src="/static/player-placeholder.png" alt="Player" class="img-fluid rounded-circle" style="width:120px;height:120px;object-fit:cover;">
+            <div class="text-start w-100">
+              <div class="fw-bold fs-5">{{ top8.name if top8 else '-' }}</div>
+              <div class="subtle mb-2">SL {{ top8.sl if top8 else '-' }} | Win% {{ top8.win_pct if top8 else '-' }}</div>
+              <div class="d-flex flex-wrap gap-2">
+                <span class="chip chip-success">PPM: {{ top8.ppm if top8 else '-' }}</span>
+                <span class="chip chip-info">PA: {{ top8.pa if top8 else '-' }}</span>
+                <span class="chip chip-muted">Matches: {{ top8.matches if top8 else '-' }}</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="card bg-dark text-light shadow-soft hover-lift d-none" id="spotlight9">
+        <div class="card-body">
+          <div class="d-flex justify-content-between align-items-center mb-3">
+            <div class="hero-band d-inline-flex align-items-center gap-2">
+              <i class="fa-solid fa-star text-warning"></i>
+              <span class="fw-semibold">Player Spotlight</span>
+            </div>
+            <span class="pill-ghost">9-Ball</span>
+          </div>
+          <div class="d-flex flex-column flex-md-row align-items-center gap-3">
+            <img src="/static/player-placeholder.png" alt="Player" class="img-fluid rounded-circle" style="width:120px;height:120px;object-fit:cover;">
+            <div class="text-start w-100">
+              <div class="fw-bold fs-5">{{ top9.name if top9 else '-' }}</div>
+              <div class="subtle mb-2">SL {{ top9.sl if top9 else '-' }} | Win% {{ top9.win_pct if top9 else '-' }}</div>
+              <div class="d-flex flex-wrap gap-2">
+                <span class="chip chip-success">PPM: {{ top9.ppm if top9 else '-' }}</span>
+                <span class="chip chip-info">PA: {{ top9.pa if top9 else '-' }}</span>
+                <span class="chip chip-muted">Matches: {{ top9.matches if top9 else '-' }}</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-12 col-lg-5 d-flex align-items-center">
+      <div class="w-100 text-center subtle p-3 hero-band">
+        <i class="fa-solid fa-circle-info fa-2x mb-2"></i>
+        <div>Use the search, filter, and division toggle to find players. Top performer is highlighted with a glow.</div>
+      </div>
+    </div>
+</div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+  (() => {
+    let activeFormat = '8';
+    const btn8 = document.getElementById('toggle8');
+    const btn9 = document.getElementById('toggle9');
+    const table8 = document.getElementById('rosterTable8');
+    const table9 = document.getElementById('rosterTable9');
+    const spot8 = document.getElementById('spotlight8');
+    const spot9 = document.getElementById('spotlight9');
+    const avgSL = document.getElementById('avgSL');
+    const avgWin = document.getElementById('avgWin');
+    const search = document.getElementById('rosterSearch');
+    const slFilter = document.getElementById('slFilter');
+
+    const kpis = {
+      '8': { sl: '{{ avg_sl_8 }}', win: '{{ avg_win_8 }}' },
+      '9': { sl: '{{ avg_sl_9 }}', win: '{{ avg_win_9 }}' }
+    };
+
+    function updateKpis(fmt) {
+      const k = kpis[fmt] || { sl: '-', win: '-' };
+      if (avgSL) avgSL.textContent = k.sl;
+      if (avgWin) avgWin.textContent = k.win;
+    }
+
+    function toggleTables(fmt) {
+      activeFormat = fmt;
+      const show9 = fmt === '9';
+      table8.classList.toggle('d-none', show9);
+      table9.classList.toggle('d-none', !show9);
+      spot8.classList.toggle('d-none', show9);
+      spot9.classList.toggle('d-none', !show9);
+      btn8.classList.toggle('active', !show9);
+      btn9.classList.toggle('active', show9);
+      btn8.classList.toggle('btn-outline-info', !show9);
+      btn8.classList.toggle('btn-info', !show9);
+      btn9.classList.toggle('btn-outline-primary', show9);
+      btn9.classList.toggle('btn-primary', show9);
+      updateKpis(fmt);
+      filterRoster();
+    }
+
+    function filterRoster() {
+      const term = (search.value || '').toLowerCase();
+      const sl = slFilter.value;
+      const table = activeFormat === '9' ? table9 : table8;
+      if (!table) return;
+      const rows = table.querySelectorAll('tbody tr');
+      rows.forEach((row) => {
+        const cells = row.querySelectorAll('td');
+        if (!cells.length) return;
+        const name = cells[0].textContent.toLowerCase();
+        const slVal = cells[1].textContent.trim();
+        const matchesTerm = !term || name.includes(term);
+        const matchesSl = !sl || slVal === sl;
+        row.classList.toggle('d-none', !(matchesTerm && matchesSl));
+      });
+    }
+
+    window.showRoster = toggleTables;
+
+    if (search) search.addEventListener('input', filterRoster);
+    if (slFilter) slFilter.addEventListener('change', filterRoster);
+
+    // Initialize defaults
+    toggleTables('8');
+  })();
+</script>
+{% endblock %}
+
+

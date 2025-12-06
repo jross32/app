@@ -1,0 +1,773 @@
+{% extends 'base.html' %}
+{% block title %}Admin Control Hub{% endblock %}
+{% block content %}
+<style>
+  .hero-badge {
+    background: radial-gradient(circle at 20% 20%, #0ff0ff 0%, #0fa5d9 45%, #0784b5 100%);
+    padding: 1rem 2rem;
+    border-radius: 16px;
+    box-shadow: 0 14px 32px #0dd0ff55, 0 0 0 3px rgba(13, 208, 255, 0.35);
+    display: inline-flex;
+    align-items: center;
+    gap: 0.75rem;
+    color: #04121f;
+    font-weight: 800;
+    letter-spacing: 0.6px;
+    font-size: 1.5rem;
+  }
+  .soft-border { border-color: rgba(255,255,255,.12)!important; }
+  .shadow-soft { box-shadow: 0 10px 28px rgba(0,0,0,.55); }
+.subtle { color: rgba(255,255,255,.72); }
+.pill { padding:.35rem .6rem; border-radius:999px; background:rgba(255,255,255,0.05); border:1px solid rgba(255,255,255,0.1); font-size:.8rem; }
+html, body { overflow-x:hidden; }
+.anchor-section { scroll-margin-top: 90px; }
+  #adminLog { background: #0f1724; border: 1px solid rgba(0,191,255,0.25); min-height: 120px; max-height: 260px; overflow: auto; font-size: 0.9rem; }
+  #adminToast { position: fixed; top: 12px; right: 12px; z-index: 1100; min-width: 260px; display: none; }
+</style>
+
+<div class="container py-4">
+  <div id="adminBusy" class="alert alert-info py-2 px-3 mb-3 small" style="display:none;">
+    <i class="fa-solid fa-spinner fa-spin me-2"></i><span class="busy-text">Working...</span> (page will refresh)
+  </div>
+  <div class="card bg-dark text-light soft-border shadow-soft no-hover mb-3">
+    <div class="card-body">
+      <div class="d-flex align-items-center mb-2">
+        <i class="fa-solid fa-wave-square text-info me-2"></i>
+        <h6 class="mb-0">Admin Task Status</h6>
+      </div>
+      <div id="adminLog" class="p-2 small text-secondary"></div>
+    </div>
+  </div>
+  <div id="adminToast" class="alert alert-success alert-dismissible fade show" role="alert">
+    <span class="toast-text"></span>
+    <button type="button" class="btn-close btn-close-white" aria-label="Close"></button>
+  </div>
+  <div class="position-relative mb-4" style="min-height:3.5rem;">
+    <div class="d-flex justify-content-center align-items-center" style="height:100%;">
+      <div class="hero-badge">
+        <i class="fa-solid fa-user-gear"></i>
+        <span>Admin Control Hub</span>
+      </div>
+    </div>
+  </div>
+
+  {% if message %}
+  <div class="alert alert-{{ message_type or 'info' }} alert-dismissible fade show" role="alert">
+    {{ message }}
+    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="alert" aria-label="Close"></button>
+  </div>
+  {% endif %}
+
+  <div class="row g-3">
+    <!-- User Management -->
+    <div class="col-12 col-xl-8">
+      <div class="card bg-dark text-light soft-border shadow-soft no-hover h-100">
+        <div class="card-body">
+          <div class="d-flex align-items-center mb-3">
+            <i class="fa-solid fa-users-gear text-info me-2"></i>
+            <h5 class="mb-0">User Management</h5>
+            <span class="pill ms-2">Promote / Suspend / Mute / Ban / Reset PW</span>
+          </div>
+          <div class="table-responsive">
+            <table class="table table-dark table-sm align-middle mb-2">
+              <thead><tr><th>User</th><th>Role</th><th>Status</th><th>Actions</th></tr></thead>
+              <tbody>
+                {% for u in users %}
+                <tr>
+                  <td>{{ u.username }}</td>
+                  <td class="text-secondary small">{{ u.role|title if u.role else 'Member' }}</td>
+                  <td>
+                    <form class="d-flex align-items-center gap-2" method="POST" action="{{ url_for('admin_set_role') }}">
+                      <input type="hidden" name="user_id" value="{{ u.id }}">
+                      <select name="role" class="form-select form-select-sm bg-dark text-light soft-border">
+                        {% for r in roles %}
+                        <option value="{{ r.name }}" {% if u.role==r.name %}selected{% endif %}>{{ r.name }}</option>
+                        {% endfor %}
+                      </select>
+                      <button class="btn btn-sm btn-outline-info">Set</button>
+                    </form>
+                  </td>
+                  <td>
+                    {% if u.is_banned %}<span class="badge bg-danger">Banned</span>
+                    {% elif u.is_suspended %}<span class="badge bg-warning text-dark">Suspended</span>
+                    {% else %}<span class="badge bg-success">Active</span>{% endif %}
+                    {% if u.is_muted %}<span class="badge bg-secondary ms-1">Muted</span>{% endif %}
+                  </td>
+                  <td class="d-flex flex-wrap gap-1">
+                    <form method="POST" action="{{ url_for('admin_suspend_user') }}">
+                      <input type="hidden" name="user_id" value="{{ u.id }}">
+                      <input type="hidden" name="action" value="{{ 'reactivate' if u.is_suspended else 'suspend' }}">
+                      <button class="btn btn-sm btn-outline-warning">{{ 'Reactivate' if u.is_suspended else 'Suspend' }}</button>
+                    </form>
+                    <form method="POST" action="{{ url_for('admin_mute_user') }}">
+                      <input type="hidden" name="user_id" value="{{ u.id }}">
+                      <input type="hidden" name="action" value="{{ 'unmute' if u.is_muted else 'mute' }}">
+                      <button class="btn btn-sm btn-outline-secondary">{{ 'Unmute' if u.is_muted else 'Mute' }}</button>
+                    </form>
+                    <form method="POST" action="{{ url_for('admin_ban_user') }}">
+                      <input type="hidden" name="user_id" value="{{ u.id }}">
+                      <input type="hidden" name="action" value="{{ 'unban' if u.is_banned else 'ban' }}">
+                      <button class="btn btn-sm btn-outline-danger">{{ 'Unban' if u.is_banned else 'Ban' }}</button>
+                    </form>
+                    <form method="POST" action="{{ url_for('admin_reset_password') }}">
+                      <input type="hidden" name="user_id" value="{{ u.id }}">
+                      <input type="hidden" name="temp_password" value="changeme123">
+                      <button class="btn btn-sm btn-outline-danger">Reset PW</button>
+                    </form>
+                  </td>
+                </tr>
+                {% endfor %}
+              </tbody>
+            </table>
+          </div>
+          <form class="mt-2 d-flex gap-2" method="POST" action="{{ url_for('admin_add_role') }}">
+            <input type="text" name="role_name" class="form-control bg-dark text-light soft-border" placeholder="Add new role">
+            <button class="btn btn-sm btn-outline-info">Add Role</button>
+          </form>
+          <div class="text-secondary small mt-1">Roles exist; permissions editable later.</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Locker Controls -->
+    <div class="col-12 col-xl-4">
+      <div class="card bg-dark text-light soft-border shadow-soft no-hover h-100">
+        <div class="card-body">
+          <div class="d-flex align-items-center mb-3">
+            <i class="fa-solid fa-comments-gear text-info me-2"></i>
+            <h5 class="mb-0">Locker Controls</h5>
+          </div>
+          <form class="row g-2 mb-3" method="POST" action="{{ url_for('admin_add_channel') }}">
+            <div class="col-5"><input type="text" name="name" class="form-control bg-dark text-light soft-border" placeholder="Name" required></div>
+            <div class="col-5"><input type="text" name="slug" class="form-control bg-dark text-light soft-border" placeholder="slug" required></div>
+            <div class="col-2"><button class="btn btn-sm btn-outline-info w-100">Add</button></div>
+          </form>
+          <div class="table-responsive" style="max-height:280px; overflow:auto;">
+            <table class="table table-dark table-sm align-middle mb-0">
+              <thead><tr><th>Name</th><th>Slug</th><th>State</th><th></th></tr></thead>
+              <tbody>
+                {% for ch in channels %}
+                <tr>
+                  <td>{{ ch.name }}</td>
+                  <td>{{ ch.slug }}</td>
+                  <td>
+                    {% if ch.is_locked %}<span class="badge bg-warning text-dark">Locked</span>{% endif %}
+                    {% if ch.is_hidden %}<span class="badge bg-secondary ms-1">Hidden</span>{% endif %}
+                    {% if not ch.is_locked and not ch.is_hidden %}<span class="badge bg-success">Open</span>{% endif %}
+                  </td>
+                  <td class="d-flex flex-wrap gap-1">
+                    <form method="POST" action="{{ url_for('admin_toggle_channel') }}">
+                      <input type="hidden" name="channel_id" value="{{ ch.id }}">
+                      <input type="hidden" name="field" value="lock">
+                      <button class="btn btn-sm btn-outline-warning">{{ 'Unlock' if ch.is_locked else 'Lock' }}</button>
+                    </form>
+                    <form method="POST" action="{{ url_for('admin_toggle_channel') }}">
+                      <input type="hidden" name="channel_id" value="{{ ch.id }}">
+                      <input type="hidden" name="field" value="hide">
+                      <button class="btn btn-sm btn-outline-secondary">{{ 'Unhide' if ch.is_hidden else 'Hide' }}</button>
+                    </form>
+                  </td>
+                </tr>
+                {% endfor %}
+              </tbody>
+            </table>
+          </div>
+          <div class="text-secondary small mt-2">Use message delete/pin below for moderation.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Badges & Events -->
+  <div class="row g-3 mt-3" id="data-section">
+    <div class="col-12 col-xl-6">
+      <div class="card bg-dark text-light soft-border shadow-soft no-hover h-100">
+        <div class="card-body">
+          <div class="d-flex align-items-center mb-3">
+            <i class="fa-solid fa-award text-info me-2"></i>
+            <h5 class="mb-0">Badges</h5>
+            <button class="btn btn-sm btn-outline-info ms-2" data-bs-toggle="modal" data-bs-target="#allBadgesAdminModal">View / Award</button>
+          </div>
+          <form class="row g-2 mb-3" method="POST" action="{{ url_for('admin_add_badge') }}">
+            <div class="col-3"><input type="text" name="name" class="form-control bg-dark text-light soft-border" placeholder="Badge name" required></div>
+            <div class="col-3"><input type="text" name="icon" class="form-control bg-dark text-light soft-border" placeholder="Icon (fa-*)"></div>
+            <div class="col-6"><input type="text" name="description" class="form-control bg-dark text-light soft-border" placeholder="Description"></div>
+            <div class="col-12"><button class="btn btn-sm btn-outline-info">Add Badge Type</button></div>
+          </form>
+          <div class="row g-2">
+            {% for b in badges[:4] %}
+            <div class="col-12 col-md-6">
+              <div class="p-2 rounded" style="background:rgba(255,255,255,0.04); border:1px solid rgba(255,255,255,0.08);">
+                <div class="d-flex justify-content-between align-items-center">
+                  <div><i class="fa-solid {{ b.icon or 'fa-star' }} text-info me-2"></i>{{ b.name }}</div>
+                  <form method="POST" action="{{ url_for('admin_delete_badge') }}">
+                    <input type="hidden" name="badge_id" value="{{ b.id }}">
+                    <button class="btn btn-sm btn-outline-danger">Remove</button>
+                  </form>
+                </div>
+                <div class="text-secondary small">{{ b.description or '' }}</div>
+                <div class="text-secondary small fst-italic">Requirement: {{ badge_requirements.get(b.name, 'Manual award / custom rule') }}</div>
+                <form class="mt-2 d-flex gap-2" method="POST" action="{{ url_for('admin_award_badge') }}">
+                  <input type="hidden" name="badge_id" value="{{ b.id }}">
+                  <select name="user_id" class="form-select form-select-sm bg-dark text-light soft-border">
+                    {% for u in users %}<option value="{{ u.id }}">{{ u.username }}</option>{% endfor %}
+                  </select>
+                  <button class="btn btn-sm btn-outline-info">Award</button>
+                </form>
+              </div>
+            </div>
+            {% endfor %}
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-12 col-xl-6">
+      <div class="card bg-dark text-light soft-border shadow-soft no-hover h-100">
+        <div class="card-body">
+          <div class="d-flex align-items-center mb-3">
+            <i class="fa-solid fa-calendar text-info me-2"></i>
+            <h5 class="mb-0">Events / Polls</h5>
+            <span class="pill ms-2">RSVP/Polls coming soon</span>
+          </div>
+          <form class="row g-2 mb-3" method="POST" action="{{ url_for('admin_add_event') }}">
+            <div class="col-5"><input type="text" name="title" class="form-control bg-dark text-light soft-border" placeholder="Title" required></div>
+            <div class="col-4"><input type="datetime-local" name="date" class="form-control bg-dark text-light soft-border"></div>
+            <div class="col-3"><button class="btn btn-sm btn-outline-info w-100">Add</button></div>
+            <div class="col-12"><input type="text" name="location" class="form-control bg-dark text-light soft-border" placeholder="Location"></div>
+            <div class="col-12"><textarea name="description" class="form-control bg-dark text-light soft-border" rows="2" placeholder="Description"></textarea></div>
+          </form>
+          <div class="table-responsive" style="max-height:240px; overflow:auto;">
+            <table class="table table-dark table-sm align-middle mb-0">
+              <thead><tr><th>Title</th><th>Date</th><th></th></tr></thead>
+              <tbody>
+                {% for ev in events %}
+                <tr>
+                  <td>{{ ev.title }}</td>
+                  <td>{{ ev.date.strftime('%b %d, %I:%M %p') if ev.date else '' }}</td>
+                  <td class="text-end">
+                    <form method="POST" action="{{ url_for('admin_delete_event') }}">
+                      <input type="hidden" name="event_id" value="{{ ev.id }}">
+                      <button class="btn btn-sm btn-outline-danger">Delete</button>
+                    </form>
+                  </td>
+                </tr>
+                {% endfor %}
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Moderation & Audit -->
+  <div class="row g-3 mt-3 anchor-section" id="data-section">
+    <div class="col-12 col-xl-6">
+      <div class="card bg-dark text-light soft-border shadow-soft no-hover h-100">
+        <div class="card-body">
+          <div class="d-flex align-items-center mb-2">
+            <i class="fa-solid fa-comment-slash text-warning me-2"></i>
+            <h6 class="mb-0">Recent Locker Messages</h6>
+          </div>
+          <div class="table-responsive" style="max-height:240px; overflow:auto;">
+            <table class="table table-dark table-sm align-middle mb-0">
+              <tbody>
+                {% for m in recent_messages %}
+                <tr>
+                  <td class="text-secondary small">
+                    <div><strong>{{ m.author_name }}</strong></div>
+                    <div>{{ m.content[:80] }}{% if m.content|length > 80 %}...{% endif %}</div>
+                    <div class="text-secondary small">{{ m.created_at.strftime('%b %d, %I:%M %p') if m.created_at else '' }}</div>
+                  </td>
+                  <td class="text-end">
+                    <form method="POST" action="{{ url_for('admin_delete_message') }}">
+                      <input type="hidden" name="message_id" value="{{ m.id }}">
+                      <button class="btn btn-sm btn-outline-danger mb-1">Delete</button>
+                    </form>
+                    <form method="POST" action="{{ url_for('admin_pin_message') }}">
+                      <input type="hidden" name="message_id" value="{{ m.id }}">
+                      <button class="btn btn-sm btn-outline-info">{{ 'Unpin' if m.is_pinned else 'Pin' }}</button>
+                    </form>
+                  </td>
+                </tr>
+                {% endfor %}
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-12 col-xl-6">
+      <div class="card bg-dark text-light soft-border shadow-soft no-hover h-100">
+        <div class="card-body">
+          <div class="d-flex align-items-center mb-2">
+            <i class="fa-solid fa-message text-warning me-2"></i>
+            <h6 class="mb-0">Recent Profile Comments</h6>
+          </div>
+          <div class="table-responsive" style="max-height:240px; overflow:auto;">
+            <table class="table table-dark table-sm align-middle mb-0">
+              <tbody>
+                {% for c in recent_comments %}
+                <tr>
+                  <td class="text-secondary small">
+                    <div><strong>{{ c.author.username if c.author else 'Unknown' }}</strong> -> {{ c.profile_user.username if c.profile_user else 'Unknown' }}</div>
+                    <div>{{ c.content[:80] }}{% if c.content|length > 80 %}...{% endif %}</div>
+                    <div class="text-secondary small">{{ c.created_at.strftime('%b %d, %I:%M %p') if c.created_at else '' }}</div>
+                  </td>
+                  <td class="text-end">
+                    <form method="POST" action="{{ url_for('admin_delete_comment') }}">
+                      <input type="hidden" name="comment_id" value="{{ c.id }}">
+                      <button class="btn btn-sm btn-outline-danger">Delete</button>
+                    </form>
+                  </td>
+                </tr>
+                {% endfor %}
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- APA / Team Data & Settings -->
+  <div class="row g-3 mt-3">
+    <div class="col-12 col-xl-6">
+      <div class="card bg-dark text-light soft-border shadow-soft no-hover h-100">
+        <div class="card-body">
+          <div class="d-flex align-items-center mb-2">
+            <i class="fa-solid fa-ranking-star text-info me-2"></i>
+            <h6 class="mb-0">APA / Team Data</h6>
+            <span class="pill ms-2">Manual overrides</span>
+          </div>
+          <div class="text-secondary small">Placeholders for: update points, recalc standings, refresh APA data, manage roster/roles.</div>
+          <div class="mt-2">
+            <form method="post" enctype="multipart/form-data" class="js-admin-action" data-label="Uploading JSON...">
+              <label class="form-label text-secondary small">Upload JSON (replace existing)</label>
+              <input class="form-control bg-dark text-light soft-border" type="file" id="json_file" name="json_file" accept=".json">
+              <div class="text-secondary small mt-1">Pick which data file to overwrite</div>
+              <select class="form-select bg-dark text-light soft-border mt-2" id="target_file" name="target_file">
+                {% for f in allowed_files %}
+                <option value="{{ f }}" {% if loop.first %}selected{% endif %}>{{ f }}</option>
+                {% endfor %}
+              </select>
+              <button class="btn btn-sm btn-outline-info mt-2"><i class="fa-solid fa-upload me-2"></i>Upload</button>
+            </form>
+            <hr class="text-secondary">
+            <div class="d-flex flex-column flex-md-row align-items-md-center justify-content-between gap-2">
+              <div>
+                <div class="text-secondary small">Latest API dump detected:</div>
+                <div class="small fw-semibold">{{ latest_dump or 'None found' }}</div>
+              </div>
+              <form method="post" action="{{ url_for('admin_update_data') }}" class="js-admin-action" data-label="Refreshing data from dump..." data-ajax="true" data-endpoint="{{ url_for('admin_update_data_json') }}">
+                {% if latest_dump %}<input type="hidden" name="dump_path" value="{{ latest_dump }}">{% endif %}
+                <button class="btn btn-sm btn-outline-warning" {% if not latest_dump %}disabled{% endif %}>
+                  <i class="fa-solid fa-arrows-rotate me-1"></i> Refresh data from dump
+                </button>
+              </form>
+            </div>
+            <div class="d-flex flex-column flex-md-row align-items-md-center justify-content-between gap-2 mt-2">
+              <div>
+                <div class="text-secondary small">Latest backup:</div>
+                <div class="small fw-semibold">{{ latest_backup or 'None found' }}</div>
+              </div>
+              <form method="post" action="{{ url_for('admin_restore_backup') }}" class="js-admin-action" data-label="Restoring from backup...">
+                <button class="btn btn-sm btn-outline-secondary" {% if not latest_backup %}disabled{% endif %}>
+                  <i class="fa-solid fa-rotate-left me-1"></i> Restore from backup
+                </button>
+              </form>
+            </div>
+            <hr class="text-secondary">
+            <div class="d-flex flex-column flex-md-row align-items-md-center justify-content-between gap-2">
+              <div>
+                <div class="text-secondary small">Run full update (pipeline + merge into site data)</div>
+                <div class="text-secondary small">Uses scripts/scraper_sniffer/pipeline.py</div>
+              </div>
+            <form method="post" action="{{ url_for('admin_run_pipeline') }}" class="js-admin-action" data-label="Running full update..." data-ajax="true" data-endpoint="{{ url_for('admin_run_pipeline_json') }}">
+              <button class="btn btn-sm btn-outline-danger">
+                <i class="fa-solid fa-wand-magic-sparkles me-1"></i> Run Full Update
+              </button>
+            </form>
+          </div>
+            <div class="d-flex flex-column flex-md-row align-items-md-center justify-content-between gap-2 mt-2">
+              <div>
+                <div class="text-secondary small">Run pipeline only (collects latest dump, no merge)</div>
+                <div class="text-secondary small">Use Refresh data from dump afterward to apply it.</div>
+              </div>
+              <form method="post" action="{{ url_for('admin_run_pipeline_only') }}" class="js-admin-action" data-label="Running pipeline...">
+                <button class="btn btn-sm btn-outline-secondary">
+                  <i class="fa-solid fa-route me-1"></i> Run Pipeline Only
+                </button>
+              </form>
+            </div>
+            <div class="d-flex flex-column flex-md-row align-items-md-center justify-content-between gap-2 mt-2">
+              <div>
+                <div class="text-secondary small">Decode latest dump (stats/teams/matches into data/decode)</div>
+                <div class="text-secondary small">Uses scripts/scraper_sniffer/decode_dump.py</div>
+              </div>
+              <form method="post" action="{{ url_for('admin_decode_dump') }}" class="js-admin-action" data-label="Decoding dump..." data-ajax="true" data-endpoint="{{ url_for('admin_decode_dump_json') }}">
+                <button class="btn btn-sm btn-outline-info">
+                  <i class="fa-solid fa-code-branch me-1"></i> Decode Dump
+                </button>
+              </form>
+            </div>
+            <div class="d-flex flex-column flex-md-row align-items-md-center justify-content-between gap-2 mt-2">
+              <div>
+                <div class="text-secondary small">Merge decoded matches into copy (data/merge/league_with_matches.json)</div>
+                <div class="text-secondary small">Best-effort name matching; does not overwrite main file.</div>
+              </div>
+              <form method="post" action="{{ url_for('admin_merge_decoded') }}" class="js-admin-action" data-label="Merging decoded matches..." data-ajax="true" data-endpoint="{{ url_for('admin_merge_decoded_json') }}">
+                <button class="btn btn-sm btn-outline-secondary">
+                  <i class="fa-solid fa-file-merge me-1"></i> Merge decoded matches
+                </button>
+              </form>
+            </div>
+            <div class="d-flex flex-column flex-md-row align-items-md-center justify-content-between gap-2 mt-2">
+              <div>
+                <div class="text-secondary small">Apply merged copy to main (backs up then overwrites {{ LEAGUE_DATA_FILENAME }})</div>
+                <div class="text-secondary small">Only after verifying data/merge/league_with_matches.json looks good.</div>
+              </div>
+              <form method="post" action="{{ url_for('admin_apply_merged') }}" class="js-admin-action" data-label="Applying merged data..." data-ajax="true" data-endpoint="{{ url_for('admin_apply_merged_json') }}">
+                <button class="btn btn-sm btn-outline-danger">
+                  <i class="fa-solid fa-check-double me-1"></i> Apply merged to main
+                </button>
+              </form>
+            </div>
+            <div class="d-flex flex-column flex-md-row align-items-md-center justify-content-between gap-2 mt-2">
+              <div>
+                <div class="text-secondary small">Merge membership years from latest api_dump_v2.json into player data</div>
+                <div class="text-secondary small">Creates a .bak.membership.json backup; does not overwrite main file here.</div>
+              </div>
+              <form method="post" class="js-admin-action" data-label="Merging membership years..." data-ajax="true" data-endpoint="{{ url_for('admin_merge_membership_json') }}">
+                <button class="btn btn-sm btn-outline-secondary">
+                  <i class="fa-solid fa-book-open-reader me-1"></i> Merge membership years
+                </button>
+              </form>
+            </div>
+            <div class="d-flex flex-column flex-md-row align-items-md-center justify-content-between gap-2 mt-2">
+              <div>
+                <div class="text-secondary small">Merge session highlights (breaks/rackless/skunks per session) from latest api_dump_v2.json</div>
+                <div class="text-secondary small">Creates a .bak.session_highlights.json backup; does not overwrite main file here.</div>
+              </div>
+              <form method="post" class="js-admin-action" data-label="Merging session highlights..." data-ajax="true" data-endpoint="{{ url_for('admin_merge_session_highlights_json') }}">
+                <button class="btn btn-sm btn-outline-secondary">
+                  <i class="fa-solid fa-bolt me-1"></i> Merge session highlights
+                </button>
+              </form>
+            </div>
+            <div class="d-flex flex-column flex-md-row align-items-md-center justify-content-between gap-2 mt-2">
+              <div>
+                <div class="text-secondary small">Merge extended lifetime stats (CLA, defensive shot avg, last played)</div>
+                <div class="text-secondary small">Creates a .bak.lifetime_extended.json backup; overwrites main with new fields.</div>
+              </div>
+              <form method="post" class="js-admin-action" data-label="Merging lifetime stats..." data-ajax="true" data-endpoint="{{ url_for('admin_merge_lifetime_json') }}">
+                <button class="btn btn-sm btn-outline-secondary">
+                  <i class="fa-solid fa-heart-pulse me-1"></i> Merge lifetime stats
+                </button>
+              </form>
+            </div>
+            <div class="d-flex flex-column flex-md-row align-items-md-center justify-content-between gap-2 mt-2">
+              <div>
+                <div class="text-secondary small">Merge membership meta (years, leagues, consecutive years)</div>
+                <div class="text-secondary small">Creates a .bak.membership_meta.json backup; overwrites main with new fields.</div>
+              </div>
+              <form method="post" class="js-admin-action" data-label="Merging membership meta..." data-ajax="true" data-endpoint="{{ url_for('admin_merge_membership_meta_json') }}">
+                <button class="btn btn-sm btn-outline-secondary">
+                  <i class="fa-solid fa-id-badge me-1"></i> Merge membership meta
+                </button>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-12 col-xl-6">
+      <div class="card bg-dark text-light soft-border shadow-soft no-hover h-100">
+        <div class="card-body">
+          <div class="d-flex align-items-center mb-2">
+            <i class="fa-solid fa-sliders text-info me-2"></i>
+            <h6 class="mb-0">System Settings</h6>
+          </div>
+          <div class="text-secondary small">Future: theme colors, team name, site-wide config, global overrides.</div>
+          <div class="text-secondary small mt-2">Current dev mode: {{ 'On' if developer_mode else 'Off' }}</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Script Runner -->
+  <div class="row g-3 mt-3 anchor-section" id="scripts-section">
+    <div class="col-12 col-xl-7">
+      <div class="card bg-dark text-light soft-border shadow-soft no-hover h-100">
+        <div class="card-body">
+          <div class="d-flex align-items-center mb-2">
+            <i class="fa-solid fa-terminal text-info me-2"></i>
+            <h6 class="mb-0">Script Runner (URL discovery / sniffer / update)</h6>
+            <span class="pill ms-2">CLI-style outputs via alerts</span>
+          </div>
+          <div class="text-secondary small mb-3">Each button runs the script and streams a summary of stdout/stderr into alerts on this page. Reload after run to see the latest flashes; redirects land on this section to avoid jumping to the top.</div>
+          <div class="d-flex flex-wrap gap-2">
+            <form method="post" action="{{ url_for('admin_run_url_discovery') }}" class="js-admin-action" data-label="Running URL discovery...">
+              <button class="btn btn-sm btn-outline-info"><i class="fa-solid fa-sitemap me-1"></i> Run URL Discovery</button>
+            </form>
+            <form method="post" action="{{ url_for('admin_run_api_sniffer') }}" class="js-admin-action" data-label="Running API sniffer...">
+              <button class="btn btn-sm btn-outline-primary"><i class="fa-solid fa-wifi me-1"></i> Run API Sniffer</button>
+            </form>
+            <form method="post" action="{{ url_for('admin_run_pipeline_only') }}" class="js-admin-action" data-label="Running pipeline...">
+              <button class="btn btn-sm btn-outline-secondary"><i class="fa-solid fa-route me-1"></i> Run Pipeline Only</button>
+            </form>
+            <form method="post" action="{{ url_for('admin_run_pipeline') }}" class="js-admin-action" data-label="Running full update..." data-ajax="true" data-endpoint="{{ url_for('admin_run_pipeline_json') }}">
+              <button class="btn btn-sm btn-outline-warning"><i class="fa-solid fa-wand-magic-sparkles me-1"></i> Run Full Update</button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-12 col-xl-5">
+      <div class="card bg-dark text-light soft-border shadow-soft no-hover h-100">
+        <div class="card-body">
+          <div class="d-flex align-items-center mb-2">
+            <i class="fa-solid fa-info-circle text-info me-2"></i>
+            <h6 class="mb-0">Script Guide</h6>
+          </div>
+          <ul class="text-secondary small mb-3">
+            <li><strong>URL Discovery</strong>: crawls APA endpoints and updates capture targets.</li>
+            <li><strong>API Sniffer</strong>: hits those endpoints to produce a fresh <code>api_dump_v2.json</code> in a new capture folder.</li>
+            <li><strong>Run Update</strong>: runs both discovery + sniffer, snapshots the raw dump, copies to <code>data/</code>, and auto-merges into the main league data file with a backup first.</li>
+          </ul>
+          <div class="text-secondary small">
+            Tips:
+            <ul class="mb-0">
+              <li>Reload the page after a run to view output alerts.</li>
+              <li>Use "Restore from backup" if a merge goes wrong.</li>
+              <li>Latest dump shown above; merge picks newest by time.</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- AI Logs -->
+  <div class="row g-3 mt-3">
+    <div class="col-12">
+      <div class="card bg-dark text-light soft-border shadow-soft no-hover">
+        <div class="card-body">
+          <div class="d-flex align-items-center mb-2">
+            <i class="fa-solid fa-clipboard text-info me-2"></i>
+            <h6 class="mb-0">AI Chat Logs (last 50)</h6>
+            <span class="pill ms-2">Admins only</span>
+          </div>
+          <div class="table-responsive" style="max-height:260px; overflow:auto;">
+            <table class="table table-dark table-sm align-middle mb-0">
+              <thead><tr><th>When</th><th>User</th><th>Question</th><th>Answer</th></tr></thead>
+              <tbody>
+                {% for log in ai_logs %}
+                <tr>
+                  <td class="text-secondary small">{{ log.created_at.strftime('%b %d %I:%M%p') if log.created_at else '' }}</td>
+                  <td class="text-secondary small">{{ log.user.username if log.user else log.user_id }}</td>
+                  <td class="text-secondary small">{{ log.question[:120] }}{% if log.question|length > 120 %}...{% endif %}</td>
+                  <td class="text-secondary small">{{ log.answer[:120] }}{% if log.answer and log.answer|length > 120 %}...{% endif %}</td>
+                </tr>
+                {% endfor %}
+                {% if not ai_logs %}
+                <tr><td colspan="4" class="text-secondary small text-center">No chats yet.</td></tr>
+                {% endif %}
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Update Instructions -->
+  <div class="row g-3 mt-1">
+    <div class="col-12">
+      <div class="card bg-dark text-light soft-border shadow-soft no-hover">
+        <div class="card-body">
+          <div class="d-flex align-items-center mb-2">
+            <i class="fa-solid fa-circle-info text-info me-2"></i>
+            <h6 class="mb-0">Update / Scripts Instructions</h6>
+          </div>
+          <div class="row g-3">
+            <div class="col-12 col-lg-6">
+              <div class="text-secondary small mb-1 fw-semibold">Full Update (one click)</div>
+              <ul class="text-secondary small mb-3">
+                <li>Runs URL discovery → API sniffer → pipeline → decode → merge → apply with backup.</li>
+                <li>Watch the Admin Task Status log above for live progress.</li>
+                <li>Latest backup is shown in Data Management; restore if something looks off.</li>
+              </ul>
+              <div class="text-secondary small mb-1 fw-semibold">Pipeline only</div>
+              <ul class="text-secondary small mb-0">
+                <li>Collects a fresh dump only (no merge). Then click “Decode”, “Merge”, “Apply” in order.</li>
+                <li>Use “Refresh data from dump” if you only need to reapply the newest dump.</li>
+              </ul>
+            </div>
+            <div class="col-12 col-lg-6">
+              <div class="text-secondary small mb-1 fw-semibold">Script buttons</div>
+              <ul class="text-secondary small mb-3">
+                <li>URL Discovery → find endpoints; API Sniffer → capture api_dump_v2.json.</li>
+                <li>Decode Dump → write detailed breakdown to data/decode/.</li>
+                <li>Merge decoded matches → writes copy to data/merge/; Apply merged → overwrite main JSON with backup.</li>
+              </ul>
+              <div class="text-secondary small">If the page ever jumps, use the AJAX-enabled buttons (marked in orange/blue) to stay on-page; the log panel will update in place.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Audit Log -->
+  <div class="card bg-dark text-light soft-border shadow-soft no-hover mt-3">
+    <div class="card-body">
+      <div class="d-flex align-items-center mb-2">
+        <i class="fa-solid fa-clipboard-list text-info me-2"></i>
+        <h6 class="mb-0">Audit Log</h6>
+        <span class="pill ms-2">Deleted / role changes / moderation</span>
+      </div>
+      <div class="table-responsive">
+        <table class="table table-dark table-sm align-middle mb-0">
+          <thead><tr><th>When</th><th>Actor</th><th>Action</th><th>Target</th><th>Detail</th></tr></thead>
+          <tbody>
+            {% for a in audit_entries %}
+            <tr>
+              <td class="text-secondary small">{{ a.created_at.strftime('%b %d, %I:%M %p') if a.created_at else '' }}</td>
+              <td class="text-secondary small">{{ a.actor_user_id }}</td>
+              <td class="text-secondary small">{{ a.action }}</td>
+              <td class="text-secondary small">{{ a.target }}</td>
+              <td class="text-secondary small">{{ a.detail }}</td>
+            </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}
+{% block modals %}
+{{ super() }}
+<!-- All badges award modal -->
+<div class="modal fade" id="allBadgesAdminModal" tabindex="-1" aria-hidden="true">
+  <div class="modal-dialog modal-lg modal-dialog-scrollable">
+    <div class="modal-content bg-dark soft-border shadow-soft">
+      <div class="modal-header">
+        <h6 class="modal-title text-info">Badges</h6>
+        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <div class="mb-2">
+          <input type="text" id="badgeSearch" class="form-control bg-dark text-light soft-border" placeholder="Search badges...">
+        </div>
+        <div class="row g-2" id="badgeList">
+          {% for b in badges %}
+          <div class="col-12 col-md-6 badge-item" data-name="{{ b.name|lower }}">
+            <div class="p-2 rounded" style="background:rgba(255,255,255,0.04); border:1px solid rgba(255,255,255,0.08);">
+              <div class="d-flex justify-content-between align-items-center">
+                <div><i class="fa-solid {{ b.icon or 'fa-star' }} text-info me-2"></i>{{ b.name }}</div>
+                <form method="POST" action="{{ url_for('admin_delete_badge') }}">
+                  <input type="hidden" name="badge_id" value="{{ b.id }}">
+                  <button class="btn btn-sm btn-outline-danger">Remove</button>
+                </form>
+              </div>
+              <div class="text-secondary small">{{ b.description or '' }}</div>
+              <div class="text-secondary small fst-italic">Requirement: {{ badge_requirements.get(b.name, 'Manual award / custom rule') }}</div>
+              <form class="mt-2 d-flex gap-2 award-form" method="POST" action="{{ url_for('admin_award_badge') }}">
+                <input type="hidden" name="badge_id" value="{{ b.id }}">
+                <select name="user_id" class="form-select form-select-sm bg-dark text-light soft-border">
+                  {% for u in users %}<option value="{{ u.id }}">{{ u.username }}</option>{% endfor %}
+                </select>
+                <button class="btn btn-sm btn-outline-info award-btn" type="submit">Award</button>
+              </form>
+            </div>
+          </div>
+          {% endfor %}
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+{{ super() }}
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    const search = document.getElementById('badgeSearch');
+    const items = document.querySelectorAll('.badge-item');
+    if (search) {
+      search.addEventListener('input', () => {
+        const q = search.value.toLowerCase();
+        items.forEach(it => {
+          const name = it.dataset.name || '';
+          it.classList.toggle('d-none', !name.includes(q));
+        });
+      });
+    }
+
+    // Admin action loading indicator + AJAX log
+    const busy = document.getElementById('adminBusy');
+    const busyText = busy ? busy.querySelector('.busy-text') : null;
+    const logBox = document.getElementById('adminLog');
+    const toastEl = document.getElementById('adminToast');
+    const toastText = toastEl ? toastEl.querySelector('.toast-text') : null;
+
+    function appendLogs(lines) {
+      if (!logBox || !lines) return;
+      const arr = Array.isArray(lines) ? lines : [lines];
+      const existing = logBox.textContent ? logBox.textContent + '\n' : '';
+      logBox.textContent = existing + arr.join('\n');
+      logBox.scrollTop = logBox.scrollHeight;
+    }
+
+    function showToast(msg, kind='success') {
+      if (!toastEl || !toastText) return;
+      toastText.textContent = msg;
+      toastEl.className = `alert alert-${kind} alert-dismissible fade show`;
+      toastEl.style.display = 'block';
+      setTimeout(() => { toastEl.style.display = 'none'; }, 4000);
+    }
+
+    document.querySelectorAll('form.js-admin-action').forEach(form => {
+      form.addEventListener('submit', (e) => {
+        const useAjax = form.dataset.ajax === 'true';
+        if (!useAjax) {
+          if (busy) busy.style.display = 'block';
+          if (busyText) busyText.textContent = form.dataset.label || 'Working...';
+          return;
+        }
+        e.preventDefault();
+        if (busy) {
+          busy.style.display = 'block';
+          if (busyText) busyText.textContent = form.dataset.label || 'Working...';
+        }
+        const endpoint = form.dataset.endpoint || form.action;
+        fetch(endpoint, {method: 'POST'})
+          .then(r => r.json().catch(() => ({})).then(data => ({ok: r.ok, status: r.status, data})))
+          .then(({ok, data, status}) => {
+            appendLogs(data && data.logs);
+            if (!ok) {
+              appendLogs(`Error (${status}): ${data && data.error ? data.error : 'Unknown error'}`);
+              showToast(data && data.error ? data.error : 'Action failed', 'danger');
+            } else if (data && data.msg) {
+              appendLogs(data.msg);
+              showToast(data.msg, 'success');
+            }
+          })
+          .catch(err => appendLogs(`Error: ${err}`))
+          .finally(() => {
+            if (busy) busy.style.display = 'none';
+          });
+      });
+    });
+  });
+</script>
+{% endblock %}

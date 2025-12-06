@@ -1,0 +1,1004 @@
+{
+  "by_match_id": {
+    "48118020": {
+      "id": 48118020,
+      "format": "8-ball",
+      "date": "2025-09-04T20:00:00-05:00",
+      "week": 1,
+      "home_team_id": 12864715,
+      "home_team_name": "Chalk and Awe",
+      "away_team_id": 12867592,
+      "away_team_name": "Cue-ligans",
+      "team_scores": {
+        "home_total": 14,
+        "away_total": 6
+      },
+      "location": "DK's Stix & Stuff",
+      "division_id": 417530,
+      "sets": [],
+      "status": "COMPLETED",
+      "result": {
+        "winner": "home",
+        "home_total": 14,
+        "away_total": 6,
+        "note": "8-ball total 14-6 (per-board 3-0 or 2-1 scoring)"
+      },
+      "home_team_slug": "chalk_and_awe",
+      "away_team_slug": "cue_ligans"
+    },
+    "48118023": {
+      "id": 48118023,
+      "format": "8-ball",
+      "date": "2025-09-11T20:00:00-05:00",
+      "week": 2,
+      "home_team_id": 12867592,
+      "home_team_name": "Cue-ligans",
+      "away_team_id": 12864717,
+      "away_team_name": "Bad Boys",
+      "team_scores": {
+        "home_total": 10,
+        "away_total": 10
+      },
+      "location": "DK's Stix & Stuff",
+      "division_id": 417530,
+      "sets": [],
+      "status": "COMPLETED",
+      "result": {
+        "winner": "tie",
+        "home_total": 10,
+        "away_total": 10,
+        "note": "8-ball total 10-10 (per-board 3-0 or 2-1 scoring)"
+      },
+      "home_team_slug": "cue_ligans",
+      "away_team_slug": "bad_boys"
+    },
+    "48118027": {
+      "id": 48118027,
+      "format": "8-ball",
+      "date": "2025-09-18T20:00:00-05:00",
+      "week": 3,
+      "home_team_id": 12864719,
+      "home_team_name": "Palochones",
+      "away_team_id": 12867592,
+      "away_team_name": "Cue-ligans",
+      "team_scores": {
+        "home_total": 10,
+        "away_total": 9
+      },
+      "location": "The Lucky Barrel",
+      "division_id": 417530,
+      "sets": [],
+      "status": "COMPLETED",
+      "result": {
+        "winner": "home",
+        "home_total": 10,
+        "away_total": 9,
+        "note": "8-ball total 10-9 (per-board 3-0 or 2-1 scoring)"
+      },
+      "home_team_slug": "palochones",
+      "away_team_slug": "cue_ligans"
+    },
+    "48118030": {
+      "id": 48118030,
+      "format": "8-ball",
+      "date": "2025-09-25T20:00:00-05:00",
+      "week": 4,
+      "home_team_id": 12864718,
+      "home_team_name": "Sour Patch Kids",
+      "away_team_id": 12867592,
+      "away_team_name": "Cue-ligans",
+      "team_scores": {
+        "home_total": 11,
+        "away_total": 9
+      },
+      "location": "The Lucky Barrel",
+      "division_id": 417530,
+      "sets": [],
+      "status": "COMPLETED",
+      "result": {
+        "winner": "home",
+        "home_total": 11,
+        "away_total": 9,
+        "note": "8-ball total 11-9 (per-board 3-0 or 2-1 scoring)"
+      },
+      "home_team_slug": "sour_patch_kids",
+      "away_team_slug": "cue_ligans"
+    },
+    "48118033": {
+      "id": 48118033,
+      "format": "8-ball",
+      "date": "2025-10-02T20:00:00-05:00",
+      "week": 5,
+      "home_team_id": 12867592,
+      "home_team_name": "Cue-ligans",
+      "away_team_id": 12864714,
+      "away_team_name": "Dead On",
+      "team_scores": {
+        "home_total": 8,
+        "away_total": 12
+      },
+      "location": "DK's Stix & Stuff",
+      "division_id": 417530,
+      "sets": [],
+      "status": "COMPLETED",
+      "result": {
+        "winner": "away",
+        "home_total": 8,
+        "away_total": 12,
+        "note": "8-ball total 8-12 (per-board 3-0 or 2-1 scoring)"
+      },
+      "home_team_slug": "cue_ligans",
+      "away_team_slug": "dead_on"
+    },
+    "48118039": {
+      "id": 48118039,
+      "format": "8-ball",
+      "date": "2025-10-09T20:00:00-05:00",
+      "week": 6,
+      "home_team_id": 12864720,
+      "home_team_name": "Quete Importa",
+      "away_team_id": 12867592,
+      "away_team_name": "Cue-ligans",
+      "team_scores": {
+        "home_total": 10,
+        "away_total": 11
+      },
+      "location": "The Lucky Barrel",
+      "division_id": 417530,
+      "sets": [],
+      "status": "COMPLETED",
+      "result": {
+        "winner": "away",
+        "home_total": 10,
+        "away_total": 11,
+        "note": "8-ball total 10-11 (per-board 3-0 or 2-1 scoring)"
+      },
+      "home_team_slug": "quete_importa",
+      "away_team_slug": "cue_ligans"
+    },
+    "48118044": {
+      "id": 48118044,
+      "format": "8-ball",
+      "date": "2025-10-16T20:00:00-05:00",
+      "week": 7,
+      "home_team_id": 12867592,
+      "home_team_name": "Cue-ligans",
+      "away_team_id": 12864716,
+      "away_team_name": "Ballerz 956",
+      "team_scores": {
+        "home_total": 9,
+        "away_total": 11
+      },
+      "location": "DK's Stix & Stuff",
+      "division_id": 417530,
+      "sets": [],
+      "status": "COMPLETED",
+      "result": {
+        "winner": "away",
+        "home_total": 9,
+        "away_total": 11,
+        "note": "8-ball total 9-11 (per-board 3-0 or 2-1 scoring)"
+      },
+      "home_team_slug": "cue_ligans",
+      "away_team_slug": "ballerz_956"
+    },
+    "48118048": {
+      "id": 48118048,
+      "format": "8-ball",
+      "date": "2025-10-23T20:00:00-05:00",
+      "week": 8,
+      "home_team_id": 12867592,
+      "home_team_name": "Cue-ligans",
+      "away_team_id": 12864715,
+      "away_team_name": "Chalk and Awe",
+      "team_scores": {
+        "home_total": 7,
+        "away_total": 12
+      },
+      "location": "DK's Stix & Stuff",
+      "division_id": 417530,
+      "sets": [],
+      "status": "COMPLETED",
+      "result": {
+        "winner": "away",
+        "home_total": 7,
+        "away_total": 12,
+        "note": "8-ball total 7-12 (per-board 3-0 or 2-1 scoring)"
+      },
+      "home_team_slug": "cue_ligans",
+      "away_team_slug": "chalk_and_awe"
+    },
+    "48118051": {
+      "id": 48118051,
+      "format": "8-ball",
+      "date": "2025-10-30T20:00:00-05:00",
+      "week": 9,
+      "home_team_id": 12864717,
+      "home_team_name": "Bad Boys",
+      "away_team_id": 12867592,
+      "away_team_name": "Cue-ligans",
+      "team_scores": {
+        "home_total": 11,
+        "away_total": 9
+      },
+      "location": "The Lucky Barrel",
+      "division_id": 417530,
+      "sets": [],
+      "status": "COMPLETED",
+      "result": {
+        "winner": "home",
+        "home_total": 11,
+        "away_total": 9,
+        "note": "8-ball total 11-9 (per-board 3-0 or 2-1 scoring)"
+      },
+      "home_team_slug": "bad_boys",
+      "away_team_slug": "cue_ligans"
+    },
+    "48118055": {
+      "id": 48118055,
+      "format": "8-ball",
+      "date": "2025-11-06T20:00:00-06:00",
+      "week": 10,
+      "home_team_id": 12867592,
+      "home_team_name": "Cue-ligans",
+      "away_team_id": 12864719,
+      "away_team_name": "Palochones",
+      "team_scores": {
+        "home_total": 10,
+        "away_total": 9
+      },
+      "location": "DK's Stix & Stuff",
+      "division_id": 417530,
+      "sets": [],
+      "status": "COMPLETED",
+      "result": {
+        "winner": "home",
+        "home_total": 10,
+        "away_total": 9,
+        "note": "8-ball total 10-9 (per-board 3-0 or 2-1 scoring)"
+      },
+      "home_team_slug": "cue_ligans",
+      "away_team_slug": "palochones"
+    },
+    "48118058": {
+      "id": 48118058,
+      "format": "8-ball",
+      "date": "2025-11-13T20:00:00-06:00",
+      "week": 11,
+      "home_team_id": 12867592,
+      "home_team_name": "Cue-ligans",
+      "away_team_id": 12864718,
+      "away_team_name": "Sour Patch Kids",
+      "team_scores": {
+        "home_total": 7,
+        "away_total": 13
+      },
+      "location": "DK's Stix & Stuff",
+      "division_id": 417530,
+      "sets": [],
+      "status": "COMPLETED",
+      "result": {
+        "winner": "away",
+        "home_total": 7,
+        "away_total": 13,
+        "note": "8-ball total 7-13 (per-board 3-0 or 2-1 scoring)"
+      },
+      "home_team_slug": "cue_ligans",
+      "away_team_slug": "sour_patch_kids"
+    },
+    "48118061": {
+      "id": 48118061,
+      "format": "8-ball",
+      "date": "2025-11-20T20:00:00-06:00",
+      "week": 12,
+      "home_team_id": 12864714,
+      "home_team_name": "Dead On",
+      "away_team_id": 12867592,
+      "away_team_name": "Cue-ligans",
+      "team_scores": {
+        "home_total": null,
+        "away_total": null
+      },
+      "location": "DK's Stix & Stuff",
+      "division_id": 417530,
+      "sets": [],
+      "status": "COMPLETED",
+      "result": {
+        "winner": null,
+        "home_total": null,
+        "away_total": null
+      },
+      "home_team_slug": "dead_on",
+      "away_team_slug": "cue_ligans"
+    },
+    "48118067": {
+      "id": 48118067,
+      "format": "8-ball",
+      "date": "2025-12-04T20:00:00-06:00",
+      "week": 13,
+      "home_team_id": 12867592,
+      "home_team_name": "Cue-ligans",
+      "away_team_id": 12864720,
+      "away_team_name": "Quete Importa",
+      "team_scores": {
+        "home_total": null,
+        "away_total": null
+      },
+      "location": "DK's Stix & Stuff",
+      "division_id": 417530,
+      "sets": [],
+      "status": "UNPLAYED",
+      "result": {
+        "winner": null,
+        "home_total": null,
+        "away_total": null
+      },
+      "home_team_slug": "cue_ligans",
+      "away_team_slug": "quete_importa"
+    },
+    "48118072": {
+      "id": 48118072,
+      "format": "8-ball",
+      "date": "2025-12-11T20:00:00-06:00",
+      "week": 14,
+      "home_team_id": 12864716,
+      "home_team_name": "Ballerz 956",
+      "away_team_id": 12867592,
+      "away_team_name": "Cue-ligans",
+      "team_scores": {
+        "home_total": null,
+        "away_total": null
+      },
+      "location": "The Lucky Barrel",
+      "division_id": 417530,
+      "sets": [],
+      "status": "UNPLAYED",
+      "result": {
+        "winner": null,
+        "home_total": null,
+        "away_total": null
+      },
+      "home_team_slug": "ballerz_956",
+      "away_team_slug": "cue_ligans"
+    },
+    "48118076": {
+      "id": 48118076,
+      "format": "8-ball",
+      "date": "2025-12-18T20:00:00-06:00",
+      "week": 15,
+      "home_team_id": 12864715,
+      "home_team_name": "Chalk and Awe",
+      "away_team_id": 12867592,
+      "away_team_name": "Cue-ligans",
+      "team_scores": {
+        "home_total": null,
+        "away_total": null
+      },
+      "location": "DK's Stix & Stuff",
+      "division_id": 417530,
+      "sets": [],
+      "status": "UNPLAYED",
+      "result": {
+        "winner": null,
+        "home_total": null,
+        "away_total": null
+      },
+      "home_team_slug": "chalk_and_awe",
+      "away_team_slug": "cue_ligans"
+    },
+    "48118080": {
+      "id": 48118080,
+      "format": "9-ball",
+      "date": "2025-09-04T20:00:00-05:00",
+      "week": 1,
+      "home_team_id": 12864635,
+      "home_team_name": "Chalk and Awe",
+      "away_team_id": 12867593,
+      "away_team_name": "Cue-ligans",
+      "team_scores": {
+        "home_total": 78,
+        "away_total": 52
+      },
+      "location": "DK's Stix & Stuff",
+      "division_id": 417524,
+      "sets": [],
+      "status": "COMPLETED",
+      "result": {
+        "winner": "home",
+        "home_total": 78,
+        "away_total": 52,
+        "note": "9-ball total 78-52 (20-point boards)"
+      },
+      "home_team_slug": "chalk_and_awe",
+      "away_team_slug": "cue_ligans"
+    },
+    "48118083": {
+      "id": 48118083,
+      "format": "9-ball",
+      "date": "2025-09-11T20:00:00-05:00",
+      "week": 2,
+      "home_team_id": 12867593,
+      "home_team_name": "Cue-ligans",
+      "away_team_id": 12864637,
+      "away_team_name": "Bad Boys",
+      "team_scores": {
+        "home_total": 75,
+        "away_total": 55
+      },
+      "location": "DK's Stix & Stuff",
+      "division_id": 417524,
+      "sets": [],
+      "status": "COMPLETED",
+      "result": {
+        "winner": "home",
+        "home_total": 75,
+        "away_total": 55,
+        "note": "9-ball total 75-55 (20-point boards)"
+      },
+      "home_team_slug": "cue_ligans",
+      "away_team_slug": "bad_boys"
+    },
+    "48118087": {
+      "id": 48118087,
+      "format": "9-ball",
+      "date": "2025-09-18T20:00:00-05:00",
+      "week": 3,
+      "home_team_id": 12864639,
+      "home_team_name": "Palochones",
+      "away_team_id": 12867593,
+      "away_team_name": "Cue-ligans",
+      "team_scores": {
+        "home_total": 33,
+        "away_total": 82
+      },
+      "location": "The Lucky Barrel",
+      "division_id": 417524,
+      "sets": [],
+      "status": "COMPLETED",
+      "result": {
+        "winner": "away",
+        "home_total": 33,
+        "away_total": 82,
+        "note": "9-ball total 33-82 (20-point boards)"
+      },
+      "home_team_slug": "palochones",
+      "away_team_slug": "cue_ligans"
+    },
+    "48118090": {
+      "id": 48118090,
+      "format": "9-ball",
+      "date": "2025-09-25T20:00:00-05:00",
+      "week": 4,
+      "home_team_id": 12864638,
+      "home_team_name": "Sour Patch Kids",
+      "away_team_id": 12867593,
+      "away_team_name": "Cue-ligans",
+      "team_scores": {
+        "home_total": 63,
+        "away_total": 67
+      },
+      "location": "The Lucky Barrel",
+      "division_id": 417524,
+      "sets": [],
+      "status": "COMPLETED",
+      "result": {
+        "winner": "away",
+        "home_total": 63,
+        "away_total": 67,
+        "note": "9-ball total 63-67 (20-point boards)"
+      },
+      "home_team_slug": "sour_patch_kids",
+      "away_team_slug": "cue_ligans"
+    },
+    "48118093": {
+      "id": 48118093,
+      "format": "9-ball",
+      "date": "2025-10-02T20:00:00-05:00",
+      "week": 5,
+      "home_team_id": 12867593,
+      "home_team_name": "Cue-ligans",
+      "away_team_id": 12864634,
+      "away_team_name": "Dead On",
+      "team_scores": {
+        "home_total": 82,
+        "away_total": 48
+      },
+      "location": "DK's Stix & Stuff",
+      "division_id": 417524,
+      "sets": [],
+      "status": "COMPLETED",
+      "result": {
+        "winner": "home",
+        "home_total": 82,
+        "away_total": 48,
+        "note": "9-ball total 82-48 (20-point boards)"
+      },
+      "home_team_slug": "cue_ligans",
+      "away_team_slug": "dead_on"
+    },
+    "48118099": {
+      "id": 48118099,
+      "format": "9-ball",
+      "date": "2025-10-09T20:00:00-05:00",
+      "week": 6,
+      "home_team_id": 12864640,
+      "home_team_name": "Quete Importa",
+      "away_team_id": 12867593,
+      "away_team_name": "Cue-ligans",
+      "team_scores": {
+        "home_total": 70,
+        "away_total": 60
+      },
+      "location": "The Lucky Barrel",
+      "division_id": 417524,
+      "sets": [],
+      "status": "COMPLETED",
+      "result": {
+        "winner": "home",
+        "home_total": 70,
+        "away_total": 60,
+        "note": "9-ball total 70-60 (20-point boards)"
+      },
+      "home_team_slug": "quete_importa",
+      "away_team_slug": "cue_ligans"
+    },
+    "48118104": {
+      "id": 48118104,
+      "format": "9-ball",
+      "date": "2025-10-16T20:00:00-05:00",
+      "week": 7,
+      "home_team_id": 12867593,
+      "home_team_name": "Cue-ligans",
+      "away_team_id": 12864636,
+      "away_team_name": "Ballerz 956",
+      "team_scores": {
+        "home_total": 59,
+        "away_total": 71
+      },
+      "location": "DK's Stix & Stuff",
+      "division_id": 417524,
+      "sets": [],
+      "status": "COMPLETED",
+      "result": {
+        "winner": "away",
+        "home_total": 59,
+        "away_total": 71,
+        "note": "9-ball total 59-71 (20-point boards)"
+      },
+      "home_team_slug": "cue_ligans",
+      "away_team_slug": "ballerz_956"
+    },
+    "48118108": {
+      "id": 48118108,
+      "format": "9-ball",
+      "date": "2025-10-23T20:00:00-05:00",
+      "week": 8,
+      "home_team_id": 12867593,
+      "home_team_name": "Cue-ligans",
+      "away_team_id": 12864635,
+      "away_team_name": "Chalk and Awe",
+      "team_scores": {
+        "home_total": 64,
+        "away_total": 66
+      },
+      "location": "DK's Stix & Stuff",
+      "division_id": 417524,
+      "sets": [],
+      "status": "COMPLETED",
+      "result": {
+        "winner": "away",
+        "home_total": 64,
+        "away_total": 66,
+        "note": "9-ball total 64-66 (20-point boards)"
+      },
+      "home_team_slug": "cue_ligans",
+      "away_team_slug": "chalk_and_awe"
+    },
+    "48118111": {
+      "id": 48118111,
+      "format": "9-ball",
+      "date": "2025-10-30T20:00:00-05:00",
+      "week": 9,
+      "home_team_id": 12864637,
+      "home_team_name": "Bad Boys",
+      "away_team_id": 12867593,
+      "away_team_name": "Cue-ligans",
+      "team_scores": {
+        "home_total": 66,
+        "away_total": 64
+      },
+      "location": "The Lucky Barrel",
+      "division_id": 417524,
+      "sets": [],
+      "status": "COMPLETED",
+      "result": {
+        "winner": "home",
+        "home_total": 66,
+        "away_total": 64,
+        "note": "9-ball total 66-64 (20-point boards)"
+      },
+      "home_team_slug": "bad_boys",
+      "away_team_slug": "cue_ligans"
+    },
+    "48118115": {
+      "id": 48118115,
+      "format": "9-ball",
+      "date": "2025-11-06T20:00:00-06:00",
+      "week": 10,
+      "home_team_id": 12867593,
+      "home_team_name": "Cue-ligans",
+      "away_team_id": 12864639,
+      "away_team_name": "Palochones",
+      "team_scores": {
+        "home_total": 67,
+        "away_total": 63
+      },
+      "location": "DK's Stix & Stuff",
+      "division_id": 417524,
+      "sets": [],
+      "status": "COMPLETED",
+      "result": {
+        "winner": "home",
+        "home_total": 67,
+        "away_total": 63,
+        "note": "9-ball total 67-63 (20-point boards)"
+      },
+      "home_team_slug": "cue_ligans",
+      "away_team_slug": "palochones"
+    },
+    "48118118": {
+      "id": 48118118,
+      "format": "9-ball",
+      "date": "2025-11-13T20:00:00-06:00",
+      "week": 11,
+      "home_team_id": 12867593,
+      "home_team_name": "Cue-ligans",
+      "away_team_id": 12864638,
+      "away_team_name": "Sour Patch Kids",
+      "team_scores": {
+        "home_total": 48,
+        "away_total": 82
+      },
+      "location": "DK's Stix & Stuff",
+      "division_id": 417524,
+      "sets": [],
+      "status": "COMPLETED",
+      "result": {
+        "winner": "away",
+        "home_total": 48,
+        "away_total": 82,
+        "note": "9-ball total 48-82 (20-point boards)"
+      },
+      "home_team_slug": "cue_ligans",
+      "away_team_slug": "sour_patch_kids"
+    },
+    "48118121": {
+      "id": 48118121,
+      "format": "9-ball",
+      "date": "2025-11-20T20:00:00-06:00",
+      "week": 12,
+      "home_team_id": 12864634,
+      "home_team_name": "Dead On",
+      "away_team_id": 12867593,
+      "away_team_name": "Cue-ligans",
+      "team_scores": {
+        "home_total": null,
+        "away_total": null
+      },
+      "location": "DK's Stix & Stuff",
+      "division_id": 417524,
+      "sets": [],
+      "status": "COMPLETED",
+      "result": {
+        "winner": null,
+        "home_total": null,
+        "away_total": null
+      },
+      "home_team_slug": "dead_on",
+      "away_team_slug": "cue_ligans"
+    },
+    "48118139": {
+      "id": 48118139,
+      "format": "9-ball",
+      "date": "2025-12-04T20:00:00-06:00",
+      "week": 13,
+      "home_team_id": 12867593,
+      "home_team_name": "Cue-ligans",
+      "away_team_id": 12864640,
+      "away_team_name": "Quete Importa",
+      "team_scores": {
+        "home_total": null,
+        "away_total": null
+      },
+      "location": "DK's Stix & Stuff",
+      "division_id": 417524,
+      "sets": [],
+      "status": "UNPLAYED",
+      "result": {
+        "winner": null,
+        "home_total": null,
+        "away_total": null
+      },
+      "home_team_slug": "cue_ligans",
+      "away_team_slug": "quete_importa"
+    },
+    "48118144": {
+      "id": 48118144,
+      "format": "9-ball",
+      "date": "2025-12-11T20:00:00-06:00",
+      "week": 14,
+      "home_team_id": 12864636,
+      "home_team_name": "Ballerz 956",
+      "away_team_id": 12867593,
+      "away_team_name": "Cue-ligans",
+      "team_scores": {
+        "home_total": null,
+        "away_total": null
+      },
+      "location": "The Lucky Barrel",
+      "division_id": 417524,
+      "sets": [],
+      "status": "UNPLAYED",
+      "result": {
+        "winner": null,
+        "home_total": null,
+        "away_total": null
+      },
+      "home_team_slug": "ballerz_956",
+      "away_team_slug": "cue_ligans"
+    },
+    "48118148": {
+      "id": 48118148,
+      "format": "9-ball",
+      "date": "2025-12-18T20:00:00-06:00",
+      "week": 15,
+      "home_team_id": 12864635,
+      "home_team_name": "Chalk and Awe",
+      "away_team_id": 12867593,
+      "away_team_name": "Cue-ligans",
+      "team_scores": {
+        "home_total": null,
+        "away_total": null
+      },
+      "location": "DK's Stix & Stuff",
+      "division_id": 417524,
+      "sets": [],
+      "status": "UNPLAYED",
+      "result": {
+        "winner": null,
+        "home_total": null,
+        "away_total": null
+      },
+      "home_team_slug": "chalk_and_awe",
+      "away_team_slug": "cue_ligans"
+    }
+  },
+  "by_team_id": {
+    "12864715": [
+      "48118020",
+      "48118048",
+      "48118076"
+    ],
+    "12867592": [
+      "48118020",
+      "48118023",
+      "48118027",
+      "48118030",
+      "48118033",
+      "48118039",
+      "48118044",
+      "48118048",
+      "48118051",
+      "48118055",
+      "48118058",
+      "48118061",
+      "48118067",
+      "48118072",
+      "48118076"
+    ],
+    "12864717": [
+      "48118023",
+      "48118051"
+    ],
+    "12864719": [
+      "48118027",
+      "48118055"
+    ],
+    "12864718": [
+      "48118030",
+      "48118058"
+    ],
+    "12864714": [
+      "48118033",
+      "48118061"
+    ],
+    "12864720": [
+      "48118039",
+      "48118067"
+    ],
+    "12864716": [
+      "48118044",
+      "48118072"
+    ],
+    "12864635": [
+      "48118080",
+      "48118108",
+      "48118148"
+    ],
+    "12867593": [
+      "48118080",
+      "48118083",
+      "48118087",
+      "48118090",
+      "48118093",
+      "48118099",
+      "48118104",
+      "48118108",
+      "48118111",
+      "48118115",
+      "48118118",
+      "48118121",
+      "48118139",
+      "48118144",
+      "48118148"
+    ],
+    "12864637": [
+      "48118083",
+      "48118111"
+    ],
+    "12864639": [
+      "48118087",
+      "48118115"
+    ],
+    "12864638": [
+      "48118090",
+      "48118118"
+    ],
+    "12864634": [
+      "48118093",
+      "48118121"
+    ],
+    "12864640": [
+      "48118099",
+      "48118139"
+    ],
+    "12864636": [
+      "48118104",
+      "48118144"
+    ]
+  },
+  "by_division_id": {
+    "417530": [
+      "48118020",
+      "48118023",
+      "48118027",
+      "48118030",
+      "48118033",
+      "48118039",
+      "48118044",
+      "48118048",
+      "48118051",
+      "48118055",
+      "48118058",
+      "48118061",
+      "48118067",
+      "48118072",
+      "48118076"
+    ],
+    "417524": [
+      "48118080",
+      "48118083",
+      "48118087",
+      "48118090",
+      "48118093",
+      "48118099",
+      "48118104",
+      "48118108",
+      "48118111",
+      "48118115",
+      "48118118",
+      "48118121",
+      "48118139",
+      "48118144",
+      "48118148"
+    ]
+  },
+  "by_week": {
+    "1": [
+      "48118020",
+      "48118080"
+    ],
+    "2": [
+      "48118023",
+      "48118083"
+    ],
+    "3": [
+      "48118027",
+      "48118087"
+    ],
+    "4": [
+      "48118030",
+      "48118090"
+    ],
+    "5": [
+      "48118033",
+      "48118093"
+    ],
+    "6": [
+      "48118039",
+      "48118099"
+    ],
+    "7": [
+      "48118044",
+      "48118104"
+    ],
+    "8": [
+      "48118048",
+      "48118108"
+    ],
+    "9": [
+      "48118051",
+      "48118111"
+    ],
+    "10": [
+      "48118055",
+      "48118115"
+    ],
+    "11": [
+      "48118058",
+      "48118118"
+    ],
+    "12": [
+      "48118061",
+      "48118121"
+    ],
+    "13": [
+      "48118067",
+      "48118139"
+    ],
+    "14": [
+      "48118072",
+      "48118144"
+    ],
+    "15": [
+      "48118076",
+      "48118148"
+    ]
+  },
+  "by_format": {
+    "8-ball": [
+      "48118020",
+      "48118023",
+      "48118027",
+      "48118030",
+      "48118033",
+      "48118039",
+      "48118044",
+      "48118048",
+      "48118051",
+      "48118055",
+      "48118058",
+      "48118061",
+      "48118067",
+      "48118072",
+      "48118076"
+    ],
+    "9-ball": [
+      "48118080",
+      "48118083",
+      "48118087",
+      "48118090",
+      "48118093",
+      "48118099",
+      "48118104",
+      "48118108",
+      "48118111",
+      "48118115",
+      "48118118",
+      "48118121",
+      "48118139",
+      "48118144",
+      "48118148"
+    ]
+  }
+}

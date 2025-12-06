@@ -1,0 +1,19 @@
+# Sample Cloudflare Tunnel config for this app
+# Replace YOURDOMAIN.com with your real domain before running.
+#
+# Usage:
+# 1) Install cloudflared and run `cloudflared login`
+# 2) Create the tunnel: `cloudflared tunnel create cue-ligans`
+# 3) Update the credentials-file path below to point to the JSON cloudflared created.
+# 4) Update the hostname to something you own (e.g., cueligang.YOURDOMAIN.com).
+# 5) Run: `cloudflared tunnel run cue-ligans --config cloudflared-config.example.yml`
+#
+# This routes HTTPS traffic at the hostname to your local Flask app on port 5000.
+
+tunnel: cue-ligans
+credentials-file: C:\Users\YOURUSER\.cloudflared\cue-ligans.json
+
+ingress:
+  - hostname: cueligang.YOURDOMAIN.com
+    service: http://localhost:5000
+  - service: http_status:404

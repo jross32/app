@@ -1,0 +1,22 @@
+{
+	"eight_ball": [
+		{"rank": 1, "team": "Quete Importa", "points": 49, "week_points": 11, "week": 4},
+		{"rank": 2, "team": "Bad Boys", "points": 40, "week_points": 11, "week": 4},
+		{"rank": 3, "team": "Chalk and Awe", "points": 38, "week_points": 10, "week": 4},
+		{"rank": 3, "team": "Sour Patch Kids", "points": 38, "week_points": 11, "week": 4},
+		{"rank": 5, "team": "Palochones", "points": 35, "week_points": 7, "week": 4},
+		{"rank": 6, "team": "Cue-ligans", "points": 34, "week_points": 9, "week": 4},
+		{"rank": 6, "team": "Ballerz 956", "points": 34, "week_points": 9, "week": 4},
+		{"rank": 8, "team": "Dead On", "points": 32, "week_points": 9, "week": 4}
+	],
+	"nine_ball": [
+		{"rank": 1, "team": "Chalk and Awe", "points": 294, "week_points": 68, "week": 4},
+		{"rank": 2, "team": "Quete Importa", "points": 279, "week_points": 62, "week": 4},
+		{"rank": 3, "team": "Cue-ligans", "points": 276, "week_points": 67, "week": 4},
+		{"rank": 4, "team": "Ballerz 956", "points": 269, "week_points": 59, "week": 4},
+		{"rank": 5, "team": "Dead On", "points": 262, "week_points": 84, "week": 4},
+		{"rank": 6, "team": "Sour Patch Kids", "points": 243, "week_points": 63, "week": 4},
+		{"rank": 7, "team": "Palochones", "points": 231, "week_points": 71, "week": 4},
+		{"rank": 8, "team": "Bad Boys", "points": 206, "week_points": 46, "week": 4}
+	]
+}

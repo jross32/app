@@ -1,0 +1,44 @@
+{
+  "by_division_id": {
+    "417524": {
+      "id": 417524,
+      "name": "Thursday Brownsville 9 B",
+      "format": "9-ball",
+      "night": "Thursday",
+      "raw": {
+        "name": "Thursday Brownsville 9 B",
+        "format": null,
+        "type": null,
+        "divisionNight": null
+      },
+      "slug": "thursday_brownsville_9_b"
+    },
+    "417530": {
+      "id": 417530,
+      "name": "Thursday Brownsville DJ",
+      "format": "8-ball",
+      "night": "Thursday",
+      "raw": {
+        "name": "Thursday Brownsville DJ",
+        "format": null,
+        "type": null,
+        "divisionNight": null
+      },
+      "slug": "thursday_brownsville_dj"
+    }
+  },
+  "by_format": {
+    "9-ball": [
+      "417524"
+    ],
+    "8-ball": [
+      "417530"
+    ]
+  },
+  "by_night": {
+    "Thursday": [
+      "417524",
+      "417530"
+    ]
+  }
+}

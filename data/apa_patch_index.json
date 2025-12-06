@@ -1,0 +1,588 @@
+{
+  "categories": [
+    {
+      "name": "Performance Patches (Shot-Based)",
+      "slug": "performance",
+      "patches": [
+        {
+          "code": "8_on_break",
+          "name": "8-On-The-Break",
+          "description": "Make the 8 on a legal break.",
+          "difficulty": "Silver",
+          "format": "8-ball",
+          "scope": "individual",
+          "official": true,
+          "discontinued": false,
+          "notes": ""
+        },
+        {
+          "code": "8_bnr",
+          "name": "8-Ball Break & Run",
+          "description": "Break, make a ball, then run out the rack.",
+          "difficulty": "Gold",
+          "format": "8-ball",
+          "scope": "individual",
+          "official": true,
+          "discontinued": false,
+          "notes": ""
+        },
+        {
+          "code": "8_mini_slam",
+          "name": "8-Ball Mini-Slam",
+          "description": "Earn both 8-On-The-Break and 8-Ball BNR in same match/night.",
+          "difficulty": "Diamond",
+          "format": "8-ball",
+          "scope": "individual",
+          "official": true,
+          "discontinued": false,
+          "notes": ""
+        },
+        {
+          "code": "9_on_snap",
+          "name": "9-On-The-Snap",
+          "description": "Make the 9 on the break.",
+          "difficulty": "Silver",
+          "format": "9-ball",
+          "scope": "individual",
+          "official": true,
+          "discontinued": false,
+          "notes": ""
+        },
+        {
+          "code": "9_bnr",
+          "name": "9-Ball Break & Run",
+          "description": "Break and run in 9-ball.",
+          "difficulty": "Gold",
+          "format": "9-ball",
+          "scope": "individual",
+          "official": true,
+          "discontinued": false,
+          "notes": ""
+        },
+        {
+          "code": "9_mini_slam",
+          "name": "9-Ball Mini-Slam",
+          "description": "9-On-The-Snap + 9-BNR same match/night.",
+          "difficulty": "Diamond",
+          "format": "9-ball",
+          "scope": "individual",
+          "official": true,
+          "discontinued": false,
+          "notes": ""
+        },
+        {
+          "code": "rackless",
+          "name": "Rackless Night (8-Ball)",
+          "description": "Opponent never makes a ball in any rack.",
+          "difficulty": "Gold",
+          "format": "8-ball",
+          "scope": "individual",
+          "official": true,
+          "discontinued": false,
+          "notes": ""
+        },
+        {
+          "code": "table_run",
+          "name": "Rack/Table Run",
+          "description": "Run a full rack/table (local award).",
+          "difficulty": "Gold",
+          "format": "either",
+          "scope": "individual",
+          "official": false,
+          "discontinued": false,
+          "notes": "Often LO-specific wording."
+        }
+      ]
+    },
+    {
+      "name": "Match Outcome Patches",
+      "slug": "outcome",
+      "patches": [
+        {
+          "code": "shutout",
+          "name": "Shutout Patch",
+          "description": "8-Ball: 3-0 | 9-Ball: 20-0.",
+          "difficulty": "Gold",
+          "format": "either",
+          "scope": "individual",
+          "official": true,
+          "discontinued": false,
+          "notes": ""
+        },
+        {
+          "code": "hill_hill",
+          "name": "Hill-Hill Victory",
+          "description": "Win on the hill-hill rack.",
+          "difficulty": "Bronze",
+          "format": "either",
+          "scope": "individual",
+          "official": false,
+          "discontinued": false,
+          "notes": "Often local/LO patch"
+        },
+        {
+          "code": "comeback",
+          "name": "Comeback Patch",
+          "description": "Down multiple racks/points and still win.",
+          "difficulty": "Silver",
+          "format": "either",
+          "scope": "individual",
+          "official": false,
+          "discontinued": false,
+          "notes": "Usually LO issued"
+        },
+        {
+          "code": "high_win_margin",
+          "name": "High Win Margin",
+          "description": "Win by a large margin (local award).",
+          "difficulty": "Silver",
+          "format": "either",
+          "scope": "individual",
+          "official": false,
+          "discontinued": false,
+          "notes": "Proxy for dominant wins."
+        },
+        {
+          "code": "match_win",
+          "name": "Match Win",
+          "description": "Win your match (local award).",
+          "difficulty": "Bronze",
+          "format": "either",
+          "scope": "individual",
+          "official": false,
+          "discontinued": false,
+          "notes": "Common LO/local patch."
+        },
+        {
+          "code": "first_win",
+          "name": "First Win",
+          "description": "Earned for your first match win.",
+          "difficulty": "Bronze",
+          "format": "either",
+          "scope": "individual",
+          "official": true,
+          "discontinued": false,
+          "notes": "Good onramp starter patch."
+        },
+        {
+          "code": "sportsmanship_individual",
+          "name": "Sportsmanship (Individual)",
+          "description": "Recognized for great sportsmanship.",
+          "difficulty": "Bronze",
+          "format": "either",
+          "scope": "individual",
+          "official": true,
+          "discontinued": false,
+          "notes": ""
+        }
+      ]
+    },
+    {
+      "name": "Player Milestone Patches",
+      "slug": "milestone",
+      "patches": [
+        {
+          "code": "100_matches",
+          "name": "100 Matches",
+          "description": "Reach 100 lifetime matches.",
+          "difficulty": "Bronze",
+          "format": "either",
+          "scope": "lifetime",
+          "official": true,
+          "discontinued": false,
+          "notes": ""
+        },
+        {
+          "code": "250_matches",
+          "name": "250 Matches",
+          "description": "Reach 250 lifetime matches.",
+          "difficulty": "Silver",
+          "format": "either",
+          "scope": "lifetime",
+          "official": true,
+          "discontinued": false,
+          "notes": ""
+        },
+        {
+          "code": "500_matches",
+          "name": "500 Matches",
+          "description": "Reach 500 lifetime matches.",
+          "difficulty": "Gold",
+          "format": "either",
+          "scope": "lifetime",
+          "official": true,
+          "discontinued": false,
+          "notes": ""
+        },
+        {
+          "code": "750_matches",
+          "name": "750 Matches",
+          "description": "Reach 750 lifetime matches.",
+          "difficulty": "Diamond",
+          "format": "either",
+          "scope": "lifetime",
+          "official": true,
+          "discontinued": false,
+          "notes": ""
+        },
+        {
+          "code": "1000_matches",
+          "name": "1,000 Matches",
+          "description": "Reach 1,000 lifetime matches.",
+          "difficulty": "Mythic",
+          "format": "either",
+          "scope": "lifetime",
+          "official": true,
+          "discontinued": false,
+          "notes": ""
+        },
+        {
+          "code": "2000_matches",
+          "name": "2,000 Matches",
+          "description": "Reach 2,000 lifetime matches.",
+          "difficulty": "Mythic",
+          "format": "either",
+          "scope": "lifetime",
+          "official": true,
+          "discontinued": false,
+          "notes": ""
+        }
+      ]
+    },
+    {
+      "name": "Team Achievement Patches",
+      "slug": "team",
+      "patches": [
+        {
+          "code": "clean_sweep",
+          "name": "Clean Sweep (5\u20130)",
+          "description": "Every teammate wins on the night.",
+          "difficulty": "Platinum",
+          "format": "either",
+          "scope": "team",
+          "official": true,
+          "discontinued": false,
+          "notes": ""
+        },
+        {
+          "code": "session_champs",
+          "name": "Session Champions",
+          "description": "Win the session.",
+          "difficulty": "Gold",
+          "format": "either",
+          "scope": "team",
+          "official": true,
+          "discontinued": false,
+          "notes": ""
+        },
+        {
+          "code": "perfect_session",
+          "name": "Perfect Session Team",
+          "description": "Finish first with dominant points/all players above threshold.",
+          "difficulty": "Diamond",
+          "format": "either",
+          "scope": "team",
+          "official": false,
+          "discontinued": false,
+          "notes": "Often local/award specific"
+        },
+        {
+          "code": "sportsmanship",
+          "name": "Sportsmanship Team",
+          "description": "Awarded for sportsmanship.",
+          "difficulty": "Bronze",
+          "format": "either",
+          "scope": "team",
+          "official": true,
+          "discontinued": false,
+          "notes": ""
+        }
+      ]
+    },
+    {
+      "name": "Skill & Rating Patches",
+      "slug": "skill",
+      "patches": [
+        {
+          "code": "sl_increase",
+          "name": "Skill Level Increase",
+          "description": "Level up SL.",
+          "difficulty": "Bronze",
+          "format": "either",
+          "scope": "individual",
+          "official": true,
+          "discontinued": false,
+          "notes": ""
+        },
+        {
+          "code": "sl_increase_high",
+          "name": "Advanced SL Increase",
+          "description": "Level up to higher tier SL.",
+          "difficulty": "Gold",
+          "format": "either",
+          "scope": "individual",
+          "official": true,
+          "discontinued": false,
+          "notes": ""
+        },
+        {
+          "code": "top_shooter",
+          "name": "Top Shooter / MVP",
+          "description": "High average performance (division award).",
+          "difficulty": "Gold",
+          "format": "either",
+          "scope": "individual",
+          "official": true,
+          "discontinued": false,
+          "notes": ""
+        },
+        {
+          "code": "top_gun",
+          "name": "Top Gun",
+          "description": "Top points earner.",
+          "difficulty": "Platinum",
+          "format": "either",
+          "scope": "individual",
+          "official": true,
+          "discontinued": false,
+          "notes": ""
+        }
+      ]
+    },
+    {
+      "name": "Tournament Qualification Patches",
+      "slug": "tournament",
+      "patches": [
+        {
+          "code": "tri_cup",
+          "name": "Tri-Cup Qualified",
+          "description": "Qualify for Tri-Cup.",
+          "difficulty": "Silver",
+          "format": "either",
+          "scope": "tournament",
+          "official": true,
+          "discontinued": false,
+          "notes": ""
+        },
+        {
+          "code": "city_qualified",
+          "name": "City / LTC Qualified",
+          "description": "Qualify for Cities/LTC.",
+          "difficulty": "Gold",
+          "format": "either",
+          "scope": "tournament",
+          "official": true,
+          "discontinued": false,
+          "notes": ""
+        },
+        {
+          "code": "vegas_qualified",
+          "name": "Vegas Qualified",
+          "description": "Qualify for Vegas.",
+          "difficulty": "Diamond",
+          "format": "either",
+          "scope": "tournament",
+          "official": true,
+          "discontinued": false,
+          "notes": ""
+        },
+        {
+          "code": "singles_board",
+          "name": "Singles Board Winner",
+          "description": "Win a singles board.",
+          "difficulty": "Silver",
+          "format": "either",
+          "scope": "tournament",
+          "official": true,
+          "discontinued": false,
+          "notes": ""
+        },
+        {
+          "code": "regionals",
+          "name": "Regional Qualifier / Winner",
+          "description": "Qualify/win at Regionals.",
+          "difficulty": "Platinum",
+          "format": "either",
+          "scope": "tournament",
+          "official": true,
+          "discontinued": false,
+          "notes": ""
+        },
+        {
+          "code": "national_finalist",
+          "name": "National Singles Finalist / Winner",
+          "description": "National finalist or winner.",
+          "difficulty": "Mythic",
+          "format": "either",
+          "scope": "tournament",
+          "official": true,
+          "discontinued": false,
+          "notes": ""
+        }
+      ]
+    },
+    {
+      "name": "Event & Seasonal Patches",
+      "slug": "event",
+      "patches": [
+        {
+          "code": "holiday_event",
+          "name": "Holiday Event",
+          "description": "APA holiday event patch.",
+          "difficulty": "Bronze",
+          "format": "either",
+          "scope": "event",
+          "official": false,
+          "discontinued": false,
+          "notes": "Event-specific"
+        },
+        {
+          "code": "charity_tourney",
+          "name": "Charity Tournament",
+          "description": "Participate in charity tourney.",
+          "difficulty": "Silver",
+          "format": "either",
+          "scope": "event",
+          "official": true,
+          "discontinued": false,
+          "notes": ""
+        },
+        {
+          "code": "specialty_night",
+          "name": "Specialty Night",
+          "description": "Earn a themed patch (Scary Shot, Lucky Shot, etc.).",
+          "difficulty": "Bronze",
+          "format": "either",
+          "scope": "event",
+          "official": true,
+          "discontinued": false,
+          "notes": ""
+        },
+        {
+          "code": "summer_session",
+          "name": "Summer Session",
+          "description": "Summer session event patch.",
+          "difficulty": "Bronze",
+          "format": "either",
+          "scope": "event",
+          "official": false,
+          "discontinued": false,
+          "notes": "Event/LO-specific"
+        },
+        {
+          "code": "vegas_event",
+          "name": "Vegas Event",
+          "description": "Earned during Vegas match.",
+          "difficulty": "Gold",
+          "format": "either",
+          "scope": "event",
+          "official": false,
+          "discontinued": false,
+          "notes": "Event specific"
+        }
+      ]
+    },
+    {
+      "name": "Rare / LO-Exclusive Patches",
+      "slug": "rare",
+      "patches": [
+        {
+          "code": "grand_slam",
+          "name": "Grand Slam",
+          "description": "8-Ball + 9-Ball Mini Slams combined.",
+          "difficulty": "Mythic",
+          "format": "both",
+          "scope": "individual",
+          "official": true,
+          "discontinued": false,
+          "notes": "Often LO-specific."
+        },
+        {
+          "code": "beat_high_sl",
+          "name": "I Beat a 7/8/9",
+          "description": "Beat a high SL opponent.",
+          "difficulty": "Gold",
+          "format": "either",
+          "scope": "individual",
+          "official": false,
+          "discontinued": false,
+          "notes": "Availability varies by LO."
+        },
+        {
+          "code": "iced_out",
+          "name": "Iced Out",
+          "description": "Hold opponent nearly scoreless.",
+          "difficulty": "Gold",
+          "format": "either",
+          "scope": "individual",
+          "official": false,
+          "discontinued": false,
+          "notes": "Local/legacy patch."
+        },
+        {
+          "code": "lucky_dog",
+          "name": "Lucky Dog / Lucky Break",
+          "description": "Fortunate rolls patch.",
+          "difficulty": "Bronze",
+          "format": "either",
+          "scope": "individual",
+          "official": false,
+          "discontinued": false,
+          "notes": ""
+        },
+        {
+          "code": "captain_patch",
+          "name": "Captain",
+          "description": "Captain patch.",
+          "difficulty": "Bronze",
+          "format": "either",
+          "scope": "team",
+          "official": true,
+          "discontinued": false,
+          "notes": ""
+        },
+        {
+          "code": "co_captain_patch",
+          "name": "Co-Captain",
+          "description": "Co-Captain patch.",
+          "difficulty": "Bronze",
+          "format": "either",
+          "scope": "team",
+          "official": true,
+          "discontinued": false,
+          "notes": ""
+        },
+        {
+          "code": "perfect_night",
+          "name": "Perfect Night",
+          "description": "All teammates win & you earn performance patch.",
+          "difficulty": "Diamond",
+          "format": "either",
+          "scope": "team",
+          "official": false,
+          "discontinued": false,
+          "notes": ""
+        },
+        {
+          "code": "shark_patch",
+          "name": "Shark",
+          "description": "LO exclusive shark patch.",
+          "difficulty": "Gold",
+          "format": "either",
+          "scope": "individual",
+          "official": false,
+          "discontinued": false,
+          "notes": "Local exclusive."
+        }
+      ]
+    }
+  ],
+  "difficulty_scale": {
+    "Bronze": "Common",
+    "Silver": "Requires above-average play",
+    "Gold": "Skill-dependent or less common",
+    "Platinum": "Very difficult or rare",
+    "Diamond": "Extremely rare, session-defining",
+    "Mythic": "Almost impossible / retired / unicorn"
+  }
+}

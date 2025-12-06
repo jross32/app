@@ -1,0 +1,194 @@
+{% extends "base.html" %}
+{% block content %}
+<style>
+  .standings-hero {
+    background: radial-gradient(circle at 15% 20%, rgba(18,214,255,0.25), transparent 32%),
+                radial-gradient(circle at 85% 10%, rgba(255,116,217,0.18), transparent 35%),
+                linear-gradient(135deg, #0d1b2a 0%, #0b1226 50%, #07101e 100%);
+    border: 1px solid rgba(0, 191, 255, 0.35);
+    box-shadow: 0 15px 40px rgba(0,191,255,0.18);
+    border-radius: 18px;
+    padding: 18px 22px;
+  }
+  .standings-hero .badge-pill {
+    background: #0e2c44;
+    border: 1px solid #0e8fbd;
+    color: #b8eaff;
+    font-weight: 600;
+    padding: 0.35rem 0.8rem;
+    border-radius: 999px;
+  }
+  .cue-chip {
+    background: linear-gradient(90deg, #0fa5d9, #0dd0ff);
+    color: #04121f;
+    font-weight: 700;
+    padding: 0.35rem 0.75rem;
+    border-radius: 12px;
+    box-shadow: 0 8px 24px #0dd0ff55;
+  }
+  .rank-card {
+    background: linear-gradient(135deg, #0c1523 0%, #0a111d 60%, #08101c 100%);
+    border: 1px solid rgba(0, 191, 255, 0.25);
+    box-shadow: 0 12px 32px rgba(0,0,0,.45);
+    border-radius: 14px;
+  }
+  .standings-table thead th {
+    background: linear-gradient(90deg, rgba(18,214,255,0.18), rgba(124,244,255,0.14));
+    border-bottom: 1px solid rgba(255, 255, 255, 0.12);
+    color: #e1f8ff;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+  .standings-table tbody tr {
+    transition: all 0.2s ease;
+  }
+  .standings-table tbody tr:hover {
+    background: linear-gradient(90deg, rgba(0,191,255,0.06), rgba(124,244,255,0.08)) !important;
+    box-shadow: 0 0 0 1px #00bfff33 inset;
+  }
+  .tag {
+    display: inline-block;
+    border-radius: 999px;
+    padding: 0.1rem 0.6rem;
+    font-size: 0.75rem;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+  }
+  .tag-subtle { background: rgba(255,255,255,.06); color:#d1d9e6; border:1px solid rgba(255,255,255,.12); }
+  .tag-leader {
+    background: rgba(255, 215, 0, 0.12);
+    color: #ffd700;
+    border: 1px solid rgba(255, 215, 0, 0.3);
+  }
+  .tag-us {
+    background: rgba(0, 191, 255, 0.15);
+    color: #b8eaff;
+    border: 1px solid rgba(0, 191, 255, 0.35);
+  }
+  .gap-bar {
+    height: 8px;
+    border-radius: 999px;
+    background: #0b1320;
+    overflow: hidden;
+  }
+  .gap-bar span {
+    display: block;
+    height: 100%;
+    background: linear-gradient(90deg, #12d6ff, #7cf4ff);
+  }
+  .cue-ligans-row td { font-weight: 700; color: #e6f7ff; }
+  @media (max-width: 767.98px) {
+    .standings-hero h2 { font-size: 1.5rem; }
+    .standings-hero .badge-pill { margin-top: 6px; }
+    .standings-table thead { font-size: 0.85rem; }
+  }
+</style>
+
+<div class="container py-4">
+  <div class="standings-hero mb-4">
+    <div class="d-flex flex-column flex-md-row align-items-md-center justify-content-between gap-3 position-relative">
+      <div>
+        <div class="text-uppercase subtle small">Rio Grande Valley APA</div>
+        <h2 class="fw-bold mb-1">Division Standings</h2>
+        <div class="text-secondary">How the squads stack up this session.</div>
+      </div>
+        <div class="d-flex gap-2 flex-wrap">
+          <span class="badge-pill"><i class="bi bi-8-circle me-1"></i>8-ball Rank: {{ cue_ligans_idx_8 + 1 if cue_ligans_idx_8 >= 0 else '—' }}</span>
+          <span class="badge-pill"><i class="bi bi-9-circle me-1"></i>9-ball Rank: {{ cue_ligans_idx_9 + 1 if cue_ligans_idx_9 >= 0 else '—' }}</span>
+        </div>
+    </div>
+  </div>
+
+  <div class="row g-4">
+    <div class="col-12 col-xl-6">
+      <div class="card rank-card text-light h-100">
+        <div class="card-header d-flex align-items-center justify-content-between border-0">
+          <div class="d-flex align-items-center gap-2">
+            <span class="badge-pill"><i class="bi bi-8-circle me-1"></i>8-Ball</span>
+            {% set leader8 = standings_8[0].points if standings_8 else 1 %}
+            {% set us8 = standings_8[cue_ligans_idx_8].points if cue_ligans_idx_8 >= 0 else 0 %}
+            <span class="text-secondary small">Gap to 1st: {{ (leader8 - us8)|default(0) }}</span>
+          </div>
+          <div class="tag tag-subtle">Current session</div>
+        </div>
+        <div class="card-body p-0">
+          <table class="table table-dark table-striped mb-0 align-middle text-center standings-table">
+            <thead>
+              <tr>
+                <th style="width:70px;">Rank</th>
+                <th class="text-start ps-3">Team</th>
+                <th>Pts</th>
+                <th style="width:120px;">Gap</th>
+              </tr>
+            </thead>
+            <tbody>
+              {% set lead_points_8 = standings_8[0].points if standings_8 else 0 %}
+              {% for row in standings_8 %}
+              {% set is_us = row.team|lower == 'cue-ligans' %}
+              {% set gap = lead_points_8 - row.points %}
+              {% set gap_pct = 0 if lead_points_8 == 0 else (row.points / lead_points_8 * 100) %}
+              <tr class="{% if is_us %}cue-ligans-row{% endif %}">
+                <td class="fw-bold">
+                  {% if loop.index == 1 %}🥇{% elif loop.index == 2 %}🥈{% elif loop.index == 3 %}🥉{% else %}#{{ loop.index }}{% endif %}
+                </td>
+                <td class="fw-semibold text-start ps-3">{% if is_us %}<span class="fw-bold text-info">{{ row.team }}</span>{% else %}{{ row.team }}{% endif %}</td>
+                <td class="fw-bold">{{ row.points }}</td>
+                <td>
+                  <div class="gap-bar mb-1"><span style="width: {{ gap_pct }}%;"></span></div>
+                  <div class="small subtle">{{ gap == 0 and 'Leader' or ('-' ~ gap ~ ' pts') }}</div>
+                </td>
+              </tr>
+              {% endfor %}
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-12 col-xl-6">
+      <div class="card rank-card text-light h-100">
+        <div class="card-header d-flex align-items-center justify-content-between border-0">
+          <div class="d-flex align-items-center gap-2">
+            <span class="badge-pill"><i class="bi bi-9-circle me-1"></i>9-Ball</span>
+            {% set leader9 = standings_9[0].points if standings_9 else 1 %}
+            {% set us9 = standings_9[cue_ligans_idx_9].points if cue_ligans_idx_9 >= 0 else 0 %}
+            <span class="text-secondary small">Gap to 1st: {{ (leader9 - us9)|default(0) }}</span>
+          </div>
+          <div class="tag tag-subtle">Current session</div>
+        </div>
+        <div class="card-body p-0">
+          <table class="table table-dark table-striped mb-0 align-middle text-center standings-table">
+            <thead>
+              <tr>
+                <th style="width:70px;">Rank</th>
+                <th class="text-start ps-3">Team</th>
+                <th>Pts</th>
+                <th style="width:120px;">Gap</th>
+              </tr>
+            </thead>
+            <tbody>
+              {% set lead_points_9 = standings_9[0].points if standings_9 else 0 %}
+              {% for row in standings_9 %}
+              {% set is_us = row.team|lower == 'cue-ligans' %}
+              {% set gap = lead_points_9 - row.points %}
+              {% set gap_pct = 0 if lead_points_9 == 0 else (row.points / lead_points_9 * 100) %}
+              <tr class="{% if is_us %}cue-ligans-row{% endif %}">
+                <td class="fw-bold">
+                  {% if loop.index == 1 %}🥇{% elif loop.index == 2 %}🥈{% elif loop.index == 3 %}🥉{% else %}#{{ loop.index }}{% endif %}
+                </td>
+                <td class="fw-semibold text-start ps-3">{% if is_us %}<span class="fw-bold text-info">{{ row.team }}</span>{% else %}{{ row.team }}{% endif %}</td>
+                <td class="fw-bold">{{ row.points }}</td>
+                <td>
+                  <div class="gap-bar mb-1"><span style="width: {{ gap_pct }}%;"></span></div>
+                  <div class="small subtle">{{ gap == 0 and 'Leader' or ('-' ~ gap ~ ' pts') }}</div>
+                </td>
+              </tr>
+              {% endfor %}
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

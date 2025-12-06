@@ -1,0 +1,35 @@
+{% extends 'base.html' %}
+{% block title %}Login | Cüe-Ligans{% endblock %}
+{% block content %}
+<div class="container py-5" style="max-width: 560px;">
+  <div class="card bg-dark soft-border shadow-soft">
+    <div class="card-body">
+      <h5 class="text-info mb-2"><i class="fa-solid fa-right-to-bracket me-2"></i>Login</h5>
+      {% if error %}<div class="alert alert-danger py-2">{{ error }}</div>{% endif %}
+      <form method="POST">
+        <div class="mb-3">
+          <label class="form-label">Username</label>
+          <input type="text" name="username" class="form-control bg-dark text-light soft-border" required>
+        </div>
+        <div class="mb-3">
+          <label class="form-label">Password</label>
+          <input type="password" name="password" class="form-control bg-dark text-light soft-border" required>
+        </div>
+        <div class="form-check mb-3">
+          <input class="form-check-input bg-dark border-secondary" type="checkbox" value="1" id="rememberDevice" name="remember_device" checked>
+          <label class="form-check-label text-secondary" for="rememberDevice">
+            Remember this device (stay signed in)
+          </label>
+        </div>
+        <input type="hidden" name="next" value="{{ next or url_for('locker') }}">
+        <div class="d-flex justify-content-between align-items-center mb-2">
+          <button class="btn btn-info text-dark fw-bold" type="submit">Login</button>
+          <span class="text-secondary small">or</span>
+          <a class="btn btn-outline-info btn-sm" href="{{ url_for('signup') }}">Create account</a>
+        </div>
+        <div class="text-secondary small">Don’t have a profile yet? Create one now and get in the Locker!</div>
+      </form>
+    </div>
+  </div>
+</div>
+{% endblock %}

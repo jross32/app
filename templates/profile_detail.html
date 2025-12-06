@@ -1,0 +1,2471 @@
+﻿{% extends 'base.html' %}
+{% block title %}{{ user.display_name or user.username }} | Profile{% endblock %}
+{% block content %}
+<style>
+  .hero-card {
+    background: radial-gradient(circle at 15% 20%, rgba(18,214,255,0.18), transparent 32%),
+                radial-gradient(circle at 80% 15%, rgba(255,116,217,0.14), transparent 35%),
+                linear-gradient(135deg, #0d1b2a 0%, #0b1226 55%, #07101e 100%);
+    border: 1px solid rgba(0,191,255,0.35);
+    box-shadow: 0 18px 44px rgba(0,191,255,0.2);
+    border-radius: 14px;
+    position: relative;
+  }
+  .pill {
+    border-radius: 999px;
+    padding: 0.25rem 0.7rem;
+    border: 1px solid rgba(0,191,255,0.4);
+    background: rgba(0,191,255,0.12);
+    color: #8ee9ff;
+    font-size: 0.8rem;
+  }
+.stat-tile {
+    background: #0d1524;
+    border: 1px solid rgba(255,255,255,0.12);
+    border-radius: 12px;
+    padding: 0.75rem;
+    box-shadow: 0 10px 24px rgba(0,0,0,0.32);
+  }
+.playercard-panel {
+    background: linear-gradient(145deg, #0c1322 0%, #0a101c 60%, #060a12 100%);
+    border: 1px solid rgba(255,255,255,0.1);
+    border-radius: 12px;
+    box-shadow: 0 12px 28px rgba(0,0,0,0.36);
+  }
+.playercard-subtle {
+    background: rgba(255,255,255,0.02);
+  }
+.pill-soft {
+    border-radius: 10px;
+    padding: 0.25rem 0.6rem;
+    background: rgba(0,191,255,0.14);
+    border: 1px solid rgba(0,191,255,0.35);
+    color: #b3ecff;
+    font-size: 0.8rem;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.25rem;
+  }
+.badge-card {
+    background: rgba(255,255,255,0.03);
+    border: 1px solid rgba(255,255,255,0.08);
+    border-radius: 10px;
+    padding: 0.75rem;
+    height: 100%;
+}
+.modal-backdrop.show {
+    backdrop-filter: blur(4px);
+    background: rgba(0,0,0,0.55);
+}
+.patch-card {
+    position: relative;
+    background: linear-gradient(135deg, rgba(0,229,255,0.05), rgba(255,92,179,0.04));
+    border: 1px solid rgba(0,229,255,0.18);
+    border-radius: 12px;
+    padding: 0.75rem 0.9rem;
+    box-shadow: 0 10px 26px rgba(0,0,0,0.35);
+    height: 100%;
+}
+.patch-card.mini {
+    padding: 0.65rem 0.8rem;
+}
+.patch-card.patch-locked {
+    opacity: 0.65;
+    border-style: dashed;
+}
+.patch-badge-icon {
+    width: 40px;
+    height: 40px;
+    border-radius: 10px;
+    background: rgba(255,255,255,0.06);
+    display: grid;
+    place-items: center;
+    margin-right: 0.65rem;
+    font-size: 1.05rem;
+    color: #8ee9ff;
+    flex-shrink: 0;
+}
+.patch-count-bubble {
+    position: absolute;
+    right: 10px;
+    bottom: 10px;
+    background: rgba(0,229,255,0.16);
+    border: 1px solid rgba(0,229,255,0.35);
+    color: #8ee9ff;
+    font-weight: 700;
+    padding: 0.15rem 0.45rem;
+    border-radius: 999px;
+    font-size: 0.8rem;
+}
+.modal-backdrop.show {
+    backdrop-filter: blur(4px);
+    background: rgba(0,0,0,0.55);
+}
+.edit-profile-modal .modal-content {
+    background: #0c121f;
+    border: 1px solid rgba(0,229,255,0.2);
+    box-shadow: 0 28px 70px rgba(0,0,0,0.55);
+}
+.edit-profile-modal .modal-header {
+    background: linear-gradient(135deg, #0f1a2f, #0b1224);
+    border-bottom: 1px solid rgba(255,255,255,0.05);
+}
+.edit-profile-modal .form-control,
+.edit-profile-modal .form-select,
+.edit-profile-modal textarea {
+    background: #0f1626;
+    color: #e9f4ff;
+    border: 1px solid rgba(255,255,255,0.12);
+}
+.edit-profile-modal .helper {
+    color: #8ea3bf;
+    font-size: 0.82rem;
+}
+.preview-mini {
+    background: linear-gradient(135deg, rgba(0,229,255,0.08), rgba(124,93,255,0.08));
+    border: 1px solid rgba(0,229,255,0.25);
+    border-radius: 14px;
+    box-shadow: 0 16px 36px rgba(0,0,0,0.35);
+    overflow: hidden;
+    position: relative;
+    min-height: 240px;
+}
+.preview-mini .banner {
+    position: absolute;
+    inset: 0;
+    background-size: cover;
+    background-position: center;
+    opacity: 0.35;
+    filter: blur(2px);
+}
+.preview-mini .content {
+    position: relative;
+    padding: 14px;
+    display: flex;
+    gap: 12px;
+    align-items: center;
+}
+.preview-mini .avatar {
+    width: 72px;
+    height: 72px;
+    border-radius: 50%;
+    border: 2px solid rgba(0,229,255,0.6);
+    object-fit: cover;
+    background: rgba(255,255,255,0.08);
+}
+.preview-mini .pill-soft {
+    background: rgba(0,229,255,0.14);
+    border-color: rgba(0,229,255,0.4);
+}
+.accent-sample {
+    width: 32px; height: 32px; border-radius: 50%; border: 2px solid rgba(255,255,255,0.2);
+}
+.now-playing-player {
+    background: linear-gradient(135deg, rgba(0,229,255,0.08), rgba(124,93,255,0.08));
+    border: 1px solid rgba(0,229,255,0.18);
+    box-shadow: 0 10px 24px rgba(0,0,0,0.35);
+    border-radius: 12px;
+}
+.now-playing-active {
+    box-shadow: 0 0 18px rgba(0,229,255,0.35);
+    border-color: rgba(0,229,255,0.4);
+}
+.xsmall { font-size: 0.8rem; }
+.music-card {
+    background: linear-gradient(145deg, #0e1627 0%, #0b111f 55%, #090e19 100%);
+    border: 1px solid rgba(255,255,255,0.08);
+    border-radius: 14px;
+    box-shadow: 0 20px 38px rgba(0,0,0,0.4);
+}
+.music-card.playing {
+    box-shadow: 0 0 20px rgba(0,229,255,0.35);
+}
+.music-art {
+    width: 86px; height: 86px;
+    border-radius: 12px;
+    background: radial-gradient(circle at 30% 30%, rgba(0,229,255,0.22), rgba(124,93,255,0.12));
+    border: 1px solid rgba(255,255,255,0.08);
+    flex-shrink: 0;
+}
+.music-meta {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+}
+.music-progress::-webkit-slider-thumb {
+    background: currentColor;
+}
+.music-volume::-webkit-slider-thumb {
+    background: currentColor;
+}
+.music-shell {
+    background: linear-gradient(135deg, rgba(255,255,255,0.03), rgba(0,0,0,0.35));
+    border: 1px solid rgba(255,255,255,0.08);
+    border-radius: 14px;
+    padding: 12px;
+    box-shadow: inset 0 0 0 1px rgba(0,0,0,0.22);
+}
+.embed-frame {
+    width: 100%;
+    height: 210px;
+    border: 1px solid rgba(255,255,255,0.08);
+    border-radius: 12px;
+    background: rgba(5,7,12,0.8);
+}
+.embed-fallback {
+    position: relative;
+    border-radius: 12px;
+    overflow: hidden;
+    border: 1px solid rgba(255,255,255,0.12);
+    background: rgba(6,10,18,0.65);
+}
+.embed-fallback img {
+    width: 100%;
+    height: 210px;
+    object-fit: cover;
+    opacity: 0.85;
+}
+.embed-fallback .overlay {
+    position: absolute;
+    inset: 0;
+    display: grid;
+    place-items: center;
+    background: linear-gradient(135deg, rgba(0,229,255,0.16), rgba(124,93,255,0.16));
+}
+.audio-pane {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+.audio-pane .controls-row {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+.embed-fallback .overlay {
+    position: absolute;
+    inset: 0;
+    display: grid;
+    place-items: center;
+    background: linear-gradient(135deg, rgba(0,229,255,0.12), rgba(124,93,255,0.12));
+}
+  .avatar-wrapper {
+    width: 96px;
+    height: 96px;
+    position: relative;
+  }
+  .avatar-wrapper img,
+  .avatar-wrapper .avatar-fallback {
+    transition: opacity 0.2s ease;
+    width: 96px;
+    height: 96px;
+    border-radius: 50%;
+    object-fit: cover;
+  }
+  .avatar-wrapper:hover img,
+  .avatar-wrapper:hover .avatar-fallback {
+    opacity: 0.35;
+  }
+  .avatar-overlay {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #8ee9ff;
+    font-size: 0.85rem;
+    font-weight: 600;
+    opacity: 0;
+    transition: opacity 0.2s ease;
+    background: rgba(0,0,0,0.3);
+    border-radius: 50%;
+  }
+  .avatar-wrapper:hover .avatar-overlay {
+    opacity: 1;
+  }
+  .edit-profile-btn {
+    position: absolute;
+    top: 12px;
+    right: 14px;
+    padding: 0.45rem 0.95rem;
+    font-weight: 600;
+    z-index: 2;
+    border-radius: 999px;
+    background: linear-gradient(135deg, rgba(0,229,255,0.18), rgba(124,93,255,0.32));
+    border: 1px solid rgba(0,229,255,0.55);
+    color: #eaf8ff;
+    box-shadow: 0 0 14px rgba(0,229,255,0.25);
+  }
+  .edit-profile-btn:hover {
+    background: linear-gradient(135deg, rgba(0,229,255,0.28), rgba(124,93,255,0.42));
+    color: #fff;
+    box-shadow: 0 0 18px rgba(0,229,255,0.35);
+  }
+  .hero-overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(180deg, rgba(0,0,0,0.65) 0%, rgba(0,0,0,0.4) 35%, rgba(0,0,0,0.1) 100%);
+    border-radius: 14px;
+    pointer-events: none;
+    z-index: 0;
+  }
+  .hero-meta-inline { display: flex; }
+  .hero-meta-rows { display: none; }
+  .edit-profile-btn-mobile { display: none; }
+  .hero-overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(180deg, rgba(0,0,0,0.65) 0%, rgba(0,0,0,0.4) 35%, rgba(0,0,0,0.1) 100%);
+    border-radius: 14px;
+    pointer-events: none;
+    z-index: 0;
+  }
+  .edit-profile-btn-mobile { display: none; }
+  .hero-meta-rows { display: none; }
+</style>
+{% set accent = user.profile_accent_color or '#00bfff' %}
+{% set avatar_version = now.timestamp()|int %}
+<style>
+.profile-bg-wrap {
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    padding: 1rem 0;
+  }
+.profile-inner {
+    background: rgba(6,10,18,0.72);
+    border: 1px solid rgba(255,255,255,0.08);
+    border-radius: 16px;
+    box-shadow: 0 14px 32px rgba(0,0,0,0.45);
+    backdrop-filter: blur(6px);
+    padding: 1rem;
+  }
+  .hero-card .text-secondary {
+    color: #c9d2dd !important;
+    font-weight: 600;
+  }
+  .hero-meta-inline { display: flex; }
+  .hero-meta-rows { display: none; }
+  .edit-profile-btn-mobile { display: none; }
+  .banner-image {
+    width: 100%;
+    border-radius: 14px;
+    overflow: hidden;
+    border: 1px solid rgba(255,255,255,0.12);
+    box-shadow: 0 10px 26px rgba(0,0,0,0.4);
+  }
+  .banner-image img {
+    width: 100%;
+    height: 240px;
+    object-fit: cover;
+  }
+  @media (max-width: 767.98px) {
+    .profile-bg-wrap { padding-top: 0.35rem; }
+    .hero-card { padding: 0; }
+    .hero-card .card-body {
+      position: relative;
+      z-index: 1;
+      flex-direction: column !important;
+      align-items: center !important;
+      text-align: center;
+      padding: 1.1rem 1rem !important;
+      gap: 0.55rem !important;
+    }
+    .hero-meta-inline { display: none !important; }
+    .hero-meta-rows { display: flex; flex-direction: column; gap: 0.3rem; width: 100%; }
+    .hero-meta-row { display: flex; align-items: center; justify-content: center; gap: 0.4rem; color: #d9e5ff; font-size: 0.9rem; }
+    .edit-profile-btn { display: none; }
+    .edit-profile-btn-mobile { display: block; width: 100%; margin-top: 0.6rem; }
+    .hero-card .text-secondary { color: #d9e5ff !important; }
+  }
+  @media (max-width: 767.98px) {
+    .profile-bg-wrap { padding-top: 0.4rem; }
+    .hero-card { padding: 0; }
+    .hero-card .card-body {
+      position: relative;
+      z-index: 1;
+      flex-direction: column !important;
+      align-items: center !important;
+      text-align: center;
+      padding: 1.1rem 1rem !important;
+      gap: 0.55rem !important;
+    }
+    .hero-meta-inline { display: none !important; }
+    .hero-meta-rows { display: flex; flex-direction: column; gap: 0.3rem; width: 100%; }
+    .hero-meta-row { display: flex; align-items: center; justify-content: center; gap: 0.4rem; color: #d9e5ff; font-size: 0.9rem; }
+    .edit-profile-btn { display: none; }
+    .edit-profile-btn-mobile { display: block; width: 100%; margin-top: 0.6rem; }
+  }
+  .stat-tile {
+    background: #0c1523;
+    border: 1px solid rgba(255,255,255,0.12);
+    border-radius: 12px;
+    padding: 0.8rem;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.35);
+    transition: transform 0.15s ease, box-shadow 0.15s ease, border-color 0.15s ease;
+  }
+  .stat-tile.hoverable:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 12px 26px rgba(0,191,255,0.2);
+    border-color: rgba(0,191,255,0.4);
+    cursor: pointer;
+  }
+  .bg-preset-pill {
+    border: 1px solid rgba(255,255,255,.18);
+    background: rgba(255,255,255,.06);
+    border-radius: 10px;
+    padding: 0.35rem 0.6rem;
+    cursor: pointer;
+    font-size: .85rem;
+  }
+  .bg-preview {
+    height: 70px;
+    border-radius: 8px;
+    border: 1px solid rgba(255,255,255,.15);
+    background-size: cover;
+    background-position: center;
+  }
+  .neon-modal {
+    background: radial-gradient(circle at 20% 10%, rgba(0,229,255,0.15), transparent 30%),
+                radial-gradient(circle at 80% 0%, rgba(255,92,179,0.12), transparent 30%),
+                #070c14;
+    border: 1px solid rgba(0,229,255,0.25);
+    box-shadow: 0 24px 64px rgba(0,0,0,0.55), 0 0 18px rgba(0,229,255,0.25);
+  }
+  .bg-gradient-dark {
+    background: linear-gradient(135deg, #0b1220 0%, #0a0f1c 70%, #050810 100%);
+  }
+  .chip {
+    border: 1px solid rgba(0,229,255,0.35);
+    background: rgba(0,229,255,0.12);
+    color: #9be8ff;
+    border-radius: 999px;
+    padding: 0.25rem 0.75rem;
+    font-size: 0.85rem;
+    transition: all 0.15s ease;
+  }
+  .chip:hover { box-shadow: 0 0 12px rgba(0,229,255,0.35); }
+  .chip-bronze { background: rgba(205,127,50,0.15); border: 1px solid rgba(205,127,50,0.4); color: #f0c08a; }
+  .chip-silver { background: rgba(192,192,192,0.18); border: 1px solid rgba(192,192,192,0.4); color: #e6e6e6; }
+  .chip-gold { background: rgba(255,215,0,0.16); border: 1px solid rgba(255,215,0,0.45); color: #ffeb9c; }
+  .chip-platinum { background: rgba(180,224,255,0.18); border: 1px solid rgba(180,224,255,0.45); color: #e3f2ff; }
+  .chip-diamond { background: rgba(0,229,255,0.18); border: 1px solid rgba(0,229,255,0.5); color: #aaf6ff; }
+  .chip-mythic { background: rgba(255,92,179,0.18); border: 1px solid rgba(255,92,179,0.45); color: #ffc6ec; }
+  .chip-neutral { background: rgba(255,255,255,0.07); border: 1px solid rgba(255,255,255,0.15); color: #d6dde7; }
+  .chip.active { background: linear-gradient(135deg, #14b8a6, #0ea5e9); color: #04121c; border-color: transparent; }
+  .chip-amber { background: rgba(255,193,7,0.18); color: #ffda6a; border: 1px solid rgba(255,193,7,0.35); }  .table-header th {
+    background: rgba(255,255,255,0.04);
+    border-bottom: 1px solid rgba(255,255,255,0.08);
+    cursor: pointer;
+  }
+  .table-header th.sortable::after {
+    content: '⇅';
+    font-weight: 700;
+    margin-left: 6px;
+    opacity: 0.45;
+    font-size: 0.75rem;
+  }
+  .table-header th.sorted-asc::after { content: '▲'; opacity: 0.9; }
+  .table-header th.sorted-desc::after { content: '▼'; opacity: 0.9; }
+
+  #matchHistoryTable tbody tr.match-row:hover {
+    background: linear-gradient(90deg, rgba(0,229,255,0.08), rgba(255,92,179,0.06));
+  }
+  #matchHistoryTable td { padding: 0.7rem 0.85rem; }
+  .bg-gradient-success { background: linear-gradient(135deg, #34d399, #10b981); }
+  .bg-gradient-warning { background: linear-gradient(135deg, #f59e0b, #fbbf24); }
+  .bg-gradient-info { background: linear-gradient(135deg, #22d3ee, #0ea5e9); }
+  .match-table-wrap { overflow-x: auto; }
+  .match-modal-sheet .modal-dialog {
+    margin: 0;
+    max-width: none;
+  }
+@media (max-width: 767.98px) {
+    .match-modal-sheet .modal-dialog { height: 100%; }
+    .match-modal-sheet .modal-content { height: 100%; border-radius: 0; }
+    .match-modal-body { max-height: calc(100vh - 140px); overflow-y: auto; }
+  }
+  @media (min-width: 768px) {
+    .match-modal-sheet .modal-dialog {
+      margin: 1.5rem auto;
+      max-width: 1100px;
+    }
+  }
+  /* Mobile tweaks for avatars, music card, and modals */
+  @media (max-width: 575.98px) {
+    .avatar-wrapper { width: 80px; height: 80px; }
+    .hero-card .card-body { padding: 1rem; }
+    .music-art { width: 72px; height: 72px; }
+    .modal-dialog { margin: 0.75rem; }
+    .neon-modal .modal-body img,
+    .modal-body img { max-width: 100%; height: auto; }
+  }
+</style>
+
+<div class="profile-bg-wrap" {% if user.profile_background_url %}style="background-image:url('{{ user.profile_background_url }}');"{% endif %}>
+<div class="container py-4">
+<div class="profile-inner">
+  <!-- Hero Player Card -->
+  <div class="hero-card mb-3 position-relative overflow-hidden" id="heroCard" style="border-color: {{ accent }}; box-shadow: 0 18px 44px {{ accent }}33; {% if user.profile_banner_url %}background-image: url('{{ user.profile_banner_url }}'); background-size: cover; background-position: center;{% endif %}">
+    <div class="hero-overlay"></div>
+    {% if current_user and (current_user.id == user.id or (current_user.role and current_user.role|lower == 'admin')) %}
+      <button class="btn edit-profile-btn" id="editProfileBtn" type="button" data-bs-toggle="modal" data-bs-target="#profileModal">Edit profile</button>
+    {% endif %}
+    <div class="card-body d-flex flex-column flex-md-row align-items-center justify-content-start py-4 gap-4 ps-md-4">
+      <div class="d-flex justify-content-center align-items-center flex-shrink-0 ms-md-2">
+        <div class="avatar-wrapper">
+          {% if user.avatar_url %}
+            <img src="{{ user.avatar_url }}?v={{ avatar_version }}" alt="avatar" class="mx-auto" style="border:2px solid rgba(0,191,255,0.5);">
+          {% else %}
+            <div class="avatar-fallback d-flex align-items-center justify-content-center mx-auto" style="border:2px solid rgba(0,191,255,0.5); background:rgba(255,255,255,0.05);">
+              <span style="font-weight:700;font-size:1.2rem;">{{ user.initials or (user.username[:2]|upper) }}</span>
+            </div>
+          {% endif %}
+          {% if current_user and current_user.id == user.id %}
+          <div class="avatar-overlay">Change profile pic</div>
+          <input type="file" id="avatarFileInput" accept="image/*" class="d-none">
+          {% endif %}
+        </div>
+      </div>
+      <div class="flex-grow-1">
+        <div class="h4 mb-1" id="displayName">{{ user.display_name or user.username }}</div>
+        <div class="text-secondary small">@{{ user.username }}</div>
+        <div class="d-flex align-items-center gap-2 mt-1 hero-meta-inline">
+          <span class="pill">Role: {{ user.role|title if user.role else 'Player' }}</span>
+          <span class="text-secondary small">Joined on {{ user.created_at.strftime('%b %d, %Y') if user.created_at else '' }}</span>
+          {% if last_message and last_message.created_at %}
+          <span class="text-secondary small">
+            Last seen in Locker
+            {% if last_message.channel %} ({{ last_message.channel.name }}){% endif %}:
+            {{ last_message.created_at.strftime('%b %d, %I:%M %p') }}
+          </span>
+          {% endif %}
+        </div>
+        <div class="hero-meta-rows">
+          <div class="hero-meta-row"><i class="fa-solid fa-shield-halved text-info"></i>Role: {{ user.role|title if user.role else 'Player' }}</div>
+          <div class="hero-meta-row"><i class="fa-solid fa-calendar text-info"></i>Joined: {{ user.created_at.strftime('%b %d, %Y') if user.created_at else '' }}</div>
+          {% if last_message and last_message.created_at %}
+          <div class="hero-meta-row"><i class="fa-solid fa-comment-dots text-info"></i>Last seen in Locker{% if last_message.channel %} ({{ last_message.channel.name }}){% endif %}: {{ last_message.created_at.strftime('%b %d, %I:%M %p') }}</div>
+          {% endif %}
+        </div>
+        <div class="mt-2 d-flex align-items-center flex-wrap gap-2">
+          <div>
+            <span class="text-secondary small me-2">Nickname:</span>
+            <strong id="nicknameText">{{ user.display_name or user.username }}</strong>
+          </div>
+          {% if current_user and current_user.id != user.id %}
+          <a class="btn btn-sm btn-outline-info ms-1" href="{{ url_for('messenger', user=user.id) }}">
+            <i class="fa-solid fa-message me-1"></i> Message
+          </a>
+          {% endif %}
+        </div>
+        {% set history = user.get_nickname_history() %}
+        {% if history %}
+        <div class="text-secondary small mt-1">Previous nicknames: {{ history|join(', ') }}</div>
+        {% endif %}
+        <div class="mt-1 d-flex align-items-center flex-wrap gap-2">
+          <div>
+            <span class="text-secondary small me-2">Bio:</span>
+            <span class="text-secondary small" id="bioText">{{ user.bio or 'Add a bio' }}</span>
+</div>
+</div>
+</div>
+</div>
+    </div>
+  </div>
+  {% if current_user and (current_user.id == user.id or (current_user.role and current_user.role|lower == 'admin')) %}
+  <button class="btn btn-outline-info edit-profile-btn-mobile d-md-none" id="editProfileBtnMobile" type="button" data-bs-toggle="modal" data-bs-target="#profileModal">Edit profile</button>
+  {% endif %}
+
+  <!-- Quick Stats -->
+  <div class="row g-2 mb-3 mt-2">
+    <div class="col-12 col-md-3">
+      <div class="stat-tile">
+        <div class="text-secondary small">Locker Messages</div>
+        <div class="h5 mb-0">{{ message_count }}</div>
+      </div>
+    </div>
+    <div class="col-12 col-md-3">
+      <div class="stat-tile">
+        <div class="text-secondary small">Active Channels</div>
+        <div class="h5 mb-0">{{ channel_count }}</div>
+      </div>
+    </div>
+    <div class="col-12 col-md-3">
+      <div class="stat-tile">
+        <div class="text-secondary small">Joined</div>
+        {% set days = (now - user.created_at).days if user.created_at else 0 %}
+        <div class="h5 mb-0">{{ days }} days</div>
+      </div>
+    </div>
+    <div class="col-12 col-md-3">
+      <div class="stat-tile">
+        <div class="text-secondary small">Season Matches</div>
+        <div class="h5 mb-0 text-secondary">Coming soon</div>
+      </div>
+    </div>
+  </div>
+
+<!-- Match History Modal -->
+<div class="modal fade match-modal-sheet" id="matchHistoryModal" tabindex="-1" aria-labelledby="matchHistoryLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered modal-xl modal-fullscreen-sm-down">
+    <div class="modal-content neon-modal border-0">
+      <div class="modal-header border-0 rounded-top bg-gradient-dark text-light sticky-top">
+        <div>
+          <div class="h5 mb-0">Match History</div>
+          <div class="text-secondary small" id="matchHistorySub">Format — Player</div>
+        </div>
+        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body bg-dark text-light match-modal-body">
+        <div class="d-flex flex-column flex-lg-row align-items-lg-center justify-content-between gap-2 mb-3 sticky-top bg-dark pt-2">
+          <div class="d-flex flex-wrap gap-2" id="matchFilters">
+            <button class="chip active" data-filter="all">All</button>
+            <button class="chip" data-filter="win">Wins</button>
+            <button class="chip" data-filter="loss">Losses</button>
+            <button class="chip" data-filter="high">High Scoring</button>
+            <button class="chip" data-filter="upset">Upsets</button>
+          </div>
+          <div class="text-end ms-lg-auto">
+            <div class="text-secondary small" id="matchSummary">Last 0: 0-0 • Avg pts 0.0</div>
+            <div id="matchSpark" class="mt-1"></div>
+          </div>
+        </div>
+        <div class="match-table-wrap table-responsive rounded-3 border border-secondary-subtle overflow-hidden">
+          <table class="table table-dark align-middle mb-0" id="matchHistoryTable">
+            <thead class="table-header">
+              <tr>
+                <th scope="col" data-sort="week" class="sortable">Week</th>
+                <th scope="col" data-sort="date" class="sortable">Date</th>
+                <th scope="col" data-sort="opponent" class="sortable">Opponent (SL)</th>
+                <th scope="col" data-sort="points" class="sortable">Points</th>
+                <th scope="col" data-sort="result" class="sortable">Result</th>
+                <th scope="col" data-sort="difficulty" class="sortable">Difficulty</th>
+                <th scope="col"></th>
+              </tr>
+            </thead>
+            <tbody id="matchHistoryBody">
+              <tr><td colspan="7" class="text-secondary small">Loading...</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+  {% if player_insights %}
+  <div class="card bg-dark border-secondary mb-3">
+    <div class="card-body">
+      <div class="d-flex align-items-center justify-content-between flex-wrap gap-2 mb-2">
+        <div>
+          <div class="h5 mb-0">Player Card</div>
+          <div class="text-secondary small">SL snapshot and format cards.</div>
+        </div>
+        <div class="btn-group btn-group-sm" role="group" aria-label="Player card view">
+          <button type="button" class="btn btn-outline-info active playercard-toggle" data-target="current">Current Season</button>
+          <button type="button" class="btn btn-outline-info playercard-toggle" data-target="lifetime">Lifetime</button>
+          <button type="button" class="btn btn-outline-info playercard-toggle" data-target="past">Past Seasons</button>
+        </div>
+      </div>
+
+      <div id="playercard-current" class="mb-3">
+        <div class="row g-3">
+          {% for fmt, stats in player_insights.formats.items() %}
+          <div class="col-12 col-md-6">
+            <div class="card bg-dark soft-border shadow-soft h-100 current-season-card" data-format="{{ fmt|lower }}">
+              <div class="card-body">
+                <div class="d-flex align-items-center justify-content-between mb-1">
+                  <span class="badge bg-info text-dark">{{ fmt }}</span>
+                  {% if stats.sl %}<span class="pill">SL {{ stats.sl }}</span>{% endif %}
+                </div>
+                <div class="text-secondary small mb-1">{{ stats.session_label or 'Current session' }}</div>
+                <div class="d-flex flex-column gap-1">
+                  <div class="text-secondary small">Points / Match: <strong>{{ stats.ppm }}</strong></div>
+                  <div class="text-secondary small">Pts Available: <strong>{{ stats.pa }}</strong></div>
+                  <div class="text-secondary small">Wins / Losses: <strong>{{ stats.wins }} / {{ stats.losses }}</strong></div>
+                  <div class="text-secondary small">Matches Played: <strong>{{ stats.matches_played }}</strong></div>
+                  <div class="text-secondary small">Trend: <strong>{{ stats.trend or 'n/a' }}</strong></div>
+                </div>
+              </div>
+            </div>
+          </div>
+          {% endfor %}
+        </div>
+      </div>
+
+      <div id="playercard-lifetime" class="d-none">
+        {% set lifetimes = player_insights.lifetime_formats %}
+        <div class="row g-3">
+          {% for lf in lifetimes %}
+          <div class="col-12 col-md-6">
+            <div class="card playercard-panel playercard-subtle hover-lift h-100">
+              <div class="card-body">
+                <div class="d-flex justify-content-between align-items-center mb-1">
+                  <div class="fw-semibold text-light">{{ lf.label|upper }} Lifetime</div>
+                  {% if lf.sl %}<span class="pill-soft">SL {{ lf.sl }}</span>{% endif %}
+                </div>
+                {% if lf.matches == '-' or lf.matches is none %}
+                  <div class="text-secondary small">No lifetime data yet for this format.</div>
+                {% else %}
+                  <div class="row g-2 align-items-center">
+                    <div class="col-6">
+                      <div class="text-secondary xsmall">Win %</div>
+                      <div class="fw-bold fs-5">{{ lf.win_pct or '—' }}</div>
+                    </div>
+                    <div class="col-6 text-end">
+                      <div class="text-secondary xsmall">Matches</div>
+                      <div class="fw-semibold">{{ lf.matches }} <span class="text-secondary small">(W {{ lf.wins }} / L {{ lf.losses }})</span></div>
+                    </div>
+                  </div>
+                  <hr class="text-secondary mt-2 mb-2">
+                  <div class="row g-2 text-secondary small">
+                    <div class="col-6">PPM <span class="text-light fw-semibold">{{ lf.ppm or '—' }}</span></div>
+                    <div class="col-6 text-end">PA <span class="text-light fw-semibold">{{ lf.pa or '—' }}</span></div>
+                    <div class="col-6">CLA <span class="text-light fw-semibold">{{ lf.cla or '—' }}</span></div>
+                    <div class="col-6 text-end">Def Avg <span class="text-light fw-semibold">{{ lf.def_avg or '—' }}</span></div>
+                  </div>
+                  <div class="d-flex justify-content-between align-items-center text-secondary small mt-2">
+                    <span>Last played: <span class="text-light">{{ lf.last_played or '—' }}</span></span>
+                    <span>Last 2 yrs: <span class="text-light">{{ lf.last_two_years or '—' }}</span></span>
+                  </div>
+                {% endif %}
+              </div>
+            </div>
+          </div>
+          {% endfor %}
+        </div>
+      </div>
+
+      <div id="playercard-past" class="d-none">
+        <div class="d-flex justify-content-between align-items-center mb-2">
+          <div>
+            <div class="text-secondary small mb-0">Past seasons</div>
+            <div class="text-light small">Membership + session highlights pulled from the dump.</div>
+          </div>
+        </div>
+
+        {% set seasons = player_insights.past_sessions_grouped or [] %}
+        {% set has_membership = player_insights.membership_years or player_insights.membership_leagues or player_insights.consecutive_years_played %}
+        {% if not seasons and not has_membership %}
+          <div class="text-secondary small">No historical patch or achievement data available yet.</div>
+        {% endif %}
+
+        {% if player_insights.membership_years %}
+        <div class="text-secondary small mt-2">Membership years</div>
+        <div class="d-flex flex-wrap gap-2 mb-2">
+          {% for y in player_insights.membership_years %}
+          <span class="pill-soft">{{ y }}</span>
+          {% endfor %}
+        </div>
+        {% endif %}
+
+        {% if player_insights.membership_leagues or player_insights.consecutive_years_played %}
+        <div class="text-secondary small mt-3">Membership profile</div>
+        <div class="d-flex flex-wrap gap-2 align-items-center mb-3">
+          <span class="pill-soft">Consecutive years: {{ player_insights.consecutive_years_played or '-' }}</span>
+          {% if player_insights.membership_leagues %}
+            {% for l in player_insights.membership_leagues %}
+              <span class="pill-soft">{{ l.league_name }}</span>
+            {% endfor %}
+          {% endif %}
+        </div>
+        {% endif %}
+
+        {% if seasons %}
+        <div class="d-flex justify-content-between align-items-center mt-3 mb-2">
+          <div class="text-secondary small">Session highlights</div>
+          <div class="d-flex align-items-center gap-2">
+            <select class="form-select form-select-sm bg-dark text-light border-secondary" id="seasonFmtFilter" style="width:auto;">
+              <option value="all">All formats</option>
+              <option value="8-ball">8-BALL</option>
+              <option value="9-ball">9-BALL</option>
+            </select>
+            <select class="form-select form-select-sm bg-dark text-light border-secondary" id="seasonTypeFilter" style="width:auto;">
+              <option value="all">All achievements</option>
+            </select>
+          </div>
+        </div>
+        <div class="row g-3">
+          {% for season in seasons %}
+          <div class="col-12">
+            <div class="row g-2">
+              {% for fmt_block in season.formats %}
+              <div class="col-12 col-md-6 col-lg-4 season-card" data-format="{{ fmt_block.format|lower }}">
+                <div class="card playercard-panel playercard-subtle hover-lift h-100">
+                  <div class="card-body p-3 d-flex flex-column gap-2">
+                    <div class="d-flex justify-content-between align-items-center">
+                      <span class="fw-semibold text-light">{{ season.season_name }}</span>
+                      <span class="pill-soft">{{ fmt_block.format|upper }}</span>
+                    </div>
+                    <div class="d-flex flex-column gap-1">
+                      {% for stat in fmt_block.stats %}
+                        <div class="text-secondary small d-flex justify-content-between stat-row" data-label="{{ stat.label }}">
+                          <span>{{ stat.label }}</span>
+                          <span class="text-light fw-semibold">
+                            {% if stat.value and stat.value|int > 1 %}
+                              ×{{ stat.value|int }}
+                            {% else %}
+                              {{ stat.value or '—' }}
+                            {% endif %}
+                          </span>
+                        </div>
+                      {% endfor %}
+                    </div>
+                  </div>
+                </div>
+              </div>
+              {% endfor %}
+            </div>
+          </div>
+          {% endfor %}
+        </div>
+        {% endif %}
+      </div>
+  {% endif %}
+
+  {% if patch_showcase %}
+  <div class="card bg-dark soft-border shadow-soft mb-3">
+    <div class="card-body">
+      <div class="d-flex justify-content-between align-items-center mb-2">
+        <div>
+          <h6 class="text-info mb-0">Patches Earned</h6>
+          <div class="text-secondary small">Top 4 from this session</div>
+        </div>
+        <button class="btn btn-sm btn-outline-info" data-bs-toggle="modal" data-bs-target="#allBadgesModal">View All</button>
+      </div>
+      <div class="row g-2">
+        {% for p in patch_showcase %}
+        <div class="col-12 col-md-6">
+          <div class="patch-card {% if p.locked %}patch-locked{% endif %}">
+            <div class="d-flex align-items-center justify-content-between">
+              <div class="d-flex align-items-center">
+                <div class="patch-badge-icon {% if p.locked %}text-secondary{% endif %}">
+                  <i class="fa-solid fa-certificate"></i>
+                </div>
+                <div>
+                  <div class="fw-semibold">{{ p.name }}</div>
+                  <div class="text-secondary small">{{ p.description or 'Patch progress will show here.' }}</div>
+                </div>
+              </div>
+              <span class="chip chip-{{ (p.difficulty or 'neutral')|lower }}">{{ p.difficulty or 'Patch' }}</span>
+            </div>
+            {% if p.count and p.count > 0 %}
+            <div class="patch-count-bubble">x{{ p.count }}</div>
+            {% endif %}
+          </div>
+        </div>
+        {% endfor %}
+      </div>
+    </div>
+  </div>
+  {% else %}
+  <div class="card bg-dark soft-border shadow-soft mb-3">
+    <div class="card-body">
+      <div class="d-flex justify-content-between align-items-center mb-2">
+        <div>
+          <h6 class="text-info mb-0">Patches Earned</h6>
+          <div class="text-secondary small">Session progress</div>
+        </div>
+        <button class="btn btn-sm btn-outline-info" data-bs-toggle="modal" data-bs-target="#allBadgesModal">View All</button>
+      </div>
+      <div class="text-secondary small">No patches yet. As you play, earned patches will surface here.</div>
+    </div>
+  </div>
+  {% endif %}
+
+  <div class="row g-3">
+    <div class="col-12 col-lg-7">
+      <!-- About / Interests -->
+      <div class="row g-3">
+        <div class="col-12 col-lg-6">
+          <div class="card bg-dark soft-border shadow-soft h-100">
+            <div class="card-body">
+              <div class="d-flex justify-content-between align-items-center mb-2">
+                <h6 class="text-info mb-0">About</h6>
+                <a class="btn btn-sm btn-outline-info" href="#aboutText">View</a>
+              </div>
+              <div class="text-secondary" id="aboutText" style="white-space:pre-line;">{{ user.about_me or 'No about text yet.' }}</div>
+            </div>
+          </div>
+        </div>
+        <div class="col-12 col-lg-6">
+          <div class="card bg-dark soft-border shadow-soft h-100">
+            <div class="card-body">
+              <div class="d-flex justify-content-between align-items-center mb-2">
+                <h6 class="text-info mb-0">Interests</h6>
+                <a class="btn btn-sm btn-outline-info" href="#interestsText">View</a>
+              </div>
+              <div class="text-secondary" id="interestsText" style="white-space:pre-line;">{{ user.interests or 'No interests shared yet.' }}</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Recent Locker Activity -->
+      <div class="card bg-dark soft-border shadow-soft h-100">
+        <div class="card-body">
+          <h6 class="text-info mb-2">Recent Locker Activity</h6>
+          {% if recent_messages %}
+          <div class="d-flex flex-column gap-2">
+            {% for msg in recent_messages %}
+            <div class="message-card">
+              <div class="d-flex justify-content-between">
+                <div class="d-flex align-items-center gap-2">
+                  <span class="badge bg-transparent border border-info text-info">#{{ msg.channel.slug if msg.channel else 'locker' }}</span>
+                  <span class="text-secondary small">{{ msg.created_at.strftime('%b %d, %I:%M %p') if msg.created_at else '' }}</span>
+                </div>
+              </div>
+              <div class="text-secondary mt-1">{{ msg.content | e | replace('\n','<br>') | safe }}</div>
+            </div>
+            {% endfor %}
+          </div>
+          {% else %}
+          <div class="text-secondary small">No messages yet. Say something in the Locker to start your history.</div>
+          {% endif %}
+        </div>
+      </div>
+    </div>
+
+    <div class="col-12 col-lg-5">
+      <!-- Now Playing -->
+      <div class="card music-card mb-3" id="musicCard">
+        <div class="card-body">
+          <div class="d-flex align-items-center justify-content-between mb-2">
+            <div class="d-flex align-items-center gap-2">
+              <i class="fa-solid fa-music text-info"></i>
+              <span class="h6 mb-0 text-info">Profile Theme Song</span>
+            </div>
+            <div class="text-secondary xsmall" id="npSourceLabel"></div>
+          </div>
+          <div class="d-flex flex-column flex-md-row gap-3 align-items-center align-items-md-start">
+            <div class="music-art"></div>
+            <div class="flex-grow-1 w-100">
+              <div class="d-flex justify-content-between align-items-start">
+                <div class="music-meta">
+                  <div class="fw-semibold" id="npTitle">{{ user.theme_song_title or user.theme_song_url or 'No theme song' }}</div>
+                  <div class="text-secondary xsmall" id="npArtist">{{ user.theme_song_artist or '' }}</div>
+                </div>
+                <div class="text-secondary xsmall" id="npTime">0:00 / 0:00</div>
+              </div>
+              <div class="music-shell mt-3">
+                <div class="audio-pane {% if not user.theme_song_url %}d-none{% endif %}" id="npAudioPane">
+                  <div class="controls-row" id="npAudioControls">
+                    <button class="btn btn-sm btn-outline-info" id="npPlayBtn" type="button">
+                      <i class="fa-solid fa-play" id="npPlayIcon"></i>
+                    </button>
+                    <input type="range" class="form-range flex-grow-1 music-progress" id="npSeek" min="0" max="100" value="0" step="1">
+                  </div>
+                  <div class="controls-row" id="npVolumeRow">
+                    <button class="btn btn-sm btn-outline-secondary" id="npMuteBtn" type="button">
+                      <i class="fa-solid fa-volume-high" id="npVolumeIcon"></i>
+                    </button>
+                    <input type="range" class="form-range music-volume" id="npVolume" min="0" max="100" value="100">
+                    {% if user.theme_song_url %}
+                    <a class="text-info small ms-auto" id="npOpenExternal" href="{{ user.theme_song_url }}" target="_blank" rel="noopener">Open externally</a>
+                    {% endif %}
+                  </div>
+                </div>
+                <div id="npEmbedShell" class="embed-shell d-none mt-2">
+                  <div id="npEmbedWrap" class="d-none">
+                    <iframe id="npEmbed" class="embed-frame" allow="autoplay; encrypted-media" allowfullscreen loading="lazy"></iframe>
+                  </div>
+                  <div id="npFallback" class="d-none embed-fallback mt-1">
+                    <img id="npFallbackImg" src="" alt="thumbnail">
+                    <div class="overlay text-center">
+                      <div class="text-light small mb-2">Unable to load embedded player.</div>
+                      <button class="btn btn-sm btn-info text-dark" id="npFallbackBtn" type="button">Open track</button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="text-secondary xsmall mt-2" id="npStatus">{% if user.theme_song_url %}Ready to play{% else %}No theme song set yet{% endif %}</div>
+              <audio id="npAudio" preload="none" src="{{ user.theme_song_url or '' }}"></audio>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Badges -->
+      <div class="card bg-dark soft-border shadow-soft mb-3">
+        <div class="card-body">
+          <div class="d-flex justify-content-between align-items-center mb-2">
+            <h6 class="text-info mb-0">Badges &amp; Milestones</h6>
+            {% if all_badges|length > 6 %}
+            <button class="btn btn-sm btn-outline-info" data-bs-toggle="modal" data-bs-target="#allBadgesModal">View All</button>
+            {% endif %}
+          </div>
+          <div class="row g-2">
+            {% for b in badges_ordered %}
+            {% if loop.index <= 6 %}
+            {% set locked = b.name not in user_badges %}
+            {% set icon = b.icon or 'fa-star' %}
+            {% set title = b.name %}
+            {% set desc = b.description or '' %}
+            <div class="col-12 col-md-6">
+              <div class="badge-card {% if locked %}text-secondary{% endif %}" style="{% if locked %}opacity:0.6;{% endif %}">
+                <div class="d-flex align-items-center mb-1">
+                  <i class="fa-solid {{ icon }} me-2 {% if not locked %}text-info{% else %}text-secondary{% endif %}"></i>
+                  <strong>{{ title }}</strong>
+                </div>
+                <div class="text-secondary small">{{ desc }}</div>
+              </div>
+            </div>
+            {% endif %}
+            {% endfor %}
+          </div>
+        </div>
+      </div>
+
+      <!-- League & Team Links -->
+      <div class="card bg-dark soft-border shadow-soft">
+        <div class="card-body">
+          <h6 class="text-info mb-2">League &amp; Team Links</h6>
+          <div class="text-secondary small mb-1">
+            APA profile:
+            {% if apa_profile_url %}
+              <a href="{{ apa_profile_url }}" target="_blank" rel="noopener" class="text-info">View APA profile</a>
+            {% else %}
+              <span class="text-info">not linked yet</span>
+            {% endif %}
+          </div>
+          <div class="text-secondary small">Teams: Cüe-Ligans 8-Ball / 9-Ball</div>
+        </div>
+      </div>
+
+      <!-- Teammates preview -->
+      <div class="card bg-dark soft-border shadow-soft mt-3">
+        <div class="card-body">
+          <div class="d-flex justify-content-between align-items-center mb-2">
+            <h6 class="text-info mb-0">Teammates</h6>
+            <a href="{{ url_for('profiles') }}" class="btn btn-sm btn-outline-info">View all</a>
+          </div>
+          {% if other_users %}
+          <div class="row g-3">
+            {% for u in other_users %}
+            <div class="col-12">
+              <div class="d-flex align-items-center">
+                <div class="avatar-wrapper me-3" style="width:48px;height:48px;border-radius:50%;overflow:hidden;border:1px solid rgba(255,255,255,.2);">
+                  {% if u.avatar_url %}
+                    <img src="{{ u.avatar_url }}" alt="{{ u.display_name or u.username }}" class="img-fluid">
+                  {% else %}
+                    <div class="d-flex align-items-center justify-content-center h-100 w-100 bg-secondary text-dark fw-bold" style="font-size:1rem;">
+                      {{ (u.display_name or u.username)[:2] | upper }}
+                    </div>
+                  {% endif %}
+                </div>
+                <div class="flex-grow-1">
+                  <div class="fw-semibold">{{ u.display_name or u.username }}</div>
+                  <div class="text-secondary small">@{{ u.username }}</div>
+                </div>
+                <a class="btn btn-outline-info btn-sm" href="{{ url_for('profile_detail', username=u.username) }}">View</a>
+              </div>
+            </div>
+            {% endfor %}
+          </div>
+          {% else %}
+          <div class="text-secondary">No other profiles yet.</div>
+          {% endif %}
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Profile Flair -->
+  <div class="card bg-dark soft-border shadow-soft mt-3">
+    <div class="card-body">
+      <h6 class="text-info mb-2">Profile Flair</h6>
+      <div class="row g-2">
+        <div class="col-12 col-md-4">
+            <div class="settings-tile">
+              <div class="text-secondary small">Current Mood</div>
+              <div class="h6 mb-0" id="moodText">{{ user.current_mood or "—" }}</div>
+            </div>
+          </div>
+          <div class="col-12 col-md-4">
+            <div class="settings-tile">
+              <div class="text-secondary small">Favorite Game</div>
+              <div class="h6 mb-0" id="favGameText">{{ user.favorite_game or "—" }}</div>
+            </div>
+          </div>
+          <div class="col-12 col-md-4">
+            <div class="settings-tile">
+              <div class="text-secondary small">Favorite Quote</div>
+              <div class="text-secondary" id="favQuoteText">{{ user.favorite_quote or "—" }}</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  <!-- Profile Wall -->
+  <div class="card bg-dark soft-border shadow-soft mt-3">
+    <div class="card-body">
+      <h6 class="text-info mb-3">Profile Wall</h6>
+      {% if current_user %}
+      <form class="mb-3" method="POST" action="{{ url_for('profile_comment', username=user.username) }}">
+        <div class="input-group">
+          <input type="text" name="content" class="form-control bg-dark text-light soft-border" placeholder="Leave a comment..." required maxlength="500">
+          <button class="btn btn-info text-dark">Post</button>
+        </div>
+      </form>
+      {% endif %}
+      {% if comments %}
+      <div class="d-flex flex-column gap-2">
+        {% for c in comments %}
+        {% set author = commenters.get(c.author_user_id) %}
+        <div class="message-card">
+          <div class="d-flex">
+            <div class="me-2">
+              <div class="rounded-circle d-flex align-items-center justify-content-center" style="width:40px;height:40px;border:1px solid rgba(0,191,255,0.4); background:rgba(255,255,255,0.04);">
+                <span class="small fw-bold">{{ author.initials if author else '??' }}</span>
+              </div>
+            </div>
+            <div class="flex-grow-1">
+              <div class="d-flex justify-content-between align-items-center">
+                <strong><a class="text-info text-decoration-none" href="{{ url_for('profile_detail', username=author.username) if author else '#' }}">{{ author.display_name or author.username if author else 'Unknown' }}</a></strong>
+                <span class="text-secondary small">{{ c.created_at.strftime('%b %d, %I:%M %p') if c.created_at else '' }}</span>
+              </div>
+              <div class="text-secondary small">{{ c.content }}</div>
+            </div>
+          </div>
+        </div>
+        {% endfor %}
+      </div>
+      {% else %}
+      <div class="text-secondary small">No comments yet. Be the first to say hi.</div>
+      {% endif %}
+    </div>
+  </div>
+</div>
+<!-- Avatar crop modal -->
+{% if current_user and current_user.id == user.id %}
+<div class="modal fade" id="avatarModal" tabindex="-1" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content bg-dark soft-border shadow-soft">
+      <div class="modal-header">
+        <h6 class="modal-title text-info">Adjust Profile Picture</h6>
+        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <div class="text-secondary small mb-2">Drag to reposition, use zoom to fit.</div>
+        <canvas id="avatarCanvas" width="240" height="240" style="background:rgba(255,255,255,0.03); border:1px solid rgba(255,255,255,0.08); border-radius:8px;"></canvas>
+        <div class="mt-3">
+          <label class="form-label text-secondary small">Zoom</label>
+          <input type="range" min="1" max="2" step="0.05" value="1" class="form-range" id="avatarZoom">
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Cancel</button>
+        <button type="button" class="btn btn-info text-dark" id="avatarSaveBtn">Save</button>
+      </div>
+    </div>
+  </div>
+</div>
+{% endif %}
+<!-- Edit profile modal -->
+{% if current_user and (current_user.id == user.id or (current_user.role and current_user.role|lower == 'admin')) %}
+<div class="modal fade edit-profile-modal" id="profileModal" tabindex="-1" aria-hidden="true">
+  <div class="modal-dialog modal-xl modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header text-light">
+        <div>
+          <div class="h5 mb-0">Edit profile</div>
+          <div class="text-secondary small">Update how your team sees you.</div>
+        </div>
+        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body text-light">
+        <form id="profileForm" method="POST" enctype="multipart/form-data" action="{{ url_for('profile_detail', username=user.username) }}">
+          <div class="row g-3">
+            <div class="col-12 col-xl-7">
+              <div class="row g-3">
+                <div class="col-12">
+                  <label class="form-label text-secondary small mb-1">Link to APA player</label>
+                  <select name="player_ref" id="playerRefSelect" class="form-select soft-border">
+                    <option value="">-- Not linked --</option>
+                    {% for p in player_options %}
+                    <option value="{{ p.id }}" {% if user.player_ref == p.id %}selected{% endif %}>
+                      {{ p.name }}
+                    </option>
+                    {% endfor %}
+                  </select>
+                  <div class="helper">Select yourself from the league data so both 8-Ball and 9-Ball stats stay linked.</div>
+                </div>
+                <div class="col-12 col-md-6">
+                  <label class="form-label text-secondary small mb-1">Display name</label>
+                  <input type="text" name="display_name" id="inputDisplayName" class="form-control soft-border" maxlength="40" value="{{ user.display_name or user.username }}" required>
+                  <div class="helper">Shown on your banner and player card.</div>
+                </div>
+                <div class="col-12 col-md-6">
+                  <label class="form-label text-secondary small mb-1">Username / handle</label>
+                  <input type="text" class="form-control soft-border" value="@{{ user.username }}" readonly>
+                  <div class="helper">Handle is read-only.</div>
+                </div>
+                <div class="col-12">
+                  <label class="form-label text-secondary small mb-1">Nickname</label>
+                  <input type="text" name="nickname" id="inputNickname" class="form-control soft-border" maxlength="80" value="{{ user.display_name or user.username }}">
+                  <div class="helper">Appears as “Nickname:” on your profile.</div>
+                </div>
+                <div class="col-12">
+                  <label class="form-label text-secondary small mb-1">Bio</label>
+                  <textarea name="bio" id="bioInput" class="form-control soft-border" rows="2" maxlength="280">{{ user.bio or '' }}</textarea>
+                  <div class="d-flex justify-content-between helper"><span>Short status line (max 280 chars).</span><span id="bioCounter">0/280</span></div>
+                </div>
+                <div class="col-12">
+                  <label class="form-label text-secondary small mb-1">About</label>
+                  <textarea name="about_me" id="aboutInput" class="form-control soft-border" rows="2" maxlength="400">{{ user.about_me or '' }}</textarea>
+                  <div class="d-flex justify-content-between helper"><span>Longer about text.</span><span id="aboutCounter">0/400</span></div>
+                </div>
+                <div class="col-12">
+                  <label class="form-label text-secondary small mb-1">Interests (comma-separated)</label>
+                  <input type="text" name="interests" id="interestsInput" class="form-control soft-border" value="{{ user.interests or '' }}">
+                  <div class="helper">Shown as interest chips.</div>
+                </div>
+                <div class="col-12 col-md-6">
+                  <label class="form-label text-secondary small mb-1">Current mood</label>
+                  <input type="text" name="current_mood" id="moodInput" class="form-control soft-border" value="{{ user.current_mood or '' }}">
+                  <div class="helper">Displayed under Profile Flair.</div>
+                </div>
+                <div class="col-12 col-md-6">
+                  <label class="form-label text-secondary small mb-1">Favorite game</label>
+                  <select name="favorite_game" id="gameInput" class="form-select soft-border">
+                    <option value="">--</option>
+                    <option value="8-Ball" {% if user.favorite_game == '8-Ball' %}selected{% endif %}>8-Ball</option>
+                    <option value="9-Ball" {% if user.favorite_game == '9-Ball' %}selected{% endif %}>9-Ball</option>
+                    <option value="Both" {% if user.favorite_game == 'Both' %}selected{% endif %}>Both</option>
+                  </select>
+                  <div class="helper">Pick your go-to game.</div>
+                </div>
+                <div class="col-12">
+                  <label class="form-label text-secondary small mb-1">Favorite quote</label>
+                  <input type="text" name="favorite_quote" id="quoteInput" class="form-control soft-border" maxlength="280" value="{{ user.favorite_quote or '' }}">
+                  <div class="d-flex justify-content-between helper"><span>Optional flair line.</span><span id="quoteCounter">0/280</span></div>
+                </div>
+                <div class="col-12 col-md-6">
+                  <label class="form-label text-secondary small mb-1">Theme song URL</label>
+                  <input type="text" name="theme_song_url" id="themeUrlInput" class="form-control soft-border" placeholder="https://..." value="{{ user.theme_song_url or '' }}">
+                  <div class="helper">Appears in Now Playing. Detected source: <span id="themeSourceLabel">-</span></div>
+                </div>
+                <div class="col-12 col-md-6">
+                  <label class="form-label text-secondary small mb-1">Theme song title</label>
+                  <input type="text" name="theme_song_title" id="themeTitleInput" class="form-control soft-border" placeholder="Song name" value="{{ user.theme_song_title or '' }}">
+                </div>
+                <div class="col-12 col-md-6">
+                  <label class="form-label text-secondary small mb-1">Theme song artist</label>
+                  <input type="text" name="theme_song_artist" id="themeArtistInput" class="form-control soft-border" placeholder="Artist" value="{{ user.theme_song_artist or '' }}">
+                </div>
+                <div class="col-12 col-md-6 d-flex align-items-end">
+                  <button class="btn btn-outline-info w-100" type="button" id="previewSongBtn">Preview Song</button>
+                </div>
+                <div class="col-12 col-md-6">
+                  <label class="form-label text-secondary small mb-1">Accent color</label>
+                  <div class="d-flex align-items-center gap-2">
+                    <input type="color" name="profile_accent_color" id="accentInput" class="form-control form-control-color" value="{{ user.profile_accent_color or '#00bfff' }}" style="max-width:64px;">
+                    <input type="text" class="form-control soft-border" id="accentHex" value="{{ user.profile_accent_color or '#00bfff' }}">
+                    <span class="accent-sample" id="accentSample" style="background: {{ user.profile_accent_color or '#00bfff' }};"></span>
+                  </div>
+                  <div class="helper">Affects pills and highlights.</div>
+                </div>
+                <div class="col-12 col-md-6">
+                  <label class="form-label text-secondary small mb-1">Profile background URL</label>
+                  <input type="text" name="profile_background_url" id="bgUrlInput" class="form-control soft-border" placeholder="https://..." value="{{ user.profile_background_url or '' }}">
+                  <div class="helper">Behind your profile content.</div>
+                </div>
+                <div class="col-12 col-md-6">
+                  <label class="form-label text-secondary small mb-1">Banner image URL</label>
+                  <input type="text" name="profile_banner_url" id="bannerUrlInput" class="form-control soft-border" placeholder="https://..." value="{{ user.profile_banner_url or '' }}">
+                  <div class="helper">Large header image.</div>
+                </div>
+                <div class="col-12 col-md-6">
+                  <label class="form-label text-secondary small mb-1">Change avatar</label>
+                  <input type="file" accept="image/*" name="avatar_file" id="avatarFileInput" class="form-control soft-border">
+                  <div class="helper">Updates your profile picture.</div>
+                </div>
+                <div class="col-12 col-md-6">
+                  <label class="form-label text-secondary small mb-1">Change banner</label>
+                  <input type="file" accept="image/*" name="profile_banner_file" id="bannerFileInput" class="form-control soft-border">
+                  <div class="helper">Uploads a new banner image.</div>
+                </div>
+                <div class="col-12 col-md-6">
+                  <label class="form-label text-secondary small mb-1">Change background</label>
+                  <input type="file" accept="image/*" name="profile_background_file" id="bgFileInput" class="form-control soft-border">
+                  <div class="helper">Uploads a new background image.</div>
+                </div>
+              </div>
+            </div>
+            <div class="col-12 col-xl-5">
+              <div class="preview-mini" id="profilePreview">
+                <div class="banner" id="previewBanner"></div>
+                <div class="content">
+                  <img id="previewAvatar" class="avatar" src="{{ user.avatar_url or '' }}" alt="avatar">
+                  <div class="flex-grow-1">
+                    <div class="d-flex align-items-center justify-content-between">
+                      <div>
+                        <div class="fw-semibold" id="previewName">{{ user.display_name or user.username }}</div>
+                        <div class="text-secondary small" id="previewHandle">@{{ user.username }}</div>
+                      </div>
+                      <span class="pill-soft" id="previewRole" style="border-color: {{ user.profile_accent_color or '#00bfff' }}; color: {{ user.profile_accent_color or '#00bfff' }};">
+                        {{ user.role|title if user.role else 'Player' }}
+                      </span>
+                    </div>
+                    <div class="text-secondary small mt-1" id="previewBio">{{ user.bio or 'Add a bio' }}</div>
+                    <div class="text-secondary small mt-1" id="previewMood">{{ user.current_mood or '' }}</div>
+                    <div class="text-secondary xsmall mt-1" id="previewSong">{{ user.theme_song_title or '' }}</div>
+                  </div>
+                </div>
+              </div>
+            <div class="text-secondary small mt-2">Live preview updates as you edit.</div>
+            <div class="mt-2 p-2 rounded now-playing-player">
+              <div class="fw-semibold small" id="modalSongTitle">{{ user.theme_song_title or 'No theme song' }}</div>
+              <div class="text-secondary xsmall" id="modalSongArtist">{{ user.theme_song_artist or '' }}</div>
+            </div>
+          </div>
+        </div>
+      </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Cancel</button>
+        <button type="submit" form="profileForm" class="btn btn-info text-dark" id="profileSaveBtn">Save changes</button>
+      </div>
+    </div>
+  </div>
+</div>
+{% endif %}
+<!-- All badges modal -->
+<div class="modal fade" id="allBadgesModal" tabindex="-1" aria-hidden="true">
+  <div class="modal-dialog modal-xl modal-dialog-scrollable">
+    <div class="modal-content" style="background:#0b0f1a;border:1px solid rgba(255,255,255,0.08);box-shadow:0 24px 60px rgba(0,0,0,0.55);">
+      <div class="modal-header border-0 text-light" style="background:linear-gradient(135deg,#0e1727,#0a0f1c);position:sticky;top:0;z-index:5;">
+        <div>
+          <div class="h5 mb-0">All Patches</div>
+          <div class="text-secondary small">Trophy case by category and rarity</div>
+        </div>
+        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body pt-2">
+        <style>
+          .patch-filter-bar { position: sticky; top:0; z-index:4; background:#0b0f1a; padding:0.35rem 0; }
+          .patch-filter { border-radius:999px; padding:0.35rem 0.9rem; border:1px solid rgba(0,229,255,0.35); color:#b6ecff; background:rgba(0,229,255,0.08); transition:all .15s; }
+          .patch-filter.active { background:linear-gradient(135deg,#00e5ff,#7c5dff); color:#0a0d18; border-color:transparent; box-shadow:0 0 14px rgba(0,229,255,0.35); }
+          .patch-filter:not(.active):hover { border-color:rgba(124,93,255,0.45); color:#e5e9ff; }
+          .collectible-card { background:rgba(255,255,255,0.03); border:1px solid rgba(255,255,255,0.08); border-radius:12px; padding:12px; box-shadow:0 14px 30px rgba(0,0,0,0.35); display:flex; gap:12px; height:100%; }
+          .collectible-img { width:72px; min-width:72px; height:72px; border-radius:10px; background:rgba(255,255,255,0.04); border:1px dashed rgba(255,255,255,0.08); }
+          .rarity-pill { border-radius:999px; padding:0.2rem 0.7rem; font-weight:700; font-size:0.8rem; }
+          .rarity-gold { background:linear-gradient(135deg,#f9d976,#f39f33); color:#1a1000; box-shadow:0 0 12px rgba(243,159,51,0.45); }
+          .rarity-silver { background:linear-gradient(135deg,#d9e4ec,#9eaab6); color:#0d1116; box-shadow:0 0 12px rgba(158,170,182,0.35); }
+          .rarity-bronze { background:linear-gradient(135deg,#e2b28c,#b8743d); color:#1b0f06; box-shadow:0 0 12px rgba(184,116,61,0.35); }
+          .rarity-diamond { background:linear-gradient(135deg,#7cf3ff,#3b8dff); color:#071018; box-shadow:0 0 14px rgba(123,243,255,0.45); }
+          .rarity-neutral { background:rgba(255,255,255,0.08); color:#dfe7ff; }
+          .collectible-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(280px,1fr)); gap:12px; }
+          .collectible-meta { display:flex; justify-content:space-between; align-items:center; gap:8px; }
+        </style>
+        <div class="d-flex align-items-center gap-2 mb-2">
+          <button class="chip active" disabled>Current Season</button>
+          <button class="chip chip-neutral" disabled>All Seasons (coming soon)</button>
+        </div>
+        {% if patch_index and patch_index.categories %}
+        {% set categories = patch_index.categories %}
+        <div class="patch-filter-bar mb-3">
+          <div class="d-flex flex-wrap gap-2 align-items-center">
+            <button class="patch-filter active" data-filter="all">Show All</button>
+            {% for cat in categories %}
+            <button class="patch-filter" data-filter="cat-{{ loop.index0 }}">{{ cat.name }}</button>
+            {% endfor %}
+          </div>
+        </div>
+        <div id="patchGrid" class="d-flex flex-column gap-3">
+          {% for cat in categories %}
+          {% set cat_idx = loop.index0 %}
+          <div class="patch-category" data-cat="cat-{{ cat_idx }}">
+            <div class="d-flex justify-content-between align-items-center mb-2">
+              <div class="h6 mb-0 text-info">{{ cat.name }}</div>
+              <span class="text-secondary small">{{ cat.patches|length }} patches</span>
+            </div>
+            <div class="collectible-grid">
+              {% for p in cat.patches %}
+              {% set cnt = patch_counts.get(p.code, 0) %}
+              {% set rarity = (p.difficulty or 'neutral')|lower %}
+              <div class="collectible-card" data-category="cat-{{ cat_idx }}">
+                <div class="collectible-img"></div>
+                <div class="flex-grow-1 d-flex flex-column gap-1">
+                  <div class="collectible-meta">
+                    <div class="fw-semibold text-light">{{ p.name }}</div>
+                    <span class="rarity-pill rarity-{{ rarity if rarity in ['gold','silver','bronze','diamond'] else 'neutral' }}">{{ p.difficulty or 'Patch' }}</span>
+                  </div>
+                  <div class="text-secondary small">{{ p.description }}</div>
+                  <div class="text-secondary small">Format: {{ p.format|title if p.format else 'Any' }} • Scope: {{ p.scope|title if p.scope else 'Individual' }}</div>
+                  <div class="mt-1 d-flex justify-content-between align-items-center">
+                    <button class="btn btn-sm btn-outline-info view-patch-btn"
+                      type="button"
+                      data-name="{{ p.name }}"
+                      data-description="{{ p.description }}"
+                      data-difficulty="{{ p.difficulty }}"
+                      data-format="{{ p.format }}"
+                      data-scope="{{ p.scope }}"
+                      data-official="{{ 'Yes' if p.official else 'No' }}"
+                      data-notes="{{ p.notes or '' }}">
+                      Details
+                    </button>
+                    {% if cnt > 0 %}
+                    <span class="badge bg-info text-dark">x{{ cnt }}</span>
+                    {% else %}
+                    <span class="badge bg-secondary">Locked</span>
+                    {% endif %}
+                  </div>
+                </div>
+              </div>
+              {% endfor %}
+            </div>
+          </div>
+          {% endfor %}
+        </div>
+        {% else %}
+        <div class="text-secondary small">Patch index not loaded yet.</div>
+        {% endif %}
+      </div>
+    </div>
+  </div>
+</div>
+</div>
+
+<!-- Patch detail modal -->
+<div class="modal fade" id="patchDetailModal" tabindex="-1" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content neon-modal">
+      <div class="modal-header border-0 bg-gradient-dark text-light">
+        <div>
+          <div class="h5 mb-0" id="patchDetailName">Patch</div>
+          <div class="text-secondary small" id="patchDetailDifficulty">Difficulty</div>
+        </div>
+        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body bg-dark text-light">
+        <div class="mb-2 text-secondary" id="patchDetailDescription"></div>
+        <div class="d-flex flex-wrap gap-2 mb-3">
+          <span class="chip chip-info" id="patchDetailFormat"></span>
+          <span class="chip chip-neutral" id="patchDetailScope"></span>
+          <span class="chip chip-success" id="patchDetailOfficial"></span>
+        </div>
+        <div class="text-secondary small" id="patchDetailNotes"></div>
+      </div>
+    </div>
+  </div>
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    const matchModalEl = document.getElementById('matchHistoryModal');
+    const matchModalBody = document.getElementById('matchHistoryBody');
+    const matchModal = matchModalEl ? new bootstrap.Modal(matchModalEl) : null;
+    const matchData = {{ match_history|default({})|tojson|safe }};
+    const avatarWrapper = document.querySelector('.avatar-wrapper');
+    const avatarInput = document.getElementById('avatarFileInput');
+    const modalEl = document.getElementById('avatarModal');
+    const canvas = document.getElementById('avatarCanvas');
+    const zoom = document.getElementById('avatarZoom');
+    const saveBtn = document.getElementById('avatarSaveBtn');
+    const editBtn = document.getElementById('editProfileBtn');
+    const matchModalInstance = matchModal;
+    let img = new Image();
+    let imgLoaded = false;
+    let scale = 1;
+    let offset = {x:0, y:0};
+    const ctx = canvas ? canvas.getContext('2d') : null;
+
+    const profileData = {{ {
+      "display_name": user.display_name or user.username,
+      "username": user.username,
+      "bio": user.bio or "",
+      "about_me": user.about_me or "",
+      "interests": user.interests or "",
+      "theme_song_url": user.theme_song_url or "",
+      "theme_song_title": user.theme_song_title or "",
+      "theme_song_artist": user.theme_song_artist or "",
+      "favorite_quote": user.favorite_quote or "",
+      "favorite_game": user.favorite_game or "",
+      "current_mood": user.current_mood or "",
+      "profile_accent_color": user.profile_accent_color or "",
+      "profile_background_url": user.profile_background_url or "",
+      "profile_banner_url": user.profile_banner_url or "",
+      "player_ref": user.player_ref or ""
+    } | tojson }};
+    const profileModalEl = document.getElementById('profileModal');
+    const profileForm = document.getElementById('profileForm');
+    const profileSaveBtn = document.getElementById('profileSaveBtn');
+    const profileModalInstance = profileModalEl ? bootstrap.Modal.getOrCreateInstance(profileModalEl) : null;
+    const previewAvatar = document.getElementById('previewAvatar');
+    const previewBanner = document.getElementById('previewBanner');
+    const previewName = document.getElementById('previewName');
+    const previewHandle = document.getElementById('previewHandle');
+    const previewBio = document.getElementById('previewBio');
+    const previewMood = document.getElementById('previewMood');
+    const previewRole = document.getElementById('previewRole');
+
+    const displayNameInput = document.getElementById('inputDisplayName');
+    const nicknameInput = document.getElementById('inputNickname');
+    const bioInput = document.getElementById('bioInput');
+    const aboutInput = document.getElementById('aboutInput');
+    const interestsInput = document.getElementById('interestsInput');
+    const quoteInput = document.getElementById('quoteInput');
+    const themeUrlInput = document.getElementById('themeUrlInput');
+    const themeTitleInput = document.getElementById('themeTitleInput');
+    const themeArtistInput = document.getElementById('themeArtistInput');
+    const accentInput = document.getElementById('accentInput');
+    const accentHex = document.getElementById('accentHex');
+    const accentSample = document.getElementById('accentSample');
+    const bgUrlInput = document.getElementById('bgUrlInput');
+    const bannerUrlInput = document.getElementById('bannerUrlInput');
+    const moodInput = document.getElementById('moodInput');
+    const gameInput = document.getElementById('gameInput');
+    const bioCounter = document.getElementById('bioCounter');
+    const aboutCounter = document.getElementById('aboutCounter');
+    const quoteCounter = document.getElementById('quoteCounter');
+
+    const previewSong = document.getElementById('previewSong');
+
+    function updatePreview() {
+      if (previewName && displayNameInput) previewName.textContent = displayNameInput.value || profileData.username;
+      if (previewHandle) previewHandle.textContent = `@${profileData.username}`;
+      if (previewBio && bioInput) previewBio.textContent = bioInput.value || 'Add a bio';
+      if (previewMood && moodInput) previewMood.textContent = moodInput.value || '';
+      if (previewSong) {
+        const title = themeTitleInput ? themeTitleInput.value : '';
+        const artist = themeArtistInput ? themeArtistInput.value : '';
+        previewSong.textContent = [title, artist].filter(Boolean).join(' • ');
+      }
+      if (previewRole && accentInput) {
+        previewRole.style.borderColor = accentInput.value;
+        previewRole.style.color = accentInput.value;
+      }
+      if (previewBanner) {
+        const url = (bannerUrlInput && bannerUrlInput.value) || profileData.profile_banner_url;
+        previewBanner.style.backgroundImage = url ? `url('${url}')` : '';
+      }
+      if (previewAvatar && previewAvatar.dataset.original !== undefined) {
+        previewAvatar.src = previewAvatar.dataset.previewSrc || previewAvatar.dataset.original || '';
+      }
+      if (accentSample && accentInput) {
+        accentSample.style.background = accentInput.value;
+      }
+    }
+
+    function syncCounters() {
+      if (bioCounter && bioInput) bioCounter.textContent = `${bioInput.value.length}/280`;
+      if (aboutCounter && aboutInput) aboutCounter.textContent = `${aboutInput.value.length}/400`;
+      if (quoteCounter && quoteInput) quoteCounter.textContent = `${quoteInput.value.length}/280`;
+    }
+
+    // Seed initial preview values
+    if (previewAvatar) {
+      previewAvatar.dataset.original = "{{ user.avatar_url or '' }}";
+      previewAvatar.dataset.previewSrc = "{{ user.avatar_url or '' }}";
+      previewAvatar.src = previewAvatar.dataset.previewSrc;
+    }
+    updatePreview();
+    syncCounters();
+
+    [displayNameInput, bioInput, moodInput, accentInput, accentHex, bannerUrlInput].forEach(el => {
+      if (!el) return;
+      el.addEventListener('input', () => {
+        if (el === accentInput && accentHex) accentHex.value = accentInput.value;
+        if (el === accentHex && accentInput) accentInput.value = accentHex.value;
+        if (el === bannerUrlInput && previewBanner) {
+          previewBanner.style.backgroundImage = bannerUrlInput.value ? `url('${bannerUrlInput.value}')` : '';
+        }
+        updatePreview();
+        syncCounters();
+      });
+    });
+    if (quoteInput) quoteInput.addEventListener('input', syncCounters);
+    if (aboutInput) aboutInput.addEventListener('input', syncCounters);
+    if (bioInput) bioInput.addEventListener('input', syncCounters);
+
+    function previewFile(inputEl, setter) {
+      if (!inputEl) return;
+      inputEl.addEventListener('change', () => {
+        const file = inputEl.files[0];
+        if (!file) return;
+        const reader = new FileReader();
+        reader.onload = e => setter(e.target.result);
+        reader.readAsDataURL(file);
+      });
+    }
+    previewFile(document.getElementById('bannerFileInput'), (src) => { if (previewBanner) previewBanner.style.backgroundImage = `url('${src}')`; });
+    previewFile(document.getElementById('bgFileInput'), (src) => { if (previewBanner) previewBanner.style.backgroundImage = `url('${src}')`; });
+    previewFile(document.getElementById('avatarFileInput'), (src) => { if (previewAvatar) { previewAvatar.dataset.previewSrc = src; previewAvatar.src = src; } });
+
+    function draw() {
+      if (!ctx || !imgLoaded) return;
+      ctx.clearRect(0,0,canvas.width, canvas.height);
+      ctx.save();
+      ctx.beginPath();
+      ctx.arc(canvas.width/2, canvas.height/2, canvas.width/2 - 4, 0, Math.PI*2);
+      ctx.clip();
+      const sw = img.width * scale;
+      const sh = img.height * scale;
+      const dx = (canvas.width - sw)/2 + offset.x;
+      const dy = (canvas.height - sh)/2 + offset.y;
+      ctx.drawImage(img, dx, dy, sw, sh);
+      ctx.restore();
+      ctx.strokeStyle = 'rgba(0,191,255,0.6)';
+      ctx.lineWidth = 2;
+      ctx.beginPath();
+      ctx.arc(canvas.width/2, canvas.height/2, canvas.width/2 - 4, 0, Math.PI*2);
+      ctx.stroke();
+    }
+
+    let dragging = false;
+    let start = {x:0, y:0};
+    function onMove(e) {
+      if (!dragging) return;
+      const point = e.touches ? e.touches[0] : e;
+      offset.x += point.clientX - start.x;
+      offset.y += point.clientY - start.y;
+      start = {x: point.clientX, y: point.clientY};
+      draw();
+    }
+
+    if (canvas) {
+      canvas.addEventListener('mousedown', e => { dragging=true; start={x:e.clientX,y:e.clientY}; });
+      canvas.addEventListener('mousemove', onMove);
+      canvas.addEventListener('mouseup', ()=> dragging=false);
+      canvas.addEventListener('mouseleave', ()=> dragging=false);
+      canvas.addEventListener('touchstart', e => { dragging=true; start={x:e.touches[0].clientX,y:e.touches[0].clientY}; });
+      canvas.addEventListener('touchmove', onMove);
+      canvas.addEventListener('touchend', ()=> dragging=false);
+    }
+
+    if (zoom) {
+      zoom.addEventListener('input', () => { scale = parseFloat(zoom.value); draw(); });
+    }
+
+    function openModalWithFile(file) {
+      if (!file) return;
+      const reader = new FileReader();
+      reader.onload = ev => {
+        img.onload = () => {
+          imgLoaded = true;
+          scale = 1;
+          offset = {x:0,y:0};
+          zoom.value = 1;
+          draw();
+          const modal = bootstrap.Modal.getOrCreateInstance(modalEl);
+          modal.show();
+        };
+        img.src = ev.target.result;
+      };
+      reader.readAsDataURL(file);
+    }
+
+    if (avatarWrapper && avatarInput) {
+      avatarWrapper.addEventListener('click', () => avatarInput.click());
+      avatarInput.addEventListener('change', () => {
+        if (avatarInput.files.length) {
+          openModalWithFile(avatarInput.files[0]);
+        }
+      });
+    }
+
+    if (saveBtn && modalEl) {
+      saveBtn.addEventListener('click', () => {
+        if (!imgLoaded || !ctx) return;
+        canvas.toBlob(blob => {
+          if (!blob) return;
+          const fd = new FormData();
+          fd.append('avatar_file', blob, 'avatar.png');
+          fetch("{{ url_for('profile_detail', username=user.username) }}", {
+            method: 'POST',
+            body: fd,
+            headers: {'X-Requested-With': 'fetch-avatar'}
+          })
+          .then(async res => {
+            const ct = res.headers.get('content-type') || '';
+            if (!ct.includes('application/json')) {
+              const txt = await res.text();
+              throw new Error(`Unexpected response (${res.status}). Body: ${txt.slice(0,200)}`);
+            }
+            return res.json();
+          })
+          .then(data => {
+            if (data && data.ok && data.avatar_url) {
+              const imgEl = document.querySelector('.avatar-wrapper img');
+              if (imgEl) { imgEl.src = data.avatar_url; }
+              const toast = document.getElementById('profileToast');
+              if (toast) {
+                const body = toast.querySelector('.toast-body');
+                if (body) body.textContent = 'Profile picture updated';
+                bootstrap.Toast.getOrCreateInstance(toast).show();
+              }
+              bootstrap.Modal.getOrCreateInstance(modalEl).hide();
+            } else {
+              alert(data && data.error ? `Avatar save failed: ${data.error}` : 'Avatar save failed.');
+            }
+          })
+          .catch(err => {
+            alert(`Avatar save error: ${err.message}`);
+            window.location.reload();
+          });
+        });
+      });
+    }
+
+    function populateProfileModal() {
+      if (!profileForm) return;
+      profileForm.display_name.value = profileData.display_name || '';
+      profileForm.player_ref.value = profileData.player_ref || '';
+      profileForm.bio.value = profileData.bio || '';
+      profileForm.about_me.value = profileData.about_me || '';
+      profileForm.interests.value = profileData.interests || '';
+      profileForm.profile_accent_color.value = profileData.profile_accent_color || '';
+      profileForm.profile_background_url.value = profileData.profile_background_url || '';
+      profileForm.profile_banner_url.value = profileData.profile_banner_url || '';
+      profileForm.theme_song_url.value = profileData.theme_song_url || '';
+      profileForm.theme_song_title.value = profileData.theme_song_title || '';
+      if (profileForm.theme_song_artist) profileForm.theme_song_artist.value = profileData.theme_song_artist || '';
+      profileForm.favorite_quote.value = profileData.favorite_quote || '';
+      profileForm.favorite_game.value = profileData.favorite_game || '';
+      profileForm.current_mood.value = profileData.current_mood || '';
+    }
+
+    function applyProfileData(data) {
+      profileData.display_name = data.display_name;
+      profileData.bio = data.bio;
+      profileData.about_me = data.about_me;
+      profileData.interests = data.interests;
+      profileData.theme_song_url = data.theme_song_url;
+      profileData.theme_song_title = data.theme_song_title;
+      profileData.favorite_quote = data.favorite_quote;
+      profileData.favorite_game = data.favorite_game;
+      profileData.current_mood = data.current_mood;
+      profileData.profile_accent_color = data.profile_accent_color;
+      profileData.profile_background_url = data.profile_background_url;
+      profileData.profile_banner_url = data.profile_banner_url;
+      profileData.player_ref = data.player_ref;
+      // preview background
+      const bgPrev = document.getElementById('bgPreview');
+      const bannerPrev = document.getElementById('bannerPreview');
+      const bgWrap = document.querySelector('.profile-bg-wrap');
+      const bannerImg = document.getElementById('bannerImage');
+      const bannerWrap = document.getElementById('bannerImageWrap');
+      const heroCard = document.getElementById('heroCard');
+      const accentColor = data.profile_accent_color || '#00bfff';
+      if (bgPrev) {
+        bgPrev.style.backgroundImage = data.profile_background_url ? `url('${data.profile_background_url}')` : '';
+      }
+      if (bannerPrev) {
+        bannerPrev.style.backgroundImage = data.profile_banner_url ? `url('${data.profile_banner_url}')` : '';
+      }
+      if (bgWrap) {
+        bgWrap.style.backgroundImage = data.profile_background_url ? `url('${data.profile_background_url}')` : '';
+      }
+      if (heroCard) {
+        heroCard.style.borderColor = accentColor;
+        heroCard.style.boxShadow = `0 18px 44px ${accentColor}33`;
+        heroCard.style.backgroundImage = data.profile_banner_url ? `url('${data.profile_banner_url}')` : '';
+        heroCard.style.backgroundSize = data.profile_banner_url ? 'cover' : '';
+        heroCard.style.backgroundPosition = data.profile_banner_url ? 'center' : '';
+      }
+      if (bannerImg && bannerWrap) {
+        if (data.profile_banner_url) {
+          bannerImg.src = data.profile_banner_url;
+          bannerWrap.classList.remove('d-none');
+        } else {
+          bannerImg.src = '';
+          bannerWrap.classList.add('d-none');
+        }
+      }
+
+      const displayNameEl = document.getElementById('displayName');
+      const nicknameEl = document.getElementById('nicknameText');
+      const bioEl = document.getElementById('bioText');
+      const aboutEl = document.getElementById('aboutText');
+      const interestsEl = document.getElementById('interestsText');
+      const themeText = document.getElementById('themeSongText');
+      const themePlay = document.getElementById('themePlay');
+      const moodEl = document.getElementById('moodText');
+      const gameEl = document.getElementById('favGameText');
+      const quoteEl = document.getElementById('favQuoteText');
+
+      if (displayNameEl) displayNameEl.textContent = data.display_name || data.username;
+      if (nicknameEl) nicknameEl.textContent = data.display_name || data.username;
+      if (bioEl) bioEl.textContent = data.bio || 'Add a bio';
+      if (aboutEl) aboutEl.textContent = data.about_me || 'No about text yet.';
+      if (interestsEl) interestsEl.textContent = data.interests || 'No interests shared yet.';
+
+      if (themeText) {
+        if (data.theme_song_url) {
+          themeText.textContent = data.theme_song_title || data.theme_song_url;
+        } else {
+          themeText.textContent = 'No theme song set yet.';
+        }
+      }
+      if (themePlay) {
+        if (data.theme_song_url) {
+          themePlay.classList.remove('d-none');
+          themePlay.href = data.theme_song_url;
+        } else {
+          themePlay.classList.add('d-none');
+        }
+      }
+      if (moodEl) moodEl.textContent = data.current_mood || '—';
+      if (gameEl) gameEl.textContent = data.favorite_game || '—';
+      if (quoteEl) quoteEl.textContent = data.favorite_quote || '—';
+    }
+
+    if (profileModalEl) {
+      profileModalEl.addEventListener('show.bs.modal', populateProfileModal);
+    }
+
+    if (editBtn && profileModalInstance) {
+      editBtn.addEventListener('click', () => {
+        populateProfileModal();
+        profileModalInstance.show();
+      });
+    }
+
+    // Match history modal trigger + esports-style UI
+    if (matchModalInstance && matchData) {
+    const tiles = document.querySelectorAll('.stat-tile.hoverable[data-format], .current-season-card[data-format]');
+      const filtersWrap = document.getElementById('matchFilters');
+      const summaryEl = document.getElementById('matchSummary');
+      const sparkEl = document.getElementById('matchSpark');
+      const subtitleEl = document.getElementById('matchHistorySub');
+      let currentFmt = '';
+      let sortField = 'date';
+      let sortDir = 'desc';
+      let activeFilter = 'all';
+
+      const renderSpark = (rows) => {
+        if (!sparkEl) return;
+        if (!rows.length) { sparkEl.innerHTML = ''; return; }
+        const pts = rows.map(r => Number(r.our_pts) || 0);
+        const max = Math.max(...pts, 1);
+        const min = Math.min(...pts, 0);
+        const w = 140, h = 32;
+        const step = pts.length > 1 ? (w / (pts.length - 1)) : 0;
+        const d = pts.map((p,i)=>{
+          const y = h - ((p - min)/(max-min||1))*h;
+          const x = step * i;
+          return `${x},${y}`;
+        }).join(' ');
+        sparkEl.innerHTML = `<svg width="${w}" height="${h}" viewBox="0 0 ${w} ${h}" preserveAspectRatio="none">
+          <polyline points="${d}" fill="none" stroke="#00e5ff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+        </svg>`;
+      };
+
+      const difficultyChip = (opp, ours) => {
+        const o = Number(opp) || 0, p = Number(ours) || 0;
+        if (!o || !p) return '<span class="badge bg-secondary-subtle text-secondary">n/a</span>';
+        if (o >= p + 2) return '<span class="badge bg-gradient-warning text-dark">Hard</span>';
+        if (o <= p - 2) return '<span class="badge bg-gradient-success text-dark">Favored</span>';
+        return '<span class="badge bg-gradient-info text-dark">Even</span>';
+      };
+
+      const resultCell = (row) => {
+        const iconWin = '<i class="fa-solid fa-circle-check me-1 text-success"></i>';
+        const iconLoss = '<i class="fa-solid fa-circle-xmark me-1 text-danger"></i>';
+        const txt = row.result || '-';
+        const closeTag = (row.diff !== undefined && Math.abs(row.diff) <= 3) ? '<span class="chip chip-amber ms-1">Close</span>' : '';
+        if ((txt||'').toLowerCase().startsWith('win')) {
+          return `<span class="text-success fw-bold d-inline-flex align-items-center">${iconWin}${txt}</span>${closeTag}`;
+        }
+        if ((txt||'').toLowerCase().startsWith('loss')) {
+          return `<span class="text-danger fw-bold d-inline-flex align-items-center">${iconLoss}${txt}</span>${closeTag}`;
+        }
+        return `${txt}${closeTag}`;
+      };
+
+      const applyFilter = (rows) => {
+        switch(activeFilter) {
+          case 'win': return rows.filter(r => (r.result||'').toLowerCase().startsWith('win'));
+          case 'loss': return rows.filter(r => (r.result||'').toLowerCase().startsWith('loss'));
+          case 'high': return rows.filter(r => (Number(r.our_pts)||0) >= 12);
+          case 'upset': return rows.filter(r => (Number(r.opponent_sl)||0) > (Number(r.our_sl)||0));
+          default: return rows;
+        }
+      };
+
+      const sortRows = (rows) => {
+        const dir = sortDir === 'asc' ? 1 : -1;
+        return [...rows].sort((a,b) => {
+          const av = a[sortField], bv = b[sortField];
+          if (sortField === 'date') {
+            return dir * ((av || '').localeCompare(bv || ''));
+          }
+          if (sortField === 'week' || sortField === 'points') {
+            return dir * (((Number(av) || 0) - (Number(bv) || 0)));
+          }
+          return dir * ((av||'').toString().localeCompare((bv||'').toString()));
+        });
+      };
+
+      const renderTable = (fmt, rows) => {
+        if (subtitleEl) subtitleEl.textContent = `${fmt} — {{ user.display_name or user.username }}`;
+        const enriched = rows.map(r => ({...r, diff: (Number(r.our_pts)||0) - (Number(r.opp_pts)||0)}));
+        const filtered = applyFilter(enriched);
+        const sorted = sortRows(filtered);
+        const tbody = matchModalBody;
+        if (!sorted.length) {
+          tbody.innerHTML = '<tr><td colspan="7" class="text-secondary small">No match history available.</td></tr>';
+        } else {
+          const html = sorted.map((r,idx) => {
+            const ptsLabel = `${r.our_pts ?? '-'} - ${r.opp_pts ?? '-'}`;
+            return `
+              <tr class="match-row" data-idx="${idx}">
+                <td>${r.week || '-'}</td>
+                <td>${r.date || ''}</td>
+                <td>${r.opponent || ''} ${r.opponent_sl ? `(SL ${r.opponent_sl})` : ''}</td>
+                <td>${ptsLabel}</td>
+                <td>${resultCell(r)}</td>
+                <td>${difficultyChip(r.opponent_sl, r.our_sl)}</td>
+                <td class="text-end"><i class="fa-solid fa-chevron-down text-secondary small toggle-detail" role="button"></i></td>
+              </tr>
+              <tr class="detail-row d-none"><td colspan="7" class="text-secondary small">Detailed breakdown coming soon.</td></tr>
+            `;
+          }).join('');
+          tbody.innerHTML = html;
+          tbody.querySelectorAll('.toggle-detail').forEach((icon, i) => {
+            icon.addEventListener('click', () => {
+              const detail = tbody.querySelectorAll('.detail-row')[i];
+              detail.classList.toggle('d-none');
+              icon.classList.toggle('fa-rotate-180');
+            });
+          });
+        }
+        if (summaryEl) {
+          const lastN = Math.min(5, rows.length);
+          const recent = rows.slice(0, lastN);
+          const wins = recent.filter(r => (r.result||'').toLowerCase().startsWith('win')).length;
+          const losses = recent.filter(r => (r.result||'').toLowerCase().startsWith('loss')).length;
+          const avg = recent.length ? (recent.reduce((sum,r)=>sum+(Number(r.our_pts)||0),0)/recent.length).toFixed(1) : '0.0';
+          summaryEl.textContent = `Last ${recent.length}: ${wins}-${losses} • Avg pts ${avg}`;
+        }
+        renderSpark(sorted.slice(-10));
+      };
+
+      const setFilter = (key) => {
+        activeFilter = key;
+        if (filtersWrap) {
+          filtersWrap.querySelectorAll('.chip').forEach(ch => {
+            ch.classList.toggle('active', ch.dataset.filter === key);
+          });
+        }
+        if (currentFmt) renderTable(currentFmt, matchData[currentFmt] || []);
+      };
+
+      if (filtersWrap) {
+        filtersWrap.querySelectorAll('.chip').forEach(ch => {
+          ch.addEventListener('click', () => setFilter(ch.dataset.filter));
+        });
+      }
+
+      const headers = document.querySelectorAll('#matchHistoryTable th.sortable');
+      headers.forEach(h => {
+        h.addEventListener('click', () => {
+          const key = h.dataset.sort;
+          if (sortField === key) {
+            sortDir = sortDir === 'asc' ? 'desc' : 'asc';
+          } else {
+            sortField = key;
+            sortDir = 'desc';
+          }
+          headers.forEach(x => x.classList.remove('sorted-asc','sorted-desc'));
+          h.classList.add(sortDir === 'asc' ? 'sorted-asc' : 'sorted-desc');
+          if (currentFmt) renderTable(currentFmt, matchData[currentFmt] || []);
+        });
+      });
+
+      tiles.forEach(tile => {
+        tile.addEventListener('click', () => {
+          currentFmt = tile.dataset.format || '';
+          const hist = matchData[currentFmt] || [];
+          renderTable(currentFmt, hist);
+          matchModalInstance.show();
+        });
+      });
+    }
+
+    // Intercept save to show clear errors and stay on page.
+    if (profileForm && profileSaveBtn && profileModalInstance) {
+      profileForm.addEventListener('submit', (e) => {
+        e.preventDefault();
+        profileSaveBtn.disabled = true;
+        const fd = new FormData(profileForm);
+        fetch("{{ url_for('profile_detail', username=user.username) }}", {
+          method: 'POST',
+          body: fd,
+          headers: {'X-Requested-With': 'fetch-profile'},
+          credentials: 'same-origin'
+        })
+        .then(async res => {
+          const ct = res.headers.get('content-type') || '';
+          if (!ct.includes('application/json')) {
+            const txt = await res.text();
+            throw new Error(`Unexpected response (${res.status}). Body: ${txt.slice(0,200)}`);
+          }
+          return res.json();
+        })
+        .then(data => {
+          profileSaveBtn.disabled = false;
+          console.log('Profile save response', data);
+          if (data && data.ok) {
+            applyProfileData(data.profile);
+            const toast = document.getElementById('profileToast');
+            if (toast) {
+              const body = toast.querySelector('.toast-body');
+              if (body) {
+                body.textContent = (data.message || 'Changes saved') + (data.changed_fields && data.changed_fields.length ? ` • ${data.changed_fields.join(', ')}` : '');
+              }
+              bootstrap.Toast.getOrCreateInstance(toast).show();
+            } else {
+              alert((data.message || 'Saved') + (data.changed_fields ? `\nChanged: ${data.changed_fields.join ? data.changed_fields.join(', ') : data.changed_fields}` : ''));
+            }
+            profileModalInstance.hide();
+          } else {
+            const dbg = data && data.debug ? `\\nDebug: ${JSON.stringify(data.debug).slice(0,400)}` : '';
+            const msg = data && data.error ? `Save failed: ${data.error}${data.detail ? ' - '+data.detail : ''}${dbg}` : 'Save failed (unknown).';
+            alert(msg);
+          }
+        })
+        .catch(err => {
+          profileSaveBtn.disabled = false;
+          alert(`Save error: ${err.message}`);
+        });
+      });
+    }
+
+    // Background URL preview
+    const bgFileInput = document.getElementById('bgFileInput');
+    if (bgFileInput) {
+      bgFileInput.addEventListener('change', () => {
+        const file = bgFileInput.files[0];
+        if (!file) return;
+        const reader = new FileReader();
+        reader.onload = e => {
+          const bgPrev = document.getElementById('bgPreview');
+          if (bgPrev) bgPrev.style.backgroundImage = `url('${e.target.result}')`;
+        };
+        reader.readAsDataURL(file);
+      });
+    }
+    const bannerFileInput = document.getElementById('bannerFileInput');
+    if (bannerFileInput) {
+      bannerFileInput.addEventListener('change', () => {
+        const file = bannerFileInput.files[0];
+        if (!file) return;
+        const reader = new FileReader();
+        reader.onload = e => {
+          const bannerPrev = document.getElementById('bannerPreview');
+          if (bannerPrev) bannerPrev.style.backgroundImage = `url('${e.target.result}')`;
+        };
+        reader.readAsDataURL(file);
+      });
+    }
+    // Player card toggle
+    const toggleButtons = document.querySelectorAll('.playercard-toggle');
+    toggleButtons.forEach(btn => {
+      btn.addEventListener('click', () => {
+        toggleButtons.forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        const target = btn.dataset.target;
+        ['current','lifetime','past'].forEach(key => {
+          const el = document.getElementById(`playercard-${key}`);
+          if (el) el.classList.toggle('d-none', key !== target);
+        });
+      });
+    });
+
+    // Session highlight filters
+    const fmtFilter = document.getElementById('seasonFmtFilter');
+    const typeFilter = document.getElementById('seasonTypeFilter');
+    const seasonCards = Array.from(document.querySelectorAll('.season-card'));
+    if (fmtFilter && typeFilter && seasonCards.length) {
+      const labels = new Set();
+      seasonCards.forEach(card => {
+        card.querySelectorAll('.stat-row').forEach(row => {
+          const label = row.dataset.label;
+          if (label) labels.add(label);
+        });
+      });
+      labels.forEach(lbl => {
+        const opt = document.createElement('option');
+        opt.value = lbl;
+        opt.textContent = lbl;
+        typeFilter.appendChild(opt);
+      });
+      const applyFilters = () => {
+        const fmtVal = fmtFilter.value;
+        const typeVal = typeFilter.value;
+        seasonCards.forEach(card => {
+          const fmtOk = (fmtVal === 'all') || card.dataset.format === fmtVal;
+          let typeOk = (typeVal === 'all');
+          if (!typeOk) {
+            typeOk = Array.from(card.querySelectorAll('.stat-row')).some(row => row.dataset.label === typeVal);
+          }
+          card.classList.toggle('d-none', !(fmtOk && typeOk));
+        });
+      };
+      fmtFilter.addEventListener('change', applyFilters);
+      typeFilter.addEventListener('change', applyFilters);
+    }
+    // Patch detail modal
+    const patchDetailModalEl = document.getElementById('patchDetailModal');
+    const patchDetailModal = patchDetailModalEl ? new bootstrap.Modal(patchDetailModalEl) : null;
+    const nameEl = document.getElementById('patchDetailName');
+    const diffEl = document.getElementById('patchDetailDifficulty');
+    const descEl = document.getElementById('patchDetailDescription');
+    const fmtEl = document.getElementById('patchDetailFormat');
+    const scopeEl = document.getElementById('patchDetailScope');
+    const officialEl = document.getElementById('patchDetailOfficial');
+    const notesEl = document.getElementById('patchDetailNotes');
+    document.querySelectorAll('.view-patch-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        if (!patchDetailModal) return;
+        nameEl.textContent = btn.dataset.name || 'Patch';
+        diffEl.textContent = (btn.dataset.difficulty || '').trim();
+        descEl.textContent = btn.dataset.description || '';
+        fmtEl.textContent = `Format: ${btn.dataset.format || 'Any'}`;
+        scopeEl.textContent = `Scope: ${btn.dataset.scope || 'Individual'}`;
+        officialEl.textContent = `Official: ${btn.dataset.official || 'No'}`;
+        notesEl.textContent = btn.dataset.notes || '';
+        patchDetailModal.show();
+      });
+    });
+
+    // Patch category filters
+    const filterButtons = document.querySelectorAll('.patch-filter');
+    const patchCategories = document.querySelectorAll('.patch-category');
+    filterButtons.forEach(btn => {
+      btn.addEventListener('click', () => {
+        filterButtons.forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        const target = btn.dataset.filter;
+        patchCategories.forEach(cat => {
+          if (target === 'all') {
+            cat.classList.remove('d-none');
+          } else {
+            cat.classList.toggle('d-none', cat.dataset.cat !== target);
+          }
+        });
+      });
+    });
+
+    // Theme song player (profile view) with source detection/fallback
+    const npAudio = document.getElementById('npAudio');
+    const npPlayBtn = document.getElementById('npPlayBtn');
+    const npPlayIcon = document.getElementById('npPlayIcon');
+    const npSeek = document.getElementById('npSeek');
+    const npStatus = document.getElementById('npStatus');
+    const npCard = document.getElementById('musicCard');
+    const npTime = document.getElementById('npTime');
+    const npEmbedShell = document.getElementById('npEmbedShell');
+    const npEmbedWrap = document.getElementById('npEmbedWrap');
+    const npEmbed = document.getElementById('npEmbed');
+    const npSourceLabel = document.getElementById('npSourceLabel');
+    const npAudioControls = document.getElementById('npAudioControls');
+    const npVolumeRow = document.getElementById('npVolumeRow');
+    const npFallback = document.getElementById('npFallback');
+    const npFallbackImg = document.getElementById('npFallbackImg');
+    const npFallbackBtn = document.getElementById('npFallbackBtn');
+    const npAudioPane = document.getElementById('npAudioPane');
+    const themeUrl = "{{ user.theme_song_url or '' }}";
+    let ytPlayer = null;
+    let ytApiLoaded = false;
+    let currentMode = 'none';
+
+    const fmtTime = (t) => {
+      if (!t || isNaN(t)) return '0:00';
+      const m = Math.floor(t/60);
+      const s = Math.floor(t%60).toString().padStart(2,'0');
+      return `${m}:${s}`;
+    };
+    function detectSource(url) {
+      if (!url) return 'none';
+      const lower = url.toLowerCase();
+      if (lower.includes('youtube.com') || lower.includes('youtu.be')) return 'youtube';
+      if (lower.includes('soundcloud.com')) return 'soundcloud';
+      if (lower.match(/\.(mp3|wav|ogg|aac|m4a)(\?|$)/)) return 'audio';
+      return 'external';
+    }
+    function youtubeId(url) {
+      try {
+        if (url.includes('watch?v=')) return url.split('watch?v=')[1].split('&')[0];
+        if (url.includes('youtu.be/')) return url.split('youtu.be/')[1].split('?')[0];
+        if (url.includes('/embed/')) return url.split('/embed/')[1].split('?')[0];
+      } catch {}
+      return '';
+    }
+    function youtubeEmbed(url) {
+      const id = youtubeId(url);
+      return id ? `https://www.youtube.com/embed/${id}?enablejsapi=1` : url;
+    }
+    function youtubeThumb(url) {
+      const id = youtubeId(url);
+      return id ? `https://img.youtube.com/vi/${id}/hqdefault.jpg` : '';
+    }
+    function soundcloudEmbed(url) {
+      // revert to standard SoundCloud embed for fuller controls/visuals
+      return `https://w.soundcloud.com/player/?url=${encodeURIComponent(url)}&auto_play=false&show_teaser=false`;
+    }
+    function setSourceLabel(mode) {
+      if (!npSourceLabel) return;
+      const map = {audio:'Direct audio', youtube:'YouTube', soundcloud:'SoundCloud', external:'External link', none:'No source'};
+      npSourceLabel.textContent = map[mode] || map['external'] || '';
+    }
+    function renderFallback(opts) {
+      currentMode = opts.mode || 'fallback';
+      npAudioControls.classList.add('d-none');
+      npVolumeRow.classList.add('d-none');
+      npEmbedShell?.classList.remove('d-none');
+      npEmbedWrap.classList.add('d-none');
+      npFallback.classList.remove('d-none');
+      if (npTime) npTime.textContent = '';
+      if (opts.thumb) npFallbackImg.src = opts.thumb;
+      npFallbackBtn.textContent = opts.cta || 'Open source';
+      npFallbackBtn.onclick = () => { window.open(opts.href || themeUrl, '_blank', 'noopener'); };
+      npStatus.textContent = opts.message || 'Playback must open externally.';
+    }
+    function showAudioMode() {
+      currentMode = 'audio';
+      npAudioControls.classList.remove('d-none');
+      npVolumeRow.classList.remove('d-none');
+      npAudioPane?.classList.remove('d-none');
+      npEmbedShell?.classList.add('d-none');
+      npEmbedWrap.classList.add('d-none');
+      npFallback.classList.add('d-none');
+      if (npAudio) npAudio.src = themeUrl;
+      npStatus.textContent = 'Ready to play';
+    }
+    function showYoutubeMode(fallback=false) {
+      currentMode = 'youtube';
+      npAudioControls.classList.add('d-none');
+      npVolumeRow.classList.add('d-none');
+      npAudioPane?.classList.add('d-none');
+      if (npTime) npTime.textContent = '';
+      const vid = youtubeId(themeUrl);
+      if (fallback || !vid) {
+        npEmbedShell?.classList.remove('d-none');
+        renderFallback({
+          mode: 'youtube',
+          thumb: youtubeThumb(themeUrl),
+          href: themeUrl,
+          cta: 'Play on YouTube',
+          message: 'Playback must open on YouTube for this track.'
+        });
+        return;
+      }
+      npEmbedShell?.classList.remove('d-none');
+      npFallback.classList.add('d-none');
+      npEmbedWrap.classList.remove('d-none');
+      npEmbed.src = youtubeEmbed(themeUrl);
+      npEmbed.onerror = () => showYoutubeMode(true);
+      npStatus.textContent = 'Ready';
+    }
+    function showSoundcloudMode() {
+      currentMode = 'soundcloud';
+      npAudioControls.classList.add('d-none');
+      npVolumeRow.classList.add('d-none');
+      npAudioPane?.classList.add('d-none');
+      if (npTime) npTime.textContent = '';
+      npEmbedShell?.classList.remove('d-none');
+      npFallback.classList.add('d-none');
+      npEmbedWrap.classList.remove('d-none');
+      npEmbed.src = soundcloudEmbed(themeUrl);
+      npStatus.textContent = 'Ready (SoundCloud)';
+      // if the embed fails to load, fall back to external link
+      npEmbed.onload = () => { npStatus.textContent = 'Ready (SoundCloud)'; };
+      npEmbed.onerror = () => {
+        renderFallback({
+          mode: 'soundcloud',
+          href: themeUrl,
+          cta: 'Open on SoundCloud',
+          message: 'SoundCloud must open externally for this track.'
+        });
+      };
+    }
+
+    function initYouTubeAPI() {
+      if (ytApiLoaded) return;
+      const tag = document.createElement('script');
+      tag.src = "https://www.youtube.com/iframe_api";
+       tag.onerror = () => showYoutubeMode(true);
+      document.body.appendChild(tag);
+      ytApiLoaded = true;
+    }
+    window.onYouTubeIframeAPIReady = function() {
+      const videoId = youtubeId(themeUrl);
+      if (!videoId) {
+        renderFallback({
+          mode: 'youtube',
+          thumb: youtubeThumb(themeUrl),
+          href: themeUrl,
+          cta: 'Play on YouTube',
+          message: 'Playback must open on YouTube for this track.'
+        });
+        return;
+      }
+      ytPlayer = new YT.Player('npEmbed', {
+        videoId,
+        events: {
+          'onReady': () => { npStatus.textContent = 'Ready'; },
+          'onStateChange': (ev) => {
+            if (ev.data === YT.PlayerState.PLAYING) {
+              npCard?.classList.add('playing');
+              if (npPlayIcon) { npPlayIcon.classList.remove('fa-play'); npPlayIcon.classList.add('fa-pause'); }
+            }
+            if (ev.data === YT.PlayerState.PAUSED) {
+              npCard?.classList.remove('playing');
+              if (npPlayIcon) { npPlayIcon.classList.remove('fa-pause'); npPlayIcon.classList.add('fa-play'); }
+            }
+          },
+          'onError': () => { showYoutubeMode(true); }
+        },
+        playerVars: { 'origin': window.location.origin, 'rel': 0, 'modestbranding': 1 }
+      });
+    };
+
+    function setupPlayer() {
+      const mode = detectSource(themeUrl);
+      setSourceLabel(mode);
+      if (!themeUrl) {
+        npStatus.textContent = 'No theme song set.';
+        return;
+      }
+      if (mode === 'audio') {
+        showAudioMode();
+      } else if (mode === 'youtube') {
+        showYoutubeMode(false);
+        initYouTubeAPI();
+        // fallback if API never arrives
+        setTimeout(() => {
+          if (currentMode === 'youtube' && !ytPlayer) {
+            showYoutubeMode(true);
+          }
+        }, 4000);
+      } else if (mode === 'soundcloud') {
+        showSoundcloudMode();
+      } else {
+        renderFallback({
+          mode: 'external',
+          href: themeUrl,
+          cta: 'Open source',
+          message: 'Source will open externally.'
+        });
+      }
+    }
+    setupPlayer();
+
+    // Audio mode controls
+    if (npAudio && npPlayBtn && npSeek) {
+      npSeek.addEventListener('input', () => {
+        if (!npAudio.duration) return;
+        const pct = npSeek.value / 100;
+        npAudio.currentTime = pct * npAudio.duration;
+      });
+      npAudio.addEventListener('timeupdate', () => {
+        if (!npAudio.duration) return;
+        const pct = (npAudio.currentTime / npAudio.duration) * 100;
+        npSeek.value = pct;
+        if (npTime) npTime.textContent = `${fmtTime(npAudio.currentTime)} / ${fmtTime(npAudio.duration)}`;
+      });
+      npAudio.addEventListener('play', () => {
+        if (npPlayIcon) { npPlayIcon.classList.remove('fa-play'); npPlayIcon.classList.add('fa-pause'); }
+        npCard?.classList.add('now-playing-active');
+        if (npStatus) npStatus.textContent = 'Playing';
+      });
+      npAudio.addEventListener('pause', () => {
+        if (npPlayIcon) { npPlayIcon.classList.remove('fa-pause'); npPlayIcon.classList.add('fa-play'); }
+        npCard?.classList.remove('now-playing-active');
+        if (npStatus) npStatus.textContent = 'Paused';
+      });
+      npAudio.addEventListener('error', () => {
+        if (npStatus) npStatus.textContent = 'Cannot play this source internally.';
+        npCard?.classList.remove('now-playing-active');
+      });
+      npAudio.addEventListener('ended', () => {
+        npAudio.currentTime = 0;
+        npAudio.pause();
+      });
+      npPlayBtn.addEventListener('click', () => {
+        if (currentMode === 'youtube') {
+          if (ytPlayer && typeof YT !== 'undefined' && YT.PlayerState) {
+            const state = ytPlayer.getPlayerState();
+            if (state === YT.PlayerState.PLAYING) ytPlayer.pauseVideo(); else ytPlayer.playVideo();
+          } else {
+            window.open(themeUrl, '_blank', 'noopener');
+          }
+          return;
+        }
+        if (currentMode === 'soundcloud') {
+          // Hand off to embedded controls or open externally if fallback showing
+          if (!npFallback.classList.contains('d-none')) {
+            window.open(themeUrl, '_blank', 'noopener');
+          } else {
+            npEmbed?.contentWindow?.focus();
+            npStatus.textContent = 'Use embedded controls to play.';
+          }
+          return;
+        }
+        if (!npAudio.src) { if (npStatus) npStatus.textContent = 'No theme song set.'; return; }
+        if (npAudio.paused) { npAudio.play().catch(() => { if (npStatus) npStatus.textContent = 'Cannot play this source internally.'; }); }
+        else { npAudio.pause(); }
+      });
+    }
+
+    // Modal song preview detection label
+    const previewSongBtn = document.getElementById('previewSongBtn');
+    const themeSourceLabel = document.getElementById('themeSourceLabel');
+    function updateSourceLabel() {
+      if (!themeSourceLabel || !themeUrlInput) return;
+      const m = detectSource(themeUrlInput.value);
+      const map = {audio:'Direct audio', youtube:'YouTube', soundcloud:'SoundCloud', external:'External link', none:'No source'};
+      themeSourceLabel.textContent = map[m] || '';
+    }
+    themeUrlInput?.addEventListener('input', updateSourceLabel);
+    updateSourceLabel();
+
+    if (previewSongBtn) {
+      previewSongBtn.addEventListener('click', () => {
+        const url = themeUrlInput ? themeUrlInput.value : '';
+        if (!url) { alert('Add a theme song URL first.'); return; }
+        const mode = detectSource(url);
+        if (mode === 'audio') {
+          const previewAudio = new Audio(url);
+          previewAudio.play().catch(() => alert('Cannot play this source internally.'));
+        } else if (mode === 'youtube') {
+          const id = youtubeId(url);
+          const thumb = youtubeThumb(url);
+          alert('Embed restrictions possible; previewing on YouTube.');
+          window.open(`https://www.youtube.com/watch?v=${id}`, '_blank', 'noopener');
+        } else if (mode === 'soundcloud') {
+          window.open(url, '_blank', 'noopener');
+        }
+      });
+    }
+  });
+</script>
+<div class="position-fixed top-0 end-0 p-3" style="z-index: 1080;">
+  <div id="profileToast" class="toast align-items-center text-bg-success border-0 shadow" role="status" aria-live="polite" aria-atomic="true">
+    <div class="d-flex">
+      <div class="toast-body">
+        Changes saved.
+      </div>
+      <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
+    </div>
+  </div>
+</div>
+{% endblock %}
+
+
+
+
+
+
+
+
+
+
+
+
+
+

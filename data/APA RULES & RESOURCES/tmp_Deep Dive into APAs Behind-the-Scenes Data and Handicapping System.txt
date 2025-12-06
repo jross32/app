@@ -1,0 +1,199 @@
+Deep Dive into APA’s “Behind-the-Scenes” Data and
+Handicapping System
+Hidden Stats and “Backstage” Data in the APA API
+The APA League app’s API  can expose certain player statistics and details that are not directly visible on the
+public member site. In your api_dump_v2.json  (and similar data files), there are fields that amount to
+“backstage” data  – extra stats and info the app fetches behind the scenes. For example, the API returns
+Lifetime Stats  for players with fields like a player’s matches played , matches won , “CLA” , defensive shot
+average , etc. . The CLA field (Current Lifetime Average) is an internal skill metric – essentially a numeric
+value corresponding to the player’s true average skill. In one example from the dump, a player had a CLA of
+7  in  both  8-ball  and  9-ball,  indicating  a  high-skilled  player .  Likewise,  the  API  provides  a
+defensiveShotAvg  – the average number of defensive shots the player makes per match (e.g. 1.86 in 8-
+ball, 2.29 in 9-ball for that player) . These metrics are  not shown on the public APA site or standings
+pages, but they are part of the data the app uses internally (likely visible to you only because you captured
+the raw JSON).
+In addition to lifetime summary stats, the API data can include  special achievement counts  and other
+“hidden” stats. For instance, the JSON structure tracks accomplishments like  8-on-the-Break, Break-and-
+Run, Rackless nights, 9-on-the-Snap, etc.  (often used for patches and awards) even if the public site
+doesn’t list them prominently . These indicate how many times a player achieved certain feats, which is
+typically  back-end data  used for patch awards. There are also fields like  matchCountForLastTwoYrs
+(matches played in the last 2 years) and lastPlayed  date for each player’s lifetime record  – again,
+info mainly for internal/reference use. In short, the JSON dump is indeed a more comprehensive dataset
+than what a regular user sees on APA’s website. It’s pulling together all the league structure (divisions,
+teams,  rosters)  plus  detailed  stats  and  history  for  each  player .  This  “behind-the-scenes”  data  isn’t
+classified or secret per se , but it’s not displayed in the normal member UI. It’s accessible through the API
+calls – essentially backstage pass  information that the official app uses to populate certain screens (like your
+personal stats page) but might not be readily visible or user-facing without digging.
+However , it’s important to note that while these extra stats (CLA, defensive averages, lifetime totals, etc.) are
+internally available , they don’t reveal the APA’s proprietary handicap formula itself . They are more like
+supporting data. For example, CLA is likely an internal rating or a reflection of your skill level calculation,
+and APA even references it in their manual: “No player may play below their CLA (Current Lifetime Average)” ,
+meaning a player’s handicap won’t be allowed to stay below what their cumulative performance suggests
+. So the API gave you some insight into each player’s underlying metrics (probably what APA’s system
+uses to evaluate your skill), but it doesn’t directly hand out the formula or any truly “top-secret” numbers
+beyond those stats. Think of it this way: your data dump is like reading the  box scores  and averages,
+whereas the “secret sauce” is how those numbers decide a skill level – and that algorithm isn’t explicitly in
+the JSON.1
+2
+3
+4
+5
+6
+1
+Accessing “Top-Secret” APA Data (Skill Level Calculation)
+It sounds like you’re looking for the actual handicap calculation formula or administrative data  that APA
+keeps under wraps – essentially the  “top secret APA data”  on how skill levels are determined. The APA’s
+handicap  system  (called  The  Equalizer® )  is  indeed  formula-driven ,  not  an  arbitrary  decision  by  one
+person. But APA intentionally keeps the exact formula confidential , to prevent players from gaming the
+system. Even league operators get only a general understanding. The  good news  is that over the years,
+league members and some insiders have reverse-engineered or described the system’s outlines. The skill
+level (SL) formula for APA 8-ball  can be summarized (in simplified terms) as being based on your average
+innings per game , with adjustments for defensive shots and other factors . In other words, the
+system looks at how many turns (innings) it takes for you to win games (or how you perform in losses), and
+the fewer innings you need, the higher your skill level. Defensive shots  come into play by subtracting  those
+innings from the total – since a marked defensive shot indicates a deliberate safety play, it shouldn’t count
+as a “turn” that makes you look worse. As one player explains,  “Innings minus defensive shots”  is the key
+metric; if scorekeepers don’t mark safeties, it will appear you took more innings and thus could keep your
+skill lower . This is why APA harps on properly marking defensive shots – it directly impacts handicaps.
+APA’s  official  literature  confirms  that  wins  and  losses  alone  are  not  what  determine  skill  –  it’s  the
+performance data on the scoresheet  that matters . In fact, you can lose a match but still go up  in
+skill level if you played extremely well (e.g. a close match with very few innings) – conversely, you might win
+but not go up if it took many innings or the opponent was much lower skill. The  APA Team Manual
+mentions that the League Operator regularly reviews and updates skill levels using  “previous information
+recorded on your weekly scoresheet” , and it notes that several good scores (best performances) are weighted
+more to lend stability . Typically, APA uses a player’s  best 10 of their last 20 match scores  to
+calculate the current SL  – this prevents one bad night from dragging you down or one great night from
+immediately bumping you up too far . It’s a rolling evaluation of consistency.
+So what exactly is the  “top secret” formula?  While APA won’t publish it, the community consensus (and
+leaked info) indicates it’s fairly complex but systematic . For 8-ball, a commonly cited model is: calculate the
+average innings per winning game (with safeties removed), then map that to a skill level range . For example,
+Skill Level 7  corresponds to an average of about 2 innings per game or less , SL6 might be ~2–3 innings,
+SL5 around 3–4 innings, and so on, down to SL2 which can be 7+ innings . These ranges have been
+documented by players and even appear in Dr . Dave’s analysis of the APA Equalizer system. To prevent
+sandbagging  (intentionally  inflating  your  innings  to  stay  low),  APA  also  employs  an  “applied  score”
+mechanism. If a player with a high win percentage tries to pad their innings, the system will override that
+raw score with an applied  innings value based on their win % . In simpler terms, if you keep winning
+a lot, the algorithm assumes you should be playing at a higher skill and won’t let a few drawn-out games
+fool it. An insider explanation notes:  “The APA system will give you an ‘applied score’ based on your winning
+percentage… it’s next to impossible to drop a skill level while maintaining above a 50% win rate” . For
+instance, a player winning 90% of their matches will have an automatic performance floor (the system
+might treat their match as if it were done in a very low number of innings, no matter how many innings they
+actually took) . This ensures frequent winners don’t stay at a lower SL just by dragging games out.
+Conversely, if you lose often, the system uses your actual performance (no “help” from applied scores), so
+you can drop if your game warrants it. The end result  is a handicap that reflects your true ability as closely
+as possible, using a combination of mathematical averaging and business rules  (like the applied score
+and “best 10 of 20” rule). It’s definitely not a manual or whimsical process – APA’s computer software does
+the heavy lifting based on the data input.78
+8
+98
+1011
+12
+13
+1415
+1416
+1718
+2
+From  an  administrative  data  standpoint,  APA  does  have  layers  of  review  on  handicaps.  The  League
+Operator  (LO)  in  each  area  monitors  for  accuracy  and  fairness.  The  manual  even  suggests  having  a
+Handicap Advisory Committee (HAC)  to watch for sandbagging or abnormal changes . And if a player’s
+calculated skill (their CLA) seems too high or low due to exceptional circumstances, the LO can appeal to
+the APA Handicap Review Committee (HRC)  for an adjustment . These are internal governance steps –
+again, not publicly visible – to maintain the integrity of the system. None of this info is exposed via the
+member API or normal site, but it’s how APA “decisions” on handicaps are made. So, in summary: yes, there
+is a formula (with multiple factors like innings, defensive shots, win %, recent trends)  for how players
+level  up  or  down.  It’s  not  a  simple  one-line  formula  you  can  query  from  the  API,  and  APA  keeps  it
+proprietary. What you can see (and you have, through your data dump) are the inputs and outputs of that
+formula – the number of innings, defensive shot counts, win/loss records, and the resulting skill levels and
+CLAs. The actual computational logic stays on APA’s side of the wall (their servers/software). There isn’t a
+magic “conspiracy data” file with the formula – it’s baked into their code.
+League Operator Accounts and Different Access Levels
+You also asked whether League Operator or Franchisee accounts see a different APA structure , and if
+so, how you could view that. The answer is yes – League Operators have an administrative interface and
+data access  that regular members do not. In the current APA system, a League Operator can manage
+divisions, input scores, and adjust player info using either a special online portal or the admin mode of the
+software. For example, when weekly play scoresheets are turned in (or submitted via the app), the LO uses a
+tool (the old system was a program called ARES/APA Scorekeeper , and now possibly an admin panel in the
+new app) to enter the scores – including innings and safeties – for each match. The LO’s interface  will show
+all the granular data (every player’s scoresheet details, points, innings, etc.) and then compute the updates.
+It’s essentially the back-end dashboard  for league management. As a player , you cannot normally see the
+full scoresheet or those inning details after submission  (the app only shows you a summary) .
+This is by design – APA sends the detailed data to their national system, calculates ratings, and only returns
+the outcomes (updated handicaps, points, etc.) for members to see. An LO, however ,  can pull up past
+scoresheets, match details, and even reports of players’ performance metrics that players don’t have direct
+access to.
+For instance, some LO-level reports might show a player’s  average innings per match, their defensive
+shot count, or even a list of their best scores . LOs also see indicators if a player is “on the bubble”  of
+moving up or has a red flag for sandbagging. The data you obtained via the API is likely the most you can
+get  as  a  standard  member  login.  To  get  the  true  “admin  view,”  you  would  need  credentials  with  LO
+privileges. It’s not just a different JSON file or a hidden URL – it’s a permission level on APA’s systems. The
+structure of the data might be the same  (since the app is pulling from the same database), but certain
+queries  or  endpoints  will  simply  refuse  data  if  you’re  not  authorized.  For  example,  there  may  be
+administrative endpoints for roster moves, manual skill adjustments, or finance and membership info that
+are completely inaccessible without an LO login. Scraping with a different member’s account won’t help
+unless that member  is an LO or has higher permissions. Even a team captain or division rep login is
+essentially the same as a normal member in terms of data access (the APA app doesn’t distinguish those
+roles for data visibility, aside from maybe allowing a captain to score matches).
+In practice, the only way you’d “see” the LO view is if you became a League Operator (or convinced one to let
+you peek). APA is a franchised business, and LOs use either a dedicated League Management website  or
+the APA League Operator application  to run things. For example, APA’s manual notes that “Local League19
+6
+2021
+3
+Management reviews, calculates and updates players’ skill levels on a regular basis”  – they have tools to do
+so that members can’t use. There is also mention of LO-only committees and appeals (HRC) for handicaps,
+which are all internal processes . From a technical standpoint, if you’re tinkering with the GraphQL API
+in the new app, you might notice certain query fields or mutations that only work for admins. Without the
+appropriate credentials or tokens, those won’t return data. In short,  there is no known workaround to
+scrape the truly restricted data  – APA’s system is designed with access control. Your member (or even
+another regular member’s) credentials will only ever fetch member-level data. Using a different ID (like you
+mentioned “Beaver ID” – not sure what that refers to) won’t grant elevated access unless that ID is tied to an
+admin role.
+Bottom line:  League Operators and APA corporate have more data at their fingertips – every inning of
+every match, manual override capabilities, full player history, etc. – but as an outside user you can’t retrieve
+those through the public-facing API endpoints. The APA is pretty careful about separating what members
+can see versus what admins can see. While your data dump was very informative “backstage” data, it was
+still within the scope of member-accessible info (just aggregated in one place). The  really “top-secret”
+stuff  (like the exact handicap algorithms, or any disciplinary notes, etc.) lives behind privileged accounts
+and internal software. 
+To  get  that  kind  of  information,  the  only  legitimate  path  is  through  APA  channels:  e.g.  become  a
+scorekeeper or division rep (you’ll see more of how innings/defenses work), or become a League Operator
+(which is obviously a major step). Some enthusiasts have pieced together the puzzle by recording their
+match stats and  collaborating on forums  (you might find threads on Reddit or billiards forums where
+people share their findings on how the SL is calculated – much of which we discussed above). But as far as
+scraping  it directly – if it’s not in the JSON you already have, it’s likely not obtainable without breaching the
+system’s security, which we don’t recommend . 
+In summary, LOs do have a different interface and additional data , but it’s not publicly accessible. Your
+API dump contains a lot of the “hidden” member stats (lifetime averages, etc.), which is like backstage data
+for each player . It’s not classified info, but it’s more than the site frontend shows. Truly secret APA data – like
+the  exact  formula  or  admin-only  controls  –  aren’t  sitting  in  an  endpoint  you  can  hit  without  proper
+authorization. APA’s handicap system is algorithm-driven and monitored by officials; we can understand it
+conceptually (as we did above) but we can’t directly pull the proprietary code or see admin dashboards
+unless we’re on the inside. So, unfortunately, there isn’t a clever trick with a different login that will yield
+dramatically more info than you already got – short of having league operator-level access , which comes
+with the territory of running a league (and a franchise agreement with APA!). 
+That  said,  you’ve  done  well  to  gather  the  backstage  stats  that  you  did.  Using  those,  plus  community
+knowledge about the handicap system, you’re pretty equipped to understand “what’s behind the scenes.”
+It’s just that the “top secret” formula isn’t explicitly written in the data  – it has to be inferred from those
+stats. APA intentionally keeps it that way to preserve competitive integrity. Keep an eye on player forums
+and  discussions;  that’s  where  most  of  the  remaining  mysteries  (if  any)  get  unraveled  by  collective
+observation  and  data-sharing.  Good  luck,  and  may  your  new  understanding  of  the  system  help  (but
+remember to win at the table, not from the chair , as APA says)! (These references emphasize playing fair
+and not gaming the handicap system.)22
+23
+2425
+4
+api_dump APA League Data JSON Structure Analysis.pdf
+file://file-WRJj4esYRCLp3fLK5Tamnz
+team-manual-english.pdf
+file://file-P6Jh3NDJcwzk6ppdRG3PdQ
+Can someone explain the skill levels in APA? : r/billiards
+https://www.reddit.com/r/billiards/comments/12cuj4p/can_someone_explain_the_skill_levels_in_apa/
+How Your Handicap is Calculated.PDF
+https://poolplayers.com/wp-content/uploads/2013/03/HowYourHandicapisCalculated.pdf
+APA Equalizer Handicapping System - Dr . Dave Pool Info
+https://drdavepoolinfo.com/faq/rating/apa-equalizer/1 2 3 4 5
+619 22 23 25
+7 8 912 20 21
+10 11 24
+13 14 15 16 17 18
+5

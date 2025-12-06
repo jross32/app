@@ -13,6 +13,16 @@ Run helper: `run.ps1` (PowerShell) — activates `.venv` if present, sets `FLASK
 - Music card: unified styling, embed shell for SoundCloud/YouTube/audio; fallbacks intact.
 - Git repo initialized, committed, pushed to `https://github.com/jross32/app`. `.gitignore` added to exclude venvs, backups, captures, uploads.
 
+### Large Files / Parts
+- GitHub 100MB limit: big dumps were split into 50MB chunks (.partNN) and originals removed.
+- Recombine with:
+  ```
+  python scripts/join_parts.py "data/backups/raw/apa_raw_latest.json"
+  python scripts/join_parts.py "data/backups/raw/apa_raw_latest_2025-12-04_12-41-50.json"
+  python scripts/join_parts.py "data/apa_api_captures/2025-12-01_14-46-33/api_dump_v2.json"
+  ```
+  (Looks for .part files in the same folder and concatenates in order.)
+
 ### Key Data/Mappings
 - Active data file: `data/league_data_final_week11.json` (set in `config.json`).
 - Mapping guide: `data/api_dump_v2_mapping.md`.

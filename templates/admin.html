@@ -522,6 +522,9 @@ html, body { overflow-x:hidden; }
             <form method="post" action="{{ url_for('admin_run_pipeline') }}" class="js-admin-action" data-label="Running full update..." data-ajax="true" data-endpoint="{{ url_for('admin_run_pipeline_json') }}">
               <button class="btn btn-sm btn-outline-warning"><i class="fa-solid fa-wand-magic-sparkles me-1"></i> Run Full Update</button>
             </form>
+            <form method="post" action="{{ url_for('admin_git_push') }}" class="js-admin-action" data-label="Pushing to GitHub..." data-ajax="true" data-endpoint="{{ url_for('admin_git_push') }}">
+              <button class="btn btn-sm btn-outline-info"><i class="fa-brands fa-github me-1"></i> Push to GitHub</button>
+            </form>
           </div>
         </div>
       </div>

@@ -2595,6 +2595,23 @@ def admin_merge_membership_meta_json():
     )
     return jsonify({"ok": ok, "logs": logs, "msg": "Merged membership meta (backup created)" if ok else "Merge failed"})
 
+@app.route('/admin/git/push', methods=['POST'])
+def admin_git_push():
+    guard = require_admin()
+    if guard:
+        return jsonify({"error": "unauthorized"}), 401
+    repo_dir = Path(__file__).resolve().parent
+    logs = []
+    try:
+        for cmd in [["git", "status", "--short"], ["git", "push"]]:
+            proc = subprocess.run(cmd, cwd=repo_dir, capture_output=True, text=True, timeout=60)
+            logs.append(f"$ {' '.join(cmd)}\n{proc.stdout}\n{proc.stderr}")
+            if proc.returncode != 0 and "nothing to commit" not in proc.stdout.lower():
+                return jsonify({"ok": False, "error": f"Command failed: {' '.join(cmd)}", "logs": logs}), 500
+        return jsonify({"ok": True, "logs": logs})
+    except Exception as e:
+        return jsonify({"ok": False, "error": str(e), "logs": logs}), 500
+
 @app.route('/admin/restore-backup', methods=['POST'])
 def admin_restore_backup():
     guard = require_admin()

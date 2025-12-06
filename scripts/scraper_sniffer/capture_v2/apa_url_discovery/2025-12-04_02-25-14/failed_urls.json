@@ -1,0 +1,17 @@
+[
+  {
+    "url": "https://league.poolplayers.com/login/destroy",
+    "reason": "stuck_on_login",
+    "details": "Page still looks like login after re-auth."
+  },
+  {
+    "url": "https://league.poolplayers.com/RioGrandeValley/divisions",
+    "reason": "timeout",
+    "details": "Timed out or failed to load twice."
+  },
+  {
+    "url": "https://league.poolplayers.com/RioGrandeValley/divisions/session/137",
+    "reason": "timeout",
+    "details": "Timed out or failed to load twice."
+  }
+]

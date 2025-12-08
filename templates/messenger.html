@@ -38,8 +38,9 @@
             {% if messages %}
               {% for m in messages %}
               <div class="mb-2">
-                <div class="small {% if m.sender_id == current_user.id %}text-info{% else %}text-secondary{% endif %}">
-                  {{ m.sender.display_name or m.sender.username }} • {{ m.created_at.strftime('%b %d, %I:%M %p') if m.created_at else '' }}
+                <div class="small {% if m.from_me %}text-info{% else %}text-secondary{% endif %}">
+                  {{ m.sender_name }}
+                  • {{ m.created_at.strftime('%b %d, %I:%M %p') if m.created_at else '' }}
                 </div>
                 <div class="text-light">{{ m.content }}</div>
               </div>

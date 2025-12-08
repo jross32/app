@@ -43,6 +43,22 @@ STAT_KEYS = [
 ]
 
 
+def parse_response_body(resp_body: Any) -> Any:
+    if isinstance(resp_body, str):
+        try:
+            return json.loads(resp_body)
+        except json.JSONDecodeError:
+            return resp_body
+    return resp_body
+
+
+def normalize_alias_id(value: Any) -> int | None:
+    try:
+        return int(value)
+    except (TypeError, ValueError):
+        return None
+
+
 def harvest(dest: Dict[str, Any], stat: Dict[str, Any]) -> None:
     for key in STAT_KEYS:
         if key in stat:
@@ -52,14 +68,17 @@ def harvest(dest: Dict[str, Any], stat: Dict[str, Any]) -> None:
 def walk(node: Any, alias_set: set[int], lifetime: Dict[int, Dict[str, Dict[str, Any]]], current_alias: int | None = None) -> None:
     if isinstance(node, dict):
         # If this node itself matches an alias id and has a known __typename, harvest
-        if "id" in node and node["id"] in alias_set:
+        node_id = normalize_alias_id(node.get("id"))
+        if node_id is not None and node_id in alias_set:
             fmt = FMT_MAP.get(node.get("__typename"))
             if fmt:
-                harvest(lifetime[node["id"]][fmt], node)
+                harvest(lifetime[node_id][fmt], node)
 
         # If this dict is an Alias with stats blocks, harvest those for the alias
         if node.get("__typename") == "Alias" and "id" in node:
-            current_alias = node["id"] if node["id"] in alias_set else current_alias
+            candidate = normalize_alias_id(node["id"])
+            if candidate is not None and candidate in alias_set:
+                current_alias = candidate
             if current_alias in alias_set:
                 for key, fmt in (("EightBallStats", "8-ball"), ("NineBallStats", "9-ball")):
                     if key in node and node[key]:
@@ -69,7 +88,7 @@ def walk(node: Any, alias_set: set[int], lifetime: Dict[int, Dict[str, Dict[str,
                 if "players" in node:
                     for pl in node["players"]:
                         fmt = FMT_MAP.get(pl.get("__typename"))
-                        if fmt:
+                        if fmt and current_alias is not None:
                             harvest(lifetime[current_alias][fmt], pl)
 
         # Recurse values
@@ -109,7 +128,7 @@ def main() -> int:
     # Stream the dump (it is a list of entries, each with response_body as a list/dict)
     dump = json.load(dump_path.open())
     for entry in dump:
-        bodies = entry.get("response_body")
+        bodies = parse_response_body(entry.get("response_body"))
         if bodies:
             walk(bodies, alias_set, lifetime, None)
 

@@ -19,6 +19,16 @@
           <label class="form-label">Confirm password</label>
           <input type="password" name="confirm_password" class="form-control bg-dark text-light soft-border" required minlength="6">
         </div>
+        <div class="mb-3">
+          <label class="form-label">Team</label>
+          <select name="team_id" class="form-select bg-dark text-light soft-border">
+            <option value="">Select your team</option>
+            {% for team in team_options %}
+            <option value="{{ team.id }}" {% if team.id == selected_team_id %}selected{% endif %}>{{ team.label }}</option>
+            {% endfor %}
+          </select>
+          <div class="form-text text-secondary">Pick the Cue-Ligans roster you belong to; stats on the dashboard will focus on that team.</div>
+        </div>
         <button class="btn btn-info text-dark fw-bold" type="submit">Create account</button>
       </form>
     </div>

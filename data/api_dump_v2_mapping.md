@@ -9,6 +9,8 @@ Each entry is a network capture with `page_url`, `api_url`, `method`, `status`, 
 Important GraphQL shapes:
 - **Alias / Member**  
   `alias(id) { id, displayName, league { id, slug, currentSessionId }, players { ... }, sessions { id, name }, member { id, consecutiveYearsPlayed, membershipHistory { year, leaguePaidIn { id, name, salutation } } } }`
+- **Response Body Encoding**
+  Some of the latest capture runs (e.g., `2025-12-04_04-51-45`) store `response_body` as a JSON-encoded string rather than an object/list. Always `json.loads` that string before traversing the response, and keep the `parse_response_body` helper (used in the scripts under `scripts/` and `scripts/scraper_sniffer/capture_v2`) aligned with this requirement.
 - **Eight-ball stats**: `eightBallBreakAndRuns`, `eightOnBreaks`, `rackless`, `miniSlams`, `eightBallMatchPointsEarned`, `pa`, `ppm`, `matchesPlayed`, `matchesWon`
 - **Nine-ball stats**: `nineBallBreakAndRuns`, `nineOnSnaps`, `miniSlams`, `skunks`, `nineBallMatchPointsEarned`, `pa`, `ppm`, `matchesPlayed`, `matchesWon`
 - **Lifetime blocks**: `EightBallStats: stats(filter: EIGHT) { ...EightBallLifetimeStatistics... }` and `NineBallStats: stats(filter: NINE) { ...NineBallLifetimeStatistics... }` containing `matchesPlayed`, `matchesWon`, `CLA`, `defensiveShotAvg`, `matchCountForLastTwoYrs`, `lastPlayed`
@@ -91,6 +93,9 @@ Top-level keys:
 - **Session highlights**: aggregated by (season, format, stat). Display once per combo with counts (e.g., “Summer 2025 • 9-BALL • 9-On-The-Snap ×7”).
 - **Lifetime cards**: per format; show win%, matches/w/l, SL, PPM/PA, CLA, Def Avg, last played, last 2 yrs.
 - **Membership**: years sorted desc; leagues listed uniquely; consecutive years displayed if provided.
+
+### Latest Decoding Observation
+- The `2025-12-04_04-51-45` capture run decoded via `decode_dump.py` reported `aliases with stats: 0`. Without alias-specific responses, there is nothing to merge into each player's stats/lifetimes, so the structured file remains unchanged. Rerun the sniffer with alias-focused queries (see `scripts/scraper_sniffer/capture_v2/apa_api_sniffer.py`) to collect player-level data before rerunning the merge pipeline.
 
 ### Adding New Fields
 

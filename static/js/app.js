@@ -116,6 +116,56 @@ function enableSmoothScroll() {
   });
 }
 
+// --- Past Session Filters ---
+function initPastSessionFilters() {
+  const cards = Array.from(document.querySelectorAll('.season-card'));
+  if (!cards.length) return;
+  const sessionButtons = Array.from(document.querySelectorAll('.past-session-filter'));
+  const sessionSelect = document.getElementById('seasonSessionFilter');
+  const fmtSelect = document.getElementById('seasonFmtFilter');
+  const typeSelect = document.getElementById('seasonTypeFilter');
+
+  function applyFilters(sessionVal = 'all', formatVal = 'all', typeVal = 'all') {
+    const formatKey = formatVal.toLowerCase();
+    const typeKey = typeVal.toLowerCase();
+    cards.forEach(card => {
+      const cardSession = (card.dataset.sessionKey || card.dataset.season || '').toLowerCase();
+      const cardFormat = (card.dataset.format || '').toLowerCase();
+      const statRows = Array.from(card.querySelectorAll('.stat-row'));
+      const matchesSession = sessionVal === 'all' || cardSession === sessionVal.toLowerCase();
+      const matchesFormat = formatKey === 'all' || cardFormat === formatKey;
+      const matchesType = typeKey === 'all' || statRows.some(row => (row.dataset.label || '').toLowerCase() === typeKey);
+      card.classList.toggle('d-none', !(matchesSession && matchesFormat && matchesType));
+    });
+  }
+
+  function refreshState() {
+    const sessionVal = sessionSelect ? sessionSelect.value : 'all';
+    const formatVal = fmtSelect ? fmtSelect.value : 'all';
+    const typeVal = typeSelect ? typeSelect.value : 'all';
+    applyFilters(sessionVal, formatVal, typeVal);
+    sessionButtons.forEach(btn => {
+      btn.classList.toggle('active', btn.dataset.session === sessionVal);
+    });
+  }
+
+  sessionButtons.forEach(btn => {
+    btn.addEventListener('click', () => {
+      const sessionVal = btn.dataset.session || 'all';
+      if (sessionSelect) {
+        sessionSelect.value = sessionVal;
+      }
+      refreshState();
+    });
+  });
+
+  if (sessionSelect) sessionSelect.addEventListener('change', refreshState);
+  if (fmtSelect) fmtSelect.addEventListener('change', refreshState);
+  if (typeSelect) typeSelect.addEventListener('change', refreshState);
+
+  refreshState();
+}
+
 // --- Init All ---
 document.addEventListener('DOMContentLoaded', function() {
   setActiveNav();
@@ -123,4 +173,5 @@ document.addEventListener('DOMContentLoaded', function() {
   initAccordions();
   initModals();
   enableSmoothScroll();
+  initPastSessionFilters();
 });

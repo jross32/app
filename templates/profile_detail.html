@@ -1,4 +1,4 @@
-﻿{% extends 'base.html' %}
+{% extends 'base.html' %}
 {% block title %}{{ user.display_name or user.username }} | Profile{% endblock %}
 {% block content %}
 <style>
@@ -253,6 +253,7 @@
     width: 96px;
     height: 96px;
     position: relative;
+    cursor: pointer;
   }
   .avatar-wrapper img,
   .avatar-wrapper .avatar-fallback {
@@ -279,9 +280,14 @@
     transition: opacity 0.2s ease;
     background: rgba(0,0,0,0.3);
     border-radius: 50%;
+    pointer-events: none;
   }
   .avatar-wrapper:hover .avatar-overlay {
     opacity: 1;
+  }
+  #avatarCanvas {
+    max-width: 100%;
+    height: auto;
   }
   .edit-profile-btn {
     position: absolute;
@@ -460,14 +466,14 @@
     cursor: pointer;
   }
   .table-header th.sortable::after {
-    content: '⇅';
+    content: '?';
     font-weight: 700;
     margin-left: 6px;
     opacity: 0.45;
     font-size: 0.75rem;
   }
-  .table-header th.sorted-asc::after { content: '▲'; opacity: 0.9; }
-  .table-header th.sorted-desc::after { content: '▼'; opacity: 0.9; }
+  .table-header th.sorted-asc::after { content: '?'; opacity: 0.9; }
+  .table-header th.sorted-desc::after { content: '?'; opacity: 0.9; }
 
   #matchHistoryTable tbody tr.match-row:hover {
     background: linear-gradient(90deg, rgba(0,229,255,0.08), rgba(255,92,179,0.06));
@@ -522,14 +528,14 @@
               <span style="font-weight:700;font-size:1.2rem;">{{ user.initials or (user.username[:2]|upper) }}</span>
             </div>
           {% endif %}
-          {% if current_user and current_user.id == user.id %}
-          <div class="avatar-overlay">Change profile pic</div>
+          {% if current_user and (current_user.id == user.id or (current_user.role and current_user.role|lower == 'admin')) %}
+          <div class="avatar-overlay" role="button" aria-label="Change profile picture">Change profile pic</div>
           <input type="file" id="avatarFileInput" accept="image/*" class="d-none">
           {% endif %}
         </div>
       </div>
       <div class="flex-grow-1">
-        <div class="h4 mb-1" id="displayName">{{ user.display_name or user.username }}</div>
+        <div class="h4 mb-1" id="displayName" data-profile-field="display_name" data-profile-fallback="{{ user.username }}">{{ user.display_name or user.username }}</div>
         <div class="text-secondary small">@{{ user.username }}</div>
         <div class="d-flex align-items-center gap-2 mt-1 hero-meta-inline">
           <span class="pill">Role: {{ user.role|title if user.role else 'Player' }}</span>
@@ -552,7 +558,7 @@
         <div class="mt-2 d-flex align-items-center flex-wrap gap-2">
           <div>
             <span class="text-secondary small me-2">Nickname:</span>
-            <strong id="nicknameText">{{ user.display_name or user.username }}</strong>
+          <strong id="nicknameText" data-profile-field="display_name" data-profile-fallback="{{ user.username }}">{{ user.display_name or user.username }}</strong>
           </div>
           {% if current_user and current_user.id != user.id %}
           <a class="btn btn-sm btn-outline-info ms-1" href="{{ url_for('messenger', user=user.id) }}">
@@ -614,7 +620,7 @@
       <div class="modal-header border-0 rounded-top bg-gradient-dark text-light sticky-top">
         <div>
           <div class="h5 mb-0">Match History</div>
-          <div class="text-secondary small" id="matchHistorySub">Format — Player</div>
+          <div class="text-secondary small" id="matchHistorySub">Format  Player</div>
         </div>
         <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
@@ -628,7 +634,7 @@
             <button class="chip" data-filter="upset">Upsets</button>
           </div>
           <div class="text-end ms-lg-auto">
-            <div class="text-secondary small" id="matchSummary">Last 0: 0-0 • Avg pts 0.0</div>
+            <div class="text-secondary small" id="matchSummary">Last 0: 0-0  Avg pts 0.0</div>
             <div id="matchSpark" class="mt-1"></div>
           </div>
         </div>
@@ -696,49 +702,73 @@
       </div>
 
       <div id="playercard-lifetime" class="d-none">
-        {% set lifetimes = player_insights.lifetime_formats %}
         <div class="row g-3">
-          {% for lf in lifetimes %}
-          <div class="col-12 col-md-6">
-            <div class="card playercard-panel playercard-subtle hover-lift h-100">
-              <div class="card-body">
-                <div class="d-flex justify-content-between align-items-center mb-1">
-                  <div class="fw-semibold text-light">{{ lf.label|upper }} Lifetime</div>
-                  {% if lf.sl %}<span class="pill-soft">SL {{ lf.sl }}</span>{% endif %}
+          {% if player_insights.lifetime_formats %}
+            {% for lf in player_insights.lifetime_formats %}
+            <div class="col-12 col-md-6">
+              <div class="card lifetime-card bg-gradient-dark h-100">
+                <div class="card-body d-flex flex-column">
+                  <div class="d-flex justify-content-between align-items-center mb-2">
+                    <div class="fw-semibold text-light">{{ lf.label|upper }} Lifetime</div>
+                    {% if lf.sl not in (None, '-') %}
+                      <span class="pill-soft">SL {{ lf.sl }}</span>
+                    {% endif %}
+                  </div>
+                  <div class="text-secondary small">Win percentage</div>
+                  <div class="fs-3 fw-bold text-info">{{ lf.win_pct or '' }}</div>
+                  <div class="mt-3 border-top border-secondary pt-2">
+                    <div class="d-flex justify-content-between align-items-center text-secondary small">
+                      <span>Matches</span>
+                      <span class="text-light">{{ lf.matches or '' }}</span>
+                    </div>
+                    <div class="d-flex justify-content-between text-secondary small">
+                      <span>Wins / Losses</span>
+                      <span class="text-light">{{ lf.wins }} / {{ lf.losses }}</span>
+                    </div>
+                  </div>
+                  <div class="row row-cols-2 g-2 mt-3 text-secondary small">
+                    <div class="col">
+                      <div class="text-uppercase xsmall mb-1">PPM</div>
+                      <div class="text-light">{{ lf.ppm or '' }}</div>
+                    </div>
+                    <div class="col">
+                      <div class="text-uppercase xsmall mb-1">PA</div>
+                      <div class="text-light">{{ lf.pa or '' }}</div>
+                    </div>
+                    <div class="col">
+                      <div class="text-uppercase xsmall mb-1">CLA</div>
+                      <div class="text-light">{{ lf.cla or '' }}</div>
+                    </div>
+                    <div class="col">
+                      <div class="text-uppercase xsmall mb-1">Def Avg</div>
+                      <div class="text-light">{{ lf.def_avg or '' }}</div>
+                    </div>
+                  </div>
+                  <div class="d-flex justify-content-between text-secondary small mt-3">
+                    <span>Last played: <span class="text-light">{{ lf.last_played or '' }}</span></span>
+                    <span>Last 2 yrs: <span class="text-light">{{ lf.last_two_years or '' }}</span></span>
+                  </div>
+                  {% if not lf.has_data %}
+                  <div class="text-secondary small mt-3">No lifetime data yet for this format.</div>
+                  {% endif %}
                 </div>
-                {% if lf.matches == '-' or lf.matches is none %}
-                  <div class="text-secondary small">No lifetime data yet for this format.</div>
-                {% else %}
-                  <div class="row g-2 align-items-center">
-                    <div class="col-6">
-                      <div class="text-secondary xsmall">Win %</div>
-                      <div class="fw-bold fs-5">{{ lf.win_pct or '—' }}</div>
-                    </div>
-                    <div class="col-6 text-end">
-                      <div class="text-secondary xsmall">Matches</div>
-                      <div class="fw-semibold">{{ lf.matches }} <span class="text-secondary small">(W {{ lf.wins }} / L {{ lf.losses }})</span></div>
-                    </div>
-                  </div>
-                  <hr class="text-secondary mt-2 mb-2">
-                  <div class="row g-2 text-secondary small">
-                    <div class="col-6">PPM <span class="text-light fw-semibold">{{ lf.ppm or '—' }}</span></div>
-                    <div class="col-6 text-end">PA <span class="text-light fw-semibold">{{ lf.pa or '—' }}</span></div>
-                    <div class="col-6">CLA <span class="text-light fw-semibold">{{ lf.cla or '—' }}</span></div>
-                    <div class="col-6 text-end">Def Avg <span class="text-light fw-semibold">{{ lf.def_avg or '—' }}</span></div>
-                  </div>
-                  <div class="d-flex justify-content-between align-items-center text-secondary small mt-2">
-                    <span>Last played: <span class="text-light">{{ lf.last_played or '—' }}</span></span>
-                    <span>Last 2 yrs: <span class="text-light">{{ lf.last_two_years or '—' }}</span></span>
-                  </div>
-                {% endif %}
               </div>
             </div>
-          </div>
-          {% endfor %}
+            {% endfor %}
+          {% else %}
+            <div class="col-12">
+              <div class="text-secondary small">No lifetime data available yet.</div>
+            </div>
+          {% endif %}
         </div>
       </div>
 
       <div id="playercard-past" class="d-none">
+        {% set seasons = player_insights.past_sessions_grouped or [] %}
+        {% set session_filters = player_insights.session_filters or [] %}
+        {% set highlight_labels = player_insights.highlight_labels or [] %}
+        {% set active_session_key = player_insights.active_session_key %}
+        {% set has_membership = player_insights.membership_years or player_insights.membership_leagues or player_insights.consecutive_years_played %}
         <div class="d-flex justify-content-between align-items-center mb-2">
           <div>
             <div class="text-secondary small mb-0">Past seasons</div>
@@ -746,8 +776,38 @@
           </div>
         </div>
 
-        {% set seasons = player_insights.past_sessions_grouped or [] %}
-        {% set has_membership = player_insights.membership_years or player_insights.membership_leagues or player_insights.consecutive_years_played %}
+        {% if session_filters %}
+        <div class="d-flex flex-wrap gap-3 align-items-center past-session-filter-row mb-3">
+          <div class="d-flex flex-wrap gap-2">
+            <button type="button" class="btn btn-sm btn-outline-secondary past-session-filter{% if not active_session_key %} active{% endif %}" data-session="all">All sessions</button>
+            {% for sess in session_filters %}
+            <button type="button" class="btn btn-sm btn-outline-secondary past-session-filter{% if sess.session_key == active_session_key %} active{% endif %}" data-session="{{ sess.session_key|e }}">{{ sess.session_name }}</button>
+            {% endfor %}
+          </div>
+          <div class="d-flex flex-wrap gap-2 align-items-center">
+            <select class="form-select form-select-sm bg-dark text-light border-secondary" id="seasonSessionFilter" style="width:auto;">
+              <option value="all">All sessions</option>
+              {% for session in session_filters %}
+              <option value="{{ session.session_key|e }}" {% if session.session_key == active_session_key %}selected{% endif %}>
+                {% if session.session_key == active_session_key %}Current: {% endif %}{{ session.session_name }}
+              </option>
+              {% endfor %}
+            </select>
+            <select class="form-select form-select-sm bg-dark text-light border-secondary" id="seasonFmtFilter" style="width:auto;">
+              <option value="all">All formats</option>
+              <option value="8-ball">8-BALL</option>
+              <option value="9-ball">9-BALL</option>
+            </select>
+            <select class="form-select form-select-sm bg-dark text-light border-secondary" id="seasonTypeFilter" style="width:auto;">
+              <option value="all">All achievements</option>
+              {% for label in highlight_labels %}
+              <option value="{{ label|e }}">{{ label }}</option>
+              {% endfor %}
+            </select>
+          </div>
+        </div>
+        {% endif %}
+
         {% if not seasons and not has_membership %}
           <div class="text-secondary small">No historical patch or achievement data available yet.</div>
         {% endif %}
@@ -774,40 +834,25 @@
         {% endif %}
 
         {% if seasons %}
-        <div class="d-flex justify-content-between align-items-center mt-3 mb-2">
-          <div class="text-secondary small">Session highlights</div>
-          <div class="d-flex align-items-center gap-2">
-            <select class="form-select form-select-sm bg-dark text-light border-secondary" id="seasonFmtFilter" style="width:auto;">
-              <option value="all">All formats</option>
-              <option value="8-ball">8-BALL</option>
-              <option value="9-ball">9-BALL</option>
-            </select>
-            <select class="form-select form-select-sm bg-dark text-light border-secondary" id="seasonTypeFilter" style="width:auto;">
-              <option value="all">All achievements</option>
-            </select>
-          </div>
-        </div>
-        <div class="row g-3">
+        <div class="row g-3 season-grid">
           {% for season in seasons %}
           <div class="col-12">
             <div class="row g-2">
               {% for fmt_block in season.formats %}
-              <div class="col-12 col-md-6 col-lg-4 season-card" data-format="{{ fmt_block.format|lower }}">
+              <div class="col-12 col-md-6 col-lg-4 season-card" data-format="{{ fmt_block.format|lower }}" data-session-key="{{ season.session_key|e }}" data-season="{{ season.season_name|e }}">
                 <div class="card playercard-panel playercard-subtle hover-lift h-100">
                   <div class="card-body p-3 d-flex flex-column gap-2">
                     <div class="d-flex justify-content-between align-items-center">
                       <span class="fw-semibold text-light">{{ season.season_name }}</span>
-                      <span class="pill-soft">{{ fmt_block.format|upper }}</span>
+                      <span class="pill-soft">{{ fmt_block.format | upper }}</span>
                     </div>
-                    <div class="d-flex flex-column gap-1">
+                    <div class="d-flex flex-column gap-1 stat-stack">
                       {% for stat in fmt_block.stats %}
                         <div class="text-secondary small d-flex justify-content-between stat-row" data-label="{{ stat.label }}">
                           <span>{{ stat.label }}</span>
-                          <span class="text-light fw-semibold">
-                            {% if stat.value and stat.value|int > 1 %}
-                              ×{{ stat.value|int }}
-                            {% else %}
-                              {{ stat.value or '—' }}
+                          <span class="text-info fw-semibold stat-count">
+                            {% if stat.count and stat.count > 1 %}
+                              ×{{ stat.count }}
                             {% endif %}
                           </span>
                         </div>
@@ -886,7 +931,7 @@
                 <h6 class="text-info mb-0">About</h6>
                 <a class="btn btn-sm btn-outline-info" href="#aboutText">View</a>
               </div>
-              <div class="text-secondary" id="aboutText" style="white-space:pre-line;">{{ user.about_me or 'No about text yet.' }}</div>
+              <div class="text-secondary" id="aboutText" data-profile-field="about_me" data-profile-fallback="No about text yet." style="white-space:pre-line;">{{ user.about_me or 'No about text yet.' }}</div>
             </div>
           </div>
         </div>
@@ -897,7 +942,7 @@
                 <h6 class="text-info mb-0">Interests</h6>
                 <a class="btn btn-sm btn-outline-info" href="#interestsText">View</a>
               </div>
-              <div class="text-secondary" id="interestsText" style="white-space:pre-line;">{{ user.interests or 'No interests shared yet.' }}</div>
+              <div class="text-secondary" id="interestsText" data-profile-field="interests" data-profile-fallback="No interests shared yet." style="white-space:pre-line;">{{ user.interests or 'No interests shared yet.' }}</div>
             </div>
           </div>
         </div>
@@ -1030,7 +1075,7 @@
               <span class="text-info">not linked yet</span>
             {% endif %}
           </div>
-          <div class="text-secondary small">Teams: Cüe-Ligans 8-Ball / 9-Ball</div>
+          <div class="text-secondary small">Teams: Ce-Ligans 8-Ball / 9-Ball</div>
         </div>
       </div>
 
@@ -1080,19 +1125,19 @@
         <div class="col-12 col-md-4">
             <div class="settings-tile">
               <div class="text-secondary small">Current Mood</div>
-              <div class="h6 mb-0" id="moodText">{{ user.current_mood or "—" }}</div>
+              <div class="h6 mb-0" id="moodText" data-profile-field="current_mood" data-profile-fallback="">{{ user.current_mood or "" }}</div>
             </div>
           </div>
           <div class="col-12 col-md-4">
             <div class="settings-tile">
               <div class="text-secondary small">Favorite Game</div>
-              <div class="h6 mb-0" id="favGameText">{{ user.favorite_game or "—" }}</div>
+              <div class="h6 mb-0" id="favGameText" data-profile-field="favorite_game" data-profile-fallback="">{{ user.favorite_game or "" }}</div>
             </div>
           </div>
           <div class="col-12 col-md-4">
             <div class="settings-tile">
               <div class="text-secondary small">Favorite Quote</div>
-              <div class="text-secondary" id="favQuoteText">{{ user.favorite_quote or "—" }}</div>
+              <div class="text-secondary" id="favQuoteText" data-profile-field="favorite_quote" data-profile-fallback="">{{ user.favorite_quote or "" }}</div>
             </div>
           </div>
         </div>
@@ -1140,7 +1185,7 @@
   </div>
 </div>
 <!-- Avatar crop modal -->
-{% if current_user and current_user.id == user.id %}
+{% if current_user and (current_user.id == user.id or (current_user.role and current_user.role|lower == 'admin')) %}
 <div class="modal fade" id="avatarModal" tabindex="-1" aria-hidden="true">
   <div class="modal-dialog modal-dialog-centered">
     <div class="modal-content bg-dark soft-border shadow-soft">
@@ -1193,6 +1238,18 @@
                   </select>
                   <div class="helper">Select yourself from the league data so both 8-Ball and 9-Ball stats stay linked.</div>
                 </div>
+                <div class="col-12">
+                  <label class="form-label text-secondary small mb-1">Team affiliation</label>
+                  <select name="linked_team" class="form-select soft-border">
+                    <option value="">-- Choose team --</option>
+                    {% for opt in team_options %}
+                    <option value="{{ opt.id }}" {% if (user.team_id or '') == (opt.id|string) %}selected{% endif %}>
+                      {{ opt.display }}
+                    </option>
+                    {% endfor %}
+                  </select>
+                  <div class="helper">Link your account to a team so the navbar logo, dashboard, and stats focus on that roster.</div>
+                </div>
                 <div class="col-12 col-md-6">
                   <label class="form-label text-secondary small mb-1">Display name</label>
                   <input type="text" name="display_name" id="inputDisplayName" class="form-control soft-border" maxlength="40" value="{{ user.display_name or user.username }}" required>
@@ -1206,7 +1263,7 @@
                 <div class="col-12">
                   <label class="form-label text-secondary small mb-1">Nickname</label>
                   <input type="text" name="nickname" id="inputNickname" class="form-control soft-border" maxlength="80" value="{{ user.display_name or user.username }}">
-                  <div class="helper">Appears as “Nickname:” on your profile.</div>
+                  <div class="helper">Appears as Nickname: on your profile.</div>
                 </div>
                 <div class="col-12">
                   <label class="form-label text-secondary small mb-1">Bio</label>
@@ -1267,21 +1324,6 @@
                     <span class="accent-sample" id="accentSample" style="background: {{ user.profile_accent_color or '#00bfff' }};"></span>
                   </div>
                   <div class="helper">Affects pills and highlights.</div>
-                </div>
-                <div class="col-12 col-md-6">
-                  <label class="form-label text-secondary small mb-1">Profile background URL</label>
-                  <input type="text" name="profile_background_url" id="bgUrlInput" class="form-control soft-border" placeholder="https://..." value="{{ user.profile_background_url or '' }}">
-                  <div class="helper">Behind your profile content.</div>
-                </div>
-                <div class="col-12 col-md-6">
-                  <label class="form-label text-secondary small mb-1">Banner image URL</label>
-                  <input type="text" name="profile_banner_url" id="bannerUrlInput" class="form-control soft-border" placeholder="https://..." value="{{ user.profile_banner_url or '' }}">
-                  <div class="helper">Large header image.</div>
-                </div>
-                <div class="col-12 col-md-6">
-                  <label class="form-label text-secondary small mb-1">Change avatar</label>
-                  <input type="file" accept="image/*" name="avatar_file" id="avatarFileInput" class="form-control soft-border">
-                  <div class="helper">Updates your profile picture.</div>
                 </div>
                 <div class="col-12 col-md-6">
                   <label class="form-label text-secondary small mb-1">Change banner</label>
@@ -1395,7 +1437,7 @@
                     <span class="rarity-pill rarity-{{ rarity if rarity in ['gold','silver','bronze','diamond'] else 'neutral' }}">{{ p.difficulty or 'Patch' }}</span>
                   </div>
                   <div class="text-secondary small">{{ p.description }}</div>
-                  <div class="text-secondary small">Format: {{ p.format|title if p.format else 'Any' }} • Scope: {{ p.scope|title if p.scope else 'Individual' }}</div>
+                  <div class="text-secondary small">Format: {{ p.format|title if p.format else 'Any' }}  Scope: {{ p.scope|title if p.scope else 'Individual' }}</div>
                   <div class="mt-1 d-flex justify-content-between align-items-center">
                     <button class="btn btn-sm btn-outline-info view-patch-btn"
                       type="button"
@@ -1531,7 +1573,7 @@
       if (previewSong) {
         const title = themeTitleInput ? themeTitleInput.value : '';
         const artist = themeArtistInput ? themeArtistInput.value : '';
-        previewSong.textContent = [title, artist].filter(Boolean).join(' • ');
+        previewSong.textContent = [title, artist].filter(Boolean).join('  ');
       }
       if (previewRole && accentInput) {
         previewRole.style.borderColor = accentInput.value;
@@ -1658,7 +1700,11 @@
     }
 
     if (avatarWrapper && avatarInput) {
-      avatarWrapper.addEventListener('click', () => avatarInput.click());
+      const openModal = () => {
+        avatarInput.value = '';
+        avatarInput.click();
+      };
+      avatarWrapper.addEventListener('click', openModal);
       avatarInput.addEventListener('change', () => {
         if (avatarInput.files.length) {
           openModalWithFile(avatarInput.files[0]);
@@ -1676,7 +1722,8 @@
           fetch("{{ url_for('profile_detail', username=user.username) }}", {
             method: 'POST',
             body: fd,
-            headers: {'X-Requested-With': 'fetch-avatar'}
+            headers: {'X-Requested-With': 'fetch-avatar'},
+            credentials: 'same-origin'
           })
           .then(async res => {
             const ct = res.headers.get('content-type') || '';
@@ -1717,8 +1764,6 @@
       profileForm.about_me.value = profileData.about_me || '';
       profileForm.interests.value = profileData.interests || '';
       profileForm.profile_accent_color.value = profileData.profile_accent_color || '';
-      profileForm.profile_background_url.value = profileData.profile_background_url || '';
-      profileForm.profile_banner_url.value = profileData.profile_banner_url || '';
       profileForm.theme_song_url.value = profileData.theme_song_url || '';
       profileForm.theme_song_title.value = profileData.theme_song_title || '';
       if (profileForm.theme_song_artist) profileForm.theme_song_artist.value = profileData.theme_song_artist || '';
@@ -1807,9 +1852,26 @@
           themePlay.classList.add('d-none');
         }
       }
-      if (moodEl) moodEl.textContent = data.current_mood || '—';
-      if (gameEl) gameEl.textContent = data.favorite_game || '—';
-      if (quoteEl) quoteEl.textContent = data.favorite_quote || '—';
+      if (moodEl) moodEl.textContent = data.current_mood || '';
+      if (gameEl) gameEl.textContent = data.favorite_game || '';
+      if (quoteEl) quoteEl.textContent = data.favorite_quote || '';
+      refreshProfileTextFields(data);
+    }
+
+    function refreshProfileTextFields(data) {
+      document.querySelectorAll('[data-profile-field]').forEach(el => {
+        const key = el.dataset.profileField;
+        if (!key) return;
+        let value = data[key];
+        if (value === undefined || value === null || value === '') {
+          value = el.dataset.profileFallback || '';
+        }
+        if (el.tagName === 'INPUT' || el.tagName === 'TEXTAREA') {
+          el.value = value;
+        } else {
+          el.textContent = value;
+        }
+      });
     }
 
     if (profileModalEl) {
@@ -1900,7 +1962,7 @@
       };
 
       const renderTable = (fmt, rows) => {
-        if (subtitleEl) subtitleEl.textContent = `${fmt} — {{ user.display_name or user.username }}`;
+        if (subtitleEl) subtitleEl.textContent = `${fmt}  {{ user.display_name or user.username }}`;
         const enriched = rows.map(r => ({...r, diff: (Number(r.our_pts)||0) - (Number(r.opp_pts)||0)}));
         const filtered = applyFilter(enriched);
         const sorted = sortRows(filtered);
@@ -1938,7 +2000,7 @@
           const wins = recent.filter(r => (r.result||'').toLowerCase().startsWith('win')).length;
           const losses = recent.filter(r => (r.result||'').toLowerCase().startsWith('loss')).length;
           const avg = recent.length ? (recent.reduce((sum,r)=>sum+(Number(r.our_pts)||0),0)/recent.length).toFixed(1) : '0.0';
-          summaryEl.textContent = `Last ${recent.length}: ${wins}-${losses} • Avg pts ${avg}`;
+          summaryEl.textContent = `Last ${recent.length}: ${wins}-${losses}  Avg pts ${avg}`;
         }
         renderSpark(sorted.slice(-10));
       };
@@ -2014,7 +2076,7 @@
             if (toast) {
               const body = toast.querySelector('.toast-body');
               if (body) {
-                body.textContent = (data.message || 'Changes saved') + (data.changed_fields && data.changed_fields.length ? ` • ${data.changed_fields.join(', ')}` : '');
+                body.textContent = (data.message || 'Changes saved') + (data.changed_fields && data.changed_fields.length ? `  ${data.changed_fields.join(', ')}` : '');
               }
               bootstrap.Toast.getOrCreateInstance(toast).show();
             } else {
@@ -2078,8 +2140,9 @@
     // Session highlight filters
     const fmtFilter = document.getElementById('seasonFmtFilter');
     const typeFilter = document.getElementById('seasonTypeFilter');
+    const sessionFilter = document.getElementById('seasonSessionFilter');
     const seasonCards = Array.from(document.querySelectorAll('.season-card'));
-    if (fmtFilter && typeFilter && seasonCards.length) {
+    if (seasonCards.length) {
       const labels = new Set();
       seasonCards.forEach(card => {
         card.querySelectorAll('.stat-row').forEach(row => {
@@ -2094,19 +2157,23 @@
         typeFilter.appendChild(opt);
       });
       const applyFilters = () => {
-        const fmtVal = fmtFilter.value;
-        const typeVal = typeFilter.value;
+        const fmtVal = fmtFilter ? fmtFilter.value : 'all';
+        const typeVal = typeFilter ? typeFilter.value : 'all';
+        const sessVal = sessionFilter ? sessionFilter.value : 'all';
         seasonCards.forEach(card => {
           const fmtOk = (fmtVal === 'all') || card.dataset.format === fmtVal;
           let typeOk = (typeVal === 'all');
           if (!typeOk) {
             typeOk = Array.from(card.querySelectorAll('.stat-row')).some(row => row.dataset.label === typeVal);
           }
-          card.classList.toggle('d-none', !(fmtOk && typeOk));
+          const sessionOk = (sessVal === 'all') || card.dataset.season === sessVal;
+          card.classList.toggle('d-none', !(fmtOk && typeOk && sessionOk));
         });
       };
-      fmtFilter.addEventListener('change', applyFilters);
-      typeFilter.addEventListener('change', applyFilters);
+      fmtFilter?.addEventListener('change', applyFilters);
+      typeFilter?.addEventListener('change', applyFilters);
+      sessionFilter?.addEventListener('change', applyFilters);
+      applyFilters();
     }
     // Patch detail modal
     const patchDetailModalEl = document.getElementById('patchDetailModal');

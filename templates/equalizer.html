@@ -1,0 +1,261 @@
+{% extends "base.html" %}
+{% block title %}Equalizer System | Cue-Ligans APA{% endblock %}
+
+{% block content %}
+<div class="container py-5">
+  <!-- Hero / Intro -->
+  <div class="text-center mb-4">
+    <h1 class="display-5 fw-bold text-info">APA Equalizer System (How Points Work)</h1>
+    <p class="text-secondary lead mb-2">This page breaks down how match points are calculated in our league, using real examples from our recent matches.</p>
+    <p class="text-muted small">Powered by live data from the current session {{ session_label or '' }}</p>
+    <hr class="border-secondary opacity-50 mt-3" />
+  </div>
+
+  <!-- Big picture explanation -->
+  <div class="row g-3 mb-4">
+    <div class="col-12">
+      <div class="card bg-dark soft-border shadow-soft">
+        <div class="card-body">
+          <h3 class="h5 text-info mb-3">The Big Picture: Equalizer Scoring</h3>
+          <p class="text-light mb-2">The APA Equalizer system keeps matches competitive by adding a bonus to the games (or points) won in a team match.</p>
+          <ul class="text-secondary mb-0">
+            <li>Team points = games/points won + an Equalizer bonus.</li>
+            <li>A handicap flag (often shown as an “over/under” marker) determines which side gets a smaller or larger bonus.</li>
+            <li>The bonus makes close matches count, so standings reflect both performance and handicapped balance.</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 8-ball vs 9-ball breakdown -->
+  <div class="row g-3 mb-4">
+    <div class="col-md-6">
+      <div class="card bg-dark soft-border shadow-soft h-100">
+        <div class="card-body">
+          <h3 class="h5 text-info">8-Ball Matches</h3>
+          <p class="text-secondary mb-2">8-Ball team scores come from games won across five individual matches, plus a bonus:</p>
+          <ul class="text-secondary">
+            <li>Games Won: each rack won by the team during the night.</li>
+            <li>Equalizer Bonus: usually a small fixed value; the team giving the handicap takes the smaller bonus.</li>
+            <li>Total Team Points: games won + bonus.</li>
+          </ul>
+          <p class="text-muted small mb-0">Example: If we win 8 games and take a +3 bonus, our team total is 11 for that match.</p>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-6">
+      <div class="card bg-dark soft-border shadow-soft h-100">
+        <div class="card-body">
+          <h3 class="h5 text-info">9-Ball Matches</h3>
+          <p class="text-secondary mb-2">9-Ball uses points (balls made) instead of games. The bonus is larger to match the scoring scale.</p>
+          <ul class="text-secondary">
+            <li>Points Scored: balls made across the night (max 75 per side in standard play).</li>
+            <li>Equalizer Bonus: a fixed value (often 15) adjusted by the handicap flag.</li>
+            <li>Total Team Points: points scored + bonus.</li>
+          </ul>
+          <p class="text-muted small mb-0">Example: 63 points scored + 15 bonus = 78 total points for the team.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Live examples from data -->
+  <div class="mb-4">
+    <div class="d-flex align-items-center justify-content-between mb-2">
+      <h3 class="h5 text-info mb-0">Live Examples From Our Matches</h3>
+      <span class="text-muted small">Pulled directly from league data</span>
+    </div>
+    <div class="row g-3">
+      <div class="col-lg-6">
+        <div class="card bg-dark soft-border shadow-soft h-100">
+          <div class="card-body">
+            <div class="d-flex align-items-center justify-content-between mb-3">
+              <h4 class="h6 text-info mb-0">8-Ball Examples</h4>
+              <span class="badge bg-info-subtle text-info">Cue-ligans 8</span>
+            </div>
+            {% if examples_8 %}
+            <div class="table-responsive">
+              <table class="table table-dark table-sm align-middle mb-0">
+                <thead class="text-secondary small">
+                  <tr>
+                    <th>Date</th>
+                    <th>Opponent</th>
+                    <th class="text-end">Games Won</th>
+                    <th class="text-end">Bonus</th>
+                    <th class="text-end">Total</th>
+                    <th class="text-end">Handicap</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {% for row in examples_8 %}
+                  <tr>
+                    <td>{{ row.date or '—' }}</td>
+                    <td>{{ row.home and 'vs ' or '@ ' }}{{ row.opponent }}</td>
+                    <td class="text-end">{{ row.games_for }}</td>
+                    <td class="text-end">{{ row.bonus_for }}</td>
+                    <td class="text-end fw-semibold">{{ row.total_for }}</td>
+                    <td class="text-end">{{ row.handicap_flag or '—' }}</td>
+                  </tr>
+                  {% endfor %}
+                </tbody>
+              </table>
+            </div>
+            {% else %}
+              <p class="text-muted mb-0">No example 8-ball matches found yet.</p>
+            {% endif %}
+          </div>
+        </div>
+      </div>
+      <div class="col-lg-6">
+        <div class="card bg-dark soft-border shadow-soft h-100">
+          <div class="card-body">
+            <div class="d-flex align-items-center justify-content-between mb-3">
+              <h4 class="h6 text-info mb-0">9-Ball Examples</h4>
+              <span class="badge bg-info-subtle text-info">Cue-ligans 9</span>
+            </div>
+            {% if examples_9 %}
+            <div class="table-responsive">
+              <table class="table table-dark table-sm align-middle mb-0">
+                <thead class="text-secondary small">
+                  <tr>
+                    <th>Date</th>
+                    <th>Opponent</th>
+                    <th class="text-end">Points Won</th>
+                    <th class="text-end">Bonus</th>
+                    <th class="text-end">Total</th>
+                    <th class="text-end">Handicap</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {% for row in examples_9 %}
+                  <tr>
+                    <td>{{ row.date or '—' }}</td>
+                    <td>{{ row.home and 'vs ' or '@ ' }}{{ row.opponent }}</td>
+                    <td class="text-end">{{ row.games_for }}</td>
+                    <td class="text-end">{{ row.bonus_for }}</td>
+                    <td class="text-end fw-semibold">{{ row.total_for }}</td>
+                    <td class="text-end">{{ row.handicap_flag or '—' }}</td>
+                  </tr>
+                  {% endfor %}
+                </tbody>
+              </table>
+            </div>
+            {% else %}
+              <p class="text-muted mb-0">No example 9-ball matches found yet.</p>
+            {% endif %}
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Standings context -->
+  <div class="row g-3 mb-4">
+    <div class="col-12">
+      <div class="card bg-dark soft-border shadow-soft">
+        <div class="card-body">
+          <div class="d-flex justify-content-between align-items-center mb-3">
+            <h3 class="h5 text-info mb-0">How This Shows Up in the Standings</h3>
+            <span class="text-muted small">Session totals come from every match’s Equalizer score.</span>
+          </div>
+          <div class="row g-3">
+            {% for snap in snapshots %}
+            <div class="col-md-6">
+              <div class="p-3 rounded border border-secondary-subtle bg-gradient bg-opacity-25">
+                <div class="d-flex justify-content-between">
+                  <div>
+                    <div class="text-secondary small mb-1">{{ snap.division or 'Division' }}</div>
+                    <div class="h6 text-light mb-0">{{ snap.team }}</div>
+                    <span class="badge bg-info-subtle text-info mt-1">{{ snap.format or 'format' }}</span>
+                  </div>
+                  <div class="text-end">
+                    <div class="text-secondary small">Session Points</div>
+                    <div class="h4 text-info mb-0">{{ snap.points if snap.points is not none else '—' }}</div>
+                  </div>
+                </div>
+                <div class="row text-secondary small mt-3">
+                  <div class="col-4">
+                    <div class="text-muted">Matches</div>
+                    <div class="text-light fw-semibold">{{ snap.played }}</div>
+                  </div>
+                  <div class="col-4">
+                    <div class="text-muted">Avg / Match</div>
+                    <div class="text-light fw-semibold">{{ '%.2f' % snap.avg_per_match if snap.avg_per_match is not none else '—' }}</div>
+                  </div>
+                  <div class="col-4">
+                    <div class="text-muted">Trend</div>
+                    <div class="text-light">Equalizer adds bonus to every week.</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            {% endfor %}
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- FAQ -->
+  <div class="row g-3 mb-5">
+    <div class="col-12">
+      <div class="card bg-dark soft-border shadow-soft">
+        <div class="card-body">
+          <h3 class="h5 text-info mb-3">Quick Questions</h3>
+          <div class="accordion accordion-flush" id="eqFaq">
+            <div class="accordion-item bg-transparent text-light border-secondary">
+              <h2 class="accordion-header" id="q1">
+                <button class="accordion-button collapsed bg-transparent text-light" type="button" data-bs-toggle="collapse" data-bs-target="#a1" aria-expanded="false" aria-controls="a1">
+                  Why do we sometimes get more points than the other team even if the match felt close?
+                </button>
+              </h2>
+              <div id="a1" class="accordion-collapse collapse" aria-labelledby="q1" data-bs-parent="#eqFaq">
+                <div class="accordion-body text-secondary">
+                  The Equalizer bonus can swing a few points. Even with similar games won, the bonus adjusts totals to balance handicaps.
+                </div>
+              </div>
+            </div>
+            <div class="accordion-item bg-transparent text-light border-secondary">
+              <h2 class="accordion-header" id="q2">
+                <button class="accordion-button collapsed bg-transparent text-light" type="button" data-bs-toggle="collapse" data-bs-target="#a2" aria-expanded="false" aria-controls="a2">
+                  What is the “over/under” handicap flag?
+                </button>
+              </h2>
+              <div id="a2" class="accordion-collapse collapse" aria-labelledby="q2" data-bs-parent="#eqFaq">
+                <div class="accordion-body text-secondary">
+                  It marks which side is giving the handicap. The team giving weight usually receives the smaller bonus; the other side gets the larger bonus.
+                </div>
+              </div>
+            </div>
+            <div class="accordion-item bg-transparent text-light border-secondary">
+              <h2 class="accordion-header" id="q3">
+                <button class="accordion-button collapsed bg-transparent text-light" type="button" data-bs-toggle="collapse" data-bs-target="#a3" aria-expanded="false" aria-controls="a3">
+                  Do individual wins affect Equalizer points?
+                </button>
+              </h2>
+              <div id="a3" class="accordion-collapse collapse" aria-labelledby="q3" data-bs-parent="#eqFaq">
+                <div class="accordion-body text-secondary">
+                  Yes—your games (or points) won drive the subtotal. The Equalizer bonus simply layers on top to balance the matchup.
+                </div>
+              </div>
+            </div>
+            <div class="accordion-item bg-transparent text-light border-secondary">
+              <h2 class="accordion-header" id="q4">
+                <button class="accordion-button collapsed bg-transparent text-light" type="button" data-bs-toggle="collapse" data-bs-target="#a4" aria-expanded="false" aria-controls="a4">
+                  How do these points affect playoffs or Vegas spots?
+                </button>
+              </h2>
+              <div id="a4" class="accordion-collapse collapse" aria-labelledby="q4" data-bs-parent="#eqFaq">
+                <div class="accordion-body text-secondary">
+                  Standings totals decide seeding and advancement. Strong Equalizer scores across the season improve your position for playoffs and qualifying events.
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

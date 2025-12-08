@@ -32,6 +32,9 @@ app.permanent_session_lifetime = timedelta(hours=6)
 # Primary league dataset (legacy week 11 snapshot)
 LEAGUE_DATA_FILENAME = 'league_data_final_week11.json'
 LOCKER_DB = os.path.join(DATA_DIR, 'locker.db')
+TEAM_LOGO_DIR = Path(app.static_folder) / 'img' / 'team_logos'
+DEFAULT_TEAM_LOGO_URL = '/static/img/team_logos/cue-ligans-logo.png'
+TEAM_LOGO_EXTENSIONS = ('png', 'svg', 'jpg', 'jpeg')
 
 # Helper to normalize team names (for matching 'Cue-ligans' vs 'Cue Ligans', etc.)
 def normalize_team_name(name: str) -> str:
@@ -176,6 +179,8 @@ class User(Base):
     display_name = Column(String(120))
     initials = Column(String(4))
     player_ref = Column(String(120))
+    team_id = Column(String(120))
+    player_apa_id = Column(String(120))
     avatar_url = Column(String(255))
     nickname_history = Column(Text)  # JSON list of prior display names
     bio = Column(Text)
@@ -251,6 +256,8 @@ def init_locker():
                 conn.exec_driver_sql("ALTER TABLE users ADD COLUMN nickname_history TEXT")
             if 'player_ref' not in user_cols:
                 conn.exec_driver_sql("ALTER TABLE users ADD COLUMN player_ref TEXT")
+            if 'team_id' not in user_cols:
+                conn.exec_driver_sql("ALTER TABLE users ADD COLUMN team_id TEXT")
             if 'player_apa_id' not in user_cols:
                 conn.exec_driver_sql("ALTER TABLE users ADD COLUMN player_apa_id TEXT")
             if 'avatar_url' not in user_cols:
@@ -658,7 +665,18 @@ def unread_dm_count(user_id: int) -> int:
 def inject_current_user():
     user = get_current_user()
     unread = unread_dm_count(user.id) if user else 0
-    return {"current_user": user, "unread_dm_count": unread}
+    team_logo_url = get_team_logo_url(user.team_id if user else None)
+    team_logo_alt = team_display_name(user.team_id) if user else 'Cue-ligans'
+    brand_team_name = team_display_name(user.team_id) if user else 'Cue-ligans'
+    brand_label = brand_team_name if user and user.team_id else 'CL'
+    return {
+        "current_user": user,
+        "unread_dm_count": unread,
+        "team_logo_url": team_logo_url,
+        "team_logo_alt": team_logo_alt,
+        "brand_team_name": brand_team_name,
+        "brand_team_label": brand_label
+    }
 
 
 def is_admin(user):
@@ -793,11 +811,27 @@ def require_admin():
     return None
 
 
+def serialize_user_for_view(user):
+    if not user:
+        return None
+    return {
+        "id": user.id,
+        "username": user.username,
+        "display_name": user.display_name,
+    }
+
+
 @app.route('/signup', methods=['GET', 'POST'])
 def signup():
     if get_current_user():
         return redirect(url_for('locker'))
     error = None
+    team_options = build_team_options()
+    default_team = team_options[0]['id'] if team_options else None
+    selected_team_id = request.form.get('team_id') if request.method == 'POST' else default_team
+    valid_team_ids = {opt['id'] for opt in team_options}
+    if selected_team_id not in valid_team_ids:
+        selected_team_id = default_team
     if request.method == 'POST':
         username = (request.form.get('username') or '').strip()
         password = (request.form.get('password') or '')
@@ -815,6 +849,7 @@ def signup():
                     error = 'Username is already taken.'
                 else:
                     user = User(username=username, display_name=username, initials=initials_from_name(username))
+                    user.team_id = selected_team_id
                     user.set_password(password)
                     db.add(user)
                     db.commit()
@@ -823,7 +858,7 @@ def signup():
                     return redirect(url_for('get_started'))
             finally:
                 db.close()
-    return render_template('signup.html', error=error)
+    return render_template('signup.html', error=error, team_options=team_options, selected_team_id=selected_team_id)
 
 
 @app.route('/login', methods=['GET', 'POST'])
@@ -877,15 +912,20 @@ def profile_detail(username):
         # load league data once for lookups (players, matches, etc.)
         league = load_league_data()
         players = league.get('players', {}) if isinstance(league, dict) else {}
+        team_options = build_team_options(selected_id=user.team_id if user else None)
         # Handle nickname update for self
         me = get_current_user()
         if request.method == 'POST':
-            if not (me and me.id == user.id):
+            if not (me and (me.id == user.id or is_staff(me))):
                 if request.headers.get('X-Requested-With') == 'fetch-profile':
                     return jsonify({"ok": False, "error": "unauthorized"}), 403
                 # fall back to normal render if no auth
                 return redirect(url_for('profile_detail', username=user.username))
-            player_options = {p['id'] for p in list_all_players_for_select()}
+            # Allow admins/staff to link to any player; members restricted to Cue-ligans roster
+            if is_staff(me):
+                player_options = set(players.keys())
+            else:
+                player_options = {p['id'] for p in list_all_players_for_select()}
             players_map = players
             new_name = (request.form.get('display_name') or '').strip()
             new_bio = (request.form.get('bio') or '').strip()
@@ -904,6 +944,7 @@ def profile_detail(username):
             favorite_quote = (request.form.get('favorite_quote') or '').strip()
             favorite_game = (request.form.get('favorite_game') or '').strip()
             current_mood = (request.form.get('current_mood') or '').strip()
+            linked_team = (request.form.get('linked_team') or '').strip()
             changed = False
             changed_fields = []
             update_data = {}
@@ -956,6 +997,11 @@ def profile_detail(username):
                 update_data["current_mood"] = current_mood
                 changed = True
                 changed_fields.append("current_mood")
+            team_ids = {str(opt['id']) for opt in team_options}
+            if linked_team and linked_team in team_ids and linked_team != (user.team_id or ''):
+                update_data["team_id"] = linked_team
+                changed = True
+                changed_fields.append("team_id")
             if new_player in player_options and new_player != (user.player_ref or ''):
                 # store both the internal player key and apa_id for lookups
                 p_data = players_map.get(new_player, {})
@@ -1084,6 +1130,7 @@ def profile_detail(username):
                             "favorite_game": updated.favorite_game,
                             "current_mood": updated.current_mood,
                             "player_ref": updated.player_ref,
+                            "team_id": updated.team_id,
                         }
                     },
                     "profile": {
@@ -1101,7 +1148,8 @@ def profile_detail(username):
                         "profile_accent_color": updated.profile_accent_color or "",
                         "profile_background_url": updated.profile_background_url or "",
                         "profile_banner_url": updated.profile_banner_url or "",
-                        "player_ref": updated.player_ref or ""
+                        "player_ref": updated.player_ref or "",
+                        "team_id": updated.team_id or ""
                     }
                 })
             flash('Profile updated', 'success')
@@ -1307,6 +1355,12 @@ def profile_detail(username):
                     v *= 100
                 return f"{v:.{decimals}f}" + ("%" if pct else "")
 
+            def fmt_pct(val, decimals=2, default='-'):
+                frac = normalize_percent(val)
+                if frac is None:
+                    return default
+                return f"{frac * 100:.{decimals}f}%"
+
             def fmt_int(val):
                 try:
                     return int(val)
@@ -1431,7 +1485,6 @@ def profile_detail(username):
                 lp = fmt_int(raw.get('matchesPlayed') or raw.get('matches') or raw.get('games'))
                 lw = fmt_int(raw.get('matchesWon') or raw.get('wins') or raw.get('won'))
                 ll = fmt_int(raw.get('losses') or raw.get('lost'))
-                # pull ext wins/losses if raw missing
                 if lp is None and ext.get('matchesPlayed') is not None:
                     lp = fmt_int(ext.get('matchesPlayed'))
                 if lw is None and ext.get('matchesWon') is not None:
@@ -1440,21 +1493,17 @@ def profile_detail(username):
                     ll = fmt_int(ext.get('losses'))
                 if ll is None and lp is not None and lw is not None:
                     ll = lp - lw if lp >= lw else None
-                # format-friendly helpers with fallbacks
-                win_pct_raw = raw.get('win_pct') or raw.get('pa')
+                win_pct_raw = normalize_percent(raw.get('win_pct') or raw.get('pa'))
                 if win_pct_raw is None and lp and lw is not None and lp > 0:
-                    win_pct_raw = (lw / lp)
-                win_pct = fmt_num(win_pct_raw, pct=True)
+                    win_pct_raw = lw / lp
+                win_pct = fmt_pct(win_pct_raw)
                 ppm = fmt_num(raw.get('points_per_match') or raw.get('ppm') or raw.get('pointsPerMatch'))
-                pa_raw = raw.get('percent_points_avail') or raw.get('pa')
-                if pa_raw is None and win_pct_raw is not None:
-                    pa_raw = win_pct_raw
-                pa = fmt_num(pa_raw, pct=True)
+                pa_raw = normalize_percent(raw.get('percent_points_avail') or raw.get('pa') or win_pct_raw)
+                pa = fmt_pct(pa_raw)
                 cla = fmt_num(raw.get('CLA') if raw.get('CLA') not in (None, '-') else ext.get('CLA'), decimals=1)
                 def_avg = fmt_num(raw.get('defensiveShotAvg') if raw.get('defensiveShotAvg') not in (None, '-') else ext.get('defensiveShotAvg'))
                 last_played = fmt_date(ext.get('lastPlayed'))
                 last_two = ext.get('matchCountForLastTwoYrs') or '-'
-                # If we have absolutely no meaningful data, mark missing
                 has_data = any([
                     lp not in (None, '-'),
                     lw not in (None, '-'),
@@ -1522,28 +1571,73 @@ def profile_detail(username):
                 fmt_label = '8-ball' if '8' in fmt else '9-ball'
                 year = season_year(sname)
                 season_key = (year, sname)
-                block = by_season.setdefault(season_key, {'season_name': sname, 'year': year, 'formats': {}})
+                block = by_season.setdefault(season_key, {
+                    'season_name': sname,
+                    'year': year,
+                    'formats': {},
+                    'session_id': h.get('session_id') or '',
+                    'session_key': h.get('session_id') or sname
+                })
+                if not block.get('session_id') and h.get('session_id'):
+                    block['session_id'] = h.get('session_id')
                 fmt_bucket = block['formats'].setdefault(fmt_label, {})
                 for key, label in stat_labels.items():
                     val = h.get(key)
-                    if val is None or val == 0:
+                    if val is None:
                         continue
-                    fmt_bucket[label] = fmt_bucket.get(label, 0) + val
+                    try:
+                        count = int(val)
+                    except Exception:
+                        count = 1
+                    if count <= 0:
+                        continue
+                    fmt_bucket[label] = fmt_bucket.get(label, 0) + count
             # Convert aggregated map to list structure and drop empties
             for _, block in by_season.items():
+                block['session_key'] = block.get('session_key') or block['season_name']
                 fmt_list = []
                 for fmt_label, stats_map in block['formats'].items():
-                    stats = [{'label': lbl, 'value': val} for lbl, val in stats_map.items() if val]
+                    stats = [{'label': lbl, 'count': val} for lbl, val in stats_map.items() if val]
                     if stats:
                         fmt_list.append({'format': fmt_label, 'stats': stats})
                 fmt_list.sort(key=lambda x: 0 if x['format'].startswith('8') else 1)
                 block['formats'] = fmt_list
                 past_sessions_grouped.append(block)
             past_sessions_grouped.sort(key=lambda x: (x.get('year') or 0, x.get('season_name') or ''), reverse=True)
+            session_filters = []
+            for block in past_sessions_grouped:
+                session_filters.append({
+                    'session_name': block['season_name'],
+                    'session_id': block.get('session_id'),
+                    'session_key': block.get('session_key'),
+                    'year': block.get('year')
+                })
+            current_session = session_filters[0]['session_name'] if session_filters else None
+            active_session_key = session_filters[0]['session_key'] if session_filters else None
+            highlight_labels = sorted(
+                {
+                    stat['label']
+                    for block in past_sessions_grouped
+                    for fmt in block['formats']
+                    for stat in fmt['stats']
+                }
+            )
 
             membership_years = p.get('membership_years') or []
             if isinstance(membership_years, list):
                 membership_years = sorted({y for y in membership_years if isinstance(y, int)}, reverse=True)
+
+            membership_leagues_raw = p.get('membership_leagues') or []
+            seen_membership = set()
+            membership_leagues = []
+            for league_entry in membership_leagues_raw:
+                lid = league_entry.get('league_id')
+                name = league_entry.get('league_name')
+                key = (lid, name)
+                if key in seen_membership or not name:
+                    continue
+                seen_membership.add(key)
+                membership_leagues.append(league_entry)
 
             player_insights = {
                 'name': p.get('full_name') or p.get('short_name') or user.display_name or user.username,
@@ -1552,11 +1646,15 @@ def profile_detail(username):
                 'lifetime_summary': lifetime_summary,
                 'lifetime_formats': lifetime_formats,
                 'past_sessions_grouped': past_sessions_grouped,
+                'session_filters': session_filters,
+                'active_session_key': active_session_key,
+                'current_session': current_session,
+                'highlight_labels': highlight_labels,
                 'formats': fmt_stats,
                 'membership_years': membership_years,
                 'session_highlights': p.get('session_highlights') or [],
                 'lifetime_extended': lifetime_ext_formatted,
-                'membership_leagues': p.get('membership_leagues') or [],
+                'membership_leagues': membership_leagues,
                 'consecutive_years_played': p.get('consecutive_years_played')
             }
         except Exception as e:
@@ -1572,6 +1670,7 @@ def profile_detail(username):
             channel_lookup=channel_lookup,
             now=datetime.utcnow(),
             player_options=player_options,
+            team_options=team_options,
             comments=comments,
             commenters=commenters,
             user_badges=user_badges,
@@ -1665,27 +1764,59 @@ def messenger():
                                                     DirectMessage.sender_id == other_id,
                                                     DirectMessage.is_read == False).count()
             threads.append({
-                "user": other,
-                "last": m,
+                "user": serialize_user_for_view(other),
+                # Detach-safe payload
+                "last": {
+                    "content": m.content,
+                    "created_at": m.created_at,
+                    "sender_id": m.sender_id,
+                    "recipient_id": m.recipient_id,
+                },
                 "unread": unread
             })
         if target_id is None and threads:
-            target_id = threads[0]['user'].id
+            target_id = threads[0]['user']['id']
         messages = []
-        target_user = db.query(User).get(target_id) if target_id else None
-        if target_user:
+        target_user_obj = db.query(User).get(target_id) if target_id else None
+        if target_user_obj:
             messages = db.query(DirectMessage).filter(
-                ((DirectMessage.sender_id == user.id) & (DirectMessage.recipient_id == target_user.id)) |
-                ((DirectMessage.sender_id == target_user.id) & (DirectMessage.recipient_id == user.id))
+                ((DirectMessage.sender_id == user.id) & (DirectMessage.recipient_id == target_user_obj.id)) |
+                ((DirectMessage.sender_id == target_user_obj.id) & (DirectMessage.recipient_id == user.id))
             ).order_by(DirectMessage.created_at.asc()).all()
             # mark as read
             db.query(DirectMessage).filter(
                 DirectMessage.recipient_id == user.id,
-                DirectMessage.sender_id == target_user.id,
+                DirectMessage.sender_id == target_user_obj.id,
                 DirectMessage.is_read == False
             ).update({"is_read": True})
             db.commit()
-        return render_template('messenger.html', threads=threads, messages=messages, target=target_user)
+        # Build sender name cache to avoid lazy loads
+        id_set = set()
+        for m in messages:
+            id_set.add(m.sender_id)
+            id_set.add(m.recipient_id)
+        if target_user_obj:
+            id_set.add(target_user_obj.id)
+        id_set.discard(None)
+        user_cache = {}
+        if id_set:
+            for uobj in db.query(User).filter(User.id.in_(list(id_set))).all():
+                user_cache[uobj.id] = uobj
+        def name_for(uid):
+            uobj = user_cache.get(uid)
+            if not uobj:
+                return f"User {uid}"
+            return uobj.display_name or uobj.username
+        messages_view = [{
+            "content": m.content,
+            "created_at": m.created_at,
+            "sender_id": m.sender_id,
+            "recipient_id": m.recipient_id,
+            "sender_name": name_for(m.sender_id),
+            "from_me": m.sender_id == user.id,
+        } for m in messages]
+        target_user = serialize_user_for_view(target_user_obj)
+        return render_template('messenger.html', threads=threads, messages=messages_view, target=target_user)
     finally:
         db.close()
 
@@ -2114,16 +2245,27 @@ def admin():
         events = db.query(Event).order_by(Event.date.desc().nullslast()).all()
         badges = db.query(Badge).order_by(Badge.name).all()
         from sqlalchemy.orm import joinedload
-        ai_logs = (
+        ai_logs_query = (
             db.query(AIChat)
             .options(joinedload(AIChat.user))
             .order_by(AIChat.created_at.desc())
             .limit(50)
             .all()
         )
-        # Force-load usernames before session close to avoid DetachedInstanceError in templates
-        for log in ai_logs:
-            _ = log.user.username if log.user else None
+        ai_logs = []
+        for log in ai_logs_query:
+            if log.user:
+                user_label = log.user.display_name or log.user.username
+            elif log.user_id:
+                user_label = f"User {log.user_id}"
+            else:
+                user_label = 'Unknown'
+            ai_logs.append({
+                "created_at": log.created_at,
+                "user_label": user_label,
+                "question": log.question,
+                "answer": log.answer,
+            })
         badge_requirements = {
             "Locker Rookie": "First activity in the Locker",
             "First Message": "Post your first message",
@@ -2612,6 +2754,32 @@ def admin_git_push():
     except Exception as e:
         return jsonify({"ok": False, "error": str(e), "logs": logs}), 500
 
+@app.route('/admin/git/commit', methods=['POST'])
+def admin_git_commit():
+    guard = require_admin()
+    if guard:
+        return jsonify({"error": "unauthorized"}), 401
+    repo_dir = Path(__file__).resolve().parent
+    message = (request.form.get('message') or '').strip()
+    if not message:
+        user = get_current_user()
+        username = user.username if user else 'admin'
+        message = f"Admin commit by {username} at {datetime.now(timezone.utc).isoformat()}"
+    logs = []
+    try:
+        for cmd in [["git", "add", "-A"], ["git", "commit", "-m", message]]:
+            proc = subprocess.run(cmd, cwd=repo_dir, capture_output=True, text=True, timeout=60)
+            logs.append(f"$ {' '.join(cmd)}\n{proc.stdout}\n{proc.stderr}")
+            if proc.returncode != 0:
+                output = proc.stdout + proc.stderr
+                if "nothing to commit" in output.lower():
+                    return jsonify({"ok": False, "error": "nothing to commit", "logs": logs}), 400
+                return jsonify({"ok": False, "error": f"Command failed: {' '.join(cmd)}", "logs": logs}), 500
+        log_action(get_current_user().id, 'git_commit', target='repo', detail=message)
+        return jsonify({"ok": True, "logs": logs})
+    except Exception as e:
+        return jsonify({"ok": False, "error": str(e), "logs": logs}), 500
+
 @app.route('/admin/restore-backup', methods=['POST'])
 def admin_restore_backup():
     guard = require_admin()
@@ -2714,7 +2882,7 @@ def ai_ask():
             db.query(AIChat)
             .filter(AIChat.user_id == user.id, AIChat.thread_id == thread.id)
             .order_by(AIChat.created_at.desc())
-            .limit(25)
+            .limit(12)
             .all()
         )
         history_lines = []
@@ -2725,12 +2893,12 @@ def ai_ask():
         history_text = "\n".join(history_lines)
         context = build_ai_context(user)
         prompt = (
-            "You are Cue-Ligans' local stats assistant. Answer concisely using the context.\n"
-            "If the question is ambiguous (e.g., 'what rank am I?'), ask a brief clarifier like "
-            "'Do you mean skill level in 8-ball, 9-ball, or division standings?'.\n"
+            "You are Cue-Ligans' local stats assistant. Be concise (2–4 sentences max) and direct.\n"
+            "If the question is ambiguous (e.g., 'what rank am I?'), ask one short clarifier "
+            "like 'Do you mean skill level in 8-ball, 9-ball, or division standings?'.\n"
             "If data is missing, say so. Do not invent stats.\n\n"
-            f"Recent conversation (most recent last):\n{history_text or 'None'}\n\n"
-            f"Context:\n{context}\n\nQuestion: {question}\nAnswer:"
+            f"Recent conversation (most recent last, truncated):\n{history_text or 'None'}\n\n"
+            f"Context (trimmed):\n{context}\n\nQuestion: {question}\nAnswer:"
         )
         answer = call_ollama(prompt, model=model)
         if not answer:
@@ -3052,6 +3220,88 @@ def about():
 def resources():
     """Rules, manuals, and reference links."""
     return render_template('resources.html')
+
+@app.route('/equalizer')
+def equalizer_page():
+    """Explain APA Equalizer scoring with live examples from league data."""
+    league = load_league_data()
+    teams = league.get('teams', {}) or {}
+    matches = list((league.get('matches') or {}).values())
+
+    def team_name(tid: str) -> str:
+        t = teams.get(tid, {})
+        return pretty_team_name(tid, t.get('name', str(tid)))
+
+    def build_examples(team_id: str, fmt_keyword: str, limit: int = 4):
+        rows = []
+        fmt_keyword = fmt_keyword.lower()
+        for m in matches:
+            fmt = (m.get('format') or '').lower()
+            if fmt_keyword not in fmt:
+                continue
+            side = None
+            if m.get('home_team_id') == team_id:
+                side = 'home'
+            elif m.get('away_team_id') == team_id:
+                side = 'away'
+            else:
+                continue
+            scores = m.get('team_scores') or {}
+            opp_id = m.get('away_team_id') if side == 'home' else m.get('home_team_id')
+            games_for = scores.get(f'{side}_subtotal') or 0
+            bonus_for = scores.get(f'{side}_bonus') or 0
+            total_for = scores.get(f'{side}_total') or (games_for + bonus_for)
+            opp_side = 'home' if side == 'away' else 'away'
+            rows.append({
+                'date': m.get('date'),
+                'week': m.get('week') or m.get('week_number'),
+                'team': team_name(team_id),
+                'opponent': team_name(opp_id),
+                'home': side == 'home',
+                'games_for': games_for,
+                'games_against': scores.get(f'{opp_side}_subtotal') or 0,
+                'bonus_for': bonus_for,
+                'bonus_against': scores.get(f'{opp_side}_bonus') or 0,
+                'total_for': total_for,
+                'total_against': scores.get(f'{opp_side}_total') or 0,
+                'handicap_flag': m.get('over_under') or m.get('overUnder') or m.get('handicap_flag') or m.get('over_under_value') or None,
+            })
+        rows = sorted(rows, key=lambda r: r.get('date') or '', reverse=True)
+        return rows[:limit]
+
+    examples_8 = build_examples('cue_ligans_8', '8')
+    examples_9 = build_examples('cue_ligans_9', '9')
+
+    def standings_snapshot(team_id: str):
+        # pull from division standings if present
+        team = teams.get(team_id, {})
+        div_id = team.get('division_id')
+        divisions = league.get('divisions', {}) or {}
+        div = divisions.get(div_id, {})
+        row = next((r for r in div.get('standings', []) if r.get('team_id') == team_id), {})
+        points = row.get('points') or team.get('session_summary', {}).get('session_total_points')
+        # compute simple ppm from matches
+        ex = examples_8 if '8' in team_id else examples_9
+        played = len(ex)
+        avg_pts = round(sum(r.get('total_for', 0) or 0 for r in ex) / played, 2) if played else 0
+        return {
+            'team': team_name(team_id),
+            'division': div.get('name') or div_id,
+            'points': points,
+            'played': played,
+            'avg_per_match': avg_pts,
+            'format': team.get('format'),
+        }
+
+    snapshots = [standings_snapshot('cue_ligans_8'), standings_snapshot('cue_ligans_9')]
+
+    return render_template(
+        'equalizer.html',
+        examples_8=examples_8,
+        examples_9=examples_9,
+        session_label=(league.get('meta') or {}).get('session'),
+        snapshots=snapshots
+    )
 
 @app.route('/locker', methods=['GET'])
 def locker():
@@ -4778,14 +5028,19 @@ def build_ai_context(current_user=None):
             lines.append(f"- {p.get('full_name') or p.get('short_name') or p.get('alias_id')} | SL {p.get('sl') or p.get('skill_level')} | win_pct {p.get('win_pct') or p.get('pa')} | ppm {p.get('ppm') or p.get('points_per_match')}")
     return "\n".join(lines)
 
-def call_ollama(prompt: str, model: str = "phi3:mini", timeout: int = 45) -> str:
-    """Call a local Ollama model and return its response text."""
+def call_ollama(prompt: str, model: str = "phi3:mini", timeout: int = 30) -> str:
+    """Call a local Ollama model with lean, fast defaults for phi3:mini."""
+    # Keep prompts small and fast: limit ctx and tokens via env or model defaults.
+    env = os.environ.copy()
+    env.setdefault("OLLAMA_NUM_THREADS", "4")  # adjust to your physical cores
+    env.setdefault("OLLAMA_MAX_LOADED_MODELS", "1")
     try:
         result = subprocess.run(
-            ["ollama", "run", model],
+            ["ollama", "run", model, "--verbose", "false"],
             input=prompt.encode('utf-8'),
             capture_output=True,
-            timeout=timeout
+            timeout=timeout,
+            env=env
         )
         if result.returncode != 0:
             logging.error(f"Ollama error ({result.returncode}): {result.stderr.decode(errors='ignore')}")
@@ -4987,6 +5242,66 @@ def pretty_team_name(team_id: str, raw_name: str) -> str:
     if 'ballerz_956' in str(team_id):
         return 'Ballerz 956'
     return raw_name
+
+def team_display_name(team_id: str) -> str:
+    teams = get_league_teams()
+    team = teams.get(team_id) or teams.get(str(team_id)) or {}
+    return pretty_team_name(team_id, team.get('name') or str(team_id))
+
+def slug_for_logo(slug_value: str) -> str:
+    if not slug_value:
+        return ''
+    cleaned = ''.join(ch for ch in str(slug_value).lower() if ch.isalnum() or ch in ('-', '_'))
+    return cleaned.replace('_', '-').strip('-')
+
+def get_team_logo_url(team_id: str) -> str:
+    candidate = DEFAULT_TEAM_LOGO_URL
+    if not team_id:
+        return candidate
+    teams = get_league_teams()
+    team = teams.get(team_id) or teams.get(str(team_id)) or {}
+    slug = team.get('slug') or normalize_team_name(team.get('name', ''))
+    logo_slug = slug_for_logo(slug)
+    if not logo_slug:
+        return candidate
+    for ext in TEAM_LOGO_EXTENSIONS:
+        filename = f"{logo_slug}-logo.{ext}"
+        path = TEAM_LOGO_DIR / filename
+        if path.exists():
+            try:
+                rel = path.relative_to(Path(app.static_folder))
+                return f"/static/{rel.as_posix()}"
+            except ValueError:
+                return candidate
+    return candidate
+
+def get_league_teams():
+    league = load_league_data()
+    return league.get('teams', {}) if isinstance(league, dict) else {}
+
+def build_team_options(selected_id=None):
+    teams = get_league_teams()
+    options = []
+    entries = []
+    for tid, team in teams.items():
+        name = pretty_team_name(tid, team.get('name') or team.get('team_name') or str(tid))
+        fmt_raw = team.get('format') or ''
+        fmt_priority = 0 if '8' in fmt_raw else 1
+        entries.append((name, fmt_priority, fmt_raw, str(tid)))
+    entries.sort(key=lambda x: (x[0], x[1]))
+    seen_names = set()
+    for name, _, _, tid in entries:
+        if name in seen_names:
+            continue
+        seen_names.add(name)
+        options.append({'id': tid, 'label': name, 'display': name})
+    if selected_id:
+        sid = str(selected_id)
+        if sid not in {opt['id'] for opt in options}:
+            team = teams.get(sid) or teams.get(selected_id) or {}
+            name = pretty_team_name(sid, team.get('name') or team.get('team_name') or sid)
+            options.append({'id': sid, 'label': name, 'display': name})
+    return options
 
 def build_standings_from_league(data):
     """Return a dict shaped like standings_week4.json using league_data."""
@@ -5278,6 +5593,215 @@ def player_metrics(player: dict, fmt: str):
     ppm = float(session_fmt.get('points_per_match', session_fmt.get('ppm', 0)) or 0)
     pa = normalize_percent(session_fmt.get('percent_points_avail', session_fmt.get('pa', 0)))
     return {'sl': sl or 0, 'win_pct': win_pct, 'ppm': ppm, 'pa': pa}
+
+
+def matches_format(candidate_fmt: str, target_fmt: str) -> bool:
+    if not candidate_fmt or not target_fmt:
+        return False
+    cand = candidate_fmt.lower()
+    tgt = target_fmt.lower()
+    if tgt in cand:
+        return True
+    short = tgt.split('-')[0]
+    return bool(short and short in cand)
+
+
+def canonical_format(param: str) -> str:
+    if not param:
+        return '8-ball'
+    norm = str(param).lower()
+    if '9' in norm:
+        return '9-ball'
+    return '8-ball'
+
+
+def pick_stat_block(stats_block: dict, fmt: str) -> dict:
+    if not isinstance(stats_block, dict):
+        return {}
+    candidates = [fmt, fmt.replace('-', '_'), fmt.replace('-', ''), fmt.split('-')[0]]
+    for key in candidates:
+        if not key:
+            continue
+        block = stats_block.get(key)
+        if isinstance(block, dict) and block:
+            return block
+    if 'unknown' in stats_block and isinstance(stats_block['unknown'], dict):
+        return stats_block['unknown']
+    for val in stats_block.values():
+        if not isinstance(val, dict):
+            continue
+        raw_typ = str(((val or {}).get('raw') or {}).get('__typename') or '').lower()
+        if matches_format(raw_typ, fmt):
+            return val
+    return {}
+
+
+def find_session_block(player: dict, fmt: str, session_name: str) -> dict:
+    sessions = player.get('sessions') or {}
+
+    def consider(entry: dict) -> bool:
+        if not isinstance(entry, dict):
+            return False
+        entry_fmt = (entry.get('format') or '').lower()
+        if entry_fmt and not matches_format(entry_fmt, fmt):
+            return False
+        entry_session = (entry.get('session') or entry.get('session_name') or '')
+        if session_name and entry_session and session_name != entry_session:
+            return False
+        return True
+
+    if isinstance(sessions, dict):
+        for val in sessions.values():
+            if consider(val):
+                return val
+        entry = sessions.get(fmt) or sessions.get(fmt.replace('-', '_')) or sessions.get(fmt.split('-')[0])
+        if isinstance(entry, dict) and consider(entry):
+            return entry
+    elif isinstance(sessions, list):
+        for val in sessions:
+            if consider(val):
+                return val
+    stats_block = player.get('stats') or {}
+    entry = pick_stat_block(stats_block, fmt)
+    return entry or {}
+
+
+def safe_int(value):
+    try:
+        return int(value)
+    except Exception:
+        return 0
+
+
+def safe_float(value):
+    try:
+        return float(value)
+    except Exception:
+        return 0.0
+
+
+HIGHLIGHT_MAP = {
+    '8-ball': {
+        'eight_ball_break_and_runs': 'Break & Run',
+        'eight_on_breaks': '8-On-The-Break',
+        'rackless': 'Rackless Nights',
+        'skunks': 'Skunks'
+    },
+    '9-ball': {
+        'nine_ball_break_and_runs': 'Break & Run',
+        'nine_on_snaps': '9-On-The-Snap',
+        'rackless': 'Rackless Nights',
+        'skunks': 'Skunks'
+    }
+}
+
+
+def collect_highlight_counts(player: dict, fmt: str, session_name: str) -> dict:
+    counts = {}
+    highlights = player.get('session_highlights') or []
+    target_map = HIGHLIGHT_MAP.get(fmt, {})
+    for entry in highlights:
+        if not isinstance(entry, dict):
+            continue
+        entry_fmt = (entry.get('format') or '').lower()
+        entry_session = (entry.get('session_name') or entry.get('session') or '')
+        if not matches_format(entry_fmt, fmt):
+            continue
+        if session_name and entry_session and session_name != entry_session:
+            continue
+        for key, label in target_map.items():
+            value = safe_int(entry.get(key))
+            if value <= 0:
+                continue
+            counts[label] = counts.get(label, 0) + value
+    return counts
+
+
+def summarize_player_stats(player: dict, fmt: str, session_name: str) -> dict:
+    entry = find_session_block(player, fmt, session_name)
+    matches_played = safe_int(entry.get('matches_played') or entry.get('matches') or entry.get('match_count'))
+    matches_won = safe_int(entry.get('matches_won') or entry.get('wins'))
+    win_pct_raw = entry.get('win_pct')
+    if win_pct_raw in (None, '') and matches_played:
+        win_pct_raw = matches_won / matches_played
+    win_pct = normalize_percent(win_pct_raw or 0)
+    ppm = safe_float(entry.get('points_per_match') or entry.get('ppm') or 0.0)
+    pa = normalize_percent(entry.get('percent_points_avail') or entry.get('pa') or 0.0)
+    total_points = entry.get('session_total_points') or entry.get('total_points') or entry.get('points') or \
+        (ppm * matches_played if matches_played else 0.0)
+    return {
+        'matches_played': matches_played,
+        'matches_won': matches_won,
+        'win_pct': win_pct,
+        'ppm': ppm,
+        'pa': pa,
+        'total_points': round(float(total_points or 0.0), 2)
+    }
+
+
+def select_division_for_format(data: dict, fmt: str, division_id: str = None, prefer_keyword: str = 'Thursday Brownsville'):
+    divisions = data.get('divisions') or {}
+    fmt_key = fmt.lower()
+    if division_id:
+        candidate = divisions.get(division_id) or divisions.get(division_id.lower())
+        if candidate:
+            cand_fmt = (candidate.get('format') or '').lower()
+            if matches_format(cand_fmt, fmt_key):
+                return division_id, candidate
+    matches = []
+    for div_id, div in divisions.items():
+        cand_fmt = (div.get('format') or '').lower()
+        if matches_format(cand_fmt, fmt_key):
+            matches.append((div_id, div))
+    if matches:
+        keyword = (prefer_keyword or '').lower()
+        for div_id, div in matches:
+            if keyword and keyword in (div.get('name') or '').lower():
+                return div_id, div
+        return matches[0]
+    if divisions:
+        first_id = next(iter(divisions))
+        return first_id, divisions[first_id]
+    return None, {}
+
+
+def gather_mvp_players(data: dict, division_id: str, fmt: str, session_name: str) -> list:
+    teams = data.get('teams') or {}
+    players = data.get('players') or {}
+    division = (data.get('divisions') or {}).get(division_id) or {}
+    team_ids = division.get('team_ids') or []
+    if not team_ids:
+        team_ids = [tid for tid, team in teams.items() if team.get('division_id') == division_id]
+    records = []
+    for team_id in team_ids:
+        team = teams.get(team_id, {})
+        roster = team.get('roster') or []
+        for ref in roster:
+            pid = ref.get('player_id') if isinstance(ref, dict) else ref
+            player = players.get(pid) or players.get(str(pid)) or {}
+            if not player:
+                continue
+            stat = summarize_player_stats(player, fmt, session_name)
+            highlight_counts = collect_highlight_counts(player, fmt, session_name)
+            parsed_name = player.get('display_name') or player.get('full_name') or player.get('short_name') or str(pid)
+            records.append({
+                'alias_id': player.get('alias_id') or player.get('id') or pid,
+                'player_id': pid,
+                'player_name': parsed_name,
+                'team_id': team_id,
+                'team_name': pretty_team_name(team_id, team.get('name') or str(team_id)),
+                'format': fmt,
+                'matches_played': stat['matches_played'],
+                'matches_won': stat['matches_won'],
+                'win_pct': stat['win_pct'],
+                'ppm': stat['ppm'],
+                'pa': stat['pa'],
+                'total_points': stat['total_points'],
+                'patch_counts': highlight_counts,
+                'session_name': session_name,
+                'is_cue_ligan': normalize_team_name(team.get('name', team_id)) == MY_TEAM_KEY
+            })
+    return records
 
 def team_roster_ids(team: dict):
     ids = []
@@ -6570,6 +7094,17 @@ def scouting():
 # --- Robust Dashboard Route (user drop-in) ---
 @app.route('/')
 def dashboard():
+    user = get_current_user()
+    league_data = load_league_data()
+    league_teams = (league_data.get('teams') or {}) if isinstance(league_data, dict) else {}
+    target_team_id = user.team_id if user else None
+    target_team_name = 'Cue-Ligans'
+    target_team_key = MY_TEAM_KEY
+    if target_team_id and target_team_id in league_teams:
+        team_entry = league_teams[target_team_id] or {}
+        display = pretty_team_name(target_team_id, team_entry.get('name') or target_team_id)
+        target_team_name = display
+        target_team_key = normalize_team_name(display)
     # Robustly load standings data
     try:
         standings_data = get_standings_from_league()
@@ -6606,13 +7141,13 @@ def dashboard():
     try:
         # 8-ball
         for idx, team in enumerate(standings_data.get('eight_ball', []), 1):
-            if normalize_team_name(team.get('team', '')) == MY_TEAM_KEY:
+            if normalize_team_name(team.get('team', '')) == target_team_key:
                 standings['8ball']['rank'] = team.get('rank', idx)
                 standings['8ball']['points'] = int(team.get('points', 0))
                 break
         # 9-ball
         for idx, team in enumerate(standings_data.get('nine_ball', []), 1):
-            if normalize_team_name(team.get('team', '')) == MY_TEAM_KEY:
+            if normalize_team_name(team.get('team', '')) == target_team_key:
                 standings['9ball']['rank'] = team.get('rank', idx)
                 standings['9ball']['points'] = int(team.get('points', 0))
                 break
@@ -6669,8 +7204,8 @@ def dashboard():
             for match in week.get('matches', []):
                 home_team = normalize_team_name(match.get('home', ''))
                 away_team = normalize_team_name(match.get('away', ''))
-                if home_team == MY_TEAM_KEY or away_team == MY_TEAM_KEY:
-                    if home_team == MY_TEAM_KEY:
+                if home_team == target_team_key or away_team == target_team_key:
+                    if home_team == target_team_key:
                         opponent = match.get('away', '')
                         location = "DK's"
                     else:
@@ -6892,6 +7427,49 @@ def dashboard():
         weekly_scores_9 = [details9[w] for w in last_weeks if w in details9]
     except Exception as e:
         logging.error(f"Error building trend data: {e}")
+    def _points_behind(label_key: str):
+        teams_block = standings_data.get(label_key, [])
+        target_points = 0
+        diff = 0
+        for idx, team in enumerate(teams_block):
+            if normalize_team_name(team.get('team', '')) == target_team_key:
+                target_points = int(team.get('points', 0) or 0)
+                if idx > 0:
+                    prev = teams_block[idx - 1]
+                    diff = max(int(prev.get('points', 0) or 0) - target_points, 0)
+                break
+        return diff
+
+    def _weekly_delta(entries):
+        if not entries or len(entries) < 2:
+            return 0
+        last = entries[-1].get('us') or 0
+        prev = entries[-2].get('us') or 0
+        return last - prev
+
+    patch_index = load_patch_index()
+    patch_total = sum(len(cat.get('patches', [])) for cat in (patch_index.get('categories') or []))
+    points_behind_8 = _points_behind('eight_ball')
+    points_behind_9 = _points_behind('nine_ball')
+    win_trend_8 = _weekly_delta(weekly_scores_8)
+    win_trend_9 = _weekly_delta(weekly_scores_9)
+    weekly_improvement_score = max(0, win_trend_8) + max(0, win_trend_9)
+
+    kpi_points_behind = f"8-Ball: {points_behind_8} pts • 9-Ball: {points_behind_9} pts"
+    def _trend_label(value):
+        if value > 0:
+            return f"+{value} pts"
+        if value < 0:
+            return f"{value} pts"
+        return "Stable"
+    kpi_win_trend = f"8-Ball: {_trend_label(win_trend_8)} / 9-Ball: {_trend_label(win_trend_9)}"
+    performance_summary = {
+        "points_behind": kpi_points_behind,
+        "win_trend": kpi_win_trend,
+        "patches": patch_total,
+        "weekly_improvement": weekly_improvement_score
+    }
+
     trend_data = {
         "labels": trend_labels,
         "eight": trend_eight,
@@ -6931,7 +7509,9 @@ def dashboard():
         standings_9_chart=standings_9_chart,
         points_combo=points_combo,
         days_until_next_game=days_until_next_game,
-        current_week=current_week
+        current_week=current_week,
+        performance_summary=performance_summary,
+        target_team_name=target_team_name
     )
 
 
@@ -6939,15 +7519,50 @@ def dashboard():
 # --- Robust Roster Route (user drop-in) ---
 @app.route('/roster')
 def roster():
-    """Render Cue-ligans roster with 8-ball and 9-ball stats."""
-    team_name = 'Cue-ligans'
-    division_label = 'Thursday Brownsville DJ'
+    """Render roster for the user's linked team (fallback to Cue-ligans)."""
+    data = load_league_data()
+    teams = data.get('teams', {}) or {}
+    divisions = data.get('divisions', {}) or {}
     try:
-        all_teams = get_rosters_from_league()
-        cue_ligans = next((t for t in all_teams if normalize_team_name(t.get('team', '')) == MY_TEAM_KEY), None)
+        all_teams = build_rosters_from_league(data)
     except Exception as e:
         logging.error(f"Error loading league data for roster: {e}")
-        cue_ligans = None
+        all_teams = []
+    team_name = 'Cue-ligans'
+    division_label = 'Thursday Brownsville DJ'
+    target_key = MY_TEAM_KEY
+    user = get_current_user()
+    selected_team_record = None
+    if user and user.team_id:
+        tid = str(user.team_id)
+        selected_team_record = teams.get(tid) or teams.get(int(tid) if tid.isdigit() else tid)
+        if selected_team_record:
+            raw_name = selected_team_record.get('name') or selected_team_record.get('team_name') or str(tid)
+            target_key = normalize_team_name(raw_name)
+            team_name = pretty_team_name(tid, raw_name)
+            div_id = selected_team_record.get('division_id')
+            if div_id:
+                div = divisions.get(str(div_id)) or divisions.get(div_id, {})
+                division_label = get_division_label(str(div_id), div)
+    selected_entry = None
+    if target_key:
+        selected_entry = next((t for t in all_teams if normalize_team_name(t.get('team', '')) == target_key), None)
+    if not selected_entry:
+        selected_entry = next((t for t in all_teams if normalize_team_name(t.get('team', '')) == MY_TEAM_KEY), None)
+    if selected_entry:
+        team_name = selected_entry.get('team', team_name)
+        if not division_label or division_label == 'Thursday Brownsville DJ':
+            # try to infer from data if we know division id
+            if selected_team_record and selected_team_record.get('division_id'):
+                div = divisions.get(str(selected_team_record.get('division_id'))) or divisions.get(selected_team_record.get('division_id'), {})
+                if div:
+                    division_label = get_division_label(str(selected_team_record.get('division_id')), div)
+        roster_8 = selected_entry.get('eight_ball', [])
+        roster_9 = selected_entry.get('nine_ball', [])
+    else:
+        division_label = 'Thursday Brownsville DJ'
+        roster_8 = []
+        roster_9 = []
 
     def prep(roster):
         prepped = []
@@ -6973,8 +7588,8 @@ def roster():
             })
         return prepped
 
-    roster_8 = prep(cue_ligans.get('eight_ball', [])) if cue_ligans else []
-    roster_9 = prep(cue_ligans.get('nine_ball', [])) if cue_ligans else []
+    roster_8 = prep(roster_8)
+    roster_9 = prep(roster_9)
 
     unique_ids = set()
     for p in roster_8 + roster_9:
@@ -7036,6 +7651,74 @@ def standings():
         cue_ligans_idx_9=cue_ligans_idx_9,
         top5_8=top5_8,
         top5_9=top5_9
+    )
+
+
+@app.route('/mvp')
+def mvp():
+    league = load_league_data()
+    session_name = league.get('meta', {}).get('session') or 'Current Session'
+    fmt_param = canonical_format(request.args.get('format'))
+    division_param = request.args.get('division')
+    division_id, division = select_division_for_format(league, fmt_param, division_param)
+    division_name = division.get('name') or division.get('division_id') or 'Division'
+    players = []
+    if division_id:
+        players = gather_mvp_players(league, division_id, fmt_param, session_name)
+    min_matches = safe_int(request.args.get('min_matches') or 5)
+    raw_team_filter = request.args.get('team')
+    team_filter = str(raw_team_filter) if raw_team_filter else 'all'
+    qualification_flag = request.args.get('qualified', '')
+    show_only_qualified = str(qualification_flag).lower() in ('1', 'true', 'yes')
+    team_options = []
+    if division:
+        teams = league.get('teams', {}) or {}
+        team_ids = division.get('team_ids') or [tid for tid, t in teams.items() if t.get('division_id') == division_id]
+        for tid in team_ids:
+            team = teams.get(tid) or {}
+            label = pretty_team_name(tid, team.get('name') or tid)
+            team_options.append({'id': str(tid), 'label': label})
+    selected_team_label = 'All Teams'
+    if team_filter != 'all' and team_options:
+        label_match = next((t for t in team_options if t['id'] == team_filter), None)
+        if label_match:
+            selected_team_label = label_match['label']
+    def qualifies(player):
+        return player['matches_played'] >= min_matches
+
+    for player in players:
+        player['is_qualified'] = qualifies(player)
+    filtered_players = [
+        p for p in players
+        if (team_filter == 'all' or str(p.get('team_id')) == team_filter)
+           and (not show_only_qualified or p['is_qualified'])
+    ]
+    sorted_players = sorted(
+        filtered_players,
+        key=lambda p: (-p['win_pct'], -p['ppm'], -p['matches_played'])
+    )
+    for idx, player in enumerate(sorted_players, start=1):
+        player['mvp_rank'] = idx
+        player['display_win_pct'] = f"{player['win_pct']*100:.1f}%"
+        player['display_ppm'] = f"{player['ppm']:.2f}"
+        player['display_pa'] = f"{player['pa']*100:.1f}%"
+        player['display_points'] = f"{player['total_points']:.2f}"
+
+    available_formats = ['8-ball', '9-ball']
+    return render_template(
+        'mvp.html',
+        session_name=session_name,
+        division_name=division_name,
+        division_id=division_id,
+        available_formats=available_formats,
+        current_format=fmt_param,
+        mvp_players=sorted_players,
+        min_matches=min_matches,
+        team_filter=team_filter,
+        show_only_qualified=show_only_qualified,
+        team_options=team_options,
+        qualification_threshold=min_matches,
+        selected_team_label=selected_team_label
     )
 
 # --- Main entry point ---

@@ -156,47 +156,197 @@
     .card.bg-dark.soft-border.shadow-soft::before { height:4px; }
     .chart-container canvas, .chart-box canvas, .chart-wrapper canvas { max-height:220px !important; }
   }
+
+  /* --- New polish for softer cards & hierarchy --- */
+  :root { --accent-8: #12d6ff; --accent-9: #f4c542; }
+  .dash-shell { position: relative; }
+  .dash-shell::before {
+    content:""; position:absolute; inset:0; z-index:0;
+    background: radial-gradient(circle at 20% 20%, rgba(18,214,255,0.09), transparent 40%),
+                radial-gradient(circle at 80% 10%, rgba(244,197,66,0.08), transparent 38%),
+                linear-gradient(135deg, rgba(0,0,0,0.35), rgba(0,0,0,0.55));
+  }
+  .dash-shell > * { position: relative; z-index:1; }
+  .card-elevated {
+    border-radius: 16px;
+    border: 1px solid rgba(255,255,255,.12)!important;
+    box-shadow: 0 14px 36px rgba(0,0,0,.45);
+    overflow: hidden;
+    background: #0d1117;
+  }
+  .card-elevated .card-body { padding: 1.4rem 1.5rem; }
+  .card-header-accent {
+    padding: 0.85rem 1.1rem;
+    border-bottom: 1px solid rgba(255,255,255,.08);
+    background: linear-gradient(90deg, rgba(124,244,255,0.18), rgba(18,214,255,0.08));
+  }
+  .card-header-accent.gold { background: linear-gradient(90deg, rgba(244,197,66,0.2), rgba(244,197,66,0.08)); }
+  .rank-circle {
+    width: 70px; height: 70px; border-radius: 50%;
+    display:flex; align-items:center; justify-content:center;
+    font-weight: 800; color:#0d1117;
+    background: linear-gradient(145deg, #7cf4ff, #12d6ff);
+    box-shadow: 0 12px 30px rgba(124,244,255,.28), 0 0 0 4px rgba(18,214,255,.16);
+    border:1px solid rgba(255,255,255,.18);
+  }
+  .rank-circle.gold { background: linear-gradient(145deg, #ffd54f, #ffa000); box-shadow: 0 12px 30px rgba(255,200,0,.35), 0 0 0 4px rgba(255,200,0,.16); }
+  .rank-circle.silver { background: linear-gradient(145deg, #d7e1ea, #b7c4ce); box-shadow: 0 10px 26px rgba(207,216,220,.25), 0 0 0 4px rgba(207,216,220,.14); color:#0d1117; }
+  .rank-circle.bronze { background: linear-gradient(145deg, #d7b899, #b67c52); box-shadow: 0 10px 26px rgba(176,123,82,.24), 0 0 0 4px rgba(176,123,82,.16); color:#0d1117; }
+  .fade-slide { animation: fadeSlide 0.6s ease forwards; opacity:0; transform: translateY(12px); }
+  @keyframes fadeSlide { to { opacity:1; transform: translateY(0); } }
+  .pulse { animation: pulse 1.6s ease-in-out infinite; }
+  @keyframes pulse { 0% { opacity:0.8; transform: scale(1); } 50% { opacity:1; transform: scale(1.03);} 100% { opacity:0.8; transform: scale(1);} }
+  .dashboard-section { margin-top: 1.6rem; margin-bottom: 1.8rem; }
+  .dashboard-filter { margin-bottom: 0.6rem; display:flex; align-items:center; flex-wrap:wrap; gap:0.75rem; }
+  .dashboard-filter .btn-group { box-shadow: 0 6px 24px rgba(0,0,0,0.35); }
+  .format-filter-btn {
+    min-width: 100px;
+    border-radius: 999px;
+    display: inline-flex;
+    align-items:center;
+    justify-content:center;
+    gap:0.35rem;
+  }
+  .format-filter-btn.active {
+    background: linear-gradient(135deg, rgba(18,214,255,0.95), rgba(12,72,110,0.9));
+    color:#fff;
+    border-color:transparent;
+    box-shadow: 0 10px 24px rgba(12,72,110,0.45);
+  }
+  .format-filter-btn:not(.active) {
+    border-color: rgba(255,255,255,.2);
+  }
+  .format-hidden { display: none !important; }
+  #activeFormatLabel { font-weight: 600; }
 </style>
 
-<div class="container stagger">
+<div class="container dash-shell stagger">
+  <div class="text-secondary small mb-2 ps-1">Focused on {{ target_team_name }}</div>
+
+  <div class="row g-2 dashboard-filter dashboard-section" data-format="both">
+    <div class="col-auto">
+      <div class="btn-group shadow-sm" role="group" aria-label="Format filter">
+        <button type="button" class="btn btn-outline-info format-filter-btn" data-format="8-ball">
+          8-Ball
+        </button>
+        <button type="button" class="btn btn-outline-warning format-filter-btn" data-format="9-ball">
+          9-Ball
+        </button>
+      </div>
+    </div>
+    <div class="col">
+      <div class="text-secondary small">
+        Showing: <span id="activeFormatLabel">All formats</span>
+        <button type="button" class="btn btn-link btn-sm text-info p-0 ms-2" id="formatResetBtn">Show all</button>
+      </div>
+    </div>
+  </div>
 
 
 
+
+  <!-- Performance Summary -->
+  <div class="row g-3 dashboard-section" id="performanceSummaryRow" data-format="both">
+    <div class="col-12 col-md-4 col-xl-2 fade-slide" data-format="8-ball">
+      <div class="card card-elevated kpi-card h-100">
+        <div class="card-body">
+          <div class="d-flex align-items-center justify-content-between mb-2">
+            <div class="kpi-label text-secondary small">8-Ball Rank</div>
+            <i class="fa-solid fa-bowling-ball text-info fs-5"></i>
+          </div>
+          <div class="display-5 fw-bold" style="color: var(--accent-8);">#{{ (standings|default({})).get('8ball', {}).get('rank') or '—' }}</div>
+          <div class="text-secondary small">{{ (standings|default({})).get('8ball', {}).get('points') or 0 }} pts</div>
+        </div>
+      </div>
+    </div>
+    <div class="col-12 col-md-4 col-xl-2 fade-slide" data-format="9-ball">
+      <div class="card card-elevated kpi-card h-100">
+        <div class="card-body">
+          <div class="d-flex align-items-center justify-content-between mb-2">
+            <div class="kpi-label text-secondary small">9-Ball Rank</div>
+            <i class="fa-solid fa-swatchbook text-warning fs-5"></i>
+          </div>
+          <div class="display-5 fw-bold" style="color: var(--accent-9);">#{{ (standings|default({})).get('9ball', {}).get('rank') or '—' }}</div>
+          <div class="text-secondary small">{{ (standings|default({})).get('9ball', {}).get('points') or 0 }} pts</div>
+        </div>
+      </div>
+    </div>
+    <div class="col-12 col-md-4 col-xl-2 fade-slide" data-format="both">
+      <div class="card card-elevated kpi-card h-100 border-info">
+        <div class="card-body">
+          <div class="d-flex align-items-center justify-content-between mb-2">
+            <div class="kpi-label text-secondary small">Points Behind Next Team</div>
+            <i class="fa-solid fa-arrow-trend-down text-info fs-5"></i>
+          </div>
+          <div class="fw-semibold">{{ performance_summary.points_behind }}</div>
+        </div>
+      </div>
+    </div>
+    <div class="col-12 col-md-4 col-xl-2 fade-slide" data-format="both">
+      <div class="card card-elevated kpi-card h-100 border-info">
+        <div class="card-body">
+          <div class="d-flex align-items-center justify-content-between mb-2">
+            <div class="kpi-label text-secondary small">Win Rate Trend</div>
+            <i class="fa-solid fa-chart-line text-success fs-5"></i>
+          </div>
+          <div class="fw-semibold">{{ performance_summary.win_trend }}</div>
+        </div>
+      </div>
+    </div>
+    <div class="col-12 col-md-4 col-xl-2 fade-slide" data-format="both">
+      <div class="card card-elevated kpi-card h-100 border-info">
+        <div class="card-body">
+          <div class="d-flex align-items-center justify-content-between mb-2">
+            <div class="kpi-label text-secondary small">Weekly Improvement</div>
+            <i class="fa-solid fa-rocket text-info fs-5"></i>
+          </div>
+          <div class="display-6 fw-bold">{{ performance_summary.weekly_improvement }}</div>
+          <div class="text-secondary small">pts gained</div>
+        </div>
+      </div>
+    </div>
+  </div>
 
   <!-- Status cards -->
-  <div class="row g-3 mb-3">
-    <div class="col-12 col-md-6">
-      <div class="card bg-dark soft-border border shadow-soft h-100">
+  <div class="row g-3 mb-3 dashboard-section" data-format="both">
+    <div class="col-12 col-lg-5 fade-slide">
+      <div class="card card-elevated h-100">
+        <div class="card-header-accent d-flex align-items-center gap-2">
+          <i class="fa-regular fa-calendar text-info"></i>
+          <h5 class="mb-0">Current Week</h5>
+        </div>
         <div class="card-body">
-          <div class="d-flex justify-content-between align-items-center mb-1">
-            <div class="section-header mb-0">
-              <i class="fa-solid fa-calendar-week text-info"></i>
-              <h5 class="mb-0">Current Week</h5>
-            </div>
-          </div>
-          <div class="divider"></div>
-          <div class="d-flex align-items-baseline gap-2">
-            <div class="display-5 fw-bold text-info">{{ current_week or '—' }}</div>
+          <div class="d-flex align-items-baseline gap-3">
+            <div class="display-4 fw-bold text-info">{{ current_week or '—' }}</div>
             <div class="text-secondary small">Stats updated through this week</div>
           </div>
         </div>
       </div>
     </div>
-    <div class="col-12 col-md-6">
-      <div class="card bg-dark soft-border border shadow-soft h-100">
+    <div class="col-12 col-lg-7 fade-slide">
+      <div class="card card-elevated h-100 border-0" style="background:linear-gradient(135deg, rgba(18,214,255,0.16), rgba(12,72,110,0.45));">
+        <div class="card-header-accent d-flex align-items-center gap-2">
+          <i class="fa-regular fa-clock text-info"></i>
+          <h5 class="mb-0">Next Game</h5>
+        </div>
         <div class="card-body">
-          <div class="d-flex justify-content-between align-items-center mb-1">
-            <div class="section-header mb-0">
-              <i class="fa-solid fa-stopwatch text-info"></i>
-              <h5 class="mb-0">Next Game</h5>
+          <div class="d-flex flex-column flex-md-row align-items-md-center justify-content-between gap-3">
+            <div>
+              <div class="text-secondary small mb-1">Countdown</div>
+              <div class="d-flex align-items-baseline gap-3">
+                <div class="display-4 fw-bold text-info pulse">
+                  {% if days_until_next_game is not none %}{{ days_until_next_game }} days{% else %}—{% endif %}
+                </div>
+                <div class="text-secondary">Until next match</div>
+              </div>
             </div>
-          </div>
-          <div class="divider"></div>
-          <div class="d-flex align-items-baseline gap-2">
-            <div class="display-5 fw-bold text-info">
-              {% if days_until_next_game is not none %}{{ days_until_next_game }} days{% else %}—{% endif %}
+            {% if schedule_next %}
+            <div class="text-secondary small text-end">
+              <div class="fw-semibold text-light">{{ schedule_next.opponent or 'TBD' }}</div>
+              <div>{{ schedule_next.date or '' }} • {{ schedule_next.time or '' }}</div>
+              <div>{{ schedule_next.location or '' }}</div>
             </div>
-            <div class="text-secondary small">Until next match</div>
+            {% endif %}
           </div>
         </div>
       </div>
@@ -207,9 +357,9 @@
   <div class="row g-4">
 
     <!-- 8-Ball KPI -->
-    <div class="col-12 col-md-6">
-      <div class="card bg-dark soft-border border shadow-soft h-100 kpi-card">
-        <div class="card-body d-flex flex-column justify-content-between" style="padding:1.3rem;">
+    <div class="col-12 col-md-6 fade-slide">
+      <div class="card card-elevated h-100 kpi-card" style="border:1px solid rgba(18,214,255,0.35);">
+        <div class="card-body d-flex flex-column justify-content-between">
           {% set rank8 = (standings|default({})).get('8ball', {}).get('rank', '-') %}
           {% set trend8 = (standings|default({})).get('8ball', {}).get('rank_delta', 0) %}
           {% set rc8 = 'bronze' %}
@@ -217,8 +367,10 @@
           <div>
             <div class="d-flex align-items-center justify-content-between mb-2">
               <div>
-                <h5 class="card-title text-info mb-0"><i class="bi bi-8-circle me-2"></i>8-Ball Division</h5>
-                <div class="subtle small">Thursday Brownsville DJ &bull; Rank {{ rank8 }} / 8</div>
+                <h5 class="card-title mb-0 text-info"><i class="bi bi-8-circle me-2"></i>8-Ball Division</h5>
+                <div class="subtle small d-flex align-items-center gap-2">
+                  <i class="fa-solid fa-trophy text-info"></i> Rank {{ rank8 }} / 8
+                </div>
               </div>
               <div class="rank-circle {{ rc8 }}">
                 #{{ rank8 }}
@@ -228,18 +380,18 @@
             <div class="row align-items-center">
               <div class="col-6">
                 <div class="kpi-label subtle">Points</div>
-                <div class="display-6 kpi-value text-success">
+                <div class="display-6 kpi-value" style="color:var(--accent-8);">
                   {{ (standings|default({})).get('8ball', {}).get('points', 0) }}
                 </div>
               </div>
               <div class="col-6 text-end">
                 <div class="kpi-label subtle">Trend</div>
                 {% if trend8 < 0 %}
-                  <div class="mini-trend"><span class="up">▲ {{ trend8|abs }}</span> since last week</div>
+                  <div class="mini-trend"><span class="up"><i class="fa-solid fa-arrow-trend-up me-1"></i>{{ trend8|abs }}</span> since last week</div>
                 {% elif trend8 > 0 %}
-                  <div class="mini-trend"><span class="down">▼ {{ trend8 }}</span> since last week</div>
+                  <div class="mini-trend"><span class="down"><i class="fa-solid fa-arrow-trend-down me-1"></i>{{ trend8 }}</span> since last week</div>
                 {% else %}
-                  <div class="mini-trend subtle">→ Stable</div>
+                  <div class="mini-trend flat"><i class="fa-solid fa-arrow-right-long me-1"></i>Stable</div>
                 {% endif %}
               </div>
             </div>
@@ -252,9 +404,9 @@
     </div>
 
     <!-- 9-Ball KPI -->
-    <div class="col-12 col-md-6">
-      <div class="card bg-dark soft-border border shadow-soft h-100 kpi-card">
-        <div class="card-body d-flex flex-column justify-content-between" style="padding:1.3rem;">
+    <div class="col-12 col-md-6 fade-slide">
+      <div class="card card-elevated h-100 kpi-card" style="border:1px solid rgba(244,197,66,0.35);">
+        <div class="card-body d-flex flex-column justify-content-between">
           {% set rank9 = (standings|default({})).get('9ball', {}).get('rank', '-') %}
           {% set trend9 = (standings|default({})).get('9ball', {}).get('rank_delta', 0) %}
           {% set rc9 = 'bronze' %}
@@ -262,8 +414,10 @@
           <div>
             <div class="d-flex align-items-center justify-content-between mb-2">
               <div>
-                <h5 class="card-title text-primary mb-0"><i class="bi bi-9-circle me-2"></i>9-Ball Division</h5>
-                <div class="subtle small">Thursday Brownsville 9B &bull; Rank {{ rank9 }} / 8</div>
+                <h5 class="card-title mb-0" style="color:var(--accent-9);"><i class="bi bi-9-circle me-2"></i>9-Ball Division</h5>
+                <div class="subtle small d-flex align-items-center gap-2">
+                  <i class="fa-solid fa-medal" style="color:var(--accent-9);"></i> Rank {{ rank9 }} / 8
+                </div>
               </div>
               <div class="rank-circle {{ rc9 }}">
                 #{{ rank9 }}
@@ -273,18 +427,18 @@
             <div class="row align-items-center">
               <div class="col-6">
                 <div class="kpi-label subtle">Points</div>
-                <div class="display-6 kpi-value text-success">
+                <div class="display-6 kpi-value" style="color:var(--accent-9);">
                   {{ (standings|default({})).get('9ball', {}).get('points', 0) }}
                 </div>
               </div>
               <div class="col-6 text-end">
                 <div class="kpi-label subtle">Trend</div>
                 {% if trend9 < 0 %}
-                  <div class="mini-trend"><span class="up">▲ {{ trend9|abs }}</span> since last week</div>
+                  <div class="mini-trend"><span class="up"><i class="fa-solid fa-arrow-trend-up me-1"></i>{{ trend9|abs }}</span> since last week</div>
                 {% elif trend9 > 0 %}
-                  <div class="mini-trend"><span class="down">▼ {{ trend9 }}</span> since last week</div>
+                  <div class="mini-trend"><span class="down"><i class="fa-solid fa-arrow-trend-down me-1"></i>{{ trend9 }}</span> since last week</div>
                 {% else %}
-                  <div class="mini-trend subtle">→ Stable</div>
+                  <div class="mini-trend flat"><i class="fa-solid fa-arrow-right-long me-1"></i>Stable</div>
                 {% endif %}
               </div>
             </div>
@@ -296,56 +450,8 @@
       </div>
     </div>
 
-<!-- CHARTS ROW -->
-  <div class="row g-4 mt-1">
-    <div class="col-12 col-xl-7">
-      <div class="card bg-dark soft-border border shadow-soft">
-        <div class="card-body">
-          <div class="d-flex align-items-center justify-content-between mb-3">
-            <div class="section-header mb-0">
-              <i class="fa-solid fa-chart-column text-info"></i>
-              <h5 class="mb-0">Division Points Comparison</h5>
-            </div>
-            <div class="btn-group btn-group-sm" role="group">
-              <button class="btn btn-outline-info active" id="pointsBtn8" onclick="showPoints('8')">8-Ball</button>
-              <button class="btn btn-outline-primary" id="pointsBtn9" onclick="showPoints('9')">9-Ball</button>
-            </div>
-          </div>
-          <canvas id="pointsChart8" height="140"></canvas>
-          <canvas id="pointsChart9" height="140" class="d-none"></canvas>
-        </div>
-      </div>
-    </div>
-    <div class="col-12 col-xl-5">
-      <div class="card bg-dark soft-border border shadow-soft h-100">
-        <div class="card-body">
-          <div class="d-flex align-items-center justify-content-between mb-3">
-            <div class="section-header mb-0">
-              <i class="fa-solid fa-chart-line text-warning"></i>
-              <h5 class="mb-0">Recent Trend (Last 5 Weeks)</h5>
-            </div>
-            <div class="btn-group btn-group-sm" role="group">
-              <button class="btn btn-outline-info active" id="trendBtn8" onclick="showTrend('8')">8-Ball</button>
-              <button class="btn btn-outline-success" id="trendBtn9" onclick="showTrend('9')">9-Ball</button>
-            </div>
-          </div>
-          <canvas id="trendChart8" height="140"></canvas>
-          <canvas id="trendChart9" height="140" class="d-none"></canvas>
-          <div class="divider"></div>
-          <div class="d-flex gap-2">
-            <span class="chip chip-info">8-Ball</span>
-            <span class="chip chip-success">9-Ball</span>
-            <span class="chip chip-danger">Target</span>
-            <span class="chip chip-muted">Target 8: {{ trend_data.target8|first|default(0) }}</span>
-            <span class="chip chip-muted">Target 9: {{ trend_data.target9|first|default(0) }}</span>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-
   <!-- TABLES: UPCOMING & RESULTS -->
-  <div class="row g-4 mt-1">
+  <div class="row g-4 mt-1 dashboard-section" data-format="both">
     <!-- Upcoming Schedule -->
     <div class="col-12 col-xxl-6">
       <div class="card bg-dark soft-border border shadow-soft h-100">
@@ -420,182 +526,7 @@
             </div>
           </div>
 
-  <!-- Weekly Performance -->
-  <div class="row g-4 mt-1">
-    <div class="col-12">
-      <div class="card bg-dark soft-border border shadow-soft h-100">
-        <div class="card-body">
-            <div class="d-flex align-items-center justify-content-between mb-3">
-              <div class="section-header mb-0">
-                <i class="fa-solid fa-medal text-info"></i>
-                <h5 class="mb-0">Weekly Match Scores (Last {{ trend_data.weekly_count }} played)</h5>
-              </div>
-              <form class="d-flex flex-wrap align-items-center gap-2" onsubmit="event.preventDefault(); renderWeekly();">
-                <div class="d-flex flex-column">
-                  <label class="text-secondary small mb-0" for="teamSelect">Team</label>
-                  <select class="form-select form-select-sm bg-dark text-light" name="trend_team" id="teamSelect">
-                  {% for name, pair in trend_data.team_pairs.items() %}
-                  <option value="{{ name }}" {% if name == trend_data.team_base %}selected{% endif %}>{{ name }}</option>
-                  {% endfor %}
-                  </select>
-                </div>
-                <div class="d-flex flex-column">
-                  <label class="text-secondary small mb-0" for="weeklyFormat">Format</label>
-                  <select class="form-select form-select-sm bg-dark text-light" id="weeklyFormat">
-                  <option value="nine" selected>9-Ball</option>
-                  <option value="eight">8-Ball</option>
-                  <option value="both">Both</option>
-                  </select>
-                </div>
-                <div class="d-flex flex-column align-items-start">
-                  <label class="text-secondary small mb-0" for="weeklyCount">Last</label>
-                  <div class="input-group input-group-sm" style="width:140px;">
-                    <button class="btn btn-outline-secondary" type="button" id="countDown"><i class="bi bi-caret-down-fill"></i></button>
-                    <input type="number" min="1" max="20" name="weekly_count" id="weeklyCount" value="{{ trend_data.weekly_count or 5 }}" class="form-control form-control-sm bg-dark text-light text-center">
-                    <button class="btn btn-outline-secondary" type="button" id="countUp"><i class="bi bi-caret-up-fill"></i></button>
-                  </div>
-                </div>
-              </form>
-            </div>
-          <div class="table-responsive" id="weeklyContainer">
-            <!-- Tables will be rendered by JS -->
-          </div>
-        </div>
-      </div>
-    </div>
   </div>
-
-  <div class="row g-4 mt-1">
-    <!-- Player Performance -->
-    <div class="col-12 col-xl-7">
-      <div class="card bg-dark soft-border border shadow-soft">
-        <div class="card-body">
-          <div class="section-header mb-3">
-            <i class="fa-solid fa-ranking-star text-info"></i>
-            <h5 class="mb-0">Player Leaderboard</h5>
-          </div>
-          <div class="table-responsive">
-            <div class="mb-3">
-              <button class="btn btn-outline-info btn-sm me-2" id="toggle8" onclick="showLeaderboard('8')">8-BALL</button>
-              <button class="btn btn-outline-primary btn-sm" id="toggle9" onclick="showLeaderboard('9')">9-BALL</button>
-            </div>
-            <table class="table table-dark align-middle mb-0" id="leaderboard8">
-              <thead>
-                <tr>
-                  <th>Player</th>
-                  <th class="text-center">SL</th>
-                  <th class="text-center">Win %</th>
-                  <th class="text-center">PPM</th>
-                  <th class="text-center">PA</th>
-                  <th class="text-center">Games Played</th>
-                </tr>
-              </thead>
-              <tbody>
-                {% for p in leaderboard_8 %}
-                <tr>
-                  <td>{{ p.name }}</td>
-                  <td class="text-center">{{ p.sl }}</td>
-                  <td class="text-center">{{ p.win_pct|round(2) }}%</td>
-                  <td class="text-center">{{ p.ppm|round(2) }}</td>
-                  <td class="text-center">{{ p.pa|round(2) }}%</td>
-                  <td class="text-center">{{ p.games_played }}</td>
-                </tr>
-                {% else %}
-                {% for _ in range(6) %}
-                <tr>
-                  <td colspan="6"><div class="skeleton" style="height:18px;"></div></td>
-                </tr>
-                {% endfor %}
-                {% endfor %}
-              </tbody>
-            </table>
-            <table class="table table-dark align-middle mb-0 d-none" id="leaderboard9">
-              <thead>
-                <tr>
-                  <th>Player</th>
-                  <th class="text-center">SL</th>
-                  <th class="text-center">Win %</th>
-                  <th class="text-center">PPM</th>
-                  <th class="text-center">PA</th>
-                  <th class="text-center">Games Played</th>
-                </tr>
-              </thead>
-              <tbody>
-                {% for p in leaderboard_9 %}
-                <tr>
-                  <td>{{ p.name }}</td>
-                  <td class="text-center">{{ p.sl }}</td>
-                  <td class="text-center">{{ p.win_pct|round(2) }}%</td>
-                  <td class="text-center">{{ p.ppm|round(2) }}</td>
-                  <td class="text-center">{{ p.pa|round(2) }}%</td>
-                  <td class="text-center">{{ p.games_played }}</td>
-                </tr>
-                {% else %}
-                {% for _ in range(6) %}
-                <tr>
-                  <td colspan="6"><div class="skeleton" style="height:18px;"></div></td>
-                </tr>
-                {% endfor %}
-                {% endfor %}
-              </tbody>
-            </table>
-          </div>
-          <div class="divider"></div>
-          <div class="d-flex flex-wrap gap-2">
-            <span class="chip chip-info">PPM = Points per Match</span>
-            <span class="chip chip-info">PA = % of Available Points</span>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <!-- Travel & Venues -->
-    <div class="col-12 col-xl-5">
-      <div class="card bg-dark soft-border border shadow-soft h-100">
-        <div class="card-body">
-          <div class="section-header mb-3">
-            <i class="fa-solid fa-route text-info"></i>
-            <h5 class="mb-0">Travel & Venues (Next Up)</h5>
-          </div>
-          <div class="table-responsive">
-            <table class="table table-dark align-middle mb-0">
-              <thead>
-                <tr>
-                  <th>Week</th>
-                  <th>Opponent</th>
-                  <th>Venue</th>
-                  <th>Home/Away</th>
-                </tr>
-              </thead>
-              <tbody>
-                {% for m in (schedule_next|default([])) %}
-                {% set is_home = m.location|lower|default('') in ["dk's", "dk's stix & stuff", "home"] %}
-                <tr>
-                  <td>{{ m.week }}</td>
-                  <td>{{ m.opponent }}</td>
-                  <td>{{ m.location }}</td>
-                  <td>{% if is_home %}<span class="chip chip-success">Home</span>{% else %}<span class="chip chip-info">Away</span>{% endif %}</td>
-                </tr>
-                {% else %}
-                {% for _ in range(5) %}
-                <tr>
-                  <td colspan="4"><div class="skeleton" style="height:18px;"></div></td>
-                </tr>
-                {% endfor %}
-                {% endfor %}
-              </tbody>
-            </table>
-          </div>
-          <div class="divider"></div>
-          <div class="d-flex justify-content-between">
-            <span class="subtle">Tip: confirm ride-sharing for away games.</span>
-            <a href="/schedule" class="btn btn-outline-light btn-sm">Full schedule</a>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-
 </div><!-- /container -->
 
 <!-- OFFCANVAS: Filters / Settings -->
@@ -708,12 +639,13 @@
 
   // 8-Ball Standings Bar Chart
   const ctx8 = document.getElementById('standings8Chart');
-  new Chart(ctx8, {
-    type: 'bar',
-    data: {
-      labels: standings8.labels,
-      datasets: [{
-        label: '8-Ball Points',
+  if (ctx8) {
+    new Chart(ctx8, {
+      type: 'bar',
+      data: {
+        labels: standings8.labels,
+        datasets: [{
+          label: '8-Ball Points',
         data: standings8.points,
         backgroundColor: standings8.labels.map(t => t === 'Cue-ligans' ? '#00bfff' : '#444'),
         borderColor: '#fff',
@@ -735,11 +667,12 @@
 
   // 9-Ball Standings Bar Chart
   const ctx9 = document.getElementById('standings9Chart');
-  new Chart(ctx9, {
-    type: 'bar',
-    data: {
-      labels: standings9.labels,
-      datasets: [{
+  if (ctx9) {
+    new Chart(ctx9, {
+      type: 'bar',
+      data: {
+        labels: standings9.labels,
+        datasets: [{
         label: '9-Ball Points',
         data: standings9.points,
         backgroundColor: standings9.labels.map(t => t === 'Cue-ligans' ? '#ff8c00' : '#444'),
@@ -761,48 +694,51 @@
   });
 
   // Division Points Comparison (separate)
+const highlightTeam = {{ target_team_name|tojson }};
   const ctxPoints8 = document.getElementById('pointsChart8');
-  const pointsChart8 = new Chart(ctxPoints8, {
-    type: 'bar',
-    data: {
-      labels: standings8.labels || [],
-      datasets: [
-        { label: '8-Ball Points', data: standings8.points || [], backgroundColor: '#00bfff', borderColor: '#fff', borderWidth: 1 },
-      ]
-    },
-    options: {
-      responsive: true,
-      plugins: { legend: { labels: { color: '#fff' } } },
-      scales: {
-        x: { ticks: { color: '#fff' } },
-        y: {
-          beginAtZero: true,
-          ticks: { color: '#fff', stepSize: 5 }
-        }
-      }
-    }
-  });
   const ctxPoints9 = document.getElementById('pointsChart9');
-  const pointsChart9 = new Chart(ctxPoints9, {
-    type: 'bar',
-    data: {
-      labels: standings9.labels || [],
-      datasets: [
-        { label: '9-Ball Points', data: standings9.points || [], backgroundColor: '#ff8c00', borderColor: '#fff', borderWidth: 1 },
-      ]
-    },
-    options: {
-      responsive: true,
-      plugins: { legend: { labels: { color: '#fff' } } },
-      scales: {
-        x: { ticks: { color: '#fff' } },
-        y: {
-          beginAtZero: true,
-          ticks: { color: '#fff', stepSize: 25 }
+  if (ctxPoints8 && ctxPoints9) {
+    new Chart(ctxPoints8, {
+      type: 'bar',
+      data: {
+        labels: standings8.labels || [],
+        datasets: [
+          { label: '8-Ball Points', data: standings8.points || [], backgroundColor: standings8.labels.map(t => t === highlightTeam ? '#00bfff' : '#444'), borderColor: '#fff', borderWidth: 1 },
+        ]
+      },
+      options: {
+        responsive: true,
+        plugins: { legend: { labels: { color: '#fff' } } },
+        scales: {
+          x: { ticks: { color: '#fff' } },
+          y: {
+            beginAtZero: true,
+            ticks: { color: '#fff', stepSize: 5 }
+          }
         }
       }
-    }
-  });
+    });
+    new Chart(ctxPoints9, {
+      type: 'bar',
+      data: {
+        labels: standings9.labels || [],
+        datasets: [
+          { label: '9-Ball Points', data: standings9.points || [], backgroundColor: standings9.labels.map(t => t === highlightTeam ? '#ff8c00' : '#444'), borderColor: '#fff', borderWidth: 1 },
+        ]
+      },
+      options: {
+        responsive: true,
+        plugins: { legend: { labels: { color: '#fff' } } },
+        scales: {
+          x: { ticks: { color: '#fff' } },
+          y: {
+            beginAtZero: true,
+            ticks: { color: '#fff', stepSize: 25 }
+          }
+        }
+      }
+    });
+  }
 
   function showPoints(type) {
     const btn8 = document.getElementById('pointsBtn8');
@@ -1012,6 +948,41 @@
     });
   }
 </script>
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    const storageKey = 'dashboardFormat';
+    const buttons = document.querySelectorAll('.format-filter-btn');
+    const label = document.getElementById('activeFormatLabel');
+    const resetBtn = document.getElementById('formatResetBtn');
+    const elements = Array.from(document.querySelectorAll('[data-format]'));
+    const formatNames = { '8-ball': '8-Ball', '9-ball': '9-Ball', 'both': 'All formats' };
+
+    const applyFormat = (format) => {
+      const normalized = format || 'both';
+      sessionStorage.setItem(storageKey, normalized);
+      buttons.forEach(btn => btn.classList.toggle('active', btn.dataset.format === normalized));
+      if (label) label.textContent = formatNames[normalized] || 'All formats';
+      elements.forEach(el => {
+        const fmt = el.dataset.format || 'both';
+        if (normalized === 'both' || fmt === 'both' || fmt === normalized) {
+          el.classList.remove('format-hidden');
+        } else {
+          el.classList.add('format-hidden');
+        }
+      });
+    };
+
+    applyFormat(sessionStorage.getItem(storageKey) || 'both');
+
+    buttons.forEach(btn => btn.addEventListener('click', () => {
+      const target = btn.dataset.format;
+      const current = sessionStorage.getItem(storageKey) || 'both';
+      applyFormat(current === target ? 'both' : target);
+    }));
+
+    resetBtn?.addEventListener('click', () => applyFormat('both'));
+  });
+</script>
 
 {% endblock %}
 
@@ -1026,6 +997,35 @@
       <div class="modal-body">
         <div class="display-6 text-center" id="countdownTimer">...</div>
         <div class="text-secondary small text-center mt-2">8:00 PM Central</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="row g-4 mt-1 dashboard-section" data-format="both">
+    <div class="col-12">
+      <div class="card bg-dark soft-border border shadow-soft">
+        <div class="card-body">
+          <div class="d-flex align-items-center justify-content-between mb-3">
+            <div class="section-header mb-0">
+              <i class="fa-solid fa-chart-line text-warning"></i>
+              <h5 class="mb-0">Recent Trend (Last 5 Weeks)</h5>
+            </div>
+            <div class="btn-group btn-group-sm" role="group">
+              <button class="btn btn-outline-info active" id="trendBtn8" onclick="showTrend('8')">8-Ball</button>
+              <button class="btn btn-outline-success" id="trendBtn9" onclick="showTrend('9')">9-Ball</button>
+            </div>
+          </div>
+          <canvas id="trendChart8" height="140"></canvas>
+          <canvas id="trendChart9" height="140" class="d-none"></canvas>
+          <div class="divider"></div>
+          <div class="d-flex gap-2 flex-wrap">
+            <span class="chip chip-info">8-Ball</span>
+            <span class="chip chip-success">9-Ball</span>
+            <span class="chip chip-danger">Target</span>
+            <span class="chip chip-muted">Target 8: {{ trend_data.target8|first|default(0) }}</span>
+            <span class="chip chip-muted">Target 9: {{ trend_data.target9|first|default(0) }}</span>
+          </div>
+        </div>
       </div>
     </div>
   </div>

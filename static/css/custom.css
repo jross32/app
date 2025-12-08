@@ -136,3 +136,31 @@ body {
   from { opacity: 0; transform: translateY(10px); }
   to { opacity: 1; transform: translateY(0); }
 }
+.past-session-filter-row .btn.past-session-filter.active {
+  background: rgba(0,191,255,0.18);
+  border-color: rgba(0,191,255,0.4);
+  color: #f8f9fa;
+}
+.season-card .card-body {
+  min-height: 200px;
+}
+.stat-stack .stat-row {
+  padding-bottom: 0.25rem;
+  border-bottom: 1px solid rgba(255,255,255,0.08);
+}
+.stat-stack .stat-row:last-child {
+  border-bottom: none;
+}
+.stat-count {
+  min-width: 24px;
+  text-align: right;
+}
+.mvp-row {
+  transition: background 0.2s ease;
+}
+.mvp-row:hover {
+  background: rgba(0,191,255,0.05);
+}
+.mvp-cue {
+  background: rgba(0,191,255,0.12);
+}

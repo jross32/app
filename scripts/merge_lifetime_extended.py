@@ -20,11 +20,26 @@ def find_latest_dump(root: Path) -> Path | None:
     return max(candidates, key=lambda p: p.stat().st_mtime)
 
 
+def parse_response_body(response_body):
+    if isinstance(response_body, str):
+        try:
+            return json.loads(response_body)
+        except json.JSONDecodeError:
+            return []
+    return response_body
+
+
 def load_dump(path: Path):
     data = json.loads(path.read_text(encoding="utf-8"))
-    if isinstance(data, list):
-        return data
-    return data.get("responses") or data.get("response_body") or []
+    entries = data if isinstance(data, list) else data.get("responses") or data.get("response_body") or []
+    parsed = []
+    for entry in entries or []:
+        if not isinstance(entry, dict):
+            continue
+        entry_copy = dict(entry)
+        entry_copy["response_body"] = parse_response_body(entry_copy.get("response_body"))
+        parsed.append(entry_copy)
+    return parsed
 
 
 def normalize_name(name: str) -> str:

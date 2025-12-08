@@ -525,6 +525,17 @@ html, body { overflow-x:hidden; }
             <form method="post" action="{{ url_for('admin_git_push') }}" class="js-admin-action" data-label="Pushing to GitHub..." data-ajax="true" data-endpoint="{{ url_for('admin_git_push') }}">
               <button class="btn btn-sm btn-outline-info"><i class="fa-brands fa-github me-1"></i> Push to GitHub</button>
             </form>
+            <form method="post" action="{{ url_for('admin_git_commit') }}" class="js-admin-action" data-label="Committing changes..." data-ajax="true" data-endpoint="{{ url_for('admin_git_commit') }}">
+              <div class="d-flex gap-2 flex-wrap align-items-center">
+                <button class="btn btn-sm btn-outline-success"><i class="fa-solid fa-pen-nib me-1"></i> Commit Changes</button>
+                <input name="message" type="text" class="form-control form-control-sm bg-dark text-light border-secondary" style="min-width:200px;" placeholder="Commit message (optional)">
+              </div>
+            </form>
+          </div>
+          <div class="text-secondary small mt-2">
+            <div><strong>Run Full Update:</strong> executes discovery, sniffer, pipeline, decode, and merge with backup.</div>
+            <div><strong>Push to GitHub:</strong> pushes committed code to the remote repo.</div>
+            <div><strong>Commit Changes:</strong> stages all files and commits with the provided message (auto-generates one if blank).</div>
           </div>
         </div>
       </div>
@@ -571,7 +582,7 @@ html, body { overflow-x:hidden; }
                 {% for log in ai_logs %}
                 <tr>
                   <td class="text-secondary small">{{ log.created_at.strftime('%b %d %I:%M%p') if log.created_at else '' }}</td>
-                  <td class="text-secondary small">{{ log.user.username if log.user else log.user_id }}</td>
+                  <td class="text-secondary small">{{ log.user_label }}</td>
                   <td class="text-secondary small">{{ log.question[:120] }}{% if log.question|length > 120 %}...{% endif %}</td>
                   <td class="text-secondary small">{{ log.answer[:120] }}{% if log.answer and log.answer|length > 120 %}...{% endif %}</td>
                 </tr>
@@ -753,7 +764,7 @@ html, body { overflow-x:hidden; }
           if (busyText) busyText.textContent = form.dataset.label || 'Working...';
         }
         const endpoint = form.dataset.endpoint || form.action;
-        fetch(endpoint, {method: 'POST'})
+        fetch(endpoint, {method: 'POST', credentials: 'include'})
           .then(r => r.json().catch(() => ({})).then(data => ({ok: r.ok, status: r.status, data})))
           .then(({ok, data, status}) => {
             appendLogs(data && data.logs);

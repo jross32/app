@@ -1,0 +1,4610 @@
+[
+  {
+    "team_id": 12864634,
+    "team_name": "Dead On",
+    "division": null,
+    "format": null,
+    "rank": null,
+    "points": null,
+    "__typename": "Team"
+  },
+  {
+    "team_id": 12864635,
+    "team_name": "Chalk and Awe",
+    "division": null,
+    "format": null,
+    "rank": null,
+    "points": null,
+    "__typename": "Team"
+  },
+  {
+    "team_id": 12864636,
+    "team_name": "Ballerz 956",
+    "division": null,
+    "format": null,
+    "rank": null,
+    "points": null,
+    "__typename": "Team"
+  },
+  {
+    "team_id": 12864637,
+    "team_name": "Bad Boys",
+    "division": null,
+    "format": null,
+    "rank": null,
+    "points": null,
+    "__typename": "Team"
+  },
+  {
+    "team_id": 12864638,
+    "team_name": "Sour Patch Kids",
+    "division": null,
+    "format": null,
+    "rank": null,
+    "points": null,
+    "__typename": "Team"
+  },
+  {
+    "team_id": 12864639,
+    "team_name": "Palochones",
+    "division": null,
+    "format": null,
+    "rank": null,
+    "points": null,
+    "__typename": "Team"
+  },
+  {
+    "team_id": 12864640,
+    "team_name": "Quete Importa",
+    "division": null,
+    "format": null,
+    "rank": null,
+    "points": null,
+    "__typename": "Team"
+  },
+  {
+    "team_id": 12867593,
+    "team_name": "Cue-ligans",
+    "division": null,
+    "format": null,
+    "rank": null,
+    "points": null,
+    "__typename": "Team"
+  },
+  {
+    "team_id": 12864636,
+    "team_name": "Ballerz 956",
+    "division": null,
+    "format": null,
+    "rank": null,
+    "points": null,
+    "__typename": "Team"
+  },
+  {
+    "team_id": 12864634,
+    "team_name": "Dead On",
+    "division": null,
+    "format": null,
+    "rank": null,
+    "points": null,
+    "__typename": "Team"
+  },
+  {
+    "team_id": 12864639,
+    "team_name": "Palochones",
+    "division": null,
+    "format": null,
+    "rank": null,
+    "points": null,
+    "__typename": "Team"
+  },
+  {
+    "team_id": 12864640,
+    "team_name": "Quete Importa",
+    "division": null,
+    "format": null,
+    "rank": null,
+    "points": null,
+    "__typename": "Team"
+  },
+  {
+    "team_id": 12864637,
+    "team_name": "Bad Boys",
+    "division": null,
+    "format": null,
+    "rank": null,
+    "points": null,
+    "__typename": "Team"
+  },
+  {
+    "team_id": 12864638,
+    "team_name": "Sour Patch Kids",
+    "division": null,
+    "format": null,
+    "rank": null,
+    "points": null,
+    "__typename": "Team"
+  },
+  {
+    "team_id": 12864635,
+    "team_name": "Chalk and Awe",
+    "division": null,
+    "format": null,
+    "rank": null,
+    "points": null,
+    "__typename": "Team"
+  },
+  {
+    "team_id": 12867593,
+    "team_name": "Cue-ligans",
+    "division": null,
+    "format": null,
+    "rank": null,
+    "points": null,
+    "__typename": "Team"
+  },
+  {
+    "team_id": 12864638,
+    "team_name": "Sour Patch Kids",
+    "division": null,
+    "format": null,
+    "rank": null,
+    "points": null,
+    "__typename": "Team"
+  },
+  {
+    "team_id": 12864634,
+    "team_name": "Dead On",
+    "division": null,
+    "format": null,
+    "rank": null,
+    "points": null,
+    "__typename": "Team"
+  },
+  {
+    "team_id": 12864640,
+    "team_name": "Quete Importa",
+    "division": null,
+    "format": null,
+    "rank": null,
+    "points": null,
+    "__typename": "Team"
+  },
+  {
+    "team_id": 12864636,
+    "team_name": "Ballerz 956",
+    "division": null,
+    "format": null,
+    "rank": null,
+    "points": null,
+    "__typename": "Team"
+  },
+  {
+    "team_id": 12867593,
+    "team_name": "Cue-ligans",
+    "division": null,
+    "format": null,
+    "rank": null,
+    "points": null,
+    "__typename": "Team"
+  },
+  {
+    "team_id": 12864637,
+    "team_name": "Bad Boys",
+    "division": null,
+    "format": null,
+    "rank": null,
+    "points": null,
+    "__typename": "Team"
+  },
+  {
+    "team_id": 12864635,
+    "team_name": "Chalk and Awe",
+    "division": null,
+    "format": null,
+    "rank": null,
+    "points": null,
+    "__typename": "Team"
+  },
+  {
+    "team_id": 12864639,
+    "team_name": "Palochones",
+    "division": null,
+    "format": null,
+    "rank": null,
+    "points": null,
+    "__typename": "Team"
+  },
+  {
+    "team_id": 12864634,
+    "team_name": "Dead On",
+    "division": null,
+    "format": null,
+    "rank": null,
+    "points": null,
+    "__typename": "Team"
+  },
+  {
+    "team_id": 12864640,
+    "team_name": "Quete Importa",
+    "division": null,
+    "format": null,
+    "rank": null,
+    "points": null,
+    "__typename": "Team"
+  },
+  {
+    "team_id": 12864636,
+    "team_name": "Ballerz 956",
+    "division": null,
+    "format": null,
+    "rank": null,
+    "points": null,
+    "__typename": "Team"
+  },
+  {
+    "team_id": 12864638,
+    "team_name": "Sour Patch Kids",
+    "division": null,
+    "format": null,
+    "rank": null,
+    "points": null,
+    "__typename": "Team"
+  },
+  {
+    "team_id": 12864639,
+    "team_name": "Palochones",
+    "division": null,
+    "format": null,
+    "rank": null,
+    "points": null,
+    "__typename": "Team"
+  },
+  {
+    "team_id": 12867593,
+    "team_name": "Cue-ligans",
+    "division": null,
+    "format": null,
+    "rank": null,
+    "points": null,
+    "__typename": "Team"
+  },
+  {
+    "team_id": 12864637,
+    "team_name": "Bad Boys",
+    "division": null,
+    "format": null,
+    "rank": null,
+    "points": null,
+    "__typename": "Team"
+  },
+  {
+    "team_id": 12864635,
+    "team_name": "Chalk and Awe",
+    "division": null,
+    "format": null,
+    "rank": null,
+    "points": null,
+    "__typename": "Team"
+  },
+  {
+    "team_id": 12864634,
+    "team_name": "Dead On",
+    "division": null,
+    "format": null,
+    "rank": null,
+    "points": null,
+    "__typename": "Team"
+  },
+  {
+    "team_id": 12864637,
+    "team_name": "Bad Boys",
+    "division": null,
+    "format": null,
+    "rank": null,
+    "points": null,
+    "__typename": "Team"
+  },
+  {
+    "team_id": 12864638,
+    "team_name": "Sour Patch Kids",
+    "division": null,
+    "format": null,
+    "rank": null,
+    "points": null,
+    "__typename": "Team"
+  },
+  {
+    "team_id": 12867593,
+    "team_name": "Cue-ligans",
+    "division": null,
+    "format": null,
+    "rank": null,
+    "points": null,
+    "__typename": "Team"
+  },
+  {
+    "team_id": 12864640,
+    "team_name": "Quete Importa",
+    "division": null,
+    "format": null,
+    "rank": null,
+    "points": null,
+    "__typename": "Team"
+  },
+  {
+    "team_id": 12864635,
+    "team_name": "Chalk and Awe",
+    "division": null,
+    "format": null,
+    "rank": null,
+    "points": null,
+    "__typename": "Team"
+  },
+  {
+    "team_id": 12864636,
+    "team_name": "Ballerz 956",
+    "division": null,
+    "format": null,
+    "rank": null,
+    "points": null,
+    "__typename": "Team"
+  },
+  {
+    "team_id": 12864639,
+    "team_name": "Palochones",
+    "division": null,
+    "format": null,
+    "rank": null,
+    "points": null,
+    "__typename": "Team"
+  },
+  {
+    "team_id": 12867593,
+    "team_name": "Cue-ligans",
+    "division": null,
+    "format": null,
+    "rank": null,
+    "points": null,
+    "__typename": "Team"
+  },
+  {
+    "team_id": 12864634,
+    "team_name": "Dead On",
+    "division": null,
+    "format": null,
+    "rank": null,
+    "points": null,
+    "__typename": "Team"
+  },
+  {
+    "team_id": 12864635,
+    "team_name": "Chalk and Awe",
+    "division": null,
+    "format": null,
+    "rank": null,
+    "points": null,
+    "__typename": "Team"
+  },
+  {
+    "team_id": 12864636,
+    "team_name": "Ballerz 956",
+    "division": null,
+    "format": null,
+    "rank": null,
+    "points": null,
+    "__typename": "Team"
+  },
+  {
+    "team_id": 12864638,
+    "team_name": "Sour Patch Kids",
+    "division": null,
+    "format": null,
+    "rank": null,
+    "points": null,
+    "__typename": "Team"
+  },
+  {
+    "team_id": 12864640,
+    "team_name": "Quete Importa",
+    "division": null,
+    "format": null,
+    "rank": null,
+    "points": null,
+    "__typename": "Team"
+  },
+  {
+    "team_id": 12864637,
+    "team_name": "Bad Boys",
+    "division": null,
+    "format": null,
+    "rank": null,
+    "points": null,
+    "__typename": "Team"
+  },
+  {
+    "team_id": 12864639,
+    "team_name": "Palochones",
+    "division": null,
+    "format": null,
+    "rank": null,
+    "points": null,
+    "__typename": "Team"
+  },
+  {
+    "team_id": 12864634,
+    "team_name": "Dead On",
+    "division": null,
+    "format": null,
+    "rank": null,
+    "points": null,
+    "__typename": "Team"
+  },
+  {
+    "team_id": 12864639,
+    "team_name": "Palochones",
+    "division": null,
+    "format": null,
+    "rank": null,
+    "points": null,
+    "__typename": "Team"
+  },
+  {
+    "team_id": 12864638,
+    "team_name": "Sour Patch Kids",
+    "division": null,
+    "format": null,
+    "rank": null,
+    "points": null,
+    "__typename": "Team"
+  },
+  {
+    "team_id": 12864635,
+    "team_name": "Chalk and Awe",
+    "division": null,
+    "format": null,
+    "rank": null,
+    "points": null,
+    "__typename": "Team"
+  },
+  {
+    "team_id": 12864640,
+    "team_name": "Quete Importa",
+    "division": null,
+    "format": null,
+    "rank": null,
+    "points": null,
+    "__typename": "Team"
+  },
+  {
+    "team_id": 12867593,
+    "team_name": "Cue-ligans",
+    "division": null,
+    "format": null,
+    "rank": null,
+    "points": null,
+    "__typename": "Team"
+  },
+  {
+    "team_id": 12864636,
+    "team_name": "Ballerz 956",
+    "division": null,
+    "format": null,
+    "rank": null,
+    "points": null,
+    "__typename": "Team"
+  },
+  {
+    "team_id": 12864637,
+    "team_name": "Bad Boys",
+    "division": null,
+    "format": null,
+    "rank": null,
+    "points": null,
+    "__typename": "Team"
+  },
+  {
+    "team_id": 12864635,
+    "team_name": "Chalk and Awe",
+    "division": null,
+    "format": null,
+    "rank": null,
+    "points": null,
+    "__typename": "Team"
+  },
+  {
+    "team_id": 12864634,
+    "team_name": "Dead On",
+    "division": null,
+    "format": null,
+    "rank": null,
+    "points": null,
+    "__typename": "Team"
+  },
+  {
+    "team_id": 12864639,
+    "team_name": "Palochones",
+    "division": null,
+    "format": null,
+    "rank": null,
+    "points": null,
+    "__typename": "Team"
+  },
+  {
+    "team_id": 12864638,
+    "team_name": "Sour Patch Kids",
+    "division": null,
+    "format": null,
+    "rank": null,
+    "points": null,
+    "__typename": "Team"
+  },
+  {
+    "team_id": 12864637,
+    "team_name": "Bad Boys",
+    "division": null,
+    "format": null,
+    "rank": null,
+    "points": null,
+    "__typename": "Team"
+  },
+  {
+    "team_id": 12864640,
+    "team_name": "Quete Importa",
+    "division": null,
+    "format": null,
+    "rank": null,
+    "points": null,
+    "__typename": "Team"
+  },
+  {
+    "team_id": 12867593,
+    "team_name": "Cue-ligans",
+    "division": null,
+    "format": null,
+    "rank": null,
+    "points": null,
+    "__typename": "Team"
+  },
+  {
+    "team_id": 12864636,
+    "team_name": "Ballerz 956",
+    "division": null,
+    "format": null,
+    "rank": null,
+    "points": null,
+    "__typename": "Team"
+  },
+  {
+    "team_id": 12864634,
+    "team_name": "Dead On",
+    "division": null,
+    "format": null,
+    "rank": null,
+    "points": null,
+    "__typename": "Team"
+  },
+  {
+    "team_id": 12864636,
+    "team_name": "Ballerz 956",
+    "division": null,
+    "format": null,
+    "rank": null,
+    "points": null,
+    "__typename": "Team"
+  },
+  {
+    "team_id": 12864640,
+    "team_name": "Quete Importa",
+    "division": null,
+    "format": null,
+    "rank": null,
+    "points": null,
+    "__typename": "Team"
+  },
+  {
+    "team_id": 12864639,
+    "team_name": "Palochones",
+    "division": null,
+    "format": null,
+    "rank": null,
+    "points": null,
+    "__typename": "Team"
+  },
+  {
+    "team_id": 12864638,
+    "team_name": "Sour Patch Kids",
+    "division": null,
+    "format": null,
+    "rank": null,
+    "points": null,
+    "__typename": "Team"
+  },
+  {
+    "team_id": 12864637,
+    "team_name": "Bad Boys",
+    "division": null,
+    "format": null,
+    "rank": null,
+    "points": null,
+    "__typename": "Team"
+  },
+  {
+    "team_id": 12867593,
+    "team_name": "Cue-ligans",
+    "division": null,
+    "format": null,
+    "rank": null,
+    "points": null,
+    "__typename": "Team"
+  },
+  {
+    "team_id": 12864635,
+    "team_name": "Chalk and Awe",
+    "division": null,
+    "format": null,
+    "rank": null,
+    "points": null,
+    "__typename": "Team"
+  },
+  {
+    "team_id": 12864634,
+    "team_name": "Dead On",
+    "division": null,
+    "format": null,
+    "rank": null,
+    "points": null,
+    "__typename": "Team"
+  },
+  {
+    "team_id": 12864638,
+    "team_name": "Sour Patch Kids",
+    "division": null,
+    "format": null,
+    "rank": null,
+    "points": null,
+    "__typename": "Team"
+  },
+  {
+    "team_id": 12864636,
+    "team_name": "Ballerz 956",
+    "division": null,
+    "format": null,
+    "rank": null,
+    "points": null,
+    "__typename": "Team"
+  },
+  {
+    "team_id": 12864640,
+    "team_name": "Quete Importa",
+    "division": null,
+    "format": null,
+    "rank": null,
+    "points": null,
+    "__typename": "Team"
+  },
+  {
+    "team_id": 12864637,
+    "team_name": "Bad Boys",
+    "division": null,
+    "format": null,
+    "rank": null,
+    "points": null,
+    "__typename": "Team"
+  },
+  {
+    "team_id": 12867593,
+    "team_name": "Cue-ligans",
+    "division": null,
+    "format": null,
+    "rank": null,
+    "points": null,
+    "__typename": "Team"
+  },
+  {
+    "team_id": 12864639,
+    "team_name": "Palochones",
+    "division": null,
+    "format": null,
+    "rank": null,
+    "points": null,
+    "__typename": "Team"
+  },
+  {
+    "team_id": 12864635,
+    "team_name": "Chalk and Awe",
+    "division": null,
+    "format": null,
+    "rank": null,
+    "points": null,
+    "__typename": "Team"
+  },
+  {
+    "team_id": 12864640,
+    "team_name": "Quete Importa",
+    "division": null,
+    "format": null,
+    "rank": null,
+    "points": null,
+    "__typename": "Team"
+  },
+  {
+    "team_id": 12864634,
+    "team_name": "Dead On",
+    "division": null,
+    "format": null,
+    "rank": null,
+    "points": null,
+    "__typename": "Team"
+  },
+  {
+    "team_id": 12864638,
+    "team_name": "Sour Patch Kids",
+    "division": null,
+    "format": null,
+    "rank": null,
+    "points": null,
+    "__typename": "Team"
+  },
+  {
+    "team_id": 12864636,
+    "team_name": "Ballerz 956",
+    "division": null,
+    "format": null,
+    "rank": null,
+    "points": null,
+    "__typename": "Team"
+  },
+  {
+    "team_id": 12867593,
+    "team_name": "Cue-ligans",
+    "division": null,
+    "format": null,
+    "rank": null,
+    "points": null,
+    "__typename": "Team"
+  },
+  {
+    "team_id": 12864639,
+    "team_name": "Palochones",
+    "division": null,
+    "format": null,
+    "rank": null,
+    "points": null,
+    "__typename": "Team"
+  },
+  {
+    "team_id": 12864635,
+    "team_name": "Chalk and Awe",
+    "division": null,
+    "format": null,
+    "rank": null,
+    "points": null,
+    "__typename": "Team"
+  },
+  {
+    "team_id": 12864637,
+    "team_name": "Bad Boys",
+    "division": null,
+    "format": null,
+    "rank": null,
+    "points": null,
+    "__typename": "Team"
+  },
+  {
+    "team_id": 12864637,
+    "team_name": "Bad Boys",
+    "division": null,
+    "format": null,
+    "rank": null,
+    "points": null,
+    "__typename": "Team"
+  },
+  {
+    "team_id": 12864634,
+    "team_name": "Dead On",
+    "division": null,
+    "format": null,
+    "rank": null,
+    "points": null,
+    "__typename": "Team"
+  },
+  {
+    "team_id": 12867593,
+    "team_name": "Cue-ligans",
+    "division": null,
+    "format": null,
+    "rank": null,
+    "points": null,
+    "__typename": "Team"
+  },
+  {
+    "team_id": 12864638,
+    "team_name": "Sour Patch Kids",
+    "division": null,
+    "format": null,
+    "rank": null,
+    "points": null,
+    "__typename": "Team"
+  },
+  {
+    "team_id": 12864635,
+    "team_name": "Chalk and Awe",
+    "division": null,
+    "format": null,
+    "rank": null,
+    "points": null,
+    "__typename": "Team"
+  },
+  {
+    "team_id": 12864640,
+    "team_name": "Quete Importa",
+    "division": null,
+    "format": null,
+    "rank": null,
+    "points": null,
+    "__typename": "Team"
+  },
+  {
+    "team_id": 12864639,
+    "team_name": "Palochones",
+    "division": null,
+    "format": null,
+    "rank": null,
+    "points": null,
+    "__typename": "Team"
+  },
+  {
+    "team_id": 12864636,
+    "team_name": "Ballerz 956",
+    "division": null,
+    "format": null,
+    "rank": null,
+    "points": null,
+    "__typename": "Team"
+  },
+  {
+    "team_id": 12864634,
+    "team_name": "Dead On",
+    "division": null,
+    "format": null,
+    "rank": null,
+    "points": null,
+    "__typename": "Team"
+  },
+  {
+    "team_id": 12867593,
+    "team_name": "Cue-ligans",
+    "division": null,
+    "format": null,
+    "rank": null,
+    "points": null,
+    "__typename": "Team"
+  },
+  {
+    "team_id": 12864636,
+    "team_name": "Ballerz 956",
+    "division": null,
+    "format": null,
+    "rank": null,
+    "points": null,
+    "__typename": "Team"
+  },
+  {
+    "team_id": 12864635,
+    "team_name": "Chalk and Awe",
+    "division": null,
+    "format": null,
+    "rank": null,
+    "points": null,
+    "__typename": "Team"
+  },
+  {
+    "team_id": 12864640,
+    "team_name": "Quete Importa",
+    "division": null,
+    "format": null,
+    "rank": null,
+    "points": null,
+    "__typename": "Team"
+  },
+  {
+    "team_id": 12864638,
+    "team_name": "Sour Patch Kids",
+    "division": null,
+    "format": null,
+    "rank": null,
+    "points": null,
+    "__typename": "Team"
+  },
+  {
+    "team_id": 12864639,
+    "team_name": "Palochones",
+    "division": null,
+    "format": null,
+    "rank": null,
+    "points": null,
+    "__typename": "Team"
+  },
+  {
+    "team_id": 12864637,
+    "team_name": "Bad Boys",
+    "division": null,
+    "format": null,
+    "rank": null,
+    "points": null,
+    "__typename": "Team"
+  },
+  {
+    "team_id": 12864639,
+    "team_name": "Palochones",
+    "division": null,
+    "format": null,
+    "rank": null,
+    "points": null,
+    "__typename": "Team"
+  },
+  {
+    "team_id": 12864634,
+    "team_name": "Dead On",
+    "division": null,
+    "format": null,
+    "rank": null,
+    "points": null,
+    "__typename": "Team"
+  },
+  {
+    "team_id": 12864635,
+    "team_name": "Chalk and Awe",
+    "division": null,
+    "format": null,
+    "rank": null,
+    "points": null,
+    "__typename": "Team"
+  },
+  {
+    "team_id": 12864638,
+    "team_name": "Sour Patch Kids",
+    "division": null,
+    "format": null,
+    "rank": null,
+    "points": null,
+    "__typename": "Team"
+  },
+  {
+    "team_id": 12867593,
+    "team_name": "Cue-ligans",
+    "division": null,
+    "format": null,
+    "rank": null,
+    "points": null,
+    "__typename": "Team"
+  },
+  {
+    "team_id": 12864640,
+    "team_name": "Quete Importa",
+    "division": null,
+    "format": null,
+    "rank": null,
+    "points": null,
+    "__typename": "Team"
+  },
+  {
+    "team_id": 12864637,
+    "team_name": "Bad Boys",
+    "division": null,
+    "format": null,
+    "rank": null,
+    "points": null,
+    "__typename": "Team"
+  },
+  {
+    "team_id": 12864636,
+    "team_name": "Ballerz 956",
+    "division": null,
+    "format": null,
+    "rank": null,
+    "points": null,
+    "__typename": "Team"
+  },
+  {
+    "team_id": 12864634,
+    "team_name": "Dead On",
+    "division": null,
+    "format": null,
+    "rank": null,
+    "points": null,
+    "__typename": "Team"
+  },
+  {
+    "team_id": 12864635,
+    "team_name": "Chalk and Awe",
+    "division": null,
+    "format": null,
+    "rank": null,
+    "points": null,
+    "__typename": "Team"
+  },
+  {
+    "team_id": 12864638,
+    "team_name": "Sour Patch Kids",
+    "division": null,
+    "format": null,
+    "rank": null,
+    "points": null,
+    "__typename": "Team"
+  },
+  {
+    "team_id": 12864639,
+    "team_name": "Palochones",
+    "division": null,
+    "format": null,
+    "rank": null,
+    "points": null,
+    "__typename": "Team"
+  },
+  {
+    "team_id": 12864640,
+    "team_name": "Quete Importa",
+    "division": null,
+    "format": null,
+    "rank": null,
+    "points": null,
+    "__typename": "Team"
+  },
+  {
+    "team_id": 12864637,
+    "team_name": "Bad Boys",
+    "division": null,
+    "format": null,
+    "rank": null,
+    "points": null,
+    "__typename": "Team"
+  },
+  {
+    "team_id": 12864636,
+    "team_name": "Ballerz 956",
+    "division": null,
+    "format": null,
+    "rank": null,
+    "points": null,
+    "__typename": "Team"
+  },
+  {
+    "team_id": 12867593,
+    "team_name": "Cue-ligans",
+    "division": null,
+    "format": null,
+    "rank": null,
+    "points": null,
+    "__typename": "Team"
+  },
+  {
+    "team_id": 12864636,
+    "team_name": "Ballerz 956",
+    "division": null,
+    "format": null,
+    "rank": null,
+    "points": null,
+    "__typename": "Team"
+  },
+  {
+    "team_id": 12864634,
+    "team_name": "Dead On",
+    "division": null,
+    "format": null,
+    "rank": null,
+    "points": null,
+    "__typename": "Team"
+  },
+  {
+    "team_id": 12864639,
+    "team_name": "Palochones",
+    "division": null,
+    "format": null,
+    "rank": null,
+    "points": null,
+    "__typename": "Team"
+  },
+  {
+    "team_id": 12864640,
+    "team_name": "Quete Importa",
+    "division": null,
+    "format": null,
+    "rank": null,
+    "points": null,
+    "__typename": "Team"
+  },
+  {
+    "team_id": 12864637,
+    "team_name": "Bad Boys",
+    "division": null,
+    "format": null,
+    "rank": null,
+    "points": null,
+    "__typename": "Team"
+  },
+  {
+    "team_id": 12864638,
+    "team_name": "Sour Patch Kids",
+    "division": null,
+    "format": null,
+    "rank": null,
+    "points": null,
+    "__typename": "Team"
+  },
+  {
+    "team_id": 12864635,
+    "team_name": "Chalk and Awe",
+    "division": null,
+    "format": null,
+    "rank": null,
+    "points": null,
+    "__typename": "Team"
+  },
+  {
+    "team_id": 12867593,
+    "team_name": "Cue-ligans",
+    "division": null,
+    "format": null,
+    "rank": null,
+    "points": null,
+    "__typename": "Team"
+  },
+  {
+    "team_id": 12864634,
+    "team_name": "Dead On",
+    "division": null,
+    "format": null,
+    "rank": null,
+    "points": null,
+    "__typename": "Team"
+  },
+  {
+    "team_id": 12864635,
+    "team_name": "Chalk and Awe",
+    "division": null,
+    "format": null,
+    "rank": null,
+    "points": null,
+    "__typename": "Team"
+  },
+  {
+    "team_id": 12867593,
+    "team_name": "Cue-ligans",
+    "division": null,
+    "format": null,
+    "rank": null,
+    "points": null,
+    "__typename": "Team"
+  },
+  {
+    "team_id": 12864636,
+    "team_name": "Ballerz 956",
+    "division": null,
+    "format": null,
+    "rank": null,
+    "points": null,
+    "__typename": "Team"
+  },
+  {
+    "team_id": 12864637,
+    "team_name": "Bad Boys",
+    "division": null,
+    "format": null,
+    "rank": null,
+    "points": null,
+    "__typename": "Team"
+  },
+  {
+    "team_id": 12864638,
+    "team_name": "Sour Patch Kids",
+    "division": null,
+    "format": null,
+    "rank": null,
+    "points": null,
+    "__typename": "Team"
+  },
+  {
+    "team_id": 12864639,
+    "team_name": "Palochones",
+    "division": null,
+    "format": null,
+    "rank": null,
+    "points": null,
+    "__typename": "Team"
+  },
+  {
+    "team_id": 12864640,
+    "team_name": "Quete Importa",
+    "division": null,
+    "format": null,
+    "rank": null,
+    "points": null,
+    "__typename": "Team"
+  },
+  {
+    "team_id": 12864636,
+    "team_name": "Ballerz 956",
+    "division": null,
+    "format": null,
+    "rank": null,
+    "points": null,
+    "__typename": "Team"
+  },
+  {
+    "team_id": 12864634,
+    "team_name": "Dead On",
+    "division": null,
+    "format": null,
+    "rank": null,
+    "points": null,
+    "__typename": "Team"
+  },
+  {
+    "team_id": 12864639,
+    "team_name": "Palochones",
+    "division": null,
+    "format": null,
+    "rank": null,
+    "points": null,
+    "__typename": "Team"
+  },
+  {
+    "team_id": 12864640,
+    "team_name": "Quete Importa",
+    "division": null,
+    "format": null,
+    "rank": null,
+    "points": null,
+    "__typename": "Team"
+  },
+  {
+    "team_id": 12864637,
+    "team_name": "Bad Boys",
+    "division": null,
+    "format": null,
+    "rank": null,
+    "points": null,
+    "__typename": "Team"
+  },
+  {
+    "team_id": 12864638,
+    "team_name": "Sour Patch Kids",
+    "division": null,
+    "format": null,
+    "rank": null,
+    "points": null,
+    "__typename": "Team"
+  },
+  {
+    "team_id": 12864635,
+    "team_name": "Chalk and Awe",
+    "division": null,
+    "format": null,
+    "rank": null,
+    "points": null,
+    "__typename": "Team"
+  },
+  {
+    "team_id": 12867593,
+    "team_name": "Cue-ligans",
+    "division": null,
+    "format": null,
+    "rank": null,
+    "points": null,
+    "__typename": "Team"
+  },
+  {
+    "team_id": 12864638,
+    "team_name": "Sour Patch Kids",
+    "division": null,
+    "format": null,
+    "rank": null,
+    "points": null,
+    "__typename": "Team"
+  },
+  {
+    "team_id": 12864634,
+    "team_name": "Dead On",
+    "division": null,
+    "format": null,
+    "rank": null,
+    "points": null,
+    "__typename": "Team"
+  },
+  {
+    "team_id": 12864640,
+    "team_name": "Quete Importa",
+    "division": null,
+    "format": null,
+    "rank": null,
+    "points": null,
+    "__typename": "Team"
+  },
+  {
+    "team_id": 12864636,
+    "team_name": "Ballerz 956",
+    "division": null,
+    "format": null,
+    "rank": null,
+    "points": null,
+    "__typename": "Team"
+  },
+  {
+    "team_id": 12867593,
+    "team_name": "Cue-ligans",
+    "division": null,
+    "format": null,
+    "rank": null,
+    "points": null,
+    "__typename": "Team"
+  },
+  {
+    "team_id": 12864637,
+    "team_name": "Bad Boys",
+    "division": null,
+    "format": null,
+    "rank": null,
+    "points": null,
+    "__typename": "Team"
+  },
+  {
+    "team_id": 12864635,
+    "team_name": "Chalk and Awe",
+    "division": null,
+    "format": null,
+    "rank": null,
+    "points": null,
+    "__typename": "Team"
+  },
+  {
+    "team_id": 12864639,
+    "team_name": "Palochones",
+    "division": null,
+    "format": null,
+    "rank": null,
+    "points": null,
+    "__typename": "Team"
+  },
+  {
+    "team_id": 12864634,
+    "team_name": "Dead On",
+    "division": null,
+    "format": null,
+    "rank": null,
+    "points": null,
+    "__typename": "Team"
+  },
+  {
+    "team_id": 12864640,
+    "team_name": "Quete Importa",
+    "division": null,
+    "format": null,
+    "rank": null,
+    "points": null,
+    "__typename": "Team"
+  },
+  {
+    "team_id": 12864636,
+    "team_name": "Ballerz 956",
+    "division": null,
+    "format": null,
+    "rank": null,
+    "points": null,
+    "__typename": "Team"
+  },
+  {
+    "team_id": 12864638,
+    "team_name": "Sour Patch Kids",
+    "division": null,
+    "format": null,
+    "rank": null,
+    "points": null,
+    "__typename": "Team"
+  },
+  {
+    "team_id": 12864639,
+    "team_name": "Palochones",
+    "division": null,
+    "format": null,
+    "rank": null,
+    "points": null,
+    "__typename": "Team"
+  },
+  {
+    "team_id": 12867593,
+    "team_name": "Cue-ligans",
+    "division": null,
+    "format": null,
+    "rank": null,
+    "points": null,
+    "__typename": "Team"
+  },
+  {
+    "team_id": 12864637,
+    "team_name": "Bad Boys",
+    "division": null,
+    "format": null,
+    "rank": null,
+    "points": null,
+    "__typename": "Team"
+  },
+  {
+    "team_id": 12864635,
+    "team_name": "Chalk and Awe",
+    "division": null,
+    "format": null,
+    "rank": null,
+    "points": null,
+    "__typename": "Team"
+  },
+  {
+    "team_id": 12864634,
+    "team_name": "Dead On",
+    "division": null,
+    "format": null,
+    "rank": null,
+    "points": null,
+    "__typename": "Team"
+  },
+  {
+    "team_id": 12864637,
+    "team_name": "Bad Boys",
+    "division": null,
+    "format": null,
+    "rank": null,
+    "points": null,
+    "__typename": "Team"
+  },
+  {
+    "team_id": 12864638,
+    "team_name": "Sour Patch Kids",
+    "division": null,
+    "format": null,
+    "rank": null,
+    "points": null,
+    "__typename": "Team"
+  },
+  {
+    "team_id": 12867593,
+    "team_name": "Cue-ligans",
+    "division": null,
+    "format": null,
+    "rank": null,
+    "points": null,
+    "__typename": "Team"
+  },
+  {
+    "team_id": 12864640,
+    "team_name": "Quete Importa",
+    "division": null,
+    "format": null,
+    "rank": null,
+    "points": null,
+    "__typename": "Team"
+  },
+  {
+    "team_id": 12864635,
+    "team_name": "Chalk and Awe",
+    "division": null,
+    "format": null,
+    "rank": null,
+    "points": null,
+    "__typename": "Team"
+  },
+  {
+    "team_id": 12864636,
+    "team_name": "Ballerz 956",
+    "division": null,
+    "format": null,
+    "rank": null,
+    "points": null,
+    "__typename": "Team"
+  },
+  {
+    "team_id": 12864639,
+    "team_name": "Palochones",
+    "division": null,
+    "format": null,
+    "rank": null,
+    "points": null,
+    "__typename": "Team"
+  },
+  {
+    "team_id": 12867593,
+    "team_name": "Cue-ligans",
+    "division": null,
+    "format": null,
+    "rank": null,
+    "points": null,
+    "__typename": "Team"
+  },
+  {
+    "team_id": 12864634,
+    "team_name": "Dead On",
+    "division": null,
+    "format": null,
+    "rank": null,
+    "points": null,
+    "__typename": "Team"
+  },
+  {
+    "team_id": 12864635,
+    "team_name": "Chalk and Awe",
+    "division": null,
+    "format": null,
+    "rank": null,
+    "points": null,
+    "__typename": "Team"
+  },
+  {
+    "team_id": 12864636,
+    "team_name": "Ballerz 956",
+    "division": null,
+    "format": null,
+    "rank": null,
+    "points": null,
+    "__typename": "Team"
+  },
+  {
+    "team_id": 12864638,
+    "team_name": "Sour Patch Kids",
+    "division": null,
+    "format": null,
+    "rank": null,
+    "points": null,
+    "__typename": "Team"
+  },
+  {
+    "team_id": 12864640,
+    "team_name": "Quete Importa",
+    "division": null,
+    "format": null,
+    "rank": null,
+    "points": null,
+    "__typename": "Team"
+  },
+  {
+    "team_id": 12864637,
+    "team_name": "Bad Boys",
+    "division": null,
+    "format": null,
+    "rank": null,
+    "points": null,
+    "__typename": "Team"
+  },
+  {
+    "team_id": 12864639,
+    "team_name": "Palochones",
+    "division": null,
+    "format": null,
+    "rank": null,
+    "points": null,
+    "__typename": "Team"
+  },
+  {
+    "team_id": 12864634,
+    "team_name": "Dead On",
+    "division": null,
+    "format": null,
+    "rank": null,
+    "points": null,
+    "__typename": "Team"
+  },
+  {
+    "team_id": 12864639,
+    "team_name": "Palochones",
+    "division": null,
+    "format": null,
+    "rank": null,
+    "points": null,
+    "__typename": "Team"
+  },
+  {
+    "team_id": 12864638,
+    "team_name": "Sour Patch Kids",
+    "division": null,
+    "format": null,
+    "rank": null,
+    "points": null,
+    "__typename": "Team"
+  },
+  {
+    "team_id": 12864635,
+    "team_name": "Chalk and Awe",
+    "division": null,
+    "format": null,
+    "rank": null,
+    "points": null,
+    "__typename": "Team"
+  },
+  {
+    "team_id": 12864640,
+    "team_name": "Quete Importa",
+    "division": null,
+    "format": null,
+    "rank": null,
+    "points": null,
+    "__typename": "Team"
+  },
+  {
+    "team_id": 12867593,
+    "team_name": "Cue-ligans",
+    "division": null,
+    "format": null,
+    "rank": null,
+    "points": null,
+    "__typename": "Team"
+  },
+  {
+    "team_id": 12864636,
+    "team_name": "Ballerz 956",
+    "division": null,
+    "format": null,
+    "rank": null,
+    "points": null,
+    "__typename": "Team"
+  },
+  {
+    "team_id": 12864637,
+    "team_name": "Bad Boys",
+    "division": null,
+    "format": null,
+    "rank": null,
+    "points": null,
+    "__typename": "Team"
+  },
+  {
+    "team_id": 12864635,
+    "team_name": "Chalk and Awe",
+    "division": null,
+    "format": null,
+    "rank": null,
+    "points": null,
+    "__typename": "Team"
+  },
+  {
+    "team_id": 12864634,
+    "team_name": "Dead On",
+    "division": null,
+    "format": null,
+    "rank": null,
+    "points": null,
+    "__typename": "Team"
+  },
+  {
+    "team_id": 12864639,
+    "team_name": "Palochones",
+    "division": null,
+    "format": null,
+    "rank": null,
+    "points": null,
+    "__typename": "Team"
+  },
+  {
+    "team_id": 12864638,
+    "team_name": "Sour Patch Kids",
+    "division": null,
+    "format": null,
+    "rank": null,
+    "points": null,
+    "__typename": "Team"
+  },
+  {
+    "team_id": 12864637,
+    "team_name": "Bad Boys",
+    "division": null,
+    "format": null,
+    "rank": null,
+    "points": null,
+    "__typename": "Team"
+  },
+  {
+    "team_id": 12864640,
+    "team_name": "Quete Importa",
+    "division": null,
+    "format": null,
+    "rank": null,
+    "points": null,
+    "__typename": "Team"
+  },
+  {
+    "team_id": 12867593,
+    "team_name": "Cue-ligans",
+    "division": null,
+    "format": null,
+    "rank": null,
+    "points": null,
+    "__typename": "Team"
+  },
+  {
+    "team_id": 12864636,
+    "team_name": "Ballerz 956",
+    "division": null,
+    "format": null,
+    "rank": null,
+    "points": null,
+    "__typename": "Team"
+  },
+  {
+    "team_id": 12864634,
+    "team_name": "Dead On",
+    "division": null,
+    "format": null,
+    "rank": null,
+    "points": null,
+    "__typename": "Team"
+  },
+  {
+    "team_id": 12864636,
+    "team_name": "Ballerz 956",
+    "division": null,
+    "format": null,
+    "rank": null,
+    "points": null,
+    "__typename": "Team"
+  },
+  {
+    "team_id": 12864640,
+    "team_name": "Quete Importa",
+    "division": null,
+    "format": null,
+    "rank": null,
+    "points": null,
+    "__typename": "Team"
+  },
+  {
+    "team_id": 12864639,
+    "team_name": "Palochones",
+    "division": null,
+    "format": null,
+    "rank": null,
+    "points": null,
+    "__typename": "Team"
+  },
+  {
+    "team_id": 12864638,
+    "team_name": "Sour Patch Kids",
+    "division": null,
+    "format": null,
+    "rank": null,
+    "points": null,
+    "__typename": "Team"
+  },
+  {
+    "team_id": 12864637,
+    "team_name": "Bad Boys",
+    "division": null,
+    "format": null,
+    "rank": null,
+    "points": null,
+    "__typename": "Team"
+  },
+  {
+    "team_id": 12867593,
+    "team_name": "Cue-ligans",
+    "division": null,
+    "format": null,
+    "rank": null,
+    "points": null,
+    "__typename": "Team"
+  },
+  {
+    "team_id": 12864635,
+    "team_name": "Chalk and Awe",
+    "division": null,
+    "format": null,
+    "rank": null,
+    "points": null,
+    "__typename": "Team"
+  },
+  {
+    "team_id": 12864634,
+    "team_name": "Dead On",
+    "division": null,
+    "format": null,
+    "rank": null,
+    "points": null,
+    "__typename": "Team"
+  },
+  {
+    "team_id": 12864638,
+    "team_name": "Sour Patch Kids",
+    "division": null,
+    "format": null,
+    "rank": null,
+    "points": null,
+    "__typename": "Team"
+  },
+  {
+    "team_id": 12864636,
+    "team_name": "Ballerz 956",
+    "division": null,
+    "format": null,
+    "rank": null,
+    "points": null,
+    "__typename": "Team"
+  },
+  {
+    "team_id": 12864640,
+    "team_name": "Quete Importa",
+    "division": null,
+    "format": null,
+    "rank": null,
+    "points": null,
+    "__typename": "Team"
+  },
+  {
+    "team_id": 12864637,
+    "team_name": "Bad Boys",
+    "division": null,
+    "format": null,
+    "rank": null,
+    "points": null,
+    "__typename": "Team"
+  },
+  {
+    "team_id": 12867593,
+    "team_name": "Cue-ligans",
+    "division": null,
+    "format": null,
+    "rank": null,
+    "points": null,
+    "__typename": "Team"
+  },
+  {
+    "team_id": 12864639,
+    "team_name": "Palochones",
+    "division": null,
+    "format": null,
+    "rank": null,
+    "points": null,
+    "__typename": "Team"
+  },
+  {
+    "team_id": 12864635,
+    "team_name": "Chalk and Awe",
+    "division": null,
+    "format": null,
+    "rank": null,
+    "points": null,
+    "__typename": "Team"
+  },
+  {
+    "team_id": 12864640,
+    "team_name": "Quete Importa",
+    "division": null,
+    "format": null,
+    "rank": null,
+    "points": null,
+    "__typename": "Team"
+  },
+  {
+    "team_id": 12864634,
+    "team_name": "Dead On",
+    "division": null,
+    "format": null,
+    "rank": null,
+    "points": null,
+    "__typename": "Team"
+  },
+  {
+    "team_id": 12864638,
+    "team_name": "Sour Patch Kids",
+    "division": null,
+    "format": null,
+    "rank": null,
+    "points": null,
+    "__typename": "Team"
+  },
+  {
+    "team_id": 12864636,
+    "team_name": "Ballerz 956",
+    "division": null,
+    "format": null,
+    "rank": null,
+    "points": null,
+    "__typename": "Team"
+  },
+  {
+    "team_id": 12867593,
+    "team_name": "Cue-ligans",
+    "division": null,
+    "format": null,
+    "rank": null,
+    "points": null,
+    "__typename": "Team"
+  },
+  {
+    "team_id": 12864639,
+    "team_name": "Palochones",
+    "division": null,
+    "format": null,
+    "rank": null,
+    "points": null,
+    "__typename": "Team"
+  },
+  {
+    "team_id": 12864635,
+    "team_name": "Chalk and Awe",
+    "division": null,
+    "format": null,
+    "rank": null,
+    "points": null,
+    "__typename": "Team"
+  },
+  {
+    "team_id": 12864637,
+    "team_name": "Bad Boys",
+    "division": null,
+    "format": null,
+    "rank": null,
+    "points": null,
+    "__typename": "Team"
+  },
+  {
+    "team_id": 12864637,
+    "team_name": "Bad Boys",
+    "division": null,
+    "format": null,
+    "rank": null,
+    "points": null,
+    "__typename": "Team"
+  },
+  {
+    "team_id": 12864634,
+    "team_name": "Dead On",
+    "division": null,
+    "format": null,
+    "rank": null,
+    "points": null,
+    "__typename": "Team"
+  },
+  {
+    "team_id": 12867593,
+    "team_name": "Cue-ligans",
+    "division": null,
+    "format": null,
+    "rank": null,
+    "points": null,
+    "__typename": "Team"
+  },
+  {
+    "team_id": 12864638,
+    "team_name": "Sour Patch Kids",
+    "division": null,
+    "format": null,
+    "rank": null,
+    "points": null,
+    "__typename": "Team"
+  },
+  {
+    "team_id": 12864635,
+    "team_name": "Chalk and Awe",
+    "division": null,
+    "format": null,
+    "rank": null,
+    "points": null,
+    "__typename": "Team"
+  },
+  {
+    "team_id": 12864640,
+    "team_name": "Quete Importa",
+    "division": null,
+    "format": null,
+    "rank": null,
+    "points": null,
+    "__typename": "Team"
+  },
+  {
+    "team_id": 12864639,
+    "team_name": "Palochones",
+    "division": null,
+    "format": null,
+    "rank": null,
+    "points": null,
+    "__typename": "Team"
+  },
+  {
+    "team_id": 12864636,
+    "team_name": "Ballerz 956",
+    "division": null,
+    "format": null,
+    "rank": null,
+    "points": null,
+    "__typename": "Team"
+  },
+  {
+    "team_id": 12864634,
+    "team_name": "Dead On",
+    "division": null,
+    "format": null,
+    "rank": null,
+    "points": null,
+    "__typename": "Team"
+  },
+  {
+    "team_id": 12867593,
+    "team_name": "Cue-ligans",
+    "division": null,
+    "format": null,
+    "rank": null,
+    "points": null,
+    "__typename": "Team"
+  },
+  {
+    "team_id": 12864636,
+    "team_name": "Ballerz 956",
+    "division": null,
+    "format": null,
+    "rank": null,
+    "points": null,
+    "__typename": "Team"
+  },
+  {
+    "team_id": 12864635,
+    "team_name": "Chalk and Awe",
+    "division": null,
+    "format": null,
+    "rank": null,
+    "points": null,
+    "__typename": "Team"
+  },
+  {
+    "team_id": 12864640,
+    "team_name": "Quete Importa",
+    "division": null,
+    "format": null,
+    "rank": null,
+    "points": null,
+    "__typename": "Team"
+  },
+  {
+    "team_id": 12864638,
+    "team_name": "Sour Patch Kids",
+    "division": null,
+    "format": null,
+    "rank": null,
+    "points": null,
+    "__typename": "Team"
+  },
+  {
+    "team_id": 12864639,
+    "team_name": "Palochones",
+    "division": null,
+    "format": null,
+    "rank": null,
+    "points": null,
+    "__typename": "Team"
+  },
+  {
+    "team_id": 12864637,
+    "team_name": "Bad Boys",
+    "division": null,
+    "format": null,
+    "rank": null,
+    "points": null,
+    "__typename": "Team"
+  },
+  {
+    "team_id": 12864639,
+    "team_name": "Palochones",
+    "division": null,
+    "format": null,
+    "rank": null,
+    "points": null,
+    "__typename": "Team"
+  },
+  {
+    "team_id": 12864634,
+    "team_name": "Dead On",
+    "division": null,
+    "format": null,
+    "rank": null,
+    "points": null,
+    "__typename": "Team"
+  },
+  {
+    "team_id": 12864635,
+    "team_name": "Chalk and Awe",
+    "division": null,
+    "format": null,
+    "rank": null,
+    "points": null,
+    "__typename": "Team"
+  },
+  {
+    "team_id": 12864638,
+    "team_name": "Sour Patch Kids",
+    "division": null,
+    "format": null,
+    "rank": null,
+    "points": null,
+    "__typename": "Team"
+  },
+  {
+    "team_id": 12867593,
+    "team_name": "Cue-ligans",
+    "division": null,
+    "format": null,
+    "rank": null,
+    "points": null,
+    "__typename": "Team"
+  },
+  {
+    "team_id": 12864640,
+    "team_name": "Quete Importa",
+    "division": null,
+    "format": null,
+    "rank": null,
+    "points": null,
+    "__typename": "Team"
+  },
+  {
+    "team_id": 12864637,
+    "team_name": "Bad Boys",
+    "division": null,
+    "format": null,
+    "rank": null,
+    "points": null,
+    "__typename": "Team"
+  },
+  {
+    "team_id": 12864636,
+    "team_name": "Ballerz 956",
+    "division": null,
+    "format": null,
+    "rank": null,
+    "points": null,
+    "__typename": "Team"
+  },
+  {
+    "team_id": 12864634,
+    "team_name": "Dead On",
+    "division": null,
+    "format": null,
+    "rank": null,
+    "points": null,
+    "__typename": "Team"
+  },
+  {
+    "team_id": 12864635,
+    "team_name": "Chalk and Awe",
+    "division": null,
+    "format": null,
+    "rank": null,
+    "points": null,
+    "__typename": "Team"
+  },
+  {
+    "team_id": 12864638,
+    "team_name": "Sour Patch Kids",
+    "division": null,
+    "format": null,
+    "rank": null,
+    "points": null,
+    "__typename": "Team"
+  },
+  {
+    "team_id": 12864639,
+    "team_name": "Palochones",
+    "division": null,
+    "format": null,
+    "rank": null,
+    "points": null,
+    "__typename": "Team"
+  },
+  {
+    "team_id": 12864640,
+    "team_name": "Quete Importa",
+    "division": null,
+    "format": null,
+    "rank": null,
+    "points": null,
+    "__typename": "Team"
+  },
+  {
+    "team_id": 12864637,
+    "team_name": "Bad Boys",
+    "division": null,
+    "format": null,
+    "rank": null,
+    "points": null,
+    "__typename": "Team"
+  },
+  {
+    "team_id": 12864636,
+    "team_name": "Ballerz 956",
+    "division": null,
+    "format": null,
+    "rank": null,
+    "points": null,
+    "__typename": "Team"
+  },
+  {
+    "team_id": 12867593,
+    "team_name": "Cue-ligans",
+    "division": null,
+    "format": null,
+    "rank": null,
+    "points": null,
+    "__typename": "Team"
+  },
+  {
+    "team_id": 12864636,
+    "team_name": "Ballerz 956",
+    "division": null,
+    "format": null,
+    "rank": null,
+    "points": null,
+    "__typename": "Team"
+  },
+  {
+    "team_id": 12864634,
+    "team_name": "Dead On",
+    "division": null,
+    "format": null,
+    "rank": null,
+    "points": null,
+    "__typename": "Team"
+  },
+  {
+    "team_id": 12864639,
+    "team_name": "Palochones",
+    "division": null,
+    "format": null,
+    "rank": null,
+    "points": null,
+    "__typename": "Team"
+  },
+  {
+    "team_id": 12864640,
+    "team_name": "Quete Importa",
+    "division": null,
+    "format": null,
+    "rank": null,
+    "points": null,
+    "__typename": "Team"
+  },
+  {
+    "team_id": 12864637,
+    "team_name": "Bad Boys",
+    "division": null,
+    "format": null,
+    "rank": null,
+    "points": null,
+    "__typename": "Team"
+  },
+  {
+    "team_id": 12864638,
+    "team_name": "Sour Patch Kids",
+    "division": null,
+    "format": null,
+    "rank": null,
+    "points": null,
+    "__typename": "Team"
+  },
+  {
+    "team_id": 12864635,
+    "team_name": "Chalk and Awe",
+    "division": null,
+    "format": null,
+    "rank": null,
+    "points": null,
+    "__typename": "Team"
+  },
+  {
+    "team_id": 12867593,
+    "team_name": "Cue-ligans",
+    "division": null,
+    "format": null,
+    "rank": null,
+    "points": null,
+    "__typename": "Team"
+  },
+  {
+    "team_id": 12864714,
+    "team_name": "Dead On",
+    "division": null,
+    "format": null,
+    "rank": null,
+    "points": null,
+    "__typename": "Team"
+  },
+  {
+    "team_id": 12864715,
+    "team_name": "Chalk and Awe",
+    "division": null,
+    "format": null,
+    "rank": null,
+    "points": null,
+    "__typename": "Team"
+  },
+  {
+    "team_id": 12864716,
+    "team_name": "Ballerz 956",
+    "division": null,
+    "format": null,
+    "rank": null,
+    "points": null,
+    "__typename": "Team"
+  },
+  {
+    "team_id": 12864717,
+    "team_name": "Bad Boys",
+    "division": null,
+    "format": null,
+    "rank": null,
+    "points": null,
+    "__typename": "Team"
+  },
+  {
+    "team_id": 12864718,
+    "team_name": "Sour Patch Kids",
+    "division": null,
+    "format": null,
+    "rank": null,
+    "points": null,
+    "__typename": "Team"
+  },
+  {
+    "team_id": 12864719,
+    "team_name": "Palochones",
+    "division": null,
+    "format": null,
+    "rank": null,
+    "points": null,
+    "__typename": "Team"
+  },
+  {
+    "team_id": 12864720,
+    "team_name": "Quete Importa",
+    "division": null,
+    "format": null,
+    "rank": null,
+    "points": null,
+    "__typename": "Team"
+  },
+  {
+    "team_id": 12867592,
+    "team_name": "Cue-ligans",
+    "division": null,
+    "format": null,
+    "rank": null,
+    "points": null,
+    "__typename": "Team"
+  },
+  {
+    "team_id": 12864716,
+    "team_name": "Ballerz 956",
+    "division": null,
+    "format": null,
+    "rank": null,
+    "points": null,
+    "__typename": "Team"
+  },
+  {
+    "team_id": 12864714,
+    "team_name": "Dead On",
+    "division": null,
+    "format": null,
+    "rank": null,
+    "points": null,
+    "__typename": "Team"
+  },
+  {
+    "team_id": 12864719,
+    "team_name": "Palochones",
+    "division": null,
+    "format": null,
+    "rank": null,
+    "points": null,
+    "__typename": "Team"
+  },
+  {
+    "team_id": 12864720,
+    "team_name": "Quete Importa",
+    "division": null,
+    "format": null,
+    "rank": null,
+    "points": null,
+    "__typename": "Team"
+  },
+  {
+    "team_id": 12864717,
+    "team_name": "Bad Boys",
+    "division": null,
+    "format": null,
+    "rank": null,
+    "points": null,
+    "__typename": "Team"
+  },
+  {
+    "team_id": 12864718,
+    "team_name": "Sour Patch Kids",
+    "division": null,
+    "format": null,
+    "rank": null,
+    "points": null,
+    "__typename": "Team"
+  },
+  {
+    "team_id": 12864715,
+    "team_name": "Chalk and Awe",
+    "division": null,
+    "format": null,
+    "rank": null,
+    "points": null,
+    "__typename": "Team"
+  },
+  {
+    "team_id": 12867592,
+    "team_name": "Cue-ligans",
+    "division": null,
+    "format": null,
+    "rank": null,
+    "points": null,
+    "__typename": "Team"
+  },
+  {
+    "team_id": 12864718,
+    "team_name": "Sour Patch Kids",
+    "division": null,
+    "format": null,
+    "rank": null,
+    "points": null,
+    "__typename": "Team"
+  },
+  {
+    "team_id": 12864714,
+    "team_name": "Dead On",
+    "division": null,
+    "format": null,
+    "rank": null,
+    "points": null,
+    "__typename": "Team"
+  },
+  {
+    "team_id": 12864720,
+    "team_name": "Quete Importa",
+    "division": null,
+    "format": null,
+    "rank": null,
+    "points": null,
+    "__typename": "Team"
+  },
+  {
+    "team_id": 12864716,
+    "team_name": "Ballerz 956",
+    "division": null,
+    "format": null,
+    "rank": null,
+    "points": null,
+    "__typename": "Team"
+  },
+  {
+    "team_id": 12867592,
+    "team_name": "Cue-ligans",
+    "division": null,
+    "format": null,
+    "rank": null,
+    "points": null,
+    "__typename": "Team"
+  },
+  {
+    "team_id": 12864717,
+    "team_name": "Bad Boys",
+    "division": null,
+    "format": null,
+    "rank": null,
+    "points": null,
+    "__typename": "Team"
+  },
+  {
+    "team_id": 12864715,
+    "team_name": "Chalk and Awe",
+    "division": null,
+    "format": null,
+    "rank": null,
+    "points": null,
+    "__typename": "Team"
+  },
+  {
+    "team_id": 12864719,
+    "team_name": "Palochones",
+    "division": null,
+    "format": null,
+    "rank": null,
+    "points": null,
+    "__typename": "Team"
+  },
+  {
+    "team_id": 12864714,
+    "team_name": "Dead On",
+    "division": null,
+    "format": null,
+    "rank": null,
+    "points": null,
+    "__typename": "Team"
+  },
+  {
+    "team_id": 12864720,
+    "team_name": "Quete Importa",
+    "division": null,
+    "format": null,
+    "rank": null,
+    "points": null,
+    "__typename": "Team"
+  },
+  {
+    "team_id": 12864716,
+    "team_name": "Ballerz 956",
+    "division": null,
+    "format": null,
+    "rank": null,
+    "points": null,
+    "__typename": "Team"
+  },
+  {
+    "team_id": 12864718,
+    "team_name": "Sour Patch Kids",
+    "division": null,
+    "format": null,
+    "rank": null,
+    "points": null,
+    "__typename": "Team"
+  },
+  {
+    "team_id": 12864719,
+    "team_name": "Palochones",
+    "division": null,
+    "format": null,
+    "rank": null,
+    "points": null,
+    "__typename": "Team"
+  },
+  {
+    "team_id": 12867592,
+    "team_name": "Cue-ligans",
+    "division": null,
+    "format": null,
+    "rank": null,
+    "points": null,
+    "__typename": "Team"
+  },
+  {
+    "team_id": 12864717,
+    "team_name": "Bad Boys",
+    "division": null,
+    "format": null,
+    "rank": null,
+    "points": null,
+    "__typename": "Team"
+  },
+  {
+    "team_id": 12864715,
+    "team_name": "Chalk and Awe",
+    "division": null,
+    "format": null,
+    "rank": null,
+    "points": null,
+    "__typename": "Team"
+  },
+  {
+    "team_id": 12864714,
+    "team_name": "Dead On",
+    "division": null,
+    "format": null,
+    "rank": null,
+    "points": null,
+    "__typename": "Team"
+  },
+  {
+    "team_id": 12864717,
+    "team_name": "Bad Boys",
+    "division": null,
+    "format": null,
+    "rank": null,
+    "points": null,
+    "__typename": "Team"
+  },
+  {
+    "team_id": 12864718,
+    "team_name": "Sour Patch Kids",
+    "division": null,
+    "format": null,
+    "rank": null,
+    "points": null,
+    "__typename": "Team"
+  },
+  {
+    "team_id": 12867592,
+    "team_name": "Cue-ligans",
+    "division": null,
+    "format": null,
+    "rank": null,
+    "points": null,
+    "__typename": "Team"
+  },
+  {
+    "team_id": 12864720,
+    "team_name": "Quete Importa",
+    "division": null,
+    "format": null,
+    "rank": null,
+    "points": null,
+    "__typename": "Team"
+  },
+  {
+    "team_id": 12864715,
+    "team_name": "Chalk and Awe",
+    "division": null,
+    "format": null,
+    "rank": null,
+    "points": null,
+    "__typename": "Team"
+  },
+  {
+    "team_id": 12864716,
+    "team_name": "Ballerz 956",
+    "division": null,
+    "format": null,
+    "rank": null,
+    "points": null,
+    "__typename": "Team"
+  },
+  {
+    "team_id": 12864719,
+    "team_name": "Palochones",
+    "division": null,
+    "format": null,
+    "rank": null,
+    "points": null,
+    "__typename": "Team"
+  },
+  {
+    "team_id": 12867592,
+    "team_name": "Cue-ligans",
+    "division": null,
+    "format": null,
+    "rank": null,
+    "points": null,
+    "__typename": "Team"
+  },
+  {
+    "team_id": 12864714,
+    "team_name": "Dead On",
+    "division": null,
+    "format": null,
+    "rank": null,
+    "points": null,
+    "__typename": "Team"
+  },
+  {
+    "team_id": 12864715,
+    "team_name": "Chalk and Awe",
+    "division": null,
+    "format": null,
+    "rank": null,
+    "points": null,
+    "__typename": "Team"
+  },
+  {
+    "team_id": 12864716,
+    "team_name": "Ballerz 956",
+    "division": null,
+    "format": null,
+    "rank": null,
+    "points": null,
+    "__typename": "Team"
+  },
+  {
+    "team_id": 12864718,
+    "team_name": "Sour Patch Kids",
+    "division": null,
+    "format": null,
+    "rank": null,
+    "points": null,
+    "__typename": "Team"
+  },
+  {
+    "team_id": 12864720,
+    "team_name": "Quete Importa",
+    "division": null,
+    "format": null,
+    "rank": null,
+    "points": null,
+    "__typename": "Team"
+  },
+  {
+    "team_id": 12864717,
+    "team_name": "Bad Boys",
+    "division": null,
+    "format": null,
+    "rank": null,
+    "points": null,
+    "__typename": "Team"
+  },
+  {
+    "team_id": 12864719,
+    "team_name": "Palochones",
+    "division": null,
+    "format": null,
+    "rank": null,
+    "points": null,
+    "__typename": "Team"
+  },
+  {
+    "team_id": 12864714,
+    "team_name": "Dead On",
+    "division": null,
+    "format": null,
+    "rank": null,
+    "points": null,
+    "__typename": "Team"
+  },
+  {
+    "team_id": 12864719,
+    "team_name": "Palochones",
+    "division": null,
+    "format": null,
+    "rank": null,
+    "points": null,
+    "__typename": "Team"
+  },
+  {
+    "team_id": 12864718,
+    "team_name": "Sour Patch Kids",
+    "division": null,
+    "format": null,
+    "rank": null,
+    "points": null,
+    "__typename": "Team"
+  },
+  {
+    "team_id": 12864715,
+    "team_name": "Chalk and Awe",
+    "division": null,
+    "format": null,
+    "rank": null,
+    "points": null,
+    "__typename": "Team"
+  },
+  {
+    "team_id": 12864720,
+    "team_name": "Quete Importa",
+    "division": null,
+    "format": null,
+    "rank": null,
+    "points": null,
+    "__typename": "Team"
+  },
+  {
+    "team_id": 12867592,
+    "team_name": "Cue-ligans",
+    "division": null,
+    "format": null,
+    "rank": null,
+    "points": null,
+    "__typename": "Team"
+  },
+  {
+    "team_id": 12864716,
+    "team_name": "Ballerz 956",
+    "division": null,
+    "format": null,
+    "rank": null,
+    "points": null,
+    "__typename": "Team"
+  },
+  {
+    "team_id": 12864717,
+    "team_name": "Bad Boys",
+    "division": null,
+    "format": null,
+    "rank": null,
+    "points": null,
+    "__typename": "Team"
+  },
+  {
+    "team_id": 12864715,
+    "team_name": "Chalk and Awe",
+    "division": null,
+    "format": null,
+    "rank": null,
+    "points": null,
+    "__typename": "Team"
+  },
+  {
+    "team_id": 12864714,
+    "team_name": "Dead On",
+    "division": null,
+    "format": null,
+    "rank": null,
+    "points": null,
+    "__typename": "Team"
+  },
+  {
+    "team_id": 12864719,
+    "team_name": "Palochones",
+    "division": null,
+    "format": null,
+    "rank": null,
+    "points": null,
+    "__typename": "Team"
+  },
+  {
+    "team_id": 12864718,
+    "team_name": "Sour Patch Kids",
+    "division": null,
+    "format": null,
+    "rank": null,
+    "points": null,
+    "__typename": "Team"
+  },
+  {
+    "team_id": 12864717,
+    "team_name": "Bad Boys",
+    "division": null,
+    "format": null,
+    "rank": null,
+    "points": null,
+    "__typename": "Team"
+  },
+  {
+    "team_id": 12864720,
+    "team_name": "Quete Importa",
+    "division": null,
+    "format": null,
+    "rank": null,
+    "points": null,
+    "__typename": "Team"
+  },
+  {
+    "team_id": 12867592,
+    "team_name": "Cue-ligans",
+    "division": null,
+    "format": null,
+    "rank": null,
+    "points": null,
+    "__typename": "Team"
+  },
+  {
+    "team_id": 12864716,
+    "team_name": "Ballerz 956",
+    "division": null,
+    "format": null,
+    "rank": null,
+    "points": null,
+    "__typename": "Team"
+  },
+  {
+    "team_id": 12864714,
+    "team_name": "Dead On",
+    "division": null,
+    "format": null,
+    "rank": null,
+    "points": null,
+    "__typename": "Team"
+  },
+  {
+    "team_id": 12864716,
+    "team_name": "Ballerz 956",
+    "division": null,
+    "format": null,
+    "rank": null,
+    "points": null,
+    "__typename": "Team"
+  },
+  {
+    "team_id": 12864720,
+    "team_name": "Quete Importa",
+    "division": null,
+    "format": null,
+    "rank": null,
+    "points": null,
+    "__typename": "Team"
+  },
+  {
+    "team_id": 12864719,
+    "team_name": "Palochones",
+    "division": null,
+    "format": null,
+    "rank": null,
+    "points": null,
+    "__typename": "Team"
+  },
+  {
+    "team_id": 12864718,
+    "team_name": "Sour Patch Kids",
+    "division": null,
+    "format": null,
+    "rank": null,
+    "points": null,
+    "__typename": "Team"
+  },
+  {
+    "team_id": 12864717,
+    "team_name": "Bad Boys",
+    "division": null,
+    "format": null,
+    "rank": null,
+    "points": null,
+    "__typename": "Team"
+  },
+  {
+    "team_id": 12867592,
+    "team_name": "Cue-ligans",
+    "division": null,
+    "format": null,
+    "rank": null,
+    "points": null,
+    "__typename": "Team"
+  },
+  {
+    "team_id": 12864715,
+    "team_name": "Chalk and Awe",
+    "division": null,
+    "format": null,
+    "rank": null,
+    "points": null,
+    "__typename": "Team"
+  },
+  {
+    "team_id": 12864714,
+    "team_name": "Dead On",
+    "division": null,
+    "format": null,
+    "rank": null,
+    "points": null,
+    "__typename": "Team"
+  },
+  {
+    "team_id": 12864718,
+    "team_name": "Sour Patch Kids",
+    "division": null,
+    "format": null,
+    "rank": null,
+    "points": null,
+    "__typename": "Team"
+  },
+  {
+    "team_id": 12864716,
+    "team_name": "Ballerz 956",
+    "division": null,
+    "format": null,
+    "rank": null,
+    "points": null,
+    "__typename": "Team"
+  },
+  {
+    "team_id": 12864720,
+    "team_name": "Quete Importa",
+    "division": null,
+    "format": null,
+    "rank": null,
+    "points": null,
+    "__typename": "Team"
+  },
+  {
+    "team_id": 12864717,
+    "team_name": "Bad Boys",
+    "division": null,
+    "format": null,
+    "rank": null,
+    "points": null,
+    "__typename": "Team"
+  },
+  {
+    "team_id": 12867592,
+    "team_name": "Cue-ligans",
+    "division": null,
+    "format": null,
+    "rank": null,
+    "points": null,
+    "__typename": "Team"
+  },
+  {
+    "team_id": 12864719,
+    "team_name": "Palochones",
+    "division": null,
+    "format": null,
+    "rank": null,
+    "points": null,
+    "__typename": "Team"
+  },
+  {
+    "team_id": 12864715,
+    "team_name": "Chalk and Awe",
+    "division": null,
+    "format": null,
+    "rank": null,
+    "points": null,
+    "__typename": "Team"
+  },
+  {
+    "team_id": 12864720,
+    "team_name": "Quete Importa",
+    "division": null,
+    "format": null,
+    "rank": null,
+    "points": null,
+    "__typename": "Team"
+  },
+  {
+    "team_id": 12864714,
+    "team_name": "Dead On",
+    "division": null,
+    "format": null,
+    "rank": null,
+    "points": null,
+    "__typename": "Team"
+  },
+  {
+    "team_id": 12864718,
+    "team_name": "Sour Patch Kids",
+    "division": null,
+    "format": null,
+    "rank": null,
+    "points": null,
+    "__typename": "Team"
+  },
+  {
+    "team_id": 12864716,
+    "team_name": "Ballerz 956",
+    "division": null,
+    "format": null,
+    "rank": null,
+    "points": null,
+    "__typename": "Team"
+  },
+  {
+    "team_id": 12867592,
+    "team_name": "Cue-ligans",
+    "division": null,
+    "format": null,
+    "rank": null,
+    "points": null,
+    "__typename": "Team"
+  },
+  {
+    "team_id": 12864719,
+    "team_name": "Palochones",
+    "division": null,
+    "format": null,
+    "rank": null,
+    "points": null,
+    "__typename": "Team"
+  },
+  {
+    "team_id": 12864715,
+    "team_name": "Chalk and Awe",
+    "division": null,
+    "format": null,
+    "rank": null,
+    "points": null,
+    "__typename": "Team"
+  },
+  {
+    "team_id": 12864717,
+    "team_name": "Bad Boys",
+    "division": null,
+    "format": null,
+    "rank": null,
+    "points": null,
+    "__typename": "Team"
+  },
+  {
+    "team_id": 12864717,
+    "team_name": "Bad Boys",
+    "division": null,
+    "format": null,
+    "rank": null,
+    "points": null,
+    "__typename": "Team"
+  },
+  {
+    "team_id": 12864714,
+    "team_name": "Dead On",
+    "division": null,
+    "format": null,
+    "rank": null,
+    "points": null,
+    "__typename": "Team"
+  },
+  {
+    "team_id": 12867592,
+    "team_name": "Cue-ligans",
+    "division": null,
+    "format": null,
+    "rank": null,
+    "points": null,
+    "__typename": "Team"
+  },
+  {
+    "team_id": 12864718,
+    "team_name": "Sour Patch Kids",
+    "division": null,
+    "format": null,
+    "rank": null,
+    "points": null,
+    "__typename": "Team"
+  },
+  {
+    "team_id": 12864715,
+    "team_name": "Chalk and Awe",
+    "division": null,
+    "format": null,
+    "rank": null,
+    "points": null,
+    "__typename": "Team"
+  },
+  {
+    "team_id": 12864720,
+    "team_name": "Quete Importa",
+    "division": null,
+    "format": null,
+    "rank": null,
+    "points": null,
+    "__typename": "Team"
+  },
+  {
+    "team_id": 12864719,
+    "team_name": "Palochones",
+    "division": null,
+    "format": null,
+    "rank": null,
+    "points": null,
+    "__typename": "Team"
+  },
+  {
+    "team_id": 12864716,
+    "team_name": "Ballerz 956",
+    "division": null,
+    "format": null,
+    "rank": null,
+    "points": null,
+    "__typename": "Team"
+  },
+  {
+    "team_id": 12864714,
+    "team_name": "Dead On",
+    "division": null,
+    "format": null,
+    "rank": null,
+    "points": null,
+    "__typename": "Team"
+  },
+  {
+    "team_id": 12867592,
+    "team_name": "Cue-ligans",
+    "division": null,
+    "format": null,
+    "rank": null,
+    "points": null,
+    "__typename": "Team"
+  },
+  {
+    "team_id": 12864716,
+    "team_name": "Ballerz 956",
+    "division": null,
+    "format": null,
+    "rank": null,
+    "points": null,
+    "__typename": "Team"
+  },
+  {
+    "team_id": 12864715,
+    "team_name": "Chalk and Awe",
+    "division": null,
+    "format": null,
+    "rank": null,
+    "points": null,
+    "__typename": "Team"
+  },
+  {
+    "team_id": 12864720,
+    "team_name": "Quete Importa",
+    "division": null,
+    "format": null,
+    "rank": null,
+    "points": null,
+    "__typename": "Team"
+  },
+  {
+    "team_id": 12864718,
+    "team_name": "Sour Patch Kids",
+    "division": null,
+    "format": null,
+    "rank": null,
+    "points": null,
+    "__typename": "Team"
+  },
+  {
+    "team_id": 12864719,
+    "team_name": "Palochones",
+    "division": null,
+    "format": null,
+    "rank": null,
+    "points": null,
+    "__typename": "Team"
+  },
+  {
+    "team_id": 12864717,
+    "team_name": "Bad Boys",
+    "division": null,
+    "format": null,
+    "rank": null,
+    "points": null,
+    "__typename": "Team"
+  },
+  {
+    "team_id": 12864719,
+    "team_name": "Palochones",
+    "division": null,
+    "format": null,
+    "rank": null,
+    "points": null,
+    "__typename": "Team"
+  },
+  {
+    "team_id": 12864714,
+    "team_name": "Dead On",
+    "division": null,
+    "format": null,
+    "rank": null,
+    "points": null,
+    "__typename": "Team"
+  },
+  {
+    "team_id": 12864715,
+    "team_name": "Chalk and Awe",
+    "division": null,
+    "format": null,
+    "rank": null,
+    "points": null,
+    "__typename": "Team"
+  },
+  {
+    "team_id": 12864718,
+    "team_name": "Sour Patch Kids",
+    "division": null,
+    "format": null,
+    "rank": null,
+    "points": null,
+    "__typename": "Team"
+  },
+  {
+    "team_id": 12867592,
+    "team_name": "Cue-ligans",
+    "division": null,
+    "format": null,
+    "rank": null,
+    "points": null,
+    "__typename": "Team"
+  },
+  {
+    "team_id": 12864720,
+    "team_name": "Quete Importa",
+    "division": null,
+    "format": null,
+    "rank": null,
+    "points": null,
+    "__typename": "Team"
+  },
+  {
+    "team_id": 12864717,
+    "team_name": "Bad Boys",
+    "division": null,
+    "format": null,
+    "rank": null,
+    "points": null,
+    "__typename": "Team"
+  },
+  {
+    "team_id": 12864716,
+    "team_name": "Ballerz 956",
+    "division": null,
+    "format": null,
+    "rank": null,
+    "points": null,
+    "__typename": "Team"
+  },
+  {
+    "team_id": 12864714,
+    "team_name": "Dead On",
+    "division": null,
+    "format": null,
+    "rank": null,
+    "points": null,
+    "__typename": "Team"
+  },
+  {
+    "team_id": 12864715,
+    "team_name": "Chalk and Awe",
+    "division": null,
+    "format": null,
+    "rank": null,
+    "points": null,
+    "__typename": "Team"
+  },
+  {
+    "team_id": 12864718,
+    "team_name": "Sour Patch Kids",
+    "division": null,
+    "format": null,
+    "rank": null,
+    "points": null,
+    "__typename": "Team"
+  },
+  {
+    "team_id": 12864719,
+    "team_name": "Palochones",
+    "division": null,
+    "format": null,
+    "rank": null,
+    "points": null,
+    "__typename": "Team"
+  },
+  {
+    "team_id": 12864720,
+    "team_name": "Quete Importa",
+    "division": null,
+    "format": null,
+    "rank": null,
+    "points": null,
+    "__typename": "Team"
+  },
+  {
+    "team_id": 12864717,
+    "team_name": "Bad Boys",
+    "division": null,
+    "format": null,
+    "rank": null,
+    "points": null,
+    "__typename": "Team"
+  },
+  {
+    "team_id": 12864716,
+    "team_name": "Ballerz 956",
+    "division": null,
+    "format": null,
+    "rank": null,
+    "points": null,
+    "__typename": "Team"
+  },
+  {
+    "team_id": 12867592,
+    "team_name": "Cue-ligans",
+    "division": null,
+    "format": null,
+    "rank": null,
+    "points": null,
+    "__typename": "Team"
+  },
+  {
+    "team_id": 12864716,
+    "team_name": "Ballerz 956",
+    "division": null,
+    "format": null,
+    "rank": null,
+    "points": null,
+    "__typename": "Team"
+  },
+  {
+    "team_id": 12864714,
+    "team_name": "Dead On",
+    "division": null,
+    "format": null,
+    "rank": null,
+    "points": null,
+    "__typename": "Team"
+  },
+  {
+    "team_id": 12864719,
+    "team_name": "Palochones",
+    "division": null,
+    "format": null,
+    "rank": null,
+    "points": null,
+    "__typename": "Team"
+  },
+  {
+    "team_id": 12864720,
+    "team_name": "Quete Importa",
+    "division": null,
+    "format": null,
+    "rank": null,
+    "points": null,
+    "__typename": "Team"
+  },
+  {
+    "team_id": 12864717,
+    "team_name": "Bad Boys",
+    "division": null,
+    "format": null,
+    "rank": null,
+    "points": null,
+    "__typename": "Team"
+  },
+  {
+    "team_id": 12864718,
+    "team_name": "Sour Patch Kids",
+    "division": null,
+    "format": null,
+    "rank": null,
+    "points": null,
+    "__typename": "Team"
+  },
+  {
+    "team_id": 12864715,
+    "team_name": "Chalk and Awe",
+    "division": null,
+    "format": null,
+    "rank": null,
+    "points": null,
+    "__typename": "Team"
+  },
+  {
+    "team_id": 12867592,
+    "team_name": "Cue-ligans",
+    "division": null,
+    "format": null,
+    "rank": null,
+    "points": null,
+    "__typename": "Team"
+  },
+  {
+    "team_id": 12864714,
+    "team_name": "Dead On",
+    "division": null,
+    "format": null,
+    "rank": null,
+    "points": null,
+    "__typename": "Team"
+  },
+  {
+    "team_id": 12864715,
+    "team_name": "Chalk and Awe",
+    "division": null,
+    "format": null,
+    "rank": null,
+    "points": null,
+    "__typename": "Team"
+  },
+  {
+    "team_id": 12867592,
+    "team_name": "Cue-ligans",
+    "division": null,
+    "format": null,
+    "rank": null,
+    "points": null,
+    "__typename": "Team"
+  },
+  {
+    "team_id": 12864716,
+    "team_name": "Ballerz 956",
+    "division": null,
+    "format": null,
+    "rank": null,
+    "points": null,
+    "__typename": "Team"
+  },
+  {
+    "team_id": 12864717,
+    "team_name": "Bad Boys",
+    "division": null,
+    "format": null,
+    "rank": null,
+    "points": null,
+    "__typename": "Team"
+  },
+  {
+    "team_id": 12864718,
+    "team_name": "Sour Patch Kids",
+    "division": null,
+    "format": null,
+    "rank": null,
+    "points": null,
+    "__typename": "Team"
+  },
+  {
+    "team_id": 12864719,
+    "team_name": "Palochones",
+    "division": null,
+    "format": null,
+    "rank": null,
+    "points": null,
+    "__typename": "Team"
+  },
+  {
+    "team_id": 12864720,
+    "team_name": "Quete Importa",
+    "division": null,
+    "format": null,
+    "rank": null,
+    "points": null,
+    "__typename": "Team"
+  },
+  {
+    "team_id": 12864716,
+    "team_name": "Ballerz 956",
+    "division": null,
+    "format": null,
+    "rank": null,
+    "points": null,
+    "__typename": "Team"
+  },
+  {
+    "team_id": 12864714,
+    "team_name": "Dead On",
+    "division": null,
+    "format": null,
+    "rank": null,
+    "points": null,
+    "__typename": "Team"
+  },
+  {
+    "team_id": 12864719,
+    "team_name": "Palochones",
+    "division": null,
+    "format": null,
+    "rank": null,
+    "points": null,
+    "__typename": "Team"
+  },
+  {
+    "team_id": 12864720,
+    "team_name": "Quete Importa",
+    "division": null,
+    "format": null,
+    "rank": null,
+    "points": null,
+    "__typename": "Team"
+  },
+  {
+    "team_id": 12864717,
+    "team_name": "Bad Boys",
+    "division": null,
+    "format": null,
+    "rank": null,
+    "points": null,
+    "__typename": "Team"
+  },
+  {
+    "team_id": 12864718,
+    "team_name": "Sour Patch Kids",
+    "division": null,
+    "format": null,
+    "rank": null,
+    "points": null,
+    "__typename": "Team"
+  },
+  {
+    "team_id": 12864715,
+    "team_name": "Chalk and Awe",
+    "division": null,
+    "format": null,
+    "rank": null,
+    "points": null,
+    "__typename": "Team"
+  },
+  {
+    "team_id": 12867592,
+    "team_name": "Cue-ligans",
+    "division": null,
+    "format": null,
+    "rank": null,
+    "points": null,
+    "__typename": "Team"
+  },
+  {
+    "team_id": 12864718,
+    "team_name": "Sour Patch Kids",
+    "division": null,
+    "format": null,
+    "rank": null,
+    "points": null,
+    "__typename": "Team"
+  },
+  {
+    "team_id": 12864714,
+    "team_name": "Dead On",
+    "division": null,
+    "format": null,
+    "rank": null,
+    "points": null,
+    "__typename": "Team"
+  },
+  {
+    "team_id": 12864720,
+    "team_name": "Quete Importa",
+    "division": null,
+    "format": null,
+    "rank": null,
+    "points": null,
+    "__typename": "Team"
+  },
+  {
+    "team_id": 12864716,
+    "team_name": "Ballerz 956",
+    "division": null,
+    "format": null,
+    "rank": null,
+    "points": null,
+    "__typename": "Team"
+  },
+  {
+    "team_id": 12867592,
+    "team_name": "Cue-ligans",
+    "division": null,
+    "format": null,
+    "rank": null,
+    "points": null,
+    "__typename": "Team"
+  },
+  {
+    "team_id": 12864717,
+    "team_name": "Bad Boys",
+    "division": null,
+    "format": null,
+    "rank": null,
+    "points": null,
+    "__typename": "Team"
+  },
+  {
+    "team_id": 12864715,
+    "team_name": "Chalk and Awe",
+    "division": null,
+    "format": null,
+    "rank": null,
+    "points": null,
+    "__typename": "Team"
+  },
+  {
+    "team_id": 12864719,
+    "team_name": "Palochones",
+    "division": null,
+    "format": null,
+    "rank": null,
+    "points": null,
+    "__typename": "Team"
+  },
+  {
+    "team_id": 12864714,
+    "team_name": "Dead On",
+    "division": null,
+    "format": null,
+    "rank": null,
+    "points": null,
+    "__typename": "Team"
+  },
+  {
+    "team_id": 12864720,
+    "team_name": "Quete Importa",
+    "division": null,
+    "format": null,
+    "rank": null,
+    "points": null,
+    "__typename": "Team"
+  },
+  {
+    "team_id": 12864716,
+    "team_name": "Ballerz 956",
+    "division": null,
+    "format": null,
+    "rank": null,
+    "points": null,
+    "__typename": "Team"
+  },
+  {
+    "team_id": 12864718,
+    "team_name": "Sour Patch Kids",
+    "division": null,
+    "format": null,
+    "rank": null,
+    "points": null,
+    "__typename": "Team"
+  },
+  {
+    "team_id": 12864719,
+    "team_name": "Palochones",
+    "division": null,
+    "format": null,
+    "rank": null,
+    "points": null,
+    "__typename": "Team"
+  },
+  {
+    "team_id": 12867592,
+    "team_name": "Cue-ligans",
+    "division": null,
+    "format": null,
+    "rank": null,
+    "points": null,
+    "__typename": "Team"
+  },
+  {
+    "team_id": 12864717,
+    "team_name": "Bad Boys",
+    "division": null,
+    "format": null,
+    "rank": null,
+    "points": null,
+    "__typename": "Team"
+  },
+  {
+    "team_id": 12864715,
+    "team_name": "Chalk and Awe",
+    "division": null,
+    "format": null,
+    "rank": null,
+    "points": null,
+    "__typename": "Team"
+  },
+  {
+    "team_id": 12864714,
+    "team_name": "Dead On",
+    "division": null,
+    "format": null,
+    "rank": null,
+    "points": null,
+    "__typename": "Team"
+  },
+  {
+    "team_id": 12864717,
+    "team_name": "Bad Boys",
+    "division": null,
+    "format": null,
+    "rank": null,
+    "points": null,
+    "__typename": "Team"
+  },
+  {
+    "team_id": 12864718,
+    "team_name": "Sour Patch Kids",
+    "division": null,
+    "format": null,
+    "rank": null,
+    "points": null,
+    "__typename": "Team"
+  },
+  {
+    "team_id": 12867592,
+    "team_name": "Cue-ligans",
+    "division": null,
+    "format": null,
+    "rank": null,
+    "points": null,
+    "__typename": "Team"
+  },
+  {
+    "team_id": 12864720,
+    "team_name": "Quete Importa",
+    "division": null,
+    "format": null,
+    "rank": null,
+    "points": null,
+    "__typename": "Team"
+  },
+  {
+    "team_id": 12864715,
+    "team_name": "Chalk and Awe",
+    "division": null,
+    "format": null,
+    "rank": null,
+    "points": null,
+    "__typename": "Team"
+  },
+  {
+    "team_id": 12864716,
+    "team_name": "Ballerz 956",
+    "division": null,
+    "format": null,
+    "rank": null,
+    "points": null,
+    "__typename": "Team"
+  },
+  {
+    "team_id": 12864719,
+    "team_name": "Palochones",
+    "division": null,
+    "format": null,
+    "rank": null,
+    "points": null,
+    "__typename": "Team"
+  },
+  {
+    "team_id": 12867592,
+    "team_name": "Cue-ligans",
+    "division": null,
+    "format": null,
+    "rank": null,
+    "points": null,
+    "__typename": "Team"
+  },
+  {
+    "team_id": 12864714,
+    "team_name": "Dead On",
+    "division": null,
+    "format": null,
+    "rank": null,
+    "points": null,
+    "__typename": "Team"
+  },
+  {
+    "team_id": 12864715,
+    "team_name": "Chalk and Awe",
+    "division": null,
+    "format": null,
+    "rank": null,
+    "points": null,
+    "__typename": "Team"
+  },
+  {
+    "team_id": 12864716,
+    "team_name": "Ballerz 956",
+    "division": null,
+    "format": null,
+    "rank": null,
+    "points": null,
+    "__typename": "Team"
+  },
+  {
+    "team_id": 12864718,
+    "team_name": "Sour Patch Kids",
+    "division": null,
+    "format": null,
+    "rank": null,
+    "points": null,
+    "__typename": "Team"
+  },
+  {
+    "team_id": 12864720,
+    "team_name": "Quete Importa",
+    "division": null,
+    "format": null,
+    "rank": null,
+    "points": null,
+    "__typename": "Team"
+  },
+  {
+    "team_id": 12864717,
+    "team_name": "Bad Boys",
+    "division": null,
+    "format": null,
+    "rank": null,
+    "points": null,
+    "__typename": "Team"
+  },
+  {
+    "team_id": 12864719,
+    "team_name": "Palochones",
+    "division": null,
+    "format": null,
+    "rank": null,
+    "points": null,
+    "__typename": "Team"
+  },
+  {
+    "team_id": 12864714,
+    "team_name": "Dead On",
+    "division": null,
+    "format": null,
+    "rank": null,
+    "points": null,
+    "__typename": "Team"
+  },
+  {
+    "team_id": 12864719,
+    "team_name": "Palochones",
+    "division": null,
+    "format": null,
+    "rank": null,
+    "points": null,
+    "__typename": "Team"
+  },
+  {
+    "team_id": 12864718,
+    "team_name": "Sour Patch Kids",
+    "division": null,
+    "format": null,
+    "rank": null,
+    "points": null,
+    "__typename": "Team"
+  },
+  {
+    "team_id": 12864715,
+    "team_name": "Chalk and Awe",
+    "division": null,
+    "format": null,
+    "rank": null,
+    "points": null,
+    "__typename": "Team"
+  },
+  {
+    "team_id": 12864720,
+    "team_name": "Quete Importa",
+    "division": null,
+    "format": null,
+    "rank": null,
+    "points": null,
+    "__typename": "Team"
+  },
+  {
+    "team_id": 12867592,
+    "team_name": "Cue-ligans",
+    "division": null,
+    "format": null,
+    "rank": null,
+    "points": null,
+    "__typename": "Team"
+  },
+  {
+    "team_id": 12864716,
+    "team_name": "Ballerz 956",
+    "division": null,
+    "format": null,
+    "rank": null,
+    "points": null,
+    "__typename": "Team"
+  },
+  {
+    "team_id": 12864717,
+    "team_name": "Bad Boys",
+    "division": null,
+    "format": null,
+    "rank": null,
+    "points": null,
+    "__typename": "Team"
+  },
+  {
+    "team_id": 12864715,
+    "team_name": "Chalk and Awe",
+    "division": null,
+    "format": null,
+    "rank": null,
+    "points": null,
+    "__typename": "Team"
+  },
+  {
+    "team_id": 12864714,
+    "team_name": "Dead On",
+    "division": null,
+    "format": null,
+    "rank": null,
+    "points": null,
+    "__typename": "Team"
+  },
+  {
+    "team_id": 12864719,
+    "team_name": "Palochones",
+    "division": null,
+    "format": null,
+    "rank": null,
+    "points": null,
+    "__typename": "Team"
+  },
+  {
+    "team_id": 12864718,
+    "team_name": "Sour Patch Kids",
+    "division": null,
+    "format": null,
+    "rank": null,
+    "points": null,
+    "__typename": "Team"
+  },
+  {
+    "team_id": 12864717,
+    "team_name": "Bad Boys",
+    "division": null,
+    "format": null,
+    "rank": null,
+    "points": null,
+    "__typename": "Team"
+  },
+  {
+    "team_id": 12864720,
+    "team_name": "Quete Importa",
+    "division": null,
+    "format": null,
+    "rank": null,
+    "points": null,
+    "__typename": "Team"
+  },
+  {
+    "team_id": 12867592,
+    "team_name": "Cue-ligans",
+    "division": null,
+    "format": null,
+    "rank": null,
+    "points": null,
+    "__typename": "Team"
+  },
+  {
+    "team_id": 12864716,
+    "team_name": "Ballerz 956",
+    "division": null,
+    "format": null,
+    "rank": null,
+    "points": null,
+    "__typename": "Team"
+  },
+  {
+    "team_id": 12864714,
+    "team_name": "Dead On",
+    "division": null,
+    "format": null,
+    "rank": null,
+    "points": null,
+    "__typename": "Team"
+  },
+  {
+    "team_id": 12864716,
+    "team_name": "Ballerz 956",
+    "division": null,
+    "format": null,
+    "rank": null,
+    "points": null,
+    "__typename": "Team"
+  },
+  {
+    "team_id": 12864720,
+    "team_name": "Quete Importa",
+    "division": null,
+    "format": null,
+    "rank": null,
+    "points": null,
+    "__typename": "Team"
+  },
+  {
+    "team_id": 12864719,
+    "team_name": "Palochones",
+    "division": null,
+    "format": null,
+    "rank": null,
+    "points": null,
+    "__typename": "Team"
+  },
+  {
+    "team_id": 12864718,
+    "team_name": "Sour Patch Kids",
+    "division": null,
+    "format": null,
+    "rank": null,
+    "points": null,
+    "__typename": "Team"
+  },
+  {
+    "team_id": 12864717,
+    "team_name": "Bad Boys",
+    "division": null,
+    "format": null,
+    "rank": null,
+    "points": null,
+    "__typename": "Team"
+  },
+  {
+    "team_id": 12867592,
+    "team_name": "Cue-ligans",
+    "division": null,
+    "format": null,
+    "rank": null,
+    "points": null,
+    "__typename": "Team"
+  },
+  {
+    "team_id": 12864715,
+    "team_name": "Chalk and Awe",
+    "division": null,
+    "format": null,
+    "rank": null,
+    "points": null,
+    "__typename": "Team"
+  },
+  {
+    "team_id": 12864714,
+    "team_name": "Dead On",
+    "division": null,
+    "format": null,
+    "rank": null,
+    "points": null,
+    "__typename": "Team"
+  },
+  {
+    "team_id": 12864718,
+    "team_name": "Sour Patch Kids",
+    "division": null,
+    "format": null,
+    "rank": null,
+    "points": null,
+    "__typename": "Team"
+  },
+  {
+    "team_id": 12864716,
+    "team_name": "Ballerz 956",
+    "division": null,
+    "format": null,
+    "rank": null,
+    "points": null,
+    "__typename": "Team"
+  },
+  {
+    "team_id": 12864720,
+    "team_name": "Quete Importa",
+    "division": null,
+    "format": null,
+    "rank": null,
+    "points": null,
+    "__typename": "Team"
+  },
+  {
+    "team_id": 12864717,
+    "team_name": "Bad Boys",
+    "division": null,
+    "format": null,
+    "rank": null,
+    "points": null,
+    "__typename": "Team"
+  },
+  {
+    "team_id": 12867592,
+    "team_name": "Cue-ligans",
+    "division": null,
+    "format": null,
+    "rank": null,
+    "points": null,
+    "__typename": "Team"
+  },
+  {
+    "team_id": 12864719,
+    "team_name": "Palochones",
+    "division": null,
+    "format": null,
+    "rank": null,
+    "points": null,
+    "__typename": "Team"
+  },
+  {
+    "team_id": 12864715,
+    "team_name": "Chalk and Awe",
+    "division": null,
+    "format": null,
+    "rank": null,
+    "points": null,
+    "__typename": "Team"
+  },
+  {
+    "team_id": 12864720,
+    "team_name": "Quete Importa",
+    "division": null,
+    "format": null,
+    "rank": null,
+    "points": null,
+    "__typename": "Team"
+  },
+  {
+    "team_id": 12864714,
+    "team_name": "Dead On",
+    "division": null,
+    "format": null,
+    "rank": null,
+    "points": null,
+    "__typename": "Team"
+  },
+  {
+    "team_id": 12864718,
+    "team_name": "Sour Patch Kids",
+    "division": null,
+    "format": null,
+    "rank": null,
+    "points": null,
+    "__typename": "Team"
+  },
+  {
+    "team_id": 12864716,
+    "team_name": "Ballerz 956",
+    "division": null,
+    "format": null,
+    "rank": null,
+    "points": null,
+    "__typename": "Team"
+  },
+  {
+    "team_id": 12867592,
+    "team_name": "Cue-ligans",
+    "division": null,
+    "format": null,
+    "rank": null,
+    "points": null,
+    "__typename": "Team"
+  },
+  {
+    "team_id": 12864719,
+    "team_name": "Palochones",
+    "division": null,
+    "format": null,
+    "rank": null,
+    "points": null,
+    "__typename": "Team"
+  },
+  {
+    "team_id": 12864715,
+    "team_name": "Chalk and Awe",
+    "division": null,
+    "format": null,
+    "rank": null,
+    "points": null,
+    "__typename": "Team"
+  },
+  {
+    "team_id": 12864717,
+    "team_name": "Bad Boys",
+    "division": null,
+    "format": null,
+    "rank": null,
+    "points": null,
+    "__typename": "Team"
+  },
+  {
+    "team_id": 12864717,
+    "team_name": "Bad Boys",
+    "division": null,
+    "format": null,
+    "rank": null,
+    "points": null,
+    "__typename": "Team"
+  },
+  {
+    "team_id": 12864714,
+    "team_name": "Dead On",
+    "division": null,
+    "format": null,
+    "rank": null,
+    "points": null,
+    "__typename": "Team"
+  },
+  {
+    "team_id": 12867592,
+    "team_name": "Cue-ligans",
+    "division": null,
+    "format": null,
+    "rank": null,
+    "points": null,
+    "__typename": "Team"
+  },
+  {
+    "team_id": 12864718,
+    "team_name": "Sour Patch Kids",
+    "division": null,
+    "format": null,
+    "rank": null,
+    "points": null,
+    "__typename": "Team"
+  },
+  {
+    "team_id": 12864715,
+    "team_name": "Chalk and Awe",
+    "division": null,
+    "format": null,
+    "rank": null,
+    "points": null,
+    "__typename": "Team"
+  },
+  {
+    "team_id": 12864720,
+    "team_name": "Quete Importa",
+    "division": null,
+    "format": null,
+    "rank": null,
+    "points": null,
+    "__typename": "Team"
+  },
+  {
+    "team_id": 12864719,
+    "team_name": "Palochones",
+    "division": null,
+    "format": null,
+    "rank": null,
+    "points": null,
+    "__typename": "Team"
+  },
+  {
+    "team_id": 12864716,
+    "team_name": "Ballerz 956",
+    "division": null,
+    "format": null,
+    "rank": null,
+    "points": null,
+    "__typename": "Team"
+  },
+  {
+    "team_id": 12864714,
+    "team_name": "Dead On",
+    "division": null,
+    "format": null,
+    "rank": null,
+    "points": null,
+    "__typename": "Team"
+  },
+  {
+    "team_id": 12867592,
+    "team_name": "Cue-ligans",
+    "division": null,
+    "format": null,
+    "rank": null,
+    "points": null,
+    "__typename": "Team"
+  },
+  {
+    "team_id": 12864716,
+    "team_name": "Ballerz 956",
+    "division": null,
+    "format": null,
+    "rank": null,
+    "points": null,
+    "__typename": "Team"
+  },
+  {
+    "team_id": 12864715,
+    "team_name": "Chalk and Awe",
+    "division": null,
+    "format": null,
+    "rank": null,
+    "points": null,
+    "__typename": "Team"
+  },
+  {
+    "team_id": 12864720,
+    "team_name": "Quete Importa",
+    "division": null,
+    "format": null,
+    "rank": null,
+    "points": null,
+    "__typename": "Team"
+  },
+  {
+    "team_id": 12864718,
+    "team_name": "Sour Patch Kids",
+    "division": null,
+    "format": null,
+    "rank": null,
+    "points": null,
+    "__typename": "Team"
+  },
+  {
+    "team_id": 12864719,
+    "team_name": "Palochones",
+    "division": null,
+    "format": null,
+    "rank": null,
+    "points": null,
+    "__typename": "Team"
+  },
+  {
+    "team_id": 12864717,
+    "team_name": "Bad Boys",
+    "division": null,
+    "format": null,
+    "rank": null,
+    "points": null,
+    "__typename": "Team"
+  },
+  {
+    "team_id": 12864719,
+    "team_name": "Palochones",
+    "division": null,
+    "format": null,
+    "rank": null,
+    "points": null,
+    "__typename": "Team"
+  },
+  {
+    "team_id": 12864714,
+    "team_name": "Dead On",
+    "division": null,
+    "format": null,
+    "rank": null,
+    "points": null,
+    "__typename": "Team"
+  },
+  {
+    "team_id": 12864715,
+    "team_name": "Chalk and Awe",
+    "division": null,
+    "format": null,
+    "rank": null,
+    "points": null,
+    "__typename": "Team"
+  },
+  {
+    "team_id": 12864718,
+    "team_name": "Sour Patch Kids",
+    "division": null,
+    "format": null,
+    "rank": null,
+    "points": null,
+    "__typename": "Team"
+  },
+  {
+    "team_id": 12867592,
+    "team_name": "Cue-ligans",
+    "division": null,
+    "format": null,
+    "rank": null,
+    "points": null,
+    "__typename": "Team"
+  },
+  {
+    "team_id": 12864720,
+    "team_name": "Quete Importa",
+    "division": null,
+    "format": null,
+    "rank": null,
+    "points": null,
+    "__typename": "Team"
+  },
+  {
+    "team_id": 12864717,
+    "team_name": "Bad Boys",
+    "division": null,
+    "format": null,
+    "rank": null,
+    "points": null,
+    "__typename": "Team"
+  },
+  {
+    "team_id": 12864716,
+    "team_name": "Ballerz 956",
+    "division": null,
+    "format": null,
+    "rank": null,
+    "points": null,
+    "__typename": "Team"
+  },
+  {
+    "team_id": 12864714,
+    "team_name": "Dead On",
+    "division": null,
+    "format": null,
+    "rank": null,
+    "points": null,
+    "__typename": "Team"
+  },
+  {
+    "team_id": 12864715,
+    "team_name": "Chalk and Awe",
+    "division": null,
+    "format": null,
+    "rank": null,
+    "points": null,
+    "__typename": "Team"
+  },
+  {
+    "team_id": 12864718,
+    "team_name": "Sour Patch Kids",
+    "division": null,
+    "format": null,
+    "rank": null,
+    "points": null,
+    "__typename": "Team"
+  },
+  {
+    "team_id": 12864719,
+    "team_name": "Palochones",
+    "division": null,
+    "format": null,
+    "rank": null,
+    "points": null,
+    "__typename": "Team"
+  },
+  {
+    "team_id": 12864720,
+    "team_name": "Quete Importa",
+    "division": null,
+    "format": null,
+    "rank": null,
+    "points": null,
+    "__typename": "Team"
+  },
+  {
+    "team_id": 12864717,
+    "team_name": "Bad Boys",
+    "division": null,
+    "format": null,
+    "rank": null,
+    "points": null,
+    "__typename": "Team"
+  },
+  {
+    "team_id": 12864716,
+    "team_name": "Ballerz 956",
+    "division": null,
+    "format": null,
+    "rank": null,
+    "points": null,
+    "__typename": "Team"
+  },
+  {
+    "team_id": 12867592,
+    "team_name": "Cue-ligans",
+    "division": null,
+    "format": null,
+    "rank": null,
+    "points": null,
+    "__typename": "Team"
+  },
+  {
+    "team_id": 12864716,
+    "team_name": "Ballerz 956",
+    "division": null,
+    "format": null,
+    "rank": null,
+    "points": null,
+    "__typename": "Team"
+  },
+  {
+    "team_id": 12864714,
+    "team_name": "Dead On",
+    "division": null,
+    "format": null,
+    "rank": null,
+    "points": null,
+    "__typename": "Team"
+  },
+  {
+    "team_id": 12864719,
+    "team_name": "Palochones",
+    "division": null,
+    "format": null,
+    "rank": null,
+    "points": null,
+    "__typename": "Team"
+  },
+  {
+    "team_id": 12864720,
+    "team_name": "Quete Importa",
+    "division": null,
+    "format": null,
+    "rank": null,
+    "points": null,
+    "__typename": "Team"
+  },
+  {
+    "team_id": 12864717,
+    "team_name": "Bad Boys",
+    "division": null,
+    "format": null,
+    "rank": null,
+    "points": null,
+    "__typename": "Team"
+  },
+  {
+    "team_id": 12864718,
+    "team_name": "Sour Patch Kids",
+    "division": null,
+    "format": null,
+    "rank": null,
+    "points": null,
+    "__typename": "Team"
+  },
+  {
+    "team_id": 12864715,
+    "team_name": "Chalk and Awe",
+    "division": null,
+    "format": null,
+    "rank": null,
+    "points": null,
+    "__typename": "Team"
+  },
+  {
+    "team_id": 12867592,
+    "team_name": "Cue-ligans",
+    "division": null,
+    "format": null,
+    "rank": null,
+    "points": null,
+    "__typename": "Team"
+  }
+]

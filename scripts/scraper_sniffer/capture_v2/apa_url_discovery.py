@@ -32,7 +32,7 @@ from selenium.webdriver.chrome.options import Options
 from selenium.webdriver.chrome.service import Service
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
-from selenium.common.exceptions import TimeoutException
+from selenium.common.exceptions import InvalidSessionIdException, TimeoutException
 
 from webdriver_manager.chrome import ChromeDriverManager
 
@@ -111,7 +111,10 @@ def start_spinner(label="[WAIT]"):
                 if stop_event.is_set():
                     break
                 bar = "[" + "." * i + " " * (10 - i) + "]"
-                print(f"\r{label} {bar}", end="", flush=True)
+                try:
+                    print(f"\r{label} {bar}", end="", flush=True)
+                except OSError:
+                    pass
                 time.sleep(0.2)
             # loop: bar "restarts" at [.] again
 
@@ -362,7 +365,7 @@ def login_with_retries(driver):
     # 1) Try with current globals
     login_once(driver, APA_EMAIL, APA_PASSWORD)
 
-    url_now = (driver.current_url or "").lower()
+    url_now = (safe_current_url(driver) or "").lower()
     if not (is_login_url(url_now) or looks_like_login_dom(driver)):
         print("[AUTH] Logged in successfully with current credentials.\n")
         return True
@@ -379,7 +382,7 @@ def login_with_retries(driver):
 
     login_once(driver, APA_EMAIL, APA_PASSWORD)
 
-    url_now = (driver.current_url or "").lower()
+    url_now = (safe_current_url(driver) or "").lower()
     if not (is_login_url(url_now) or looks_like_login_dom(driver)):
         print("[AUTH] Logged in successfully with CLI credentials.\n")
         return True
@@ -397,13 +400,20 @@ def login_with_retries(driver):
     time.sleep(3)
     stop_spinner(spinner)
 
-    url_now = (driver.current_url or "").lower()
+    url_now = (safe_current_url(driver) or "").lower()
     if is_login_url(url_now) or looks_like_login_dom(driver):
         print("[AUTH] Still appears to be a login page even after manual login.")
         return False
 
     print("[AUTH] Manual login successful.\n")
     return True
+
+
+def safe_current_url(driver):
+    try:
+        return driver.current_url or ""
+    except InvalidSessionIdException:
+        return ""
 
 
 def ensure_logged_in(driver):
@@ -414,7 +424,10 @@ def ensure_logged_in(driver):
         True  -> we believe we're logged in now
         False -> still appears as login; caller should skip this URL
     """
-    url = driver.current_url or ""
+    try:
+        url = safe_current_url(driver)
+    except InvalidSessionIdException:
+        return False
     if not (is_login_url(url) or looks_like_login_dom(driver)):
         return True
 
@@ -431,7 +444,7 @@ def ensure_logged_in(driver):
         return False
 
     # one more sanity check
-    url_after = driver.current_url or ""
+    url_after = safe_current_url(driver)
     if is_login_url(url_after) or looks_like_login_dom(driver):
         print("[AUTH] Still appears to be a login page after re-login. Skipping this URL.\n")
         return False
@@ -633,6 +646,11 @@ def crawl_all_urls(driver):
                 continue
             visited.add(current_url)
 
+            if not ensure_logged_in(driver):
+                print("   [AUTH] Unable to stay logged in; pausing crawler.")
+                interrupted = True
+                break
+
             print(f"\n🌐 Visiting [{len(visited)} visited] : {current_url}")
 
             # Try page load with retries (with spinner)
@@ -666,7 +684,7 @@ def crawl_all_urls(driver):
                 continue
 
             # If we got bounced to login or the page looks like login, pause + reauth
-            if is_login_url(driver.current_url) or looks_like_login_dom(driver):
+            if is_login_url(safe_current_url(driver)) or looks_like_login_dom(driver):
                 ok = ensure_logged_in(driver)
                 if not ok:
                     print("   [AUTH] Skipping this URL due to failed re-login.")
@@ -703,7 +721,7 @@ def crawl_all_urls(driver):
                     continue
 
                 # If still looks like login, bail on this URL
-                if is_login_url(driver.current_url) or looks_like_login_dom(driver):
+                if is_login_url(safe_current_url(driver)) or looks_like_login_dom(driver):
                     print("   [AUTH] Still seeing login after reauth; skipping this URL.")
                     failed.append({
                         "url": current_url,

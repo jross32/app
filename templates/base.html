@@ -13,56 +13,129 @@
 <body>
 <style>
   .nav-shell {
-    background: linear-gradient(135deg, #0d1b2a 0%, #081120 60%, #051622 100%);
-    border-bottom: 1px solid rgba(0,191,255,0.35);
-    box-shadow: 0 10px 30px #00bfff15;
+    position: sticky;
+    top: 0;
+    z-index: 1020;
+    background: rgba(10,10,20,0.92);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid rgba(0,234,255,0.25);
+    box-shadow: 0 12px 30px rgba(0,0,0,.45);
   }
+  .nav-brand-container {
+    display:flex;
+    align-items:center;
+    gap:0.75rem;
+  }
+  .nav-logo-img {
+    width:38px;
+    height:38px;
+    border-radius:50%;
+    overflow:hidden;
+    border:1px solid rgba(255,255,255,.25);
+    box-shadow:0 0 16px rgba(0,234,255,.25);
+  }
+  .nav-logo-img img {
+    width:100%; height:100%; object-fit:cover;
+  }
+  .nav-brand-title {
+    display:flex;
+    flex-direction:column;
+    line-height:1.1;
+  }
+  .nav-brand-title strong { letter-spacing:0.8px; }
+  .nav-brand-sub { font-size:0.72rem; color:rgba(255,255,255,.65); }
   .nav-pill {
-    border-radius: 999px;
-    padding: 0.35rem 0.9rem !important;
-    margin-right: 0.35rem;
+    border-radius: 1rem;
+    padding: 0.35rem 0.85rem;
+    margin-right: 0.25rem;
     border: 1px solid transparent;
     transition: all 0.2s ease;
-    color: #d9f2ff !important;
-  }
-  .nav-pill:hover { border-color: rgba(0,191,255,0.35); background: rgba(0,191,255,0.1); }
-  .nav-brand-pill {
-    border-radius: 14px;
-    padding: 0.2rem 0.5rem;
-    background: transparent;
-    color: #d9f2ff !important;
-    box-shadow: none;
-    display: inline-flex;
-    align-items: center;
-    gap: 0.35rem;
-  }
-  .nav-logo-icon {
-    width: 32px;
-    height: 32px;
-    border-radius: 50%;
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    background: radial-gradient(circle at 30% 30%, #fff 0%, #f5f5f5 25%, #1b1b1b 70%, #0b0b0b 100%);
-    color: #0b0b0b;
-    font-weight: 800;
-    font-size: 0.95rem;
+    color: #d9f2ff;
     position: relative;
-    box-shadow: 0 2px 10px rgba(0,0,0,0.35);
+    overflow:hidden;
+    display:flex;
+    align-items:center;
+    gap:0.35rem;
   }
-  .nav-logo-icon::after {
-    content: '8';
-    color: #0b0b0b;
-    background: #fff;
-    width: 16px;
-    height: 16px;
-    border-radius: 50%;
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 0.8rem;
-    font-weight: 800;
+  .nav-pill span {
+    white-space: nowrap;
+    opacity: 1;
+    max-width: 200px;
+    transition: opacity 0.2s ease, max-width 0.2s ease, margin 0.2s ease;
+    margin: 0;
   }
+  .nav-pill::after {
+    content:"";
+    position:absolute;
+    left:15%;
+    right:15%;
+    bottom:4px;
+    height:2px;
+    background:linear-gradient(90deg, rgba(0,234,255,0), rgba(0,234,255,0.8), rgba(0,234,255,0));
+    transform: scaleX(0);
+    transform-origin:center;
+    transition: transform 0.25s ease;
+  }
+  .nav-pill:hover {
+    border-color: rgba(0,234,255,0.35);
+    background: rgba(0,234,255,0.12);
+    box-shadow: 0 8px 20px rgba(0,234,255,0.15);
+  }
+  .nav-pill:hover::after { transform: scaleX(1); }
+  .nav-pill.active {
+    background: rgba(0,200,255,0.18);
+    border-color: rgba(0,200,255,0.5);
+    box-shadow: 0 0 20px rgba(0,200,255,0.35);
+  }
+  .nav-pill:hover span {
+    max-width: 160px;
+    opacity: 1;
+    margin-left: 0.35rem;
+  }
+  .nav-icon { font-size: 1rem; }
+  .user-pill {
+    border:1px solid rgba(255,255,255,.2);
+    border-radius:999px;
+    padding:0.25rem 0.5rem;
+    background: rgba(255,255,255,0.05);
+    display:flex;
+    align-items:center;
+    gap:0.35rem;
+    box-shadow: 0 0 18px rgba(0,234,255,0.15);
+  }
+  .user-pill a {
+    color:#00eaff;
+    padding:0.15rem 0.4rem;
+    border-radius:50%;
+    transition: background 0.2s ease, box-shadow 0.2s ease;
+    font-size:1.2rem;
+  }
+  .user-pill a:hover {
+    background: rgba(0,234,255,0.18);
+    box-shadow: 0 4px 12px rgba(0,234,255,0.35);
+  }
+  .user-account-link {
+    box-shadow: none !important;
+    background: transparent !important;
+    border-color: transparent;
+  }
+  .user-account-link:hover,
+  .user-account-link:focus {
+    border-color: rgba(0,234,255,0.2);
+    background: rgba(0,234,255,0.08) !important;
+    box-shadow: 0 0 12px rgba(0,234,255,0.45);
+  }
+  .user-account-icon {
+    color: #00eaff;
+    font-size: 1.3rem;
+    filter: drop-shadow(0 0 6px rgba(0,234,255,0.9));
+  }
+  .navbar-collapse {
+    transition: transform 0.25s ease, opacity 0.25s ease;
+    transform-origin: top;
+  }
+  .navbar-collapse.collapsing { opacity: 0; transform: translateY(-10px); }
+  .navbar-collapse.show { opacity: 1; transform: translateY(0); }
   /* Global accent treatment for dark cards (applies sitewide) */
   .card.bg-dark.soft-border.shadow-soft {
     position: relative;
@@ -213,11 +286,16 @@
       padding: 0.5rem 0.75rem;
       margin-top: 0.5rem;
     }
-    .navbar-nav .nav-link {
-      text-align: left;
-      padding: 0.55rem 0.4rem;
-      width: 100%;
-    }
+  .navbar-nav .nav-link {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        gap: 0.5rem;
+        text-align: left;
+        padding: 0.55rem 0.4rem;
+        width: 100%;
+        color: var(--cue-text, #fff) !important;
+      }
     .nav-pill {
       margin-right: 0;
       width: 100%;
@@ -233,8 +311,16 @@
 </style>
 <nav class="navbar navbar-expand-lg navbar-dark nav-shell mb-4">
   <div class="container-fluid">
-    <a class="navbar-brand d-flex align-items-center nav-brand-pill" href="/">
-      <span class="nav-mobile-pill d-inline-flex"><i class="fa-solid fa-shield-halved"></i><span>Cue-Ligans</span></span>
+    <a class="navbar-brand nav-brand-container" href="/">
+        <span class="nav-logo-img">
+          <img src="{{ team_logo_url or '/static/img/team_logos/cue-ligans-logo.png' }}"
+               alt="{{ team_logo_alt or 'Cue-Ligans logo' }}"
+               onerror="this.onerror=null;this.src='data:image/svg+xml,%3Csvg%20width=%2234%22%20height=%2234%22%20xmlns=%22http://www.w3.org/2000/svg%22%3E%3Ccircle%20cx=%2217%22%20cy=%2217%22%20r=%2216%22%20fill=%2200b1ff%22/%3E%3Ctext%20x=%2217%22%20y=%2222%22%20font-size=%2214%22%20fill=%22%23fff%22%20text-anchor=%22middle%22%20font-family=%22Arial,%20sans-serif%22%3ECL%3C/text%3E%3C/svg%3E';">
+        </span>
+      <span class="nav-brand-title">
+        <strong>{{ brand_team_name or brand_team_label or 'Cüe-Ligans' }}</strong>
+        <span class="nav-brand-sub">Fall 2025 · APA Manager</span>
+      </span>
     </a>
     <div class="mobile-actions ms-auto d-lg-none">
       <a class="icon-btn me-2" href="{{ url_for('locker') }}" title="Locker"><i class="fa-solid fa-vault"></i></a>
@@ -275,25 +361,57 @@
     </div>
     <div class="collapse navbar-collapse" id="mainNav">
       <div class="d-flex align-items-center flex-column flex-lg-row w-100">
-        <ul class="navbar-nav mb-2 mb-lg-0 flex-grow-1 justify-content-center">
-          <li class="nav-item"><a class="nav-link nav-pill" href="/">Dashboard</a></li>
-          <li class="nav-item"><a class="nav-link nav-pill" href="/roster">Roster</a></li>
-          <li class="nav-item"><a class="nav-link nav-pill" href="/standings">Standings</a></li>
-          <li class="nav-item"><a class="nav-link nav-pill" href="/schedule">Schedule</a></li>
-          <li class="nav-item"><a class="nav-link nav-pill" href="/scouting">Scouting</a></li>
+        <ul class="navbar-nav mb-2 mb-lg-0 flex-grow-1 justify-content-center d-flex flex-wrap gap-2">
+          <li class="nav-item">
+            <a class="nav-link nav-pill {% if request.path == '/' %}active{% endif %}" href="/">
+              <i class="fa-solid fa-house-chimney nav-icon"></i>
+              <span class="nav-text">Dashboard</span>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link nav-pill {% if request.path.startswith('/roster') %}active{% endif %}" href="/roster">
+              <i class="fa-solid fa-people-group nav-icon"></i>
+              <span class="nav-text">Roster</span>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link nav-pill {% if request.path.startswith('/standings') %}active{% endif %}" href="/standings">
+              <i class="fa-solid fa-trophy nav-icon"></i>
+              <span class="nav-text">Standings</span>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link nav-pill {% if request.path.startswith('/schedule') %}active{% endif %}" href="/schedule">
+              <i class="fa-solid fa-calendar-week nav-icon"></i>
+              <span class="nav-text">Schedule</span>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link nav-pill {% if request.path.startswith('/scouting') %}active{% endif %}" href="/scouting">
+              <i class="fa-solid fa-binoculars nav-icon"></i>
+              <span class="nav-text">Scouting</span>
+            </a>
+          </li>
           {% if current_user and current_user.role and current_user.role|lower in ['admin','captain','coach','staff'] %}
-          <li class="nav-item"><a class="nav-link nav-pill" href="{{ url_for('coach_planner') }}">Coach</a></li>
+          <li class="nav-item">
+            <a class="nav-link nav-pill {% if request.path.startswith('/coach') %}active{% endif %}" href="{{ url_for('coach_planner') }}">
+              <i class="fa-solid fa-chalkboard-user nav-icon"></i>
+              <span class="nav-text">Coach</span>
+            </a>
+          </li>
           {% endif %}
         </ul>
-        <div class="d-flex align-items-center ms-lg-3 d-none d-lg-flex">
-          <a class="nav-link nav-pill d-flex align-items-center gap-1" href="/locker" title="Locker"><i class="fa-solid fa-vault"></i><span class="ms-1">Locker</span></a>
-          <a class="nav-link nav-pill d-flex align-items-center gap-1" href="/lab" title="LAB"><i class="fa-solid fa-flask"></i><span class="ms-1">LAB</span></a>
-          <a class="nav-link nav-pill d-flex align-items-center gap-1" href="{{ url_for('ai_page') }}" title="AI Assistant"><i class="fa-solid fa-robot"></i><span class="ms-1">AI</span></a>
+        <div class="d-flex align-items-center flex-nowrap gap-2 ms-lg-3">
+          <div class="user-pill">
+            <a href="/locker" title="Locker"><i class="fa-solid fa-vault nav-icon"></i></a>
+            <a href="/lab" title="LAB"><i class="fa-solid fa-flask nav-icon"></i></a>
+            <a href="{{ url_for('ai_page') }}" title="AI Assistant"><i class="fa-solid fa-robot nav-icon"></i></a>
+          </div>
           {% if current_user %}
             <div class="dropdown">
-              <a class="nav-link nav-pill dropdown-toggle d-flex align-items-center" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false" title="Account">
+              <a class="nav-link nav-pill dropdown-toggle user-account-link" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false" title="Account">
                 <span class="position-relative">
-                  <i class="fa-solid fa-user"></i>
+                  <i class="fa-solid fa-user user-account-icon"></i>
                   {% if unread_dm_count and unread_dm_count > 0 %}
                   <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger" style="font-size:0.65rem;">
                     {{ unread_dm_count }}
@@ -305,6 +423,7 @@
                 <li><a class="dropdown-item text-light" href="{{ url_for('profile_detail', username=current_user.username) }}"><i class="fa-solid fa-id-card me-2 text-info"></i>My Profile</a></li>
                 <li><a class="dropdown-item text-light" href="{{ url_for('get_started') }}"><i class="fa-solid fa-rocket me-2 text-info"></i>Get Started</a></li>
                 <li><a class="dropdown-item text-light" href="{{ url_for('messenger') }}"><i class="fa-solid fa-message me-2 text-info"></i>Messenger</a></li>
+                <li><a class="dropdown-item text-light" href="{{ url_for('equalizer_page') }}"><i class="fa-solid fa-scale-balanced me-2 text-info"></i>Equalizer System</a></li>
                 <li><a class="dropdown-item text-light" href="{{ url_for('dues') }}"><i class="fa-solid fa-wallet me-2 text-info"></i>Dues</a></li>
                 <li><a class="dropdown-item text-light" href="{{ url_for('about') }}"><i class="fa-solid fa-circle-info me-2 text-info"></i>About</a></li>
                 <li><a class="dropdown-item text-light" href="{{ url_for('resources') }}"><i class="fa-solid fa-book-open me-2 text-info"></i>Rules & Resources</a></li>
@@ -348,6 +467,31 @@
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <script src="/static/js/app.js"></script>
+{% if config.get('ENV') == 'development' %}
+<script>
+  // Dev-only auto-reload: refresh when /static/.reload-ping.txt timestamp changes.
+  (function() {
+    const PING_INTERVAL_MS = 2000;
+    let last = Date.now();
+    async function ping() {
+      try {
+        const res = await fetch('/static/.reload-ping.txt', { cache: 'no-cache' });
+        const txt = await res.text();
+        const ts = Date.parse(txt.trim());
+        if (ts && ts > last) {
+          last = ts;
+          location.reload();
+        }
+      } catch (e) {
+        // ignore
+      } finally {
+        setTimeout(ping, PING_INTERVAL_MS);
+      }
+    }
+    ping();
+  })();
+</script>
+{% endif %}
 <script>
   // Close mobile menu when clicking a link or outside the collapse
   document.addEventListener('DOMContentLoaded', () => {

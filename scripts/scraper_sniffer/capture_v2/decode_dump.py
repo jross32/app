@@ -67,6 +67,15 @@ def harvest(dest: Dict[str, Any], stat: Dict[str, Any]) -> None:
             dest[key] = stat[key]
 
 
+def parse_response_body(response_body: Any) -> Any:
+    if isinstance(response_body, str):
+        try:
+            return json.loads(response_body)
+        except json.JSONDecodeError:
+            return []
+    return response_body
+
+
 def walk(
     node: Any,
     alias_stats: Dict[Any, Dict[str, Dict[str, Any]]],
@@ -177,7 +186,8 @@ def main():
     leagues = []
 
     def process_body(body):
-        items = body if isinstance(body, list) else [body]
+        parsed = parse_response_body(body)
+        items = parsed if isinstance(parsed, list) else [parsed]
         for obj in items:
             if not isinstance(obj, dict):
                 continue

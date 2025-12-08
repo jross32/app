@@ -1,0 +1,112 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="container py-4">
+  <div class="d-flex flex-column flex-md-row justify-content-between align-items-start gap-3 mb-3">
+    <div>
+      <h2 class="fw-bold mb-1">MVP Leaderboard</h2>
+      <div class="text-secondary">
+        {{ session_name }} · {{ division_name }} · {{ current_format|replace('-', ' ')|title }}
+      </div>
+      <div class="small text-secondary mt-1">
+        Filters: {{ selected_team_label }} · Min matches {{ min_matches }} ·
+        {% if show_only_qualified %}Qualified only{% else %}All players{% endif %}
+      </div>
+    </div>
+    <div class="btn-group" role="group" aria-label="Format toggle">
+      {% for fmt in available_formats %}
+      <a
+        class="btn btn-sm {% if fmt == current_format %}btn-info text-dark{% else %}btn-outline-info{% endif %}"
+        href="{{ url_for('mvp', format=fmt, division=division_id, min_matches=min_matches, team=team_filter, qualified=show_only_qualified and '1' or None) }}"
+      >{{ fmt|replace('-', ' ')|title }} MVPs</a>
+      {% endfor %}
+    </div>
+  </div>
+
+  <div class="card shadow-soft mb-3">
+    <div class="card-body">
+      <form method="get" class="row g-3 align-items-center">
+        <input type="hidden" name="format" value="{{ current_format }}">
+        <input type="hidden" name="division" value="{{ division_id }}">
+        <div class="col-auto">
+          <label class="form-label small text-secondary mb-1" for="teamFilter">Team</label>
+          <select class="form-select form-select-sm bg-dark text-light" id="teamFilter" name="team">
+            <option value="all"{% if team_filter == 'all' %} selected{% endif %}>All Teams</option>
+            {% for team in team_options %}
+            <option value="{{ team.id }}"{% if team_filter == team.id %} selected{% endif %}>{{ team.label }}</option>
+            {% endfor %}
+          </select>
+        </div>
+        <div class="col-auto">
+          <label class="form-label small text-secondary mb-1" for="minMatches">Min Matches</label>
+          <input type="number" min="0" class="form-control form-control-sm bg-dark text-light" id="minMatches" name="min_matches" value="{{ min_matches }}">
+        </div>
+        <div class="col-auto form-check align-self-end">
+          <input class="form-check-input" type="checkbox" id="qualifiedOnly" name="qualified" value="1" {% if show_only_qualified %}checked{% endif %}>
+          <label class="form-check-label small text-secondary" for="qualifiedOnly">Only qualified (≥ {{ qualification_threshold }})</label>
+        </div>
+        <div class="col-auto">
+          <button type="submit" class="btn btn-sm btn-info text-dark">Apply filters</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <div class="card shadow-soft">
+    <div class="card-body table-responsive overflow-auto">
+      <table class="table table-dark table-striped align-middle mb-0">
+        <thead class="table-header text-secondary small text-uppercase">
+          <tr>
+            <th scope="col">Rank</th>
+            <th scope="col">Player</th>
+            <th scope="col">Team</th>
+            <th scope="col">Matches</th>
+            <th scope="col">Wins</th>
+            <th scope="col">Win %</th>
+            <th scope="col">PPM</th>
+            <th scope="col">Total Points</th>
+            <th scope="col">Highlights</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% if mvp_players %}
+            {% for player in mvp_players %}
+            <tr class="mvp-row {% if player.is_cue_ligan %}mvp-cue{% endif %}{% if not player.is_qualified %} text-secondary{% endif %}">
+              <td>
+                <span class="badge rounded-pill {% if player.mvp_rank == 1 %}bg-warning text-dark{% elif player.mvp_rank == 2 %}bg-secondary text-dark{% elif player.mvp_rank == 3 %}bg-light text-dark{% else %}bg-dark border border-secondary{% endif %}">
+                  {{ player.mvp_rank }}
+                </span>
+              </td>
+              <td>
+                <div class="fw-semibold">{{ player.player_name }}</div>
+                <div class="text-secondary xsmall">ID: {{ player.alias_id }}</div>
+              </td>
+              <td>{{ player.team_name }}</td>
+              <td>{{ player.matches_played }}</td>
+              <td>{{ player.matches_won }}</td>
+              <td>{{ player.display_win_pct }}</td>
+              <td>{{ player.display_ppm }}</td>
+              <td>{{ player.display_points }}</td>
+              <td>
+                {% if player.patch_counts %}
+                <div class="d-flex flex-wrap gap-1">
+                  {% for label, count in player.patch_counts.items() %}
+                  <span class="badge bg-info text-dark">{{ label }} ×{{ count }}</span>
+                  {% endfor %}
+                </div>
+                {% else %}
+                <span class="text-secondary small">--</span>
+                {% endif %}
+              </td>
+            </tr>
+            {% endfor %}
+          {% else %}
+          <tr>
+            <td colspan="9" class="text-center text-secondary small py-4">No players matching these filters.</td>
+          </tr>
+          {% endif %}
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+{% endblock %}
